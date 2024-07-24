@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <link rel="stylesheet" href="{% static 'pong/scripts/style.css' %}"/> -->
+	<script>
+		var static_url = "{% get_static_prefix %}";
+	</script>
+    <script src="{% static 'pong/scripts/phaser.min.js' %}"></script>
+	<script src="{% static 'pong/scripts/SceneBoot.js' %}"></script>
+	<script src="{% static 'pong/scripts/ScenePlay.js' %}"></script>
+    <script src="{% static 'pong/scripts/game.js' %}"></script>
+</head>
+<body>
+</body>
+</html>
