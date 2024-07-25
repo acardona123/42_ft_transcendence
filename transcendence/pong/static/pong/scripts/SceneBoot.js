@@ -15,8 +15,11 @@ class SceneBoot extends Phaser.Scene{
 				this.load.spritesheet("ship1", static_url + "pong/assets/spritesheets/ship1.png", {frameWidth:16, frameHeight:16});
 				this.load.spritesheet("ship2", static_url + "pong/assets/spritesheets/ship2.png", {frameWidth:32, frameHeight:16});
 				this.load.spritesheet("ship3", static_url + "pong/assets/spritesheets/ship3.png", {frameWidth:32, frameHeight:32});
-		// loading the explosion
+		// loading the explosion and power up sprites
 			this.load.spritesheet("explosion", static_url + "pong/assets/spritesheets/explosion.png", {frameWidth:16, frameHeight:16});
+			this.load.spritesheet("power-up",  static_url + "pong/assets/spritesheets/power-up.png", {frameWidth:16, frameHeight:16});
+		// loading the player
+			this.load.spritesheet("player", static_url + "pong/assets/spritesheets/player.png", {frameWidth:16, frameHeight:24});
 	}
 
 	create(){
