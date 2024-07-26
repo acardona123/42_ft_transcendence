@@ -1,24 +1,27 @@
 services:
-  django:
+  core_app:
     build: .
-    container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
+    container_name: core_app
+    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8000"
     restart: always
     volumes:
       - .:/usr/src/app
     ports:
       - "8000:8000"
+    networks:
+      - website-network
+      - core-network
     depends_on:
-      db:
+      core_db:
         condition: service_healthy
-  db:
+  core_db:
     image: postgres:16
-    container_name: postgre
+    container_name: core_db
     restart: always
     volumes:
-      - postgredb:/var/lib/postgresql/data/
-    ports:
-      - "5432:5432"
+      - core_db:/var/lib/postgresql/data/
+    networks:
+      - core-network
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -30,4 +33,11 @@ services:
       retries: 5
 
 volumes:
-  postgredb:
+  core_db:
+
+networks:
+  website-network:
+    name: website_network
+  core-network:
+    name: core_network
+

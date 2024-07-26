@@ -1,0 +1,43 @@
+services:
+  history_app:
+    build: .
+    container_name: history_app
+    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8003"
+    restart: always
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8003:8003"
+    networks:
+      - core_website-network
+      - history-network
+    depends_on:
+      history_db:
+        condition: service_healthy
+  history_db:
+    image: postgres:16
+    container_name: history_db
+    restart: always
+    volumes:
+      - history_db:/var/lib/postgresql/data/
+    networks:
+      - history-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  history_db:
+
+networks:
+  core_website-network:
+    external: true #line to comment if makefile not use
+    name: website_network
+  history-network:
+    name: history_network

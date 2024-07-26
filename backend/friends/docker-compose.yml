@@ -1,0 +1,43 @@
+services:
+  friends_app:
+    build: .
+    container_name: friends_app
+    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002"
+    restart: always
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8002:8002"
+    networks:
+      - core_website-network
+      - friends-network
+    depends_on:
+      friends_db:
+        condition: service_healthy
+  friends_db:
+    image: postgres:16
+    container_name: friends_db
+    restart: always
+    volumes:
+      - friends_db:/var/lib/postgresql/data/
+    networks:
+      - friends-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  friends_db:
+
+networks:
+  core_website-network:
+    external: true #line to comment if makefile not use
+    name: website_network
+  friends-network:
+    name: friends_network
