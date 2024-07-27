@@ -17,7 +17,6 @@ class ScenePlay extends Phaser.Scene{
 
 		create_ships(){
 			this.load_ships_objects();
-			this.create_ship_animations();
 			this.play_ships_animations();
 		}
 
@@ -37,28 +36,6 @@ class ScenePlay extends Phaser.Scene{
 				// this.ship1.angle += 45;
 		}
 
-		create_ship_animations(){
-			//general function for animations: this.anims.crate({key, frames, frameRate, repeat});
-			this.anims.create({
-				key: "ship1_anim", //id of the animation
-				frames: this.anims.generateFrameNumbers("ship1"),
-				frameRate: 20, //20 Hz
-				repeat: -1, //infinite loop
-			});
-			this.anims.create({
-				key: "ship2_anim",
-				frames: this.anims.generateFrameNumbers("ship2"),
-				frameRate: 20,
-				repeat: -1,
-			});
-			this.anims.create({
-				key: "ship3_anim",
-				frames: this.anims.generateFrameNumbers("ship3"),
-				frameRate: 20,
-				repeat: -1,
-			});
-		}
-
 		play_ships_animations(){
 			this.ship1.play("ship1_anim");
 			this.ship2.play("ship2_anim");
@@ -68,30 +45,8 @@ class ScenePlay extends Phaser.Scene{
 
 	//---- Power-ups
 		create_power_ups(){
-			this.create_power_ups_animations();
 			this.create_power_ups_objects();
 			this.create_power_ups_physic();
-		}
-		
-		create_power_ups_animations(){
-			this.anims.create({
-				key: "power_up_red",
-				frames: this.anims.generateFrameNumbers("power-up", {
-					start: 0, //one can create 2 game objects from one sprite file
-					end: 1
-				}),
-				frameRate: 20,
-				repeat: -1
-			});
-			this.anims.create({
-				key: "power_up_grey",
-				frames: this.anims.generateFrameNumbers("power-up", {
-					start: 2,
-					end: 3
-				}),
-				frameRate: 20,
-				repeat: -1
-			})
 		}
 
 		create_power_ups_objects(){
@@ -125,23 +80,18 @@ class ScenePlay extends Phaser.Scene{
 		}
 
 
+	// ---- beams ----
+
+
+
 	// ---- player ----
 
 		create_player(){
-			this.create_player_animation();
 			this.create_player_object();
-			this.play_player_animation();
 			this.create_player_physic();
+			this.play_player_animation();
 		}
 
-		create_player_animation(){
-			this.anims.create({
-				key: "player_anim",
-				frames: this.anims.generateFrameNumbers("player"),
-				frameRates: 20,
-				repeat: -1,
-			});
-		}
 
 		create_player_object()
 		{
@@ -154,6 +104,29 @@ class ScenePlay extends Phaser.Scene{
 
 		create_player_physic(){
 			this.player.setCollideWorldBounds(true);
+		}
+
+	// ---- interactions ----
+
+		enable_ship_interactions(){
+			this.ship1.setInteractive();
+			this.ship2.setInteractive();
+			this.ship3.setInteractive();
+		}
+
+		interaction_destroyShip(pointer, gameObject){
+			gameObject.setTexture("explosion");
+			gameObject.play("explode_anim");
+		}
+
+
+		create_objects_interactions(){
+			//interaction done when the object is clicked
+			this.input.on('gameobjectdown', this.interaction_destroyShip, this);
+			//keyboard interactions
+			this.cursorKeys = this.input.keyboard.createCursorKeys();
+			this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+			this.projectiles = this.add.group();
 		}
 
 		movePlayerManager(){
@@ -173,36 +146,11 @@ class ScenePlay extends Phaser.Scene{
 			}
 		}
 
-	// ---- interactions ----
-
-		enable_ship_interactions(){
-			this.ship1.setInteractive();
-			this.ship2.setInteractive();
-			this.ship3.setInteractive();
+		shootBeamManager(){
+			if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
+				var beam = new Beam(this);
+			}
 		}
-
-		interaction_destroyShip(pointer, gameObject){
-			gameObject.setTexture("explosion");
-			gameObject.play("explode_anim");
-		}
-
-		create_explosion_animation(){
-			this.anims.create({
-				key: "explode_anim", //id of the animation
-				frames: this.anims.generateFrameNumbers("explosion"),
-				frameRate: 20, //20 Hz
-				repeat: 0, //no repetition, happens once
-				hideOnComplete: true, //disappears at the end of the animation
-			});
-		}
-
-		create_objects_interactions(){
-			//interaction done when the object is clicked
-			this.input.on('gameobjectdown', this.interaction_destroyShip, this);
-			//keyboard interactions
-			this.cursorKeys = this.input.keyboard.createCursorKeys();
-		}
-
 
 
 	create(){
@@ -210,8 +158,6 @@ class ScenePlay extends Phaser.Scene{
 		this.create_ships();
 		this.create_power_ups();
 		this.create_player();
-
-		this.create_explosion_animation();
 
 		this.enable_ship_interactions();
 		this.create_objects_interactions();
@@ -238,5 +184,6 @@ class ScenePlay extends Phaser.Scene{
 		this.background.tilePositionY -= 0.5;
 
 		this.movePlayerManager();
+		this.shootBeamManager();
 	}
 }
