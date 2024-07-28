@@ -5,13 +5,18 @@
 <head>
 	<!-- <link rel="stylesheet" href="{% static 'pong/scripts/style.css' %}"/> -->
 	<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgoeHACDX6AAgIOgAAwMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREREAAAABBERERFAAABBERERERQAAEFEERMxFAAARERBEzEUAABEREEREzQAAEFEERETNAAAQREREREUAABBEiIiIRQAAEEiIiIiFAAAQSIiIiIUAABBIiIiIhQAAEEiIiIiFAAAQRIiIiEUAAAEEREREUAAAABEREREAADwDwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAOAHAADwDwAA" rel="icon" type="image/x-icon">
+	<title>Custom Pong</title>
+
 	<script>
 		var static_url = "{% get_static_prefix %}";
 	</script>
     <script src="{% static 'pong/scripts/phaser.min.js' %}"></script>
     <script src="{% static 'pong/scripts/game.js' %}"></script>
+
 </head>
 <body>
 	<p>Pong</p>
+	<div id="phaser_pong_game"></div>
+	<p>after pong</p>
 </body>
 </html>
