@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <link rel="stylesheet" href="{% static 'tuto_shooter/scripts/style.css' %}"/> -->
+	<script>
+		var static_url = "{% get_static_prefix %}";
+	</script>
+    <script src="{% static 'tuto_shooter/scripts/phaser.min.js' %}"></script>
+	<script src="{% static 'tuto_shooter/scripts/SceneBoot.js' %}"></script>
+	<script src="{% static 'tuto_shooter/scripts/ScenePlay.js' %}"></script>
+    <script src="{% static 'tuto_shooter/scripts/SceneGameOver.js' %}"></script>
+    <script src="{% static 'tuto_shooter/scripts/Explosion.js' %}"></script>
+    <script src="{% static 'tuto_shooter/scripts/Beam.js' %}"></script>
+    <script src="{% static 'tuto_shooter/scripts/game.js' %}"></script>
+</head>
+<body>
+	<div>
+		<a href="https://www.youtube.com/playlist?list=PLDyH9Tk5ZdFzEu_izyqgPFtHJJXkc79no">Tuto videos</a>
+	</div>
+</body>
+</html>

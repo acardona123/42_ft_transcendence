@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from pong import views
+from pong import views as pong_views
+from tuto_shooter import views as tuto_shooter_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('pong/', views.pong_index),
+	path('pong/', pong_views.pong_index),
+	path('tuto_shooter/', tuto_shooter_views.tuto_shooter_index),
 ]
