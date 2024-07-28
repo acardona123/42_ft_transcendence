@@ -32,3 +32,7 @@ docker exec -it postgre psql -d hello_django_dev -U hello_django
 	->
 
 
+
+note for window users using WSL:
+to access the website (running on wsl thanks to the command `pyhton manage.py runserver  0.0.0.0:8000) from a window app, replace 0.0.0.0 by the IP address of the WSL instance (obtained with ip addr show eth0):
+    http://<WSL_IP_Address>:8000

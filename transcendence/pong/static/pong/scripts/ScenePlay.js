@@ -18,6 +18,7 @@ class ScenePlay extends Phaser.Scene{
 		create_ships(){
 			this.load_ships_objects();
 			this.play_ships_animations();
+			this.create_ship_group();
 		}
 
 		load_ships_objects(){
@@ -40,6 +41,13 @@ class ScenePlay extends Phaser.Scene{
 			this.ship1.play("ship1_anim");
 			this.ship2.play("ship2_anim");
 			this.ship3.play("ship3_anim");
+		}
+
+		create_ship_group(){
+			this.enemies = this.physics.add.group();
+			this.enemies.add(this.ship1);
+			this.enemies.add(this.ship2);
+			this.enemies.add(this.ship3);
 		}
 	
 
@@ -68,6 +76,7 @@ class ScenePlay extends Phaser.Scene{
 				var velocityX = Math.random() * gameSettings.powerUpsInitialVelocity;
 				var velocityY = Math.random() * gameSettings.powerUpsInitialVelocity;
 				new_powerUp.setVelocity(velocityX, velocityY);
+				new_powerUp.setMaxVelocity(gameSettings.powerUpsmaxVelocity, gameSettings.powerUpsmaxVelocity);
 				// collisions
 				new_powerUp.setCollideWorldBounds(true);
 				new_powerUp.setBounce(1);
@@ -76,12 +85,15 @@ class ScenePlay extends Phaser.Scene{
 
 		create_power_ups_physic(){
 			// this.physics.world.setBoundsCollision();
-			this.physics.add.collider(this.powerUps, this.powerUps);
 		}
 
 
-	// ---- beams ----
+	// ---- Beam ----
 
+	create_beams(){
+		this.projectiles = this.add.group();
+		//see Beam class 
+	}
 
 
 	// ---- player ----
@@ -106,6 +118,23 @@ class ScenePlay extends Phaser.Scene{
 			this.player.setCollideWorldBounds(true);
 		}
 
+		resetPlayer(){
+			var x = config.width / 2 - 8;
+			var y = config.height + 64;
+			this.player.enableBody(true, x, y, true, true);
+			//respawn protection
+			this.player.alpha = 0.5;//transparency
+			var tween = this.tweens.add({ //smoth transition of a targeted variable
+				targets: this.player,
+				y: config.height - 64, //moves the sheep to this pos
+				ease: 'Power1',
+				duration: 1500,
+				repeat: 0,
+				onComplete: function(){this.player.alpha = 1;},
+				callbackScope: this
+			})
+		}
+
 	// ---- interactions ----
 
 		enable_ship_interactions(){
@@ -114,19 +143,56 @@ class ScenePlay extends Phaser.Scene{
 			this.ship3.setInteractive();
 		}
 
-		interaction_destroyShip(pointer, gameObject){
-			gameObject.setTexture("explosion");
-			gameObject.play("explode_anim");
-		}
+		// interaction_destroyShip(pointer, gameObject){
+		// 	gameObject.setTexture("explosion");
+		// 	gameObject.play("explode_anim");
+		// }
 
 
 		create_objects_interactions(){
-			//interaction done when the object is clicked
-			this.input.on('gameobjectdown', this.interaction_destroyShip, this);
 			//keyboard interactions
 			this.cursorKeys = this.input.keyboard.createCursorKeys();
 			this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-			this.projectiles = this.add.group();
+
+			//interaction done when the object is clicked
+			// this.input.on('gameobjectdown', this.interaction_destroyShip, this);
+
+			//ingame physic interactions
+			this.physics.add.collider(this.powerUps, this.powerUps);
+			this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp){
+				projectile.destroy();
+			});
+			this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+			this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+			this.physics.add.overlap(this.projectiles, this.enemies,this.hitEnemy, null, this);
+		}
+
+		pickPowerUp(player, powerUp){
+			powerUp.disableBody(true, true); //set inactive and invisible
+		}
+
+		hurtPlayer(player, enemy){
+			this.resetShipPos(enemy);
+			var explosion = new Explosion(this, player.x, player.y);
+			if (this.player.alpha < 1){
+				return;
+			}
+			player.disableBody(true, true);
+			this.time.addEvent({
+				delay: 1000,
+				callback: this.resetPlayer,
+				callbackScope: this,
+				loop: false
+			})
+			// this.scene.start("GameOver");
+		}
+
+		hitEnemy(projectile, enemy){
+			projectile.destroy();
+
+			var explosion1 = new Explosion(this, enemy.x, enemy.y, enemy.scale);
+
+			this.resetShipPos(enemy);
 		}
 
 		movePlayerManager(){
@@ -147,8 +213,12 @@ class ScenePlay extends Phaser.Scene{
 		}
 
 		shootBeamManager(){
-			if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
+			if (this.player.active && Phaser.Input.Keyboard.JustDown(this.spacebar)){
 				var beam = new Beam(this);
+			}
+			for (var i = 0; i < this.projectiles.getChildren().length; ++i){
+				var beam = this.projectiles.getChildren()[i];
+				beam.update();
 			}
 		}
 
@@ -157,6 +227,7 @@ class ScenePlay extends Phaser.Scene{
 		this.create_background();
 		this.create_ships();
 		this.create_power_ups();
+		this.create_beams();
 		this.create_player();
 
 		this.enable_ship_interactions();

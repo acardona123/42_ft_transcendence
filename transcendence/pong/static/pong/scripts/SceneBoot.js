@@ -41,7 +41,7 @@ class SceneBoot extends Phaser.Scene{
 	create(){
 		this.add.text(20,20, "Loading game...");
 		this.create_anims();
-		this.scene.start("playGame")
+		this.scene.start("playGame");
 	}
 
 	// --- animations ---
