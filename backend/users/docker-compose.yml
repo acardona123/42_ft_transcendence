@@ -6,10 +6,10 @@ services:
     restart: always
     volumes:
       - .:/usr/src/app
-    ports:
-      - "8001:8001"
+    # ports:
+    #   - "8001:8001"
     networks:
-      - core_website-network
+      - website-network
       - users-network
     depends_on:
       users_db:
@@ -36,8 +36,7 @@ volumes:
   users_db:
 
 networks:
-  core_website-network:
-    external: true #line to comment if makefile not use
+  website-network:
     name: website_network
   users-network:
     name: users_network
