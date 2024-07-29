@@ -11,12 +11,13 @@
 		var static_url = "{% get_static_prefix %}";
 	</script>
     <script src="{% static 'pong/scripts/phaser.min.js' %}"></script>
+    <script src="{% static 'pong/scripts/Texture.js' %}"></script>
     <script src="{% static 'pong/scripts/game.js' %}"></script>
 
 </head>
 <body>
 	<p>Pong</p>
-	<div id="phaser_pong_game"></div>
+	<div id="phaser_pong_game" style="width:100vw; height: 50vh"></div>
 	<p>after pong</p>
 </body>
 </html>
