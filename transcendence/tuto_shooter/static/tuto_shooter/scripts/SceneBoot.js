@@ -22,16 +22,16 @@ class SceneBoot extends Phaser.Scene{
 				// this.load.image("ship2", static_url + "pong/assets/images/ship2.png");
 				// this.load.image("ship3", static_url + "pong/assets/images/ship3.png");
 			//- option 2: as spritesheet, animated image
-				this.load.spritesheet("ship1", static_url + "pong/assets/spritesheets/ship1.png", {frameWidth:16, frameHeight:16});
-				this.load.spritesheet("ship2", static_url + "pong/assets/spritesheets/ship2.png", {frameWidth:32, frameHeight:16});
-				this.load.spritesheet("ship3", static_url + "pong/assets/spritesheets/ship3.png", {frameWidth:32, frameHeight:32});
+				this.load.spritesheet("ship1", static_url + "tuto_shooter/assets/spritesheets/ship1.png", {frameWidth:16, frameHeight:16});
+				this.load.spritesheet("ship2", static_url + "tuto_shooter/assets/spritesheets/ship2.png", {frameWidth:32, frameHeight:16});
+				this.load.spritesheet("ship3", static_url + "tuto_shooter/assets/spritesheets/ship3.png", {frameWidth:32, frameHeight:32});
 		// loading the explosion and power up sprites
-			this.load.spritesheet("explosion", static_url + "pong/assets/spritesheets/explosion.png", {frameWidth:16, frameHeight:16});
-			this.load.spritesheet("power-up", static_url + "pong/assets/spritesheets/power-up.png", {frameWidth:16, frameHeight:16});
+			this.load.spritesheet("explosion", static_url + "tuto_shooter/assets/spritesheets/explosion.png", {frameWidth:16, frameHeight:16});
+			this.load.spritesheet("power-up", static_url + "tuto_shooter/assets/spritesheets/power-up.png", {frameWidth:16, frameHeight:16});
 		// loading the beams
-			this.load.spritesheet("beam", static_url + "pong/assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
+			this.load.spritesheet("beam", static_url + "tuto_shooter/assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
 		// loading the player
-			this.load.spritesheet("player", static_url + "pong/assets/spritesheets/player.png", {frameWidth:16, frameHeight:24});
+			this.load.spritesheet("player", static_url + "tuto_shooter/assets/spritesheets/player.png", {frameWidth:16, frameHeight:24});
 	}
 
 	// =====
