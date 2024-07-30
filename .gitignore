@@ -1,8 +1,0 @@
-transcendence/.env
-.venv
-transcendence/backend/__pycache__/
-transcendence/pong/__pycache__/
-transcendence/tuto_shooter/__pycache__/
-transcendence/backend/migrations/
-transcendence/pong/migrations/
-transcendence/tuto_shooter/migrations/
