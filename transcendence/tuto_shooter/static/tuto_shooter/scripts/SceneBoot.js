@@ -15,7 +15,7 @@ class SceneBoot extends Phaser.Scene{
 
 	preload_assets(){
 		//loading background as an image
-			this.load.image("background", static_url + "pong/assets/images/background.png");
+			this.load.image("background", static_url + "tuto_shooter/assets/images/background.png");
 		//loading the ships
 			// option 1: as images, not animated
 				// this.load.image("ship1", static_url + "pong/assets/images/ship1.png");
