@@ -5,14 +5,14 @@ include:
 
 services:
   nginx:
-    image: nginx:1.26
+    build: ./backend/nginx
     container_name: nginx
     restart: always
     volumes:
      - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf
-     - ./backend/nginx/nginx.crt:/etc/ssl/certs/nginx.crt
-     - ./backend/nginx/nginx.key:/etc/ssl/private/nginx.key
-     - ./backend/nginx/dhparam.pem:/etc/ssl/certs/dhparam.pem
+     - ./backend/nginx/cert/nginx.crt:/etc/ssl/certs/nginx.crt
+     - ./backend/nginx/cert/nginx.key:/etc/ssl/private/nginx.key
+     - ./backend/nginx/cert/dhparam.pem:/etc/ssl/certs/dhparam.pem
     ports:
       - "8443:8443"
     networks:
