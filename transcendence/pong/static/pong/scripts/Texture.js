@@ -14,24 +14,21 @@ class Texture {
 	}
 
 	preloadOnScene(scene, name){
-		if (texture.type === "image"){
-			this.#preloadImage(scene, name);
-		} else if (texture.type === "sprite"){
-			this.#preloadSprite(scene, name);
+		if (this.type === "image"){
+			scene.load.image(name, assets_path + this.path);
+		} else if (this.type === "sprite"){
+			scene.load.spritesheet(name, assets_path + this.path, {frameWidth: this.width, frameHeight: this.height});
 		}
 	}
 
-	#preloadImage(scene, name){
-		this.load.image(name, assets_path + this.path);
-	}
-
-	#preloadSprite(scene, name){
-		this.load.spritesheet(name, assets_path + this.path, {frameWidth: this.width, frameHeight: this.height});
-		this.anims.create({
-			key: name + "_anim",
-			frames: this.anims.generateFrameNumbers(name),
-			frameRate: this.frameRates,
-			repeat: this.repeat,
-		});
+	createAnimationOnScene(scene, sprite_name){
+		if (this.type === "sprite"){
+			scene.anims.create({
+				key: sprite_name + "_anim",
+				frames: scene.anims.generateFrameNumbers(sprite_name),
+				frameRate: this.frameRates,
+				repeat: this.repeat,
+			});
+		}
 	}
 }
