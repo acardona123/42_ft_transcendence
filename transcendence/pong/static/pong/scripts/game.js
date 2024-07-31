@@ -1,8 +1,10 @@
 var gameSettings = {
-	ball_init_velocity: 100,
 	pad_default_size: 200,
 	pad_default_velocity: 200,
-	player_color_default: "white"
+	player_default_color: 0xFFFFFF,
+	ball_init_velocity: 300,
+	ball_default_color: 0xFFFFFF,
+	ball_default_radius: 100,
 }
 
 var assets_path = static_url + "pong/assets/"
