@@ -20,55 +20,58 @@ class Paddle extends Phaser.GameObjects.Graphics {
 		scene.paddles.add(this);
 
 		this.fillStyle(color, alpha);
-		this.#buildRondedRectangle();
+		this.#buildRondedRectangle(middleX, middleY);
 
-		// this.enableBody(true, middleX, middleY, true, true);
 		this.body.setCollideWorldBounds(true);
 		this.body.immovable = true;
 		this.body.setBounce(1);
-		this.body.setVelocityX(300);
-		this.body.setVelocityY(200);
 	}
 
-	#buildRondedRectangle()
+	getMiddleX(){
+		return (this.x + this.middle_offset_x);
+	}
+
+	getMiddleY(){
+		return (this.y + this.middle_offset_y);
+	}
+
+	#buildRondedRectangle(middleX, middleY)
 	{
 		const ratio_radius_width = 3 / 4;
 		const angle_radius = Math.min(this.width * ratio_radius_width, this.length / 2);
 
-		let rect_x;
-		let rect_y;
 		let rect_size_x;
 		let rect_size_y;
 		let pad_angles_radiuses;
 
 		if (this.orientation === "top"){
-			rect_x = this.middleX - this.length / 2;
-			rect_y = this.middleY - this.width;
+			this.middle_offset_x = this.length / 2;
+			this.middle_offset_y = this.width;
 			rect_size_x = this.length;
 			rect_size_y = this.width;
 			pad_angles_radiuses = {tl:angle_radius, tr:angle_radius, bl:0, br:0};
 		}else if (this.orientation === "bottom"){
-			rect_x = this.middleX - this.length / 2;
-			rect_y = this.middleY;
+			this.middle_offset_x = this.length / 2;
+			this.middle_offset_y = 0;
 			rect_size_x = this.length;
 			rect_size_y = this.width;
 			pad_angles_radiuses = {tl:0, tr:0, bl:angle_radius, br:angle_radius};
 		}else if (this.orientation === "right"){
-			rect_x = this.middleX;
-			rect_y = this.middleY - this.length / 2;
+			this.middle_offset_x = 0;
+			this.middle_offset_y = this.length / 2;
 			rect_size_x = this.width;
 			rect_size_y = this.length;
 			pad_angles_radiuses = {tl:0, tr:angle_radius, bl:0, br:angle_radius};
 		}else{// <=> if (this.orientation === "left"){
-			rect_x = this.middleX - this.width;
-			rect_y = this.middleY - this.length / 2;
+			this.middle_offset_x = this.width;
+			this.middle_offset_y = this.length / 2;
 			rect_size_x = this.width;
 			rect_size_y = this.length;
 			pad_angles_radiuses = {tl:angle_radius, tr:0, bl:angle_radius, br:0};
 		}
-
-		this.fillRoundedRect(rect_x, rect_y, rect_size_x, rect_size_y, pad_angles_radiuses);
+		this.fillRoundedRect(0, 0, rect_size_x, rect_size_y, pad_angles_radiuses);
 		this.body.setSize(rect_size_x, rect_size_y);
-		this.body.setOffset(rect_x, rect_y);
+		this.setPosition(middleX - this.middle_offset_x, middleY - this.middle_offset_y);
 	}
+
 }
