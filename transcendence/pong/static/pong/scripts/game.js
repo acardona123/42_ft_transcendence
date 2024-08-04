@@ -5,6 +5,8 @@ var gameSettings = {
 	ball_init_velocity: 300,
 	ball_default_color: 0xFFFFFF,
 	ball_default_radius: 100,
+	ball_max_bounce_angle: 45, //degrees
+	ball_bounce_coefficient: 2
 }
 
 var assets_path = static_url + "pong/assets/"
