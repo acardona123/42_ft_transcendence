@@ -25,9 +25,9 @@ const gameConfig = {
 	player: {
 		paddle_length: 300,
 		paddle_width: 50,
-		color: 0x00FF00,
-		alpha: 1,
-		distance_to_border: 100
+		distance_to_border: 100,
+		left: {color: 0x00FF00, alpha: 1, cmd_up: "w", cmd_down: "s"},
+		right: {color: 0x00FF00, alpha: 1, cmd_up: "UP", cmd_down: "DOWN"},
 	},
 	ball: {
 		default_radius: 50,

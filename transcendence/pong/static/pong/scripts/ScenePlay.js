@@ -12,9 +12,9 @@ class ScenePlay extends Phaser.Scene{
 		this.paddles = this.physics.add.group();
 		this.createBackground();
 		this.createInteractions();
+		this.createPlayers();
 		this.ball = this.createBall();
 		this.resetBall(this.ball);
-		this.createPlayers();
 	}
 
 	createBackground(){
@@ -69,8 +69,15 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	createPlayers(){
-		this.player_left = new Paddle(this, "left", gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.color, gameConfig.player.alpha);
-		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.color, gameConfig.player.alpha);
+		this.#createPlayerLeft();
+		this.#createPlayerRight();
+	}
+	#createPlayerLeft(){
+		this.player_left = new Paddle(this, "left", gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.left.color, gameConfig.player.left.alpha);
+		
+	}
+	#createPlayerRight(){
+		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.right.color, gameConfig.player.right.alpha);
 	}
 
 	createInteractions(){
