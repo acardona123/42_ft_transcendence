@@ -83,7 +83,7 @@ class ScenePlay extends Phaser.Scene{
 					return;
 				}
 				const normal_angle = 180;
-				const contact_point = ball.intersection_y;
+				const contact_point = ball.y;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
 				bounce_angle = normal_angle - relative_contact * gameSettings.ball_max_bounce_angle;
 			} else if (paddle.orientation === "top"){
@@ -92,7 +92,7 @@ class ScenePlay extends Phaser.Scene{
 					return;
 				}
 				const normal_angle = 270;
-				const contact_point = ball.intersection_x;
+				const contact_point = ball.x;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
 				bounce_angle = normal_angle + relative_contact * gameSettings.ball_max_bounce_angle;
 			}
@@ -102,7 +102,7 @@ class ScenePlay extends Phaser.Scene{
 					return;
 				}
 				const normal_angle = 90;
-				const contact_point = ball.intersection_x;
+				const contact_point = ball.x;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
 				bounce_angle = normal_angle - relative_contact * gameSettings.ball_max_bounce_angle;
 			}
