@@ -30,9 +30,10 @@ const gameConfig = {
 		distance_to_border: 100
 	},
 	ball: {
-		init_velocity: 300,
-		default_color: 0xFFFFFF,
 		default_radius: 50,
+		default_color: 0xFFFFFF,
+		default_alpha: 1,
+		init_velocity: 300,
 		max_bounce_angle: 45, //degrees
 		bounce_coefficient: 1.1,
 	},

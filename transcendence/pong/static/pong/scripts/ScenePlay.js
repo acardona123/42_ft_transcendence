@@ -13,6 +13,7 @@ class ScenePlay extends Phaser.Scene{
 		this.createBackground();
 		this.createInteractions();
 		this.ball = this.createBall();
+		this.resetBall(this.ball);
 		this.createPlayers();
 	}
 
@@ -27,10 +28,10 @@ class ScenePlay extends Phaser.Scene{
 			y = gameConfig.height / 2,
 			radius = gameConfig.ball.default_radius,
 			// velocityX = (Math.random() > 0.5 ? 1 : -1) * gameConfig.ball.init_velocity,
-			velocityX = gameConfig.ball.init_velocity,
+			velocityX = 0,
 			velocityY = 0,
 			color = gameConfig.ball.default_color,
-			alpha = 1){
+			alpha = gameConfig.ball.default_alpha){
 		let new_ball = new Ball(this, x, y, radius, velocityX, velocityY, color, alpha);
 		return new_ball;
 	}
@@ -39,10 +40,17 @@ class ScenePlay extends Phaser.Scene{
 	{
 		ball.x = gameConfig.width / 2;
 		ball.y = gameConfig.height / 2;
-		ball.enableBody(true, x, y, true, true);
-		let trajectory_angle = 90 - gameConfig.ball.max_bounce_angle + Math.random() * gameConfig.ball.max_bounce_angle * 2;
-
+		const trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
+		this.physics.velocityFromAngle(trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
 		
+	}
+	#randomBetweenBounds(minimum, maximum){
+		if (minimum > maximum){
+			const tmp = maximum;
+			maximum = minimum;
+			minimum = tmp;
+		}
+		return (minimum + (maximum - minimum) * Math.random());
 	}
 
 	createPlayers(){
