@@ -38,11 +38,26 @@ class ScenePlay extends Phaser.Scene{
 
 	resetBall(ball)
 	{
-		ball.x = gameConfig.width / 2;
-		ball.y = gameConfig.height / 2;
-		const trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
-		this.physics.velocityFromAngle(trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
-		
+		this.#recenterBall(ball);
+		this.#launchBallRandomly(ball);
+	}
+	#recenterBall(ball){
+		const ball_alpha = ball.alpha;
+		ball.alpha = 0.5;
+		var tween = this.tweens.add({ //smoth transition of a targeted variable
+			targets: ball,
+			ease: 'Power1',
+			x: gameConfig.width / 2,
+			y: gameConfig.height / 2,
+			duration: 1500,
+			repeat: 0,
+			onComplete: function(){ball.alpha = ball_alpha;},
+			callbackScope: this
+		})
+	}
+	#launchBallRandomly(ball){
+		const random_trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
+		this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
 	}
 	#randomBetweenBounds(minimum, maximum){
 		if (minimum > maximum){
