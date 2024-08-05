@@ -1,22 +1,11 @@
-var gameSettings = {
-	pad_default_size: 200,
-	pad_default_velocity: 200,
-	player_default_color: 0xFFFFFF,
-	ball_init_velocity: 300,
-	ball_default_color: 0xFFFFFF,
-	ball_default_radius: 100,
-	ball_max_bounce_angle: 45, //degrees
-	ball_bounce_coefficient: 2
-}
-
-var assets_path = static_url + "pong/assets/"
-var gameTextures = {
+const assets_path = static_url + "pong/assets/"
+const gameTextures = {
 	background: new Texture("background_classic", "images/background.jpeg", "image", 256, 272),
 	ball: new Texture("ball_pacman", "images/to_dell.png", "image", 225, 224),
 	// ball: new Texture("ball_pacman", "images/pacman.png", "image", 2000, 2000),
 }
 
-var gameMode = {
+let gameMode = {
 	activeBoosters: [],
 	maxTime: -1,
 	maxPoints: -1,
@@ -24,7 +13,7 @@ var gameMode = {
 	bot_level: -1,
 }
 
-var gameConfig = {
+const gameConfig = {
 	title: "custom_pong",
 	version: 0.1,
 	
@@ -33,6 +22,21 @@ var gameConfig = {
 
 	width: 1920,
 	height: 1200,
+	player: {
+		paddle_length: 300,
+		paddle_width: 50,
+		color: 0x00FF00,
+		alpha: 1,
+		distance_to_border: 100
+	},
+	ball: {
+		init_velocity: 300,
+		default_color: 0xFFFFFF,
+		default_radius: 50,
+		max_bounce_angle: 45, //degrees
+		bounce_coefficient: 1.1,
+	},
+	
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		mode: Phaser.Scale.FIT
@@ -42,7 +46,7 @@ var gameConfig = {
 		game.scale.pageAlignHorizontally = true;
 		game.scale.pageAlignVertically = true;
 	},
-
+	
 	backgroundColor: '#eee', //sides when rescaled, can be written in binary (0x000000)
 	pixelArt: true,
 	autoFocus: true,

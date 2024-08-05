@@ -1,5 +1,5 @@
 class Paddle extends Phaser.GameObjects.Graphics {
-	constructor(scene, middleX, middleY, length, width, color = 0xFFFFFF, orientation, alpha = 1){
+	constructor(scene, orientation, middleX, middleY, length, width, color = 0xFFFFFF, alpha = 1){
 		super(scene);
 		
 		const possibleDirections = ["top", "left", "right", "bottom"];
