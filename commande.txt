@@ -1,0 +1,3 @@
+docker compose up
+
+docker exec vault /bin/sh /usr/local/bin/vault_init.sh
