@@ -1,8 +1,8 @@
 class ScenePlay extends Phaser.Scene{
+
 	constructor(){
 		super("playGame");
 	}
-	
 	
 	preload(){
 	}
@@ -15,6 +15,7 @@ class ScenePlay extends Phaser.Scene{
 		this.createPlayers();
 		this.ball = this.createBall();
 		this.resetBall(this.ball);
+		this.createPlayersControles();
 	}
 
 	createBackground(){
@@ -145,9 +146,27 @@ class ScenePlay extends Phaser.Scene{
 		return (relative_contact);
 	}
 
-	update(){
+	createPlayersControles(){
+		this.#setPlayerControls(this.player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
+		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.UP , Phaser.Input.Keyboard.KeyCodes.DOWN);
+	}
+	#setPlayerControls(player, key_code_up, key_code_down){
+		player.key_up = this.input.keyboard.addKey(key_code_up);
+		player.key_down = this.input.keyboard.addKey(key_code_down);
 	}
 
-	//velocityFromAngle(angle, 200, sprite.body.velocity)
+	movePlayersManager(){
+		this.#setPlayerVelocity(this.player_left);
+		this.#setPlayerVelocity(this.player_right);
+	}
+	#setPlayerVelocity(player){
+		const key_up_pressed = player.key_up.isDown;
+		const key_down_pressed = player.key_down.isDown;
+		const player_vertical_direction = key_down_pressed - key_up_pressed;
+		player.body.setVelocityY(gameConfig.player.max_speed * player_vertical_direction);
+	}
 
+	update(){
+		this.movePlayersManager();
+	}
 }
