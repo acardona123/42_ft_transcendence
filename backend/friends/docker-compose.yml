@@ -4,8 +4,11 @@ services:
     container_name: friends_app
     command: bash -c "python3 ./app/vault/vault_init.py"
     restart: always
+    environment:
+      - VAULT_DATABASE_NAME=friends_db
     volumes:
       - .:/usr/src/app
+      - ../vault/data:/usr/src/app/vault
     # ports:
     #   - "8002:8002"
     networks:

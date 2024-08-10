@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
  
-from .vault.hvac_vault import create_cred, create_client, is_connected
+from .vault.hvac_vault import create_cred, create_client
 
-client = create_client(os.getenv("VAULT_HOSTNAME"), os.getenv("VAULT_PORT"))
+client = create_client()
 cred = create_cred(client, os.getenv("VAULT_DATABASE_NAME"))
 
 DATABASES = {

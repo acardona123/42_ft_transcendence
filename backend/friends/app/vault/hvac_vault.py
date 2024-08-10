@@ -1,24 +1,26 @@
 import hvac
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key
 
-load_dotenv()
+VAULT_ENV_FILE='/usr/src/app/vault/.env'
 
 def is_connected(client):
 	print(f"Is initialized :	{client.sys.is_initialized()}")
 	print(f"Is sealed :			{client.sys.is_sealed()}")
 	print(f"Is authenticated :	{client.is_authenticated()}")
 
-def create_client(host, port):
+def create_client():
+	load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 	client = hvac.Client(
-		url=f'{host}:{port}',
+		url=f'{os.getenv('VAULT_HOSTNAME')}:{os.getenv('VAULT_PORT')}',
 		token=os.getenv('VAULT_TOKEN')
 	)
 	return client
 
-def initialize(host, port):
+def initialize():
+	load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 	client = hvac.Client(
-		url=f'{host}:{port}',
+		url=f'{os.getenv('VAULT_HOSTNAME')}:{os.getenv('VAULT_PORT')}',
 	)
 	if client.sys.is_initialized() == False :
 		shares = 5
@@ -26,15 +28,18 @@ def initialize(host, port):
 		result = client.sys.initialize(shares, threshold)
 		root_token = result['root_token']
 		keys = result['keys']
-		for i in range (0,shares):
-			os.environ["VAULT_KEY"+str(i)] = keys[i]
-		os.environ["VAULT_TOKEN"] = root_token
+		set_key(dotenv_path=VAULT_ENV_FILE, key_to_set="VAULT_TOKEN",\
+			value_to_set=root_token)
+		for i in range (0,5):
+			set_key(dotenv_path=VAULT_ENV_FILE, key_to_set="VAULT_KEY"+str(i),
+				value_to_set=keys[i])
 	return client
 
 def unsealed(client):
 	if client.sys.is_initialized() == True and client.sys.is_sealed() == True:
+		load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 		for i in range (0,5):
-			unseal_response1 = client.sys.submit_unseal_key(os.getenv('VAULT_KEY'+str(i)))
+			client.sys.submit_unseal_key(os.getenv('VAULT_KEY'+str(i)))
 	return client
 
 def enable_database(client):
@@ -43,6 +48,7 @@ def enable_database(client):
 	)
 
 def configure_database(client, name):
+	load_dotenv(override=True)
 	client.secrets.database.configure(
 		name=name,
 		plugin_name='postgresql-database-plugin',
@@ -51,7 +57,7 @@ def configure_database(client, name):
 		username=os.getenv('DB_USER'),
 		password=os.getenv('DB_PASSWORD'),
 	)
- 
+
 def create_role(client, name):
 	creation_statements = [
 		"CREATE ROLE \"{{name}}\" WITH LOGIN SUPERUSER PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';"

@@ -1,10 +1,12 @@
+import os
 from hvac_vault import *
+from dotenv import load_dotenv
 
-os.environ["VAULT_HOSTNAME"] = 'http://vault'
-os.environ["VAULT_PORT"] = str(8200)
-os.environ["VAULT_DATABASE_NAME"] = 'friends_db'
+VAULT_ENV_FILE='/usr/src/app/vault/.env'
 
-VAULT_CLIENT = initialize(os.getenv("VAULT_HOSTNAME"), os.getenv("VAULT_PORT"))
+load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
+
+VAULT_CLIENT = initialize()
 
 VAULT_CLIENT = unsealed(VAULT_CLIENT)
 if VAULT_CLIENT.sys.is_initialized() == True \
@@ -17,4 +19,5 @@ configure_database(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
-os.system("/bin/bash -c 'python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'")
+os.system("/bin/bash -c 'python3 ./manage.py makemigrations \
+	&& python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'")
