@@ -34,9 +34,14 @@ const gameConfig = {
 		default_radius: 50,
 		default_color: 0xFFFFFF,
 		default_alpha: 1,
-		init_velocity: 300,
+		init_velocity: 500,
 		max_bounce_angle: 45, //degrees
 		bounce_coefficient: 1.1,
+	},
+	border: {
+		color: 0x6666ff,
+		alpha: 0.5,
+		thikness:50 
 	},
 	
 	scale: {

@@ -10,12 +10,15 @@ class ScenePlay extends Phaser.Scene{
 	create(){
 		this.balls = this.physics.add.group();
 		this.paddles = this.physics.add.group();
+		this.bounce_borders = this.physics.add.group();
+		this.death_borders = this.physics.add.group();
+
 		this.createBackground();
-		this.createInteractions();
+		this.createBorders();
 		this.createPlayers();
-		this.ball = this.createBall();
-		this.resetBall(this.ball);
-		this.createPlayersControles();
+		this.createInteractions();
+
+		this.newRound();
 	}
 
 	createBackground(){
@@ -25,10 +28,23 @@ class ScenePlay extends Phaser.Scene{
 		this.background.setOrigin(0,0);
 	}
 
+	createBorders(){
+		this.#createBounceBorders();
+		this.#createDeathBorders();
+	}
+	#createBounceBorders(){
+		this.border_top = new BounceBorder(this, border_side.TOP);
+		this.border_bottom = new BounceBorder(this, border_side.BOTTOM);
+	}
+	#createDeathBorders(){
+		this.border_right = new DeathBorder(this, border_side.RIGHT);
+		this.border_left = new DeathBorder(this, border_side.LEFT);
+	}
+
+
 	createBall(x = gameConfig.width / 2,
 			y = gameConfig.height / 2,
 			radius = gameConfig.ball.default_radius,
-			// velocityX = (Math.random() > 0.5 ? 1 : -1) * gameConfig.ball.init_velocity,
 			velocityX = 0,
 			velocityY = 0,
 			color = gameConfig.ball.default_color,
@@ -43,22 +59,26 @@ class ScenePlay extends Phaser.Scene{
 		this.#launchBallRandomly(ball);
 	}
 	#recenterBall(ball){
-		const ball_alpha = ball.alpha;
-		ball.alpha = 0.5;
-		var tween = this.tweens.add({ //smoth transition of a targeted variable
-			targets: ball,
-			ease: 'Power1',
-			x: gameConfig.width / 2,
-			y: gameConfig.height / 2,
-			duration: 1500,
-			repeat: 0,
-			onComplete: function(){ball.alpha = ball_alpha;},
-			callbackScope: this
-		})
+		ball.velocityX = 0;
+		ball.velocityY = 0;
+		ball.x = gameConfig.width / 2;
+		ball.y = gameConfig.height / 2;
 	}
 	#launchBallRandomly(ball){
-		const random_trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
-		this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
+		let old_alpha = ball.alpha;
+		ball.alpha *= 0.5;
+		var tween = this.tweens.add({ //smooth transition of a targeted variable
+			targets: ball,
+			ease: 'Power1',
+			alpha: old_alpha,
+			duration: 1500,
+			repeat: 0,
+			onComplete: function(){
+				const random_trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
+				this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
+				},
+				callbackScope: this
+			})
 	}
 	#randomBetweenBounds(minimum, maximum){
 		if (minimum > maximum){
@@ -84,8 +104,12 @@ class ScenePlay extends Phaser.Scene{
 	createInteractions(){
 		// this.physics.add.collider(this.balls, this.balls);
 		this.#createBallPaddleCollision();
+		this.#createBallDeathBorderCollision();
+		this.#createBallBounceBorderCollision();
+		this.#createPlayersControles();
 	}
 
+	
 	#createBallPaddleCollision(){
 		this.physics.add.collider(this.balls, this.paddles, (ball, paddle) => {
 			//bounce angle
@@ -136,6 +160,24 @@ class ScenePlay extends Phaser.Scene{
 		});
 	}
 
+	#createBallDeathBorderCollision(){
+		this.physics.add.collider(this.balls, this.death_borders, (ball, border) => {
+			ball.destroy();
+			if (border.orientation === border_side.LEFT){
+				console.log("1 point for player right")
+			} else if (border.orientation === border_side.RIGHT){
+				console.log("1 point for player left")
+			} else {
+				throw new Error (`Undefined behavior for the collision of the ball with a Death border with the orientation ${border.orientation}`);
+			}
+			this.newRound();
+		});
+	}
+
+	#createBallBounceBorderCollision(){
+		this.physics.add.collider(this.balls, this.bounce_borders);
+	}
+
 	#calculateRelativeContact(paddle, contact_point, middle_point){
 		const relative_contact =  2 * (contact_point - middle_point) / paddle.length;
 		if (relative_contact < -1){
@@ -146,7 +188,7 @@ class ScenePlay extends Phaser.Scene{
 		return (relative_contact);
 	}
 
-	createPlayersControles(){
+	#createPlayersControles(){
 		this.#setPlayerControls(this.player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
 		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.UP , Phaser.Input.Keyboard.KeyCodes.DOWN);
 	}
@@ -154,8 +196,17 @@ class ScenePlay extends Phaser.Scene{
 		player.key_up = this.input.keyboard.addKey(key_code_up);
 		player.key_down = this.input.keyboard.addKey(key_code_down);
 	}
+	
+	newRound(){
+		this.ball = this.createBall();
+		this.resetBall(this.ball);
+	}
 
-	movePlayersManager(){
+	update(){
+		this.#movePlayersManager();
+	}
+
+	#movePlayersManager(){
 		this.#setPlayerVelocity(this.player_left);
 		this.#setPlayerVelocity(this.player_right);
 	}
@@ -165,8 +216,10 @@ class ScenePlay extends Phaser.Scene{
 		const player_vertical_direction = key_down_pressed - key_up_pressed;
 		player.body.setVelocityY(gameConfig.player.max_speed * player_vertical_direction);
 	}
+}
 
-	update(){
-		this.movePlayersManager();
-	}
+async function delayedExecution(delay_ms) {
+	console.log("before timeout")
+	await new Promise(resolve => setTimeout(resolve, delay_ms));
+	console.log("after timeout")
 }
