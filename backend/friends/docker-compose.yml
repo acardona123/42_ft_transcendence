@@ -2,7 +2,7 @@ services:
   friends_app:
     build: .
     container_name: friends_app
-    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002"
+    command: bash -c "python3 ./app/vault/vault_init.py"
     restart: always
     volumes:
       - .:/usr/src/app
@@ -22,6 +22,7 @@ services:
       - friends_db:/var/lib/postgresql/data/
     networks:
       - friends-network
+      - vault-network
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -40,3 +41,5 @@ networks:
     name: website_network
   friends-network:
     name: friends_network
+  vault-network:
+    name: vault_network

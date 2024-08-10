@@ -2,29 +2,8 @@ docker-compose run django django-admin startproject backend .
 
 docker-compose up/down
 
-In setting.py
-
-ALLOWED_HOSTS = ['*']
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'db',
-        'PORT': '5432',
-    }
-}
-
 docker exec -it django bash
 	-> python3 manage.py migrate
-
 
 docker exec -it postgre psql -d hello_django_dev -U hello_django
 	->\c hello_django_dev

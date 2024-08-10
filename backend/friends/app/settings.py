@@ -77,13 +77,18 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+ 
+from .vault.hvac_vault import create_cred, create_client, is_connected
+
+client = create_client(os.getenv("VAULT_HOSTNAME"), os.getenv("VAULT_PORT"))
+cred = create_cred(client, os.getenv("VAULT_DATABASE_NAME"))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'USER': cred["data"]['username'],
+        'PASSWORD': cred["data"]['password'],
         'HOST': 'friends_db',
         'PORT': '5432',
     }

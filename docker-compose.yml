@@ -21,6 +21,7 @@ services:
   vault:
     image: hashicorp/vault:latest
     container_name: vault
+    command: server
     restart: always
     environment:
       VAULT_ADDR: http://0.0.0.0:8200
@@ -31,9 +32,9 @@ services:
       - ./backend/vault/vault_init.sh:/usr/local/bin/vault_init.sh
     cap_add:
       - IPC_LOCK
-    command: server
     networks:
       - website-network
+      - vault-network
     ports:
       - "8200:8200"
 
