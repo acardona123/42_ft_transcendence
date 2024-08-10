@@ -15,6 +15,7 @@ class ScenePlay extends Phaser.Scene{
 
 		this.createBackground();
 		this.createBorders();
+		this.createScores();
 		this.createPlayers();
 		this.createInteractions();
 
@@ -29,18 +30,25 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	createBorders(){
+		this.borders = {};
 		this.#createBounceBorders();
 		this.#createDeathBorders();
 	}
 	#createBounceBorders(){
-		this.border_top = new BounceBorder(this, border_side.TOP);
-		this.border_bottom = new BounceBorder(this, border_side.BOTTOM);
+		this.borders.top = new BounceBorder(this, border_side.TOP);
+		this.borders.bottom = new BounceBorder(this, border_side.BOTTOM);
 	}
 	#createDeathBorders(){
-		this.border_right = new DeathBorder(this, border_side.RIGHT);
-		this.border_left = new DeathBorder(this, border_side.LEFT);
+		this.borders.right = new DeathBorder(this, border_side.RIGHT);
+		this.borders.left = new DeathBorder(this, border_side.LEFT);
 	}
 
+	createScores(){
+		this.scores= {
+			left: new Score(this, playerSide.LEFT),
+			right: new Score(this, playerSide.RIGHT)	
+		}
+	}
 
 	createBall(x = gameConfig.width / 2,
 			y = gameConfig.height / 2,
@@ -52,7 +60,6 @@ class ScenePlay extends Phaser.Scene{
 		let new_ball = new Ball(this, x, y, radius, velocityX, velocityY, color, alpha);
 		return new_ball;
 	}
-
 	resetBall(ball)
 	{
 		this.#recenterBall(ball);
@@ -101,9 +108,11 @@ class ScenePlay extends Phaser.Scene{
 		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.right.color, gameConfig.player.right.alpha);
 	}
 
+
 	createInteractions(){
 		// this.physics.add.collider(this.balls, this.balls);
 		this.#createBallPaddleCollision();
+		this.#createPlayerBordersCollisions();
 		this.#createBallDeathBorderCollision();
 		this.#createBallBounceBorderCollision();
 		this.#createPlayersControles();
@@ -160,13 +169,18 @@ class ScenePlay extends Phaser.Scene{
 		});
 	}
 
+	#createPlayerBordersCollisions()
+	{
+		this.physics.add.collider(this.paddles, this.bounce_borders, );
+	}
+
 	#createBallDeathBorderCollision(){
 		this.physics.add.collider(this.balls, this.death_borders, (ball, border) => {
 			ball.destroy();
 			if (border.orientation === border_side.LEFT){
-				console.log("1 point for player right")
+				this.scores.right.addPoints(1);
 			} else if (border.orientation === border_side.RIGHT){
-				console.log("1 point for player left")
+				this.scores.left.addPoints(1);
 			} else {
 				throw new Error (`Undefined behavior for the collision of the ball with a Death border with the orientation ${border.orientation}`);
 			}
@@ -190,7 +204,7 @@ class ScenePlay extends Phaser.Scene{
 
 	#createPlayersControles(){
 		this.#setPlayerControls(this.player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
-		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.UP , Phaser.Input.Keyboard.KeyCodes.DOWN);
+		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.I , Phaser.Input.Keyboard.KeyCodes.K);
 	}
 	#setPlayerControls(player, key_code_up, key_code_down){
 		player.key_up = this.input.keyboard.addKey(key_code_up);

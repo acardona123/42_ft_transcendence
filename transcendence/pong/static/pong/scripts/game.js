@@ -23,10 +23,10 @@ const gameConfig = {
 	width: 1920,
 	height: 1200,
 	player: {
-		max_speed: 500,
+		max_speed: 1000,
 		paddle_length: 300,
-		paddle_width: 50,
-		distance_to_border: 100,
+		paddle_width: 200,
+		distance_to_border: 200,
 		left: {color: 0x00FF00, alpha: 1},
 		right: {color: 0x00FF00, alpha: 1},
 	},
@@ -34,7 +34,7 @@ const gameConfig = {
 		default_radius: 50,
 		default_color: 0xFFFFFF,
 		default_alpha: 1,
-		init_velocity: 500,
+		init_velocity: 750,
 		max_bounce_angle: 45, //degrees
 		bounce_coefficient: 1.1,
 	},
@@ -42,6 +42,12 @@ const gameConfig = {
 		color: 0x6666ff,
 		alpha: 0.5,
 		thikness:50 
+	},
+	score: {
+		font: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+		fontSize: '300px',
+		color: 'white',
+		excentricity: 100
 	},
 	
 	scale: {
