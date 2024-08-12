@@ -13,14 +13,14 @@ class Timer extends AbstractClock{
 	update (){
 		if (!this.isPaused()){
 			this.#updateRemainingTime();
+			this.updateDisplay(this.getRemainingTime() / 1000);
 		}
-		this.updateDisplay(this.getRemainingTime() / 1000);
 	}
 
 	pause(){
 		if (! this.isPaused()){
-			this.setPause(true);
 			this.#updateRemainingTime();
+			this.setPause(true);
 		}
 	}
 
