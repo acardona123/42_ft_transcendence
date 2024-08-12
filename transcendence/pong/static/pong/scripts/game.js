@@ -44,10 +44,16 @@ const gameConfig = {
 		thikness:50 
 	},
 	score: {
-		font: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+		font: '"Goudy Bookletter 1911", Times, serif',
 		fontSize: '300px',
 		color: 'white',
 		excentricity: 100
+	},
+	clock: {
+		font: '"Goudy Bookletter 1911", Times, serif',
+		fontSize: '200px',
+		color: 'white',
+		padding_top: 50
 	},
 	
 	scale: {

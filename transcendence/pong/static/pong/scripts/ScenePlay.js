@@ -1,5 +1,19 @@
 class ScenePlay extends Phaser.Scene{
 
+	background;
+	borders;
+	scores;
+	clock;
+	player_left;
+	player_right;
+	ball;
+
+	//physic groups
+	balls;
+	paddles;
+	bounce_borders;
+	death_borders;
+
 	constructor(){
 		super("playGame");
 	}
@@ -16,6 +30,7 @@ class ScenePlay extends Phaser.Scene{
 		this.createBackground();
 		this.createBorders();
 		this.createScores();
+		this.createClock();
 		this.createPlayers();
 		this.createInteractions();
 
@@ -48,6 +63,10 @@ class ScenePlay extends Phaser.Scene{
 			left: new Score(this, playerSide.LEFT),
 			right: new Score(this, playerSide.RIGHT)	
 		}
+	}
+
+	createClock(){
+		this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, 3)
 	}
 
 	createBall(x = gameConfig.width / 2,
@@ -218,6 +237,7 @@ class ScenePlay extends Phaser.Scene{
 
 	update(){
 		this.#movePlayersManager();
+		this.clock.update();
 	}
 
 	#movePlayersManager(){
