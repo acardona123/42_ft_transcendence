@@ -43,33 +43,44 @@ def unsealed(client):
 	return client
 
 def enable_database(client):
+	secrets_engine = client.sys.list_mounted_secrets_engines()
+	if 'database/' in secrets_engine:
+		return
 	client.sys.enable_secrets_engine(
 		backend_type='database'
 	)
 
 def configure_database(client, name):
-	load_dotenv(override=True)
-	client.secrets.database.configure(
-		name=name,
-		plugin_name='postgresql-database-plugin',
-		allowed_roles=name+'-role',
-		connection_url=f'postgresql://{{{{username}}}}:{{{{password}}}}@{name}:5432/{os.getenv("DB_NAME")}',
-		username=os.getenv('DB_USER'),
-		password=os.getenv('DB_PASSWORD'),
-	)
+	try:
+		new_cred = create_cred(client,name)
+		return
+	except:
+		load_dotenv(override=True)
+		client.secrets.database.configure(
+			name=name,
+			plugin_name='postgresql-database-plugin',
+			allowed_roles=name+'-role',
+			connection_url=f'postgresql://{{{{username}}}}:{{{{password}}}}@{name}:5432/{os.getenv("DB_NAME")}',
+			username=os.getenv('DB_USER'),
+			password=os.getenv('DB_PASSWORD'),
+		)
 
 def create_role(client, name):
-	creation_statements = [
-		"CREATE ROLE \"{{name}}\" WITH LOGIN SUPERUSER PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';"
-		# "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO \"{{name}}\";"
-	]
-	client.secrets.database.create_role(
-		name=name+'-role',
-		db_name=name,
-		creation_statements=creation_statements,
-		default_ttl='1h',
-		max_ttl='24h'
-	)
+	try:
+		new_cred = create_cred(client,name)
+		return
+	except:
+		creation_statements = [
+			"CREATE ROLE \"{{name}}\" WITH LOGIN SUPERUSER PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';"
+			# "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO \"{{name}}\";"
+		]
+		client.secrets.database.create_role(
+			name=name+'-role',
+			db_name=name,
+			creation_statements=creation_statements,
+			default_ttl='1h',
+			max_ttl='24h'
+		)
 
 def rotate_cred(client, name):
 	client.secrets.database.rotate_root_credentials(
