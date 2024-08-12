@@ -66,7 +66,10 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	createClock(){
-		this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, 3)
+		//test timer
+		this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, 10)
+		//test chronometer
+		this.clock1 = new Chronometer(this, gameConfig.width / 2, gameConfig.clock.padding_top + 250)
 	}
 
 	createBall(x = gameConfig.width / 2,
@@ -238,6 +241,7 @@ class ScenePlay extends Phaser.Scene{
 	update(){
 		this.#movePlayersManager();
 		this.clock.update();
+		this.clock1.update();
 	}
 
 	#movePlayersManager(){
