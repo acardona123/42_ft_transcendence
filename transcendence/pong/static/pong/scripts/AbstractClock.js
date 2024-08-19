@@ -7,7 +7,7 @@ class AbstractClock extends Phaser.GameObjects.Text {
 		const clock_style = {fontFamily: gameConfig.clock.font, fontSize: gameConfig.clock.fontSize, fill: gameConfig.clock.color};
 		super(scene, x, y, "", clock_style).setOrigin(0.5, 0);
 		this.scene = scene;
-		this.#is_paused = false;
+		this.#is_paused = true;
 		this.updateDisplay(time_s);
 		scene.add.existing(this);
 	}
@@ -31,11 +31,16 @@ class AbstractClock extends Phaser.GameObjects.Text {
 	}
 
 	pause(){
-		throw new Error ("Can't instantiate AbstractClock, it is an abstract class")
+		throw new Error ("Can't use AbstractClock.pause, it is an abstract class")
 	}
 
 	resume(){
-		throw new Error ("Can't instantiate AbstractClock, it is an abstract class")
+		throw new Error ("Can't call AbstractClock.resume, it is an abstract class")
+	}
+
+	start(){
+		throw new Error ("Can't use AbstractClock.start, it is an abstract class")
+		this.resume();
 	}
 
 	isPaused(){

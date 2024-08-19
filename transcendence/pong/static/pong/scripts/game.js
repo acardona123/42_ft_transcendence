@@ -7,7 +7,7 @@ const gameTextures = {
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: -1,
+	maxTime: 10,
 	maxPoints: -1,
 	players:[],
 	bot_level: -1,
@@ -18,7 +18,7 @@ const gameConfig = {
 	version: 0.1,
 	
 	parent: "phaser_pong_game", //html DOM element or id
-	scene: [SceneBoot, ScenePlay],
+	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
 	width: 1920,
 	height: 1200,

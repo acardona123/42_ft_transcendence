@@ -8,13 +8,12 @@ class Timer extends AbstractClock{
 		super (scene, x, y, duration_sec);
 		this.#end_time = scene.time.now + duration_sec * 1000;
 		this.#remaining_time = duration_sec * 1000;
+		this.updateDisplay(this.#remaining_time / 1000)
 	}
 
-	update (){
-		if (!this.isPaused()){
-			this.#updateRemainingTime();
-			this.updateDisplay(this.getRemainingTime() / 1000);
-		}
+	start(){
+		this.#end_time = this.scene.time.now + this.#remaining_time;
+		this.setPause(false);
 	}
 
 	pause(){
@@ -28,6 +27,13 @@ class Timer extends AbstractClock{
 		if (this.isPaused()){
 			this.#end_time = this.scene.time.now + this.#remaining_time;
 			this.setPause(false);
+		}
+	}
+
+	update (){
+		if (!this.isPaused()){
+			this.#updateRemainingTime();
+			this.updateDisplay(this.getRemainingTime() / 1000);
 		}
 	}
 

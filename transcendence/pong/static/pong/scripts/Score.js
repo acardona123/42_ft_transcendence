@@ -46,4 +46,8 @@ class Score extends AlignedText{
 	updateDisplay(){
 		this.setText(this.#value)
 	}
+
+	greaterThan(number){
+		return (this.#value >= number)
+	}
 }

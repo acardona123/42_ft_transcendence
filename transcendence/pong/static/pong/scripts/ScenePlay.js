@@ -35,13 +35,14 @@ class ScenePlay extends Phaser.Scene{
 		this.createInteractions();
 
 		this.newRound();
+		this.clock.start();
 	}
 
 	createBackground(){
 		this.background = this.add.sprite(0, 0, "background");
 		this.background.setDisplaySize(this.scale.width, this.scale.height);
 		this.background.setSize(this.scale.width, this.scale.height);
-		this.background.setOrigin(0,0);
+		this.background.setOrigin(0, 0);
 	}
 
 	createBorders(){
@@ -66,10 +67,11 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	createClock(){
-		//test timer
-		this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, 10)
-		//test chronometer
-		this.clock1 = new Chronometer(this, gameConfig.width / 2, gameConfig.clock.padding_top + 250)
+		if (gameMode.maxTime > 0){
+			this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, gameMode.maxTime)
+		} else {
+			this.clock = new Chronometer(this, gameConfig.width / 2, gameConfig.clock.padding_top)
+		}
 	}
 
 	createBall(x = gameConfig.width / 2,
@@ -241,7 +243,10 @@ class ScenePlay extends Phaser.Scene{
 	update(){
 		this.#movePlayersManager();
 		this.clock.update();
-		this.clock1.update();
+		if (this.#isPartyFinished()){
+			console.log("The party is finished");
+			this.scene.start("GameFinished", 3);
+		}
 	}
 
 	#movePlayersManager(){
@@ -254,6 +259,19 @@ class ScenePlay extends Phaser.Scene{
 		const player_vertical_direction = key_down_pressed - key_up_pressed;
 		player.body.setVelocityY(gameConfig.player.max_speed * player_vertical_direction);
 	}
+
+	#isPartyFinished(){
+		let party_finished = false;
+		if (gameMode.maxPoints > 0){
+			party_finished |= this.scores.left.greaterThan(gameMode.maxPoints) || this.scores.right.greaterThan(gameMode.maxPoints);
+		}
+		if (gameMode.maxTime >0){
+			party_finished |= this.clock.isTimeOver();
+		}
+		return party_finished;
+	}
+
+
 }
 
 async function delayedExecution(delay_ms) {

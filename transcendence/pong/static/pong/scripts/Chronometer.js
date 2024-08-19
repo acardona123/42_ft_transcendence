@@ -7,18 +7,13 @@ class Chronometer extends AbstractClock{
 	{
 		super (scene, x, y);
 		this.#start_time = scene.time.now;
-		this.#updateTimePast();
+		this.#time_past = 0;
+		this.updateDisplay(0);
 	}
 
-	update (){
-		if (!this.isPaused()){
-			this.#updateTimePast();
-			this.updateDisplay(this.getTimePast() / 1000);
-		}
-	}
-
-	#updateTimePast(){
-		this.#time_past = this.scene.time.now - this.#start_time;
+	start(){
+		this.#start_time = this.scene.time.now;
+		this.setPause(false);
 	}
 
 	pause(){
@@ -33,6 +28,17 @@ class Chronometer extends AbstractClock{
 			this.#start_time = this.scene.time.now - this.#time_past;
 			this.setPause(false);
 		}
+	}
+
+	update (){
+		if (!this.isPaused()){
+			this.#updateTimePast();
+			this.updateDisplay(this.getTimePast() / 1000);
+		}
+	}
+
+	#updateTimePast(){
+		this.#time_past = this.scene.time.now - this.#start_time;
 	}
 
 	getTimePast(){
