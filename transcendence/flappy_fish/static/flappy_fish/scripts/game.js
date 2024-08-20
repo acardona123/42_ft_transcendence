@@ -1,6 +1,10 @@
 const assets_path = static_url + "flappy_fish/assets/"
 const gameTextures = {
-}
+		pipe: {
+			core : new Texture("pipe_core", "images/pipe_core.png", "image", 230, 460),
+			exit: new Texture("pipe_exit", "images/pipe_exit.png", "image", 250, 120)
+		}
+	}
 
 let gameMode = {
 	activeBoosters: [],
