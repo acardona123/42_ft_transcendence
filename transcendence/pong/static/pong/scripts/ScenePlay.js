@@ -264,9 +264,3 @@ class ScenePlay extends Phaser.Scene{
 
 
 }
-
-async function delayedExecution(delay_ms) {
-	console.log("before timeout")
-	await new Promise(resolve => setTimeout(resolve, delay_ms));
-	console.log("after timeout")
-}
