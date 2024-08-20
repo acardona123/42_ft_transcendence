@@ -20,7 +20,7 @@ class Paddle extends Phaser.GameObjects.Graphics {
 		scene.paddles.add(this);
 
 		this.fillStyle(color, alpha);
-		this.#buildRondedRectangle(middleX, middleY);
+		this.#buildRoundedRectangle(middleX, middleY);
 
 		this.body.setCollideWorldBounds(true);
 		this.body.immovable = true;
@@ -35,7 +35,7 @@ class Paddle extends Phaser.GameObjects.Graphics {
 		return (this.y + this.middle_offset_y);
 	}
 
-	#buildRondedRectangle(middleX, middleY)
+	#buildRoundedRectangle(middleX, middleY)
 	{
 		const ratio_radius_width = 3 / 4;
 		const angle_radius = Math.min(this.width * ratio_radius_width, this.length / 2);

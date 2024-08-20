@@ -139,7 +139,7 @@ class ScenePlay extends Phaser.Scene{
 		this.#createPlayerBordersCollisions();
 		this.#createBallDeathBorderCollision();
 		this.#createBallBounceBorderCollision();
-		this.#createPlayersControles();
+		this.#createPlayersControls();
 	}
 
 	
@@ -226,7 +226,7 @@ class ScenePlay extends Phaser.Scene{
 		return (relative_contact);
 	}
 
-	#createPlayersControles(){
+	#createPlayersControls(){
 		this.#setPlayerControls(this.player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
 		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.I , Phaser.Input.Keyboard.KeyCodes.K);
 	}

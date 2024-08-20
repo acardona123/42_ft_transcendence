@@ -14,13 +14,13 @@ class Score extends AlignedText{
 		const score_text = '0';
 		const score_style = {fontFamily: gameConfig.score.font, fontSize: gameConfig.score.fontSize, fill: gameConfig.score.color};
 		if (player_side === playerSide.LEFT){
-			const score_alignement = text_alignment.ALIGN_RIGHT;
-			const score_x = gameConfig.width / 2 - gameConfig.score.excentricity;
-			super(scene, score_alignement, score_x, score_y, score_text, score_style);
+			const score_alignment = text_alignment.ALIGN_RIGHT;
+			const score_x = gameConfig.width / 2 - gameConfig.score.eccentricity;
+			super(scene, score_alignment, score_x, score_y, score_text, score_style);
 		} else{
-			const score_alignement = text_alignment.ALIGN_LEFT;
-			const score_x = gameConfig.width / 2 + gameConfig.score.excentricity;
-			super(scene, score_alignement, score_x, score_y, score_text, score_style);
+			const score_alignment = text_alignment.ALIGN_LEFT;
+			const score_x = gameConfig.width / 2 + gameConfig.score.eccentricity;
+			super(scene, score_alignment, score_x, score_y, score_text, score_style);
 		}
 		this.#value = 0;
 		scene.add.existing(this);

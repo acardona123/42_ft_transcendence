@@ -41,13 +41,13 @@ const gameConfig = {
 	border: {
 		color: 0x6666ff,
 		alpha: 0.5,
-		thikness:50 
+		thickness:50 
 	},
 	score: {
 		font: '"Goudy Bookletter 1911", Times, serif',
 		fontSize: '300px',
 		color: 'white',
-		excentricity: 100
+		eccentricity: 100
 	},
 	clock: {
 		font: '"Goudy Bookletter 1911", Times, serif',

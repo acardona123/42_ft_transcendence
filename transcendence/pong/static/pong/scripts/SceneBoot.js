@@ -24,11 +24,11 @@ class SceneBoot extends Phaser.Scene{
 	}
 
 
-	//=== controles ===
-	#createPlayerControlesDisplay(){
+	//=== controls ===
+	#createPlayerControlsDisplay(){
 
 	}
-	#setPlayerControleKeys(player, key){
+	#setPlayerControlKeys(player, key){
 		//allowing the players to change input keys when button clicked
 	}
 
@@ -46,7 +46,7 @@ class SceneBoot extends Phaser.Scene{
 	create(){
 		this.#createAllAnimations();
 		this.#createStartButton();
-		this.#createPlayerControlesDisplay();
+		this.#createPlayerControlsDisplay();
 		this.#startGame();
 	}
 
