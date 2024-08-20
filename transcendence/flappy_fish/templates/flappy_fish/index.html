@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <link rel="stylesheet" href="{% static 'pong/scripts/style.css' %}"/> -->
+	<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgoeHACDX6AAgIOgAAwMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREREAAAABBERERFAAABBERERERQAAEFEERMxFAAARERBEzEUAABEREEREzQAAEFEERETNAAAQREREREUAABBEiIiIRQAAEEiIiIiFAAAQSIiIiIUAABBIiIiIhQAAEEiIiIiFAAAQRIiIiEUAAAEEREREUAAAABEREREAADwDwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAOAHAADwDwAA" rel="icon" type="image/x-icon">
+	<title>Custom flappy_fish</title>
+
+	<script>
+		var static_url = "{% get_static_prefix %}";
+	</script>
+    <script src="{% static 'flappy_fish/scripts/phaser.min.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/SceneBoot.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/ScenePlay.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/SceneGameFinished.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/game.js' %}"></script>
+
+</head>
+<body>
+	<p>flappy_fish</p>
+	<div id="phaser_flappy_fish_game" style="width:100vw; height: 50vh"></div>
+	<p>after flappy_fish</p>
+</body>
+</html>

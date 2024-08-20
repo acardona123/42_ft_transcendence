@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from pong import views as pong_views
+from flappy_fish import views as flappy_fish_views
 from tuto_shooter import views as tuto_shooter_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('pong/', pong_views.pong_index),
+	path('flappy_fish/', flappy_fish_views.flappy_fish_index),
 	path('tuto_shooter/', tuto_shooter_views.tuto_shooter_index),
 ]
