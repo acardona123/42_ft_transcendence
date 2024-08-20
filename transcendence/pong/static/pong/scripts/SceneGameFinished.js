@@ -3,11 +3,15 @@ class SceneGameFinished extends Phaser.Scene{
 	
 	constructor(scores){
 		super("GameFinished");
-		this.#scores = scores;
+		this.#scores = 0;
+	}
+
+	init(data){
+		this.#scores = data.scores;
 	}
 	
 	create(){
 		const score_style = {fontFamily: gameConfig.score.font, fontSize: gameConfig.score.fontSize, fill: gameConfig.score.color};
-		this.add.text(100, 100, "test: " + this.#scores, score_style);
+		this.add.text(100, 100, "End: " + this.#scores.left.getScore() + " - " + this.#scores.right.getScore(), score_style);
 	}
 }
