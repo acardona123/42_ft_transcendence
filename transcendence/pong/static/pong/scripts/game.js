@@ -7,8 +7,8 @@ const gameTextures = {
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: 10,
-	maxPoints: -1,
+	maxTime: 30,
+	maxPoints: 2,
 	players:[],
 	bot_level: -1,
 }
@@ -54,6 +54,11 @@ const gameConfig = {
 		fontSize: '200px',
 		color: 'white',
 		padding_top: 50
+	},
+	recapText: {
+		font: '"Goudy Bookletter 1911", Times, serif',
+		fontSize: '200px',
+		color: 'white',
 	},
 	
 	scale: {

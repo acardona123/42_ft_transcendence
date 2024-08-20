@@ -236,8 +236,7 @@ class ScenePlay extends Phaser.Scene{
 		this.#movePlayersManager();
 		this.clock.update();
 		if (this.#isPartyFinished()){
-			console.log("The party is finished");
-			this.scene.start("GameFinished", {scores: this.scores});
+			this.scene.start("GameFinished", {scores: this.scores, duration_ms: this.clock.getPastTime()});
 		}
 	}
 
@@ -257,7 +256,7 @@ class ScenePlay extends Phaser.Scene{
 		if (gameMode.maxPoints > 0){
 			party_finished |= this.scores.left.greaterThan(gameMode.maxPoints) || this.scores.right.greaterThan(gameMode.maxPoints);
 		}
-		if (gameMode.maxTime >0){
+		if (gameMode.maxTime > 0){
 			party_finished |= this.clock.isTimeOver();
 		}
 		return party_finished;
