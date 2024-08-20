@@ -1,13 +1,16 @@
 class Timer extends AbstractClock{
 
+	//all times are in ms
 	#end_time;
 	#remaining_time;
+	#targetedDuration;
 
 	constructor(scene, x, y, duration_sec)
 	{
 		super (scene, x, y, duration_sec);
-		this.#end_time = scene.time.now + duration_sec * 1000;
-		this.#remaining_time = duration_sec * 1000;
+		this.#targetedDuration = duration_sec * 1000;
+		this.#end_time = scene.time.now + this.#targetedDuration;
+		this.#remaining_time = this.#targetedDuration;
 		this.updateDisplay(this.#remaining_time / 1000)
 	}
 
@@ -43,6 +46,10 @@ class Timer extends AbstractClock{
 
 	getRemainingTime(){
 		return (this.#remaining_time)
+	}
+
+	getPastTime(){
+		return (this.#targetedDuration - this.getRemainingTime());
 	}
 
 	isTimeOver(){

@@ -33,7 +33,7 @@ class Chronometer extends AbstractClock{
 	update (){
 		if (!this.isPaused()){
 			this.#updateTimePast();
-			this.updateDisplay(this.getTimePast() / 1000);
+			this.updateDisplay(this.getPastTime() / 1000);
 		}
 	}
 
@@ -41,7 +41,7 @@ class Chronometer extends AbstractClock{
 		this.#time_past = this.scene.time.now - this.#start_time;
 	}
 
-	getTimePast(){
+	getPastTime(){
 		return (this.#time_past);
 	}
 }

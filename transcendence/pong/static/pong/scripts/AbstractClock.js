@@ -40,7 +40,6 @@ class AbstractClock extends Phaser.GameObjects.Text {
 
 	start(){
 		throw new Error ("Can't use AbstractClock.start, it is an abstract class")
-		this.resume();
 	}
 
 	isPaused(){
@@ -49,5 +48,9 @@ class AbstractClock extends Phaser.GameObjects.Text {
 
 	setPause(pauseStatus){
 		this.#is_paused = pauseStatus;
+	}
+
+	getPastTime(){
+		throw new Error ("Can't use AbstractClock.getPastTime, it is an abstract class")
 	}
 }
