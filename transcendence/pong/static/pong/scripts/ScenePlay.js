@@ -105,19 +105,11 @@ class ScenePlay extends Phaser.Scene{
 			duration: 1500,
 			repeat: 0,
 			onComplete: function(){
-				const random_trajectory_angle = this.#randomBetweenBounds(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
+				const random_trajectory_angle = Phaser.Math.Between(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
 				this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
 				},
 				callbackScope: this
 			})
-	}
-	#randomBetweenBounds(minimum, maximum){
-		if (minimum > maximum){
-			const tmp = maximum;
-			maximum = minimum;
-			minimum = tmp;
-		}
-		return (minimum + (maximum - minimum) * Math.random());
 	}
 
 	createPlayers(){
@@ -245,7 +237,7 @@ class ScenePlay extends Phaser.Scene{
 		this.clock.update();
 		if (this.#isPartyFinished()){
 			console.log("The party is finished");
-			this.scene.start("GameFinished", 3);
+			this.scene.start("GameFinished", {scores: this.scores});
 		}
 	}
 
