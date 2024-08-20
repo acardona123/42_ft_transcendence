@@ -80,7 +80,11 @@ load_dotenv(override=True)
  
 from .vault.hvac_vault import create_cred, create_client
 
-client = create_client()
+cert= f'{os.getenv("VAULT_DATA")}vault.crt'
+key= f'{os.getenv("VAULT_DATA")}vault.key'
+certs=(cert, key)
+
+client = create_client(certs)
 cred = create_cred(client, os.getenv("VAULT_DATABASE_NAME"))
 
 DATABASES = {

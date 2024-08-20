@@ -9,18 +9,20 @@ def is_connected(client):
 	print(f"Is sealed :			{client.sys.is_sealed()}")
 	print(f"Is authenticated :	{client.is_authenticated()}")
 
-def create_client():
+def create_client(certs):
 	load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 	client = hvac.Client(
 		url=f'{os.getenv('VAULT_HOSTNAME')}:{os.getenv('VAULT_PORT')}',
-		token=os.getenv('VAULT_TOKEN')
+		token=os.getenv('VAULT_TOKEN'),
+		cert=certs
 	)
 	return client
 
-def initialize():
+def initialize(certs):
 	load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 	client = hvac.Client(
 		url=f'{os.getenv('VAULT_HOSTNAME')}:{os.getenv('VAULT_PORT')}',
+		cert=certs,
 	)
 	if client.sys.is_initialized() == False :
 		shares = 5

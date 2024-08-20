@@ -4,14 +4,10 @@ storage "file" {
 
 listener "tcp" {
 	address     = "0.0.0.0:8200"
-	tls_disable = 1
+	tls_disable = 0
+	tls_disable_client_certs = 1
+	tls_cert_file = "/vault/tls/vault.crt"
+	tls_key_file = "/vault/tls/vault.key"
 }
 
 ui = true
-
-api_addr = "http://0.0.0.0:8200"
-
-disable_mlock = "true"
-
-default_lease_ttl = "168h"
-max_lease_ttl = "720h"

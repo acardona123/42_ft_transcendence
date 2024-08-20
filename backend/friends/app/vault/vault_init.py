@@ -2,13 +2,26 @@ import os
 from hvac_vault import *
 from dotenv import load_dotenv
 
-VAULT_ENV_FILE='/usr/src/app/vault/.env'
+VAULT_ENV_FILE = '/usr/src/app/vault/.env'
+
+load_dotenv(override=True)
+
+cert= f'{os.getenv("VAULT_DATA")}vault.crt'
+key= f'{os.getenv("VAULT_DATA")}vault.key'
+certs=(cert, key)
+
+os.system("bash -c 'ls -la ./vault'")
+print(cert)
+print(key)
+if certs:
+	os.environ['REQUESTS_CA_BUNDLE'] = cert
+
+VAULT_CLIENT = initialize(certs)
+
+VAULT_CLIENT = unsealed(VAULT_CLIENT)
 
 load_dotenv(dotenv_path=VAULT_ENV_FILE, override=True)
 
-VAULT_CLIENT = initialize()
-
-VAULT_CLIENT = unsealed(VAULT_CLIENT)
 if VAULT_CLIENT.sys.is_initialized() == True \
 	and VAULT_CLIENT.sys.is_sealed() == False \
  	and VAULT_CLIENT.is_authenticated() == False:
