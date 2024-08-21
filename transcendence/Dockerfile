@@ -10,4 +10,7 @@ COPY requirements.txt ./
 RUN pip install python-dotenv
 RUN pip install -r requirements.txt
 
+# for profile picture
+RUN pip install Pillow
+
 COPY . /usr/src/app/

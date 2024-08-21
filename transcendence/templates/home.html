@@ -5,6 +5,12 @@
 {% block content %}
 {% if user.is_authenticated %}
   Welcome, {{ user.email }}!
+  {% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 250px; height: 188px;">
+  {% else %}
+    <!-- Fallback or alternative content when there's no profile picture -->
+    <div>No Profile Picture</div>
+  {% endif %}
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
   <p>You are not logged in</p>
