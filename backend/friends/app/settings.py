@@ -74,17 +74,10 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 import os
-from dotenv import load_dotenv
 
-load_dotenv(override=True)
- 
 from .vault.hvac_vault import create_cred, create_client
 
-cert= '/usr/src/app/vault/vault.crt'
-key= '/usr/src/app/vault/vault.key'
-certs=(cert, key)
-
-client = create_client(certs)
+client = create_client()
 cred = create_cred(client, os.getenv("VAULT_DATABASE_NAME"))
 
 DATABASES = {

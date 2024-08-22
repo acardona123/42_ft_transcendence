@@ -4,19 +4,9 @@ from dotenv import load_dotenv
 
 VAULT_ENV_FILE = '/usr/src/app/vault/.env'
 
-load_dotenv(override=True)
+os.environ['REQUESTS_CA_BUNDLE'] = '/usr/src/app/vault/vault.crt'
 
-cert= '/usr/src/app/vault/vault.crt'
-key= '/usr/src/app/vault/vault.key'
-certs=(cert, key)
-
-os.system("bash -c 'ls -la ./vault'")
-print(cert)
-print(key)
-if certs:
-	os.environ['REQUESTS_CA_BUNDLE'] = cert
-
-VAULT_CLIENT = initialize(certs)
+VAULT_CLIENT = initialize()
 
 VAULT_CLIENT = unsealed(VAULT_CLIENT)
 
