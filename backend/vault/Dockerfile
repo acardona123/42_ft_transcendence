@@ -10,7 +10,3 @@ RUN mkdir -p /vault/tls; chown vault:vault /vault/tls;
 
 COPY --chown=vault:vault ./data/vault.key /vault/tls/vault.key
 COPY --chown=vault:vault ./data/vault.crt /vault/tls/vault.crt
-
-# ENTRYPOINT [ "vault" ]
-
-# CMD ["server", "-config=/vault/config/config.hcl"]
