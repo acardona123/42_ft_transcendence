@@ -1,12 +1,14 @@
 class SceneBoot extends Phaser.Scene{
 
 	#loaded_textures_names;
+	#pipes_components;
 
 	constructor(){
 		super("bootGame");
 		this.#loaded_textures_names = {
 			pipe_core: "tex_pipe_core",
-			pipe_exit: "tex_pipe_exit"
+			pipe_head: "tex_pipe_head",
+			pipe_spacer: "tex_pipe_spacer"
 		}
 	}
 
@@ -18,20 +20,18 @@ class SceneBoot extends Phaser.Scene{
 
 	#preloadAllTextures(){
 		gameTextures.pipe.core.preloadOnScene(this, this.#loaded_textures_names.pipe_core);
-		gameTextures.pipe.exit.preloadOnScene(this, this.#loaded_textures_names.pipe_exit);
+		gameTextures.pipe.head.preloadOnScene(this, this.#loaded_textures_names.pipe_head);
+		gameTextures.pipe_spacer.preloadOnScene(this, this.#loaded_textures_names.pipe_spacer);
 	}
 
 	create(){
 		this.physics.world.collideDebug = true;
 
-		const pipe = [];
+		this.#pipes_components = this.physics.add.group();
 
-		const sprite_pipe_exit = this.add.sprite(0, 0, this.#loaded_textures_names.pipe_exit).setOrigin(0);
-		pipe.push(sprite_pipe_exit);
-		const sprite_pipe_core = this.add.sprite(0, 0, this.#loaded_textures_names.pipe_core);
-		pipe.push(sprite_pipe_core);
-		Phaser.Actions.AlignTo(pipe, Phaser.Display.Align.BOTTOM_CENTER);
-
+		let test = new PipePair(this, this.#pipes_components, this.#loaded_textures_names.pipe_core, this.#loaded_textures_names.pipe_head, this.#loaded_textures_names.pipe_spacer, 300);
+		test.setVerticalOffset(-100);
+		test.x = 500;
 	}
 
 

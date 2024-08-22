@@ -2,8 +2,9 @@ const assets_path = static_url + "flappy_fish/assets/"
 const gameTextures = {
 		pipe: {
 			core : new Texture("pipe_core", "images/pipe_core.png", "image", 230, 460),
-			exit: new Texture("pipe_exit", "images/pipe_exit.png", "image", 250, 120)
-		}
+			head: new Texture("pipe_head", "images/pipe_head.png", "image", 250, 120),
+		},
+		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
 	}
 
 let gameMode = {
@@ -23,6 +24,19 @@ const gameConfig = {
 
 	width: 1920,
 	height: 1200,
+
+	pipe : {
+		head_width : 250,
+		head_height: 120,
+		core_width: 230,
+	},
+	pipe_spacer: {
+		height_default: 200,
+		height_min : 0,
+		height_max: 900,
+		width: 1,
+		vertical_offset_max: 500
+	},
 	
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -43,7 +57,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false
+			debug: true
 		}
 	},
 	
