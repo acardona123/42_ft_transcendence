@@ -6,8 +6,8 @@ VAULT_ENV_FILE = '/usr/src/app/vault/.env'
 
 load_dotenv(override=True)
 
-cert= f'{os.getenv("VAULT_DATA")}vault.crt'
-key= f'{os.getenv("VAULT_DATA")}vault.key'
+cert= '/usr/src/app/vault/vault.crt'
+key= '/usr/src/app/vault/vault.key'
 certs=(cert, key)
 
 os.system("bash -c 'ls -la ./vault'")
@@ -32,5 +32,5 @@ configure_database(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
-os.system("/bin/bash -c 'python3 ./manage.py makemigrations \
+os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations \
 	&& python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'")

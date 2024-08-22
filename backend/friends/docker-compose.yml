@@ -2,13 +2,13 @@ services:
   friends_app:
     build: .
     container_name: friends_app
-    command: bash -c "python3 ./app/vault/vault_init.py"
+    command: bash -c "python3 ./django/app/vault/vault_init.py"
     restart: always
     environment:
       - VAULT_DATABASE_NAME=friends_db
     volumes:
-      - .:/usr/src/app
-      - ../vault/data:${VAULT_DATA}
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
     # ports:
     #   - "8002:8002"
     networks:
