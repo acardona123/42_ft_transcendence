@@ -1,5 +1,7 @@
 FROM hashicorp/vault:1.17
 
+RUN apk --no-cache add curl jq
+
 COPY --chown=vault:vault ./config.hcl /vault/config/config.hcl
 
 RUN mkdir -p /vault/tls; chown vault:vault /vault/tls;
@@ -10,3 +12,5 @@ RUN mkdir -p /vault/tls; chown vault:vault /vault/tls;
 
 COPY --chown=vault:vault ./data/vault.key /vault/tls/vault.key
 COPY --chown=vault:vault ./data/vault.crt /vault/tls/vault.crt
+
+COPY --chown=vault:vault ./data/.env /vault/env/.env
