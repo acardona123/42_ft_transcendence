@@ -11,5 +11,4 @@ RUN pip install python-dotenv
 RUN pip install -r requirements.txt
 
 COPY . /usr/src/app/
-RUN python manage.py migrate
-
+# RUN python manage.py migrate
