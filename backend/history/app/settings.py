@@ -74,20 +74,38 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+database_name = os.getenv("VAULT_DATABASE_NAME")
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'history_db',
-        'PORT': '5432',
-    }
-}
+if (database_name.endswith('_dev') == False):
+	from .vault.hvac_vault import create_cred, create_client
+
+	client = create_client()
+	cred = create_cred(client, database_name)
+
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql',
+			'NAME': os.getenv('DB_NAME'),
+			'USER': cred["data"]['username'],
+			'PASSWORD': cred["data"]['password'],
+			'HOST': database_name,
+			'PORT': '5432',
+		}
+	}
+else:
+	from dotenv import load_dotenv
+	load_dotenv()
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql',
+			'NAME': os.getenv('DB_NAME'),
+			'USER': os.getenv('DB_USER'),
+			'PASSWORD': os.getenv('DB_PASSWORD'),
+			'HOST': database_name,
+			'PORT': '5432',
+		}
+	}
 
 
 # Password validation

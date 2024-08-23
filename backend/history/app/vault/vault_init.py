@@ -13,4 +13,4 @@ create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
 os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations \
-	&& python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'")
+	&& python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8001'")

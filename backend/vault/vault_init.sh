@@ -38,6 +38,9 @@ else
 	echo $env | tr " " "\n" > /vault/env/.env
 	echo "VAULT_TOKEN=$ROOT_TOKEN">> /vault/env/.env
 
+	#enable database
+	echo 'Enable database in Vault server...'
+	vault secrets enable database
 fi
 
 vault status > /vault/file/status;

@@ -2,12 +2,13 @@ services:
   users_app:
     build: .
     container_name: users_app
-    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8001"
+    command: bash -c "python3 ./django/app/vault/vault_init.py"
     restart: always
+    environment:
+      - VAULT_DATABASE_NAME=users_db
     volumes:
-      - .:/usr/src/app
-    # ports:
-    #   - "8001:8001"
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
     networks:
       - website-network
       - users-network
@@ -22,6 +23,7 @@ services:
       - users_db:/var/lib/postgresql/data/
     networks:
       - users-network
+      - vault-network
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -40,3 +42,5 @@ networks:
     name: website_network
   users-network:
     name: users_network
+  vault-network:
+    name: vault_network

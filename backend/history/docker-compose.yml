@@ -2,12 +2,13 @@ services:
   history_app:
     build: .
     container_name: history_app
-    command: bash -c "python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8003"
+    command: bash -c "python3 ./django/app/vault/vault_init.py"
     restart: always
+    environment:
+      - VAULT_DATABASE_NAME=history_db
     volumes:
-      - .:/usr/src/app
-    # ports:
-    #   - "8003:8003"
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
     networks:
       - website-network
       - history-network
@@ -22,6 +23,7 @@ services:
       - history_db:/var/lib/postgresql/data/
     networks:
       - history-network
+      - vault-network
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -40,3 +42,5 @@ networks:
     name: website_network
   history-network:
     name: history_network
+  vault-network:
+    name: vault_network

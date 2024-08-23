@@ -1,29 +1,30 @@
 services:
-  friends_app:
+  users_app_dev:
     build: .
-    container_name: friends_app
-    command: bash -c "python3 ./django/app/vault/vault_init.py"
+    container_name: users_app_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8001'"
     restart: always
     environment:
-      - VAULT_DATABASE_NAME=friends_db
+      - VAULT_DATABASE_NAME=users_db_dev
     volumes:
       - .:/usr/src/app/django
-      - ../vault/data:/usr/src/app/vault/
+    ports:
+      - "8001:8001"
     networks:
       - website-network
-      - friends-network
+      - users-network
     depends_on:
-      friends_db:
+      users_db_dev:
         condition: service_healthy
-  friends_db:
+
+  users_db_dev:
     image: postgres:16
-    container_name: friends_db
+    container_name: users_db_dev
     restart: always
     volumes:
-      - friends_db:/var/lib/postgresql/data/
+      - users_db:/var/lib/postgresql/data/
     networks:
-      - friends-network
-      - vault-network
+      - users-network
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -34,13 +35,12 @@ services:
       timeout: 5s
       retries: 5
 
+
 volumes:
-  friends_db:
+  users_db:
 
 networks:
   website-network:
     name: website_network
-  friends-network:
-    name: friends_network
-  vault-network:
-    name: vault_network
+  users-network:
+    name: users_network

@@ -10,4 +10,4 @@ COPY requirements.txt ./
 RUN pip install python-dotenv
 RUN pip install -r requirements.txt
 
-COPY . /usr/src/app/
+COPY . /usr/src/app/django
