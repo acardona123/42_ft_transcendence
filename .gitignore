@@ -3,4 +3,3 @@ backend/*/*/.env
 backend/*/*/__pycache__
 backend/*/*/*/__pycache__
 backend/vault/data/*.crt
-backend/vault/data/*.key

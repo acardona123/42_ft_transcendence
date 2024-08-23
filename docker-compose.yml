@@ -30,7 +30,7 @@ services:
     volumes:
       - private-volume:/vault/file
       - ./backend/vault/vault_init.sh:/vault_init.sh
-      - ./backend/vault/data/.env:/vault/env/.env
+      - ./backend/vault/data/:/vault/env
     cap_add:
       - IPC_LOCK
     networks:

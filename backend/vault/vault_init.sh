@@ -4,7 +4,8 @@ set -e
 vault server -config=/vault/config/config.hcl &
 pid=$!
 
-while [ -z "$(curl -XGET --insecure --silent -H "X-Vault-Token: $VAULT_TOKEN" $VAULT_ADDR/v1/sys/health | jq '.initialized')" ] 
+while [ -z "$(curl -XGET --insecure --silent -H "X-Vault-Token: $VAULT_TOKEN" \
+		$VAULT_ADDR/v1/sys/health | jq '.initialized')" ] 
 do
 	echo 'Vault is Starting...'
 	sleep 1
@@ -29,7 +30,7 @@ else
 
 	#log in vault
 	echo 'Log in vault server ...'
-	export ROOT_TOKEN=$(grep 'Initial Root Token:' /vault/file/keys | awk '{print $NF}');
+	ROOT_TOKEN=$(grep 'Initial Root Token:' /vault/file/keys | awk '{print $NF}');
 	vault login $ROOT_TOKEN 2>&1 > /dev/null;
 
 	#update .env with VAULT_TOKEN

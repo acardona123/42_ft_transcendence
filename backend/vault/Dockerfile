@@ -6,11 +6,8 @@ COPY --chown=vault:vault ./config.hcl /vault/config/config.hcl
 
 RUN mkdir -p /vault/tls; chown vault:vault /vault/tls;
 
-# RUN apk add openssl;\
-# 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /vault/tls/vault.key -out /vault/tls/vault.crt -subj "/C=FR/ST=ile-de-france/L=Paris/CN=42School";\
-# 	chown vault:vault /vault/tls/*;
-
-COPY --chown=vault:vault ./data/vault.key /vault/tls/vault.key
-COPY --chown=vault:vault ./data/vault.crt /vault/tls/vault.crt
-
-COPY --chown=vault:vault ./data/.env /vault/env/.env
+RUN apk --no-cache add openssl;\
+	openssl req -out /vault/tls/vault.crt -new -keyout /vault/tls/vault.key\
+	-newkey rsa:2048 -nodes -sha256 -x509 -subj "/O=HashiCorp/CN=Vault"\
+	-addext "subjectAltName = IP:0.0.0.0,DNS:vault" -days 365;\
+	chown vault:vault /vault/tls/*;
