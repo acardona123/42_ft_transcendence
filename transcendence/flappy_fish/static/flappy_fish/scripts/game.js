@@ -4,6 +4,7 @@ const gameTextures = {
 			core : new Texture("pipe_core", "images/pipe_core.png", "image", 230, 460),
 			head: new Texture("pipe_head", "images/pipe_head.png", "image", 250, 120),
 		},
+		// pipe_spacer: new Texture("pipe_spacer", "images/to_dell_test.png", "image", 1536, 2048),
 		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
 	}
 
@@ -34,13 +35,25 @@ const gameConfig = {
 		height_default: 200,
 		height_min : 0,
 		height_max: 900,
-		width: 1,
-		vertical_offset_max: 500
+		width: 100,
 	},
+	pipe_repartition: {
+		vertical_offset_max: 500,
+		horizontal_distance_max: 1500,
+		horizontal_distance_min: 200,
+	},
+	pipes_pool_size: 8,
+
 	
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		mode: Phaser.Scale.FIT
+	},
+	depth: {
+		ground: 0,
+		pipes: -1,
+		player: -1,
+		background: -1
 	},
 	preload: function() {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

@@ -1,7 +1,9 @@
 class SceneBoot extends Phaser.Scene{
 
 	#loaded_textures_names;
-	#pipes_components;
+	#pipes_group;
+	#pipes_pairs_pool;
+	#active_pipes;
 
 	constructor(){
 		super("bootGame");
@@ -26,13 +28,23 @@ class SceneBoot extends Phaser.Scene{
 
 	create(){
 		this.physics.world.collideDebug = true;
+		this.#pipes_group = this.physics.add.group();
+		this.#active_pipes = []
 
-		this.#pipes_components = this.physics.add.group();
-
-		let test = new PipePair(this, this.#pipes_components, this.#loaded_textures_names.pipe_core, this.#loaded_textures_names.pipe_head, this.#loaded_textures_names.pipe_spacer, 300);
-		test.setVerticalOffset(-100);
-		test.x = 500;
+		this.#createPipesPool();
+		
+		//examples of pool use:
+		let one_pipe_pair = this.#pipes_pairs_pool.getPipePair(100, 100, 400);
+		let one_pipe_pair1 = this.#pipes_pairs_pool.getPipePair(100, 0, 700);
+		let one_pipe_pair2 = this.#pipes_pairs_pool.getPipePair(100, -100, 1000);
 	}
-
+		#createPipesPool()
+		{
+			const pipe_textures = {
+				core: this.#loaded_textures_names.pipe_core,
+				head: this.#loaded_textures_names.pipe_head,
+				spacer: this.#loaded_textures_names.pipe_spacer}
+			this.#pipes_pairs_pool = new PipePairsPool(this, this.#pipes_group, pipe_textures, gameConfig.pipes_pool_size);
+		}
 
 }

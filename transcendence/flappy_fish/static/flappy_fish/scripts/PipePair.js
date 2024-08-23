@@ -6,50 +6,71 @@ class PipePair extends Phaser.GameObjects.Container{
 	#pipe_core_height;
 	components;
 	scales;
+	#physical_components
 	
 	
-	constructor(scene, pipe_group, core_texture_name, head_texture_name, spacer_texture_name, spacer_height = gameConfig.pipe_spacer.height_default){
+	constructor(
+		scene,
+		pipe_group,
+		textures_names,
+		spacer_height = gameConfig.pipe_spacer.height_default,
+		offset_to_middle = 0,
+		x = gameConfig.width + (Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width))/2
+		){
 		super(scene);
 		this.#scene = scene;
 		this.#pipe_group = pipe_group;
-		this.#generateComponents(core_texture_name, head_texture_name, spacer_texture_name);
+		this.depth = gameConfig.depth.pipes;
+		this.#generateComponents(textures_names);
 		this.#calculateScales(spacer_height);
 		this.#resizeComponents();
 		this.#positionComponents();
 		this.#generateComponentsPhysics();
 		this.#integrateComponentsToContainer();
+		this.#moveToInitialPosition(offset_to_middle, x);
 		this.#scene.add.existing(this);
 		this.#scene.physics.world.enable(this);
+
 	}
 
-	#generateComponents(core_texture_name, head_texture_name, spacer_texture_name){
+	#generateComponents(textures_names){
 		this.components = {};
 
-		this.components.top_pipe_core = this.#scene.add.sprite(0, 0, core_texture_name);
-		this.components.top_pipe_head = this.#scene.add.sprite(0, 0, head_texture_name);
-		this.components.bottom_pipe_core =  this.#scene.add.sprite(0, 0, core_texture_name);
-		this.components.bottom_pipe_head = this.#scene.add.sprite(0, 0, head_texture_name);
-		this.components.pipe_spacer = this.#scene.add.sprite(0, 0, spacer_texture_name);
+		this.components.top_pipe_core = this.#scene.add.sprite(0, 0, textures_names.core);
+		this.components.top_pipe_head = this.#scene.add.sprite(0, 0, textures_names.head);
+		this.components.bottom_pipe_core =  this.#scene.add.sprite(0, 0, textures_names.core);
+		this.components.bottom_pipe_head = this.#scene.add.sprite(0, 0, textures_names.head);
+		this.components.pipe_spacer = this.#scene.add.sprite(0, 0, textures_names.spacer);
 	}
 
 	#calculateScales(targeted_spacer_height){
-		this.#spacer_height = clamp(targeted_spacer_height, gameConfig.pipe_spacer.height_min, gameConfig.pipe_spacer.height_max);
-		this.#pipe_core_height = gameConfig.height - this.#spacer_height - 2 * gameConfig.pipe.head_height;
-
+		
+		
 		this.scales = {};
-		this.scales.core = {
-			x: gameConfig.pipe.core_width / gameTextures.pipe.core.width,
-			y: this.#pipe_core_height / gameTextures.pipe.core.height
-		};
-		this.scales.head = {
-			x: gameConfig.pipe.head_width / gameTextures.pipe.head.width,
-			y: gameConfig.pipe.head_height / gameTextures.pipe.head.height
-		}
-		this.scales.spacer = {
-			x: gameConfig.pipe_spacer.width / gameTextures.pipe_spacer.width,
-			y: this.#spacer_height / gameTextures.pipe_spacer.height
-		}
+		this.#calculateScaleCore();
+		this.#calculateScaleHead();
+		this.#calculateScaleSpacer(targeted_spacer_height);
 	}
+		#calculateScaleCore(){
+			this.#pipe_core_height = gameConfig.height - gameConfig.ground.height - gameConfig.pipe_spacer.height_min - 2 * gameConfig.pipe.head_height;
+			this.scales.core = {
+				x: gameConfig.pipe.core_width / gameTextures.pipe.core.width,
+				y: this.#pipe_core_height / gameTextures.pipe.core.height
+			};
+		}
+		#calculateScaleHead(){
+			this.scales.head = {
+				x: gameConfig.pipe.head_width / gameTextures.pipe.head.width,
+				y: gameConfig.pipe.head_height / gameTextures.pipe.head.height
+			}
+		}
+		#calculateScaleSpacer(targeted_spacer_height){
+			this.#spacer_height = clamp(targeted_spacer_height, gameConfig.pipe_spacer.height_min, gameConfig.pipe_spacer.height_max);
+			this.scales.spacer = {
+				x: gameConfig.pipe_spacer.width / gameTextures.pipe_spacer.width,
+				y: this.#spacer_height / gameTextures.pipe_spacer.height
+			}
+		}
 
 	#resizeComponents(){
 		this.#resizePipeCore(this.components.top_pipe_core);
@@ -60,18 +81,18 @@ class PipePair extends Phaser.GameObjects.Container{
 	}
 		#resizePipeCore(core){
 			core.setScale(this.scales.core.x, this.scales.core.y);
-			core.width *= this.scales.core.x;
-			core.height *= this.scales.core.y;
+			core.width = gameTextures.pipe.core.width * this.scales.core.x;
+			core.height = gameTextures.pipe.core.height * this.scales.core.y;
 		}
 		#resizePipeHead(head){
 			head.setScale(this.scales.head.x, this.scales.head.y);
-			head.width *= this.scales.head.x;
-			head.height *= this.scales.head.y;
+			head.width = gameTextures.pipe.head.width * this.scales.head.x;
+			head.height = gameTextures.pipe.head.height * this.scales.head.y;
 		}
 		#resizeSpacer(){
 			this.components.pipe_spacer.setScale(this.scales.spacer.x, this.scales.spacer.y);
-			this.components.pipe_spacer.width *= this.scales.spacer.x;
-			this.components.pipe_spacer.height *= this.scales.spacer.y;
+			this.components.pipe_spacer.width = gameTextures.pipe_spacer.width * this.scales.spacer.x;
+			this.components.pipe_spacer.height = gameTextures.pipe_spacer.height * this.scales.spacer.y;
 		}
 
 	#positionComponents(){
@@ -94,22 +115,22 @@ class PipePair extends Phaser.GameObjects.Container{
 		}
 
 	#generateComponentsPhysics(){
-		const solid_pipes = [
+		this.#physical_components = [
 			this.components.top_pipe_core,
 			this.components.top_pipe_head,
 			this.components.bottom_pipe_head,
 			this.components.bottom_pipe_core
 		]
-		this.#enableBodies(solid_pipes);
-		this.#addComponentsToPipeGroup(solid_pipes);
+		this.#enableBodies();
+		this.#addComponentsToPipeGroup();
 	}
-		#enableBodies(solid_pipes){
-			solid_pipes.forEach(component => {
+		#enableBodies(){
+			this.#physical_components.forEach(component => {
 				this.#scene.physics.world.enable(component);
 			});
 		}
-		#addComponentsToPipeGroup(solid_pipes){
-			solid_pipes.forEach(component => {
+		#addComponentsToPipeGroup(){
+			this.#physical_components.forEach(component => {
 				this.#pipe_group.add(component);
 			});
 		}
@@ -124,14 +145,58 @@ class PipePair extends Phaser.GameObjects.Container{
 			});
 		}
 		#fitContainerToComponents(){
-			const container_width = Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width);
-			const container_height = 2 * (this.#pipe_core_height + gameConfig.pipe.head_height) + this.#spacer_height;
-			this.setSize(container_width, container_height);
+			this.#fitContainerToComponentsWidth();
+			this.#fitContainerToComponentsHeight();
+		}
+			#fitContainerToComponentsWidth(){
+				const container_width = Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width);
+				const container_height = this.height;
+				this.setSize(container_width, container_height);
+			}
+			#fitContainerToComponentsHeight(){
+				const container_width = this.width;
+				const container_height = 2 * (this.#pipe_core_height + gameConfig.pipe.head_height) + this.#spacer_height;
+				this.setSize(container_width, container_height);
+			}
+
+	disable(){
+		this.#hideComponents();
+		this.#disableComponentsPhysic();
+	}
+		#hideComponents(){
+			this.setVisible(false);
+		}
+		#disableComponentsPhysic(){
+			this.#physical_components.forEach(component => {
+				this.#scene.physics.world.disable(component);
+			});
+		}
+
+	reactivate(targeted_spacer_height = gameConfig.pipe_spacer.height_default, offset_to_middle = 0, x = gameConfig.width + this.width/2){
+		this.#resetSpacerSize(targeted_spacer_height);
+		this.#enableBodies();
+		this.#moveToInitialPosition(offset_to_middle, x);
+		this.#showComponents();
+	}
+		#resetSpacerSize(targeted_spacer_height){
+			if (targeted_spacer_height != this.#spacer_height){
+				this.#calculateScaleSpacer(targeted_spacer_height);
+				this.#resizeSpacer();
+				this.#positionComponents();
+			}
+		}
+
+		#moveToInitialPosition(offset_to_middle = 0, x = gameConfig.width + this.width/2){
+			this.x = x;
+			this.setVerticalOffset(offset_to_middle);
+		}
+		#showComponents(){
+			this.setVisible(true);
 		}
 
 	setVerticalOffset(offset_to_middle){
-		offset_to_middle = clamp(offset_to_middle, -gameConfig.pipe_spacer.vertical_offset_max, gameConfig.pipe_spacer.vertical_offset_max);
-		this.y = offset_to_middle + gameConfig.height / 2;
+		offset_to_middle = clamp(offset_to_middle, -gameConfig.pipe_repartition.vertical_offset_max, gameConfig.pipe_repartition.vertical_offset_max);
+		this.y = offset_to_middle + (gameConfig.height - gameConfig.ground.height) / 2;
 	}
 
 }
