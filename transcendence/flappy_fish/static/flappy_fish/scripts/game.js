@@ -6,6 +6,7 @@ const gameTextures = {
 		},
 		// pipe_spacer: new Texture("pipe_spacer", "images/to_dell_test.png", "image", 1536, 2048),
 		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
+		ground: new Texture("ground", "images/ground.png", "image", 336, 112)
 	}
 
 let gameMode = {
@@ -26,7 +27,10 @@ const gameConfig = {
 	width: 1920,
 	height: 1200,
 
-	pipe : {
+	ground: {
+		height: 100,
+	},
+	pipe :{
 		head_width : 250,
 		head_height: 120,
 		core_width: 230,
