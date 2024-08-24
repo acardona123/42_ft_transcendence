@@ -1,0 +1,8 @@
+.friends-list {
+	overflow: scroll;
+	scroll-behavior: smooth;
+	scrollbar-color: black rgb(0, 0, 0, 10);
+	scrollbar-width: thin;
+	max-height: 100px;
+	max-width: 100px;
+}
