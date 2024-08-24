@@ -1,6 +1,9 @@
 #!/usr/bin/sh
 set -e
 
+#add crt to volume
+cp /vault/tls/vault.crt /vault/env/
+
 vault server -config=/vault/config/config.hcl &
 pid=$!
 
@@ -30,7 +33,7 @@ else
 
 	#log in vault
 	echo 'Log in vault server ...'
-	ROOT_TOKEN=$(grep 'Initial Root Token:' /vault/file/keys | awk '{print $NF}');
+	export ROOT_TOKEN=$(grep 'Initial Root Token:' /vault/file/keys | awk '{print $NF}');
 	vault login $ROOT_TOKEN 2>&1 > /dev/null;
 
 	#update .env with VAULT_TOKEN
