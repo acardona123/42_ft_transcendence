@@ -45,9 +45,9 @@ class SceneBoot extends Phaser.Scene{
 		this.#createPlayers();
 
 		//examples of pool use:
-		let one_pipe_pair = this.#pipes_pairs_pool.getPipePair(100, 100, 400);
-		let one_pipe_pair1 = this.#pipes_pairs_pool.getPipePair(100, 0, 700);
-		let one_pipe_pair2 = this.#pipes_pairs_pool.getPipePair(100, -100, 1000);
+		this.#active_pipes.push(this.#pipes_pairs_pool.getPipePair(400, 100, 400));
+		this.#active_pipes.push(this.#pipes_pairs_pool.getPipePair(400, 0, 1000));
+		this.#active_pipes.push(this.#pipes_pairs_pool.getPipePair(400, -100, 1800));
 	}
 		#createPipesPool()
 		{
@@ -60,12 +60,36 @@ class SceneBoot extends Phaser.Scene{
 		#createGround(){
 			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
 		}
+
 		#createPlayers(){
 			this.player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
 			this.player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
 		}
+
+
 	
-		update(){
-			this.player1.update(300);
+		update(time, delta){
+			const velocity_x = 200; //will be increasing during the round
+			this.#update_players(velocity_x);
+			this.#update_ground(velocity_x, delta);
+			this.#update_pipes(velocity_x);
 		}
+			#update_players(velocity_x){
+				this.player1.update(velocity_x);
+				this.player2.update(velocity_x);
+			}
+			#update_ground(velocity_x, delta){
+				this.#ground.update(velocity_x, delta);
+			}
+			#update_pipes(velocity_x){
+				this.#active_pipes.forEach(pipe_pair => {
+					pipe_pair.body.setVelocityX(-velocity_x);
+
+					//test repositioning
+					if (pipe_pair.body.x < - pipe_pair.width){
+						pipe_pair.body.x = gameConfig.width;
+					}
+				})
+			}
+
 }
