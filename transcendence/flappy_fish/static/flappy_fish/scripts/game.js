@@ -31,6 +31,7 @@ const gameConfig = {
 
 	ground: {
 		height: 100,
+		speed_factor : 1
 	},
 	pipe :{
 		head_width : 250,

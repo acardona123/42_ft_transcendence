@@ -58,10 +58,7 @@ class SceneBoot extends Phaser.Scene{
 			this.#pipes_pairs_pool = new PipePairsPool(this, this.#pipes_group, pipe_textures, gameConfig.pipes_pool_size);
 		}
 		#createGround(){
-			this.#ground = this.add.tileSprite(0, gameConfig.height - gameConfig.ground.height, gameConfig.width, gameTextures.ground.height, this.#loaded_textures_names.ground);
-			this.#ground.setScale(1, gameConfig.ground.height / gameTextures.ground.height);
-			this.#ground.setOrigin(0,0);
-			this.depth = gameConfig.depth.ground;
+			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
 		}
 		#createPlayers(){
 			this.player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
