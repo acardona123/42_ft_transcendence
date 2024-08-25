@@ -66,7 +66,7 @@ const gameConfig = {
 	depth: {
 		ground: 0,
 		pipes: -1,
-		player: -1,
+		players: -1,
 		background: -1
 	},
 	preload: function() {

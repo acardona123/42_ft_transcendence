@@ -23,10 +23,11 @@ class Player{
 		} else if (texture.type === "sprite"){
 			this.object = this.#scene.add.sprite(init_x, init_y, this.#texture_loaded_name);
 		}
+		this.object.depth = gameConfig.depth.players;
 	}
 
 	#resizeObject(new_width, new_height){
-		this.#rescaleObject();
+		this.#rescaleObject(new_width, new_height);
 		this.#updateObjectDimensions();
 	}
 		#rescaleObject(new_width, new_height){
