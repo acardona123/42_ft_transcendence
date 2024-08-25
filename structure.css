@@ -6,19 +6,18 @@
 	color: #cccccc;
 }
 
-.container {
+.global-container {
 	display: grid;
 	grid-template-columns: 100fr 1fr 200fr;
 	grid-template-rows: 1fr 0fr 1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
-	min-height: 30vh;
 }
 
 .sec-friends {
 	grid-area: 1 / 1 / 4 / 1;
 	/* background: #30bdd4; */
-	height: 50vh;
+	height: 100vh;
 }
 
 .sec-friends-line {

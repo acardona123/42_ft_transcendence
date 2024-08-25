@@ -3,11 +3,11 @@
 	scroll-behavior: smooth;
 	scrollbar-color: black grey;
 	scrollbar-width: thin;
-	max-height: 50%;
+	max-height: 60%;
 	padding-right: 10px;
 }
 
-.friends-div {
+.friend-div {
 	width: 100%;
 	margin-bottom: 5px;
 	margin-right: 5px;
@@ -15,17 +15,42 @@
 	border-radius: 2vh;
 }
 
-.friends-div:hover {
+.friend-div:hover {
 	border: 3px solid #634829;
 	background-color: #72533085;
 	box-shadow: inset 3px 3px 3px #725330;
 }
 
 .profil-pic {
-
-	width: 25%;
+	width: 100%;
 	object-fit: cover;
 	border-radius: 50%;
 	aspect-ratio: 1/1;
 	padding: 5px;
+}
+
+.friend-container {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 1fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+.friend-text {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	font-size: large;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.friend-online-dot {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
