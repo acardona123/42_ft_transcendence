@@ -52,7 +52,7 @@ const gameConfig = {
 	player: {
 		width: 816 * 0.2,
 		height: 576 * 0.2,
-		alpha: 0.8,
+		alpha: 0.6,
 		position_x: 100,
 		gravity_intensity: 600,
 		jump_strength : 100,
