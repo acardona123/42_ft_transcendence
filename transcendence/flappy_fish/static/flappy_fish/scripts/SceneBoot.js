@@ -42,9 +42,7 @@ class SceneBoot extends Phaser.Scene{
 
 		this.#createGround();
 		this.#createPipesPool();
-		
-		this.player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
-		this.player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
+		this.#createPlayers();
 
 		//examples of pool use:
 		let one_pipe_pair = this.#pipes_pairs_pool.getPipePair(100, 100, 400);
@@ -64,6 +62,10 @@ class SceneBoot extends Phaser.Scene{
 			this.#ground.setScale(1, gameConfig.ground.height / gameTextures.ground.height);
 			this.#ground.setOrigin(0,0);
 			this.depth = gameConfig.depth.ground;
+		}
+		#createPlayers(){
+			this.player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
+			this.player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
 		}
 	
 		update(){
