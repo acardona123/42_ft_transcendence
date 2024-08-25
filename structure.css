@@ -17,27 +17,28 @@
 
 .sec-friends {
 	grid-area: 1 / 1 / 4 / 1;
-	background: #30bdd4;
+	/* background: #30bdd4; */
+	height: 50vh;
 }
 
 .sec-friends-line {
 	grid-area: 1 / 2 / 4 / 2;
-	background: #30bdd4;
+	/* background: #30bdd4; */
 }
 
 .sec-stats-line {
 	grid-area: 2 / 2 / 3 / 4;
-	background: #a5913b;
+	/* background: #a5913b; */
 }
 
 .sec-stats {
 	grid-area: 1 / 3 / 2 / 3;
-	background: #a5913b;
+	/* background: #a5913b; */
 }
 
 .sec-history {
 	grid-area: 3 / 3 / 4 / 3;
-	background: #377602;
+	/* background: #377602; */
 }
 
 .line-vertical {
