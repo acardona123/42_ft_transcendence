@@ -6,7 +6,9 @@ const gameTextures = {
 		},
 		// pipe_spacer: new Texture("pipe_spacer", "images/to_dell_test.png", "image", 1536, 2048),
 		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
-		ground: new Texture("ground", "images/ground.png", "image", 336, 112)
+		ground: new Texture("ground", "images/ground.png", "image", 336, 112),
+		player1: new Texture("player1", "images/bird.png", "image", 816, 576),
+		player2: new Texture("player2", "images/bird1.png", "image", 816, 576),
 	}
 
 let gameMode = {
@@ -47,6 +49,14 @@ const gameConfig = {
 		horizontal_distance_min: 200,
 	},
 	pipes_pool_size: 8,
+	player: {
+		width: 816 * 0.2,
+		height: 576 * 0.2,
+		alpha: 0.8,
+		position_x: 100,
+		gravity_intensity: 600,
+		jump_strength : 100,
+	},
 
 	
 	scale: {
