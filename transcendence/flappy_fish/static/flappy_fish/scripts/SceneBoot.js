@@ -15,7 +15,7 @@ class SceneBoot extends Phaser.Scene{
 			pipe_head: "tex_pipe_head",
 			pipe_spacer: "tex_pipe_spacer",
 			ground: "tex_ground",
-			player1 : "tex_player1",
+			player1: "tex_player1",
 			player2: "tex_player2",
 		}
 	}
@@ -62,11 +62,9 @@ class SceneBoot extends Phaser.Scene{
 		}
 
 		#createPlayers(){
-			this.player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
-			this.player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
+			this.#player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
+			this.#player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
 		}
-
-
 	
 		update(time, delta){
 			const velocity_x = 200; //will be increasing during the round
@@ -75,8 +73,8 @@ class SceneBoot extends Phaser.Scene{
 			this.#update_pipes(velocity_x);
 		}
 			#update_players(velocity_x){
-				this.player1.update(velocity_x);
-				this.player2.update(velocity_x);
+				this.#player1.update(velocity_x);
+				this.#player2.update(velocity_x);
 			}
 			#update_ground(velocity_x, delta){
 				this.#ground.update(velocity_x, delta);
