@@ -21,7 +21,7 @@ class PipePairsPool {
         }
     }
 
-    getPipePair(targeted_spacer_height, offset_to_middle = 0, x = gameConfig.width + this.width/2) {
+    getPipePair(targeted_spacer_height, offset_to_middle = 0, x = gameConfig.width) {
 		if (this.#pool.length > 0) {
 			let pipePair = this.#pool.pop();
 			pipePair.reactivate(targeted_spacer_height, offset_to_middle, x)
