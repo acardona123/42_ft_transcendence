@@ -90,19 +90,23 @@ class SceneBoot extends Phaser.Scene{
 
 	
 		update(time, delta){
-			const velocity_x = 200; //will be increasing during the round
-			this.#update_players(velocity_x);
-			this.#update_ground(velocity_x, delta);
-			this.#update_pipes(velocity_x);
+			this.#updateVelocities(delta)
 		}
-			#update_players(velocity_x){
+
+		#updateVelocities(delta){
+			const velocity_x = 200; //will be increasing during the round
+			this.#updateVelocityPlayers(velocity_x);
+			this.#updateVelocityGround(velocity_x, delta);
+			this.#updateVelocityPipes(velocity_x);
+		}
+			#updateVelocityPlayers(velocity_x){
 				this.#player1.update(velocity_x);
 				this.#player2.update(velocity_x);
 			}
-			#update_ground(velocity_x, delta){
+			#updateVelocityGround(velocity_x, delta){
 				this.#ground.update(velocity_x, delta);
 			}
-			#update_pipes(velocity_x){
+			#updateVelocityPipes(velocity_x){
 				this.#active_pipes.forEach(pipe_pair => {
 					pipe_pair.body.setVelocityX(-velocity_x);
 
