@@ -75,6 +75,8 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
 database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
@@ -91,11 +93,12 @@ if (database_name.endswith('_dev') == False):
 			'PASSWORD': cred["data"]['password'],
 			'HOST': database_name,
 			'PORT': '5432',
-		}
+			'OPTIONS': {
+				"assume_role": os.getenv('DB_ROLE'),
+			},
+		},
 	}
 else:
-	from dotenv import load_dotenv
-	load_dotenv()
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql',
