@@ -100,11 +100,11 @@ function getFriendList()
 	});
 
 	offlineFriendList.sort((a, b) =>
-		{
-			const name1 = a.pseudo.toLowerCase();
-			const name2 = b.pseudo.toLowerCase();
-			return name1.localeCompare(name2);
-		});
+	{
+		const name1 = a.pseudo.toLowerCase();
+		const name2 = b.pseudo.toLowerCase();
+		return name1.localeCompare(name2);
+	});
 
 	return onlineFriendList.concat(offlineFriendList);
 }
@@ -124,4 +124,17 @@ function construct_friend_list()
 	}
 }
 
+function click_button_add_friend(event)
+{
+	// console.log(event.currentTarget);
+	// open a new window with a prompt and a button
+}
+
+function setup_friends_button()
+{
+	const elem = document.getElementById("add-friend-button");
+	elem.onclick = click_button_add_friend
+}
+
+setup_friends_button();
 construct_friend_list();

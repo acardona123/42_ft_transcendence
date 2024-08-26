@@ -65,31 +65,3 @@
 	border: 2px solid #1b1b1b;
 	background-color: #1b1b1b;
 }
-
-/* === MODAL ADD FRIEND === */
-
-.custom-modal-add-friend-dialog {
-    /* display: flex; */
-    /* align-items: flex-end; */
-    /* justify-content: center; */
-
-    padding: 8px;
-    border-radius: 20px !important;
-
-    height: 10vh !important;
-    width: 10vw !important;
-
-    max-width: none !important;
-    max-height: none !important;
-    background-color: black !important;
-
-}
-
-.custom-modal-add-friend-content {
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px !important;
-    background-color: pink !important;
-}
-/* ================================================ */
