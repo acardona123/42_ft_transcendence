@@ -19,9 +19,9 @@ class Player{
 		const init_x = gameConfig.player.position_x;
 		const init_y = (gameConfig.height - gameConfig.ground.height) / 2
 		if (this.#texture.type === "image"){
-			this.object = this.#scene.add.image(init_x, init_y, this.#texture_loaded_name);
+			this.object = this.#scene.physics.add.image(init_x, init_y, this.#texture_loaded_name);
 		} else if (texture.type === "sprite"){
-			this.object = this.#scene.add.sprite(init_x, init_y, this.#texture_loaded_name);
+			this.object = this.#scene.physics.add.sprite(init_x, init_y, this.#texture_loaded_name);
 		}
 		this.object.depth = gameConfig.depth.players;
 		this.object.setAlpha(gameConfig.player.alpha);
@@ -47,21 +47,25 @@ class Player{
 	#addPhysics(){
 		this.#enablePhysic();
 		this.#addGravity();
+		this.#addBorderCollision();
 	}
 		#enablePhysic(){
 			this.#scene.physics.world.enable(this.object);
 		}
 		#addGravity(){
-			this.object.body.setGravityY(gameConfig.player.gravity_intensity);
+			this.object.setGravityY(gameConfig.player.gravity_intensity);
+		}
+		#addBorderCollision(){
+			this.object.setCollideWorldBounds(true, 0, 0);
 		}
 
 	jump(){
-		this.object.body.setVelocityY(-gameConfig.player.jump_strength);
+		this.object.setVelocityY(-gameConfig.player.jump_strength);
 	}
 
 	update(velocity_x){
 		const velocity_y = this.object.body.velocity.y;
-		const angle = Math.atan(velocity_y/velocity_x);
+		const angle = Math.max(Math.atan(velocity_y/velocity_x), -0.17); 
 		this.object.rotation = angle;
 	}
 
