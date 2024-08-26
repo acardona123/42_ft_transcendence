@@ -43,6 +43,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#createGround();
 		this.#createPipesPool();
 		this.#createPlayers();
+		this.#createPhysicalInteractions();
 
 		//examples of pool use:
 		this.#active_pipes.push(this.#pipes_pairs_pool.getPipePair(400, 100, 400));
@@ -57,6 +58,7 @@ class SceneBoot extends Phaser.Scene{
 				spacer: this.#loaded_textures_names.pipe_spacer}
 			this.#pipes_pairs_pool = new PipePairsPool(this, this.#pipes_group, pipe_textures, gameConfig.pipes_pool_size);
 		}
+
 		#createGround(){
 			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
 		}
@@ -65,6 +67,27 @@ class SceneBoot extends Phaser.Scene{
 			this.#player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
 			this.#player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
 		}
+
+		#createPhysicalInteractions(){
+			this.#createPlayerPipeCollision();
+			this.#createPlayerGroundCollision();
+
+		}
+			#createPlayerPipeCollision(){
+				this.physics.add.overlap(this.#player1.object, this.#pipes_group, () => {
+					console.log(`player1 lost`);
+					this.#player1.object.y = (gameConfig.height - gameConfig.ground.height) / 2;
+				});
+				this.physics.add.overlap(this.#player2.object, this.#pipes_group, () => {
+					console.log(`player2 lost`);
+					this.#player2.object.y = (gameConfig.height - gameConfig.ground.height) / 2;
+				});
+			}
+			#createPlayerGroundCollision(){
+				this.physics.add.collider(this.#player1.object, this.#ground.object);
+				this.physics.add.collider(this.#player2.object, this.#ground.object);
+			}
+
 	
 		update(time, delta){
 			const velocity_x = 200; //will be increasing during the round
