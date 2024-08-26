@@ -22,6 +22,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#pipe_group = pipe_group;
 		this.depth = gameConfig.depth.pipes;
 		this.#generateComponents(textures_names);
+		this.#setComponentsOrigin();
 		this.#calculateScales(spacer_height);
 		this.#resizeComponents();
 		this.#positionComponents();
@@ -43,9 +44,20 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.components.pipe_spacer = this.#scene.add.sprite(0, 0, textures_names.spacer);
 	}
 
+	#setComponentsOrigin(){
+		const container_components = [
+			this.components.top_pipe_core,
+			this.components.top_pipe_head,
+			this.components.pipe_spacer,
+			this.components.bottom_pipe_head,
+			this.components.bottom_pipe_core
+		]
+		container_components.forEach(component => {
+			component.setOrigin(0.5, 0);
+		});
+	}
+
 	#calculateScales(targeted_spacer_height){
-		
-		
 		this.scales = {};
 		this.#calculateScaleCore();
 		this.#calculateScaleHead();
@@ -107,7 +119,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#verticallyAlignComponent(container_components);
 	}
 		#positionFirstComponent(container_components){
-			container_components[0].setOrigin(0.5, 0);
+			container_components[0];
 			container_components[0].y = - (this.#pipe_core_height + gameConfig.pipe.head_height + this.#spacer_height / 2);
 		}
 		#verticallyAlignComponent(container_components){
@@ -193,7 +205,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		}
 
 		#moveToInitialPosition(offset_to_middle = 0, x = gameConfig.width + this.width/2){
-			this.x = x;
+			this.x = x - this.width/2;
 			this.setVerticalOffset(offset_to_middle);
 		}
 		#showComponents(){

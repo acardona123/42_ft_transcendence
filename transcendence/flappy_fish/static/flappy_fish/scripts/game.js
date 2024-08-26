@@ -34,9 +34,9 @@ const gameConfig = {
 		speed_factor : 1
 	},
 	pipe :{
-		head_width : 250,
-		head_height: 120,
-		core_width: 230,
+		head_width : 250 * 0.7,
+		head_height: 120 * 0.7,
+		core_width: 230 * 0.7,
 	},
 	pipe_spacer: {
 		height_default: 200,
@@ -51,8 +51,8 @@ const gameConfig = {
 	},
 	pipes_pool_size: 8,
 	player: {
-		width: 816 * 0.2,
-		height: 576 * 0.2,
+		width: 816 * 0.15,
+		height: 576 * 0.15,
 		alpha: 0.6,
 		position_x: 100,
 		gravity_intensity: 600,
