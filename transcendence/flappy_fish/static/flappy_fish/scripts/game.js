@@ -26,12 +26,16 @@ const gameConfig = {
 	parent: "phaser_flappy_fish_game", //html DOM element or id
 	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
-	width: 1920,
-	height: 1200,
+	width: 1920 * 1.5,
+	height: 1200 * 1.5,
 
 	controls: {
 		player1: Phaser.Input.Keyboard.KeyCodes.SPACE,
 		player2: Phaser.Input.Keyboard.KeyCodes.ENTER
+	},
+	velocity_x: {
+		init_value: 350,
+		acceleration: 0,
 	},
 
 	pipes_pool_size: 8,
@@ -53,13 +57,14 @@ const gameConfig = {
 		core_width: 230 * 0.7,
 	},
 	pipe_spacer: {
-		height_default: 200,
+		height_default: 350,
 		height_min : 0,
 		height_max: 900,
 		width: 100,
 	},
 	pipe_repartition: {
-		vertical_offset_max: 500,
+		vertical_offset_max: 300,
+		horizontal_distance_default: 600,
 		horizontal_distance_max: 1500,
 		horizontal_distance_min: 200,
 	},
