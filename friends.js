@@ -19,6 +19,8 @@ function getFriendDiv()
 {
 	const div_object = document.createElement('div');
 	div_object.className = "friend-div friend-container";
+	div_object.onmouseenter = remove_friend_enter;
+	div_object.onmouseleave = remove_friend_leave;
 	return div_object;
 }
 
@@ -32,16 +34,49 @@ function getFriendPseudo(friendInfo)
 
 function getFriendOnline(friendInfo)
 {
-	const isOnline = friendInfo.online; // get from back
+	const isOnline = friendInfo.online;
 	const online_dot_div = document.createElement('div');
 	online_dot_div.style.position = "relative"
 
 	const online_dot_img = document.createElement('img');
 	online_dot_img.src = isOnline ? "./online.png" : "offline.png";
 	online_dot_img.className = "friend-online-dot";
+	online_dot_img.onclick = remove_friend;
 
-	online_dot_div.appendChild(online_dot_img)
+	online_dot_div.appendChild(online_dot_img);
 	return online_dot_div;
+}
+
+let lastReplacedImg = "";
+
+function remove_friend_enter(event)
+{
+	const elem = event.currentTarget.childNodes[2].childNodes[0];
+	lastOnlineBuffer = elem.src;
+	elem.src = "./remove_friend.png";
+}
+
+function remove_friend_leave(event)
+{
+	const elem = event.currentTarget.childNodes[2].childNodes[0];
+	elem.src = lastOnlineBuffer;
+}
+
+function remove_friend(event)
+{
+	const elem = event.currentTarget;
+	const pseudoToRemove = elem.parentNode.parentNode.childNodes[1].textContent;
+	// DELETE on database
+	// since no databse yet, do :
+	for (let i = 0; i < DBfriendList.length; i++)
+	{
+		if (pseudoToRemove == DBfriendList[i].pseudo)
+		{
+			DBfriendList.splice(i, 1);
+			break;
+		}
+	}
+	console.log(elem.parentNode.parentNode.remove())
 }
 
 function getFriendList()
@@ -76,12 +111,17 @@ function getFriendList()
 
 const friendList = getFriendList();
 
-for (let i = 0; i < DBfriendList.length; i++)
+function construct_friend_list()
 {
-	const friends_list = document.getElementById('friends-list');
-	const newElement = getFriendDiv(friendList[i]);
-	newElement.appendChild(getFriendProfilPic(friendList[i]));
-	newElement.appendChild(getFriendPseudo(friendList[i]));
-	newElement.appendChild(getFriendOnline(friendList[i]));
-	friends_list.appendChild(newElement);
+	for (let i = 0; i < DBfriendList.length; i++)
+	{
+		const friends_list = document.getElementById('friends-list');
+		const newElement = getFriendDiv(friendList[i]);
+		newElement.appendChild(getFriendProfilPic(friendList[i]));
+		newElement.appendChild(getFriendPseudo(friendList[i]));
+		newElement.appendChild(getFriendOnline(friendList[i]));
+		friends_list.appendChild(newElement);
+	}
 }
+
+construct_friend_list();
