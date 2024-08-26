@@ -78,8 +78,8 @@ def create_role(client, name):
 			name=name+'-role',
 			db_name=name,
 			creation_statements=creation_statements,
-			default_ttl='1h',
-			max_ttl='24h'
+			default_ttl='15m',
+			max_ttl='1h'
 		)
 
 def rotate_cred(client, name):
