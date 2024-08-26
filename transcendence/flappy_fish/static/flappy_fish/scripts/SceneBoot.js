@@ -7,6 +7,7 @@ class SceneBoot extends Phaser.Scene{
 	#ground;
 	#player1;
 	#player2;
+	#controls;
 
 	constructor(){
 		super("bootGame");
@@ -44,6 +45,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#createPipesPool();
 		this.#createPlayers();
 		this.#createPhysicalInteractions();
+		this.#createControls();
 
 		//examples of pool use:
 		this.#active_pipes.push(this.#pipes_pairs_pool.getPipePair(400, 100, 400));
@@ -75,11 +77,11 @@ class SceneBoot extends Phaser.Scene{
 		}
 			#createPlayerPipeCollision(){
 				this.physics.add.overlap(this.#player1.object, this.#pipes_group, () => {
-					console.log(`player1 lost`);
+					// console.log(`player1 lost`);
 					this.#player1.object.y = (gameConfig.height - gameConfig.ground.height) / 2;
 				});
 				this.physics.add.overlap(this.#player2.object, this.#pipes_group, () => {
-					console.log(`player2 lost`);
+					// console.log(`player2 lost`);
 					this.#player2.object.y = (gameConfig.height - gameConfig.ground.height) / 2;
 				});
 			}
@@ -88,6 +90,15 @@ class SceneBoot extends Phaser.Scene{
 				this.physics.add.collider(this.#player2.object, this.#ground.object);
 			}
 
+		#createControls(){
+			this.#controls = {
+				player1:  this.input.keyboard.addKey(gameConfig.controls.player1),
+				player2: this.input.keyboard.addKey(gameConfig.controls.player2)
+			};
+		}
+
+
+	//=== update ===
 	
 		update(time, delta){
 			this.#updateVelocities(delta)
@@ -115,6 +126,16 @@ class SceneBoot extends Phaser.Scene{
 						pipe_pair.body.x = gameConfig.width;
 					}
 				})
+			}
+		
+		#updateJumpPlayers(){
+			this.#updateJumpPlayer(this.#player1, this.#controls.player1);
+			this.#updateJumpPlayer(this.#player2, this.#controls.player2);
+		}
+			#updateJumpPlayer(player, jumpKey){
+				if (Phaser.Input.Keyboard.JustDown(jumpKey)){
+					player.jump();
+				}
 			}
 
 }

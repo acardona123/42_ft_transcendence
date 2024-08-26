@@ -29,6 +29,20 @@ const gameConfig = {
 	width: 1920,
 	height: 1200,
 
+	controls: {
+		player1: Phaser.Input.Keyboard.KeyCodes.SPACE,
+		player2: Phaser.Input.Keyboard.KeyCodes.ENTER
+	},
+
+	pipes_pool_size: 8,
+	player: {
+		width: 816 * 0.15,
+		height: 576 * 0.15,
+		alpha: 0.7,   
+		position_x: 100,
+		gravity_intensity: 3000,
+		jump_strength : 800,
+	},
 	ground: {
 		height: 100,
 		speed_factor : 1
@@ -48,15 +62,6 @@ const gameConfig = {
 		vertical_offset_max: 500,
 		horizontal_distance_max: 1500,
 		horizontal_distance_min: 200,
-	},
-	pipes_pool_size: 8,
-	player: {
-		width: 816 * 0.15,
-		height: 576 * 0.15,
-		alpha: 0.6,
-		position_x: 100,
-		gravity_intensity: 600,
-		jump_strength : 100,
 	},
 
 	
@@ -85,7 +90,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true
+			debug: false
 		}
 	},
 	
