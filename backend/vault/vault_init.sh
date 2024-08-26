@@ -44,6 +44,10 @@ else
 	#enable database
 	echo 'Enable database in Vault server...'
 	vault secrets enable database
+
+	#enable kv1
+	echo 'Enable kv1 in Vault server...'
+	vault secrets enable -path=secret kv-v1
 fi
 
 vault status > /vault/file/status;

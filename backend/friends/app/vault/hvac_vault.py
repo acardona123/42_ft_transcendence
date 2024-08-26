@@ -42,6 +42,8 @@ def unsealed(client):
 			client.sys.submit_unseal_key(os.getenv('VAULT_KEY'+str(i)))
 	return client
 
+# ------------DATABASE-------------
+
 def enable_database(client):
 	secrets_engine = client.sys.list_mounted_secrets_engines()
 	if 'database/' in secrets_engine:
@@ -92,3 +94,18 @@ def create_cred(client, name):
 		name=name+'-role'
 	)
 	return credentials
+
+# ------------ KV -------------
+
+def create_kv(client, path, secret):
+	load_dotenv()
+	client.secrets.kv.v1.create_or_update_secret(
+		path=path,
+		secret= secret,
+	)
+
+def read_kv(client, path):
+	return client.secrets.kv.v1.read_secret(path=path)
+
+def list_kv(client):
+	return client.secrets.kv.v1.list_secrets(path='')

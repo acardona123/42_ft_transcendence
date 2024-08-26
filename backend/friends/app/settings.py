@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%#j-h0g$pi!#!*xi9u*dc@mlgmh&zx24(e#c#^0c&bmb0=98i$'
+
+database_name = os.getenv("VAULT_DATABASE_NAME")
+
+if (database_name.endswith('_dev') == False):
+	from .vault.hvac_vault import create_client, read_kv
+
+	client = create_client()
+	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
+	cred = read_kv(client, path)
+	SECRET_KEY = cred['data'][database_name]
+else:
+	SECRET_KEY = os.getenv('SERCRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -72,12 +86,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-import os
-
-from dotenv import load_dotenv
-load_dotenv()
-database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
 	from .vault.hvac_vault import create_cred, create_client
