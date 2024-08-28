@@ -5,6 +5,7 @@ class SceneBoot extends Phaser.Scene{
 	#pipes_pairs_pool;
 	#active_pipes;
 	#ground;
+	#background;
 	#player1;
 	#player2;
 	#controls;
@@ -20,6 +21,7 @@ class SceneBoot extends Phaser.Scene{
 			pipe_head: "tex_pipe_head",
 			pipe_spacer: "tex_pipe_spacer",
 			ground: "tex_ground",
+			background: "tex_background",
 			player1: "tex_player1",
 			player2: "tex_player2",
 		}
@@ -36,6 +38,7 @@ class SceneBoot extends Phaser.Scene{
 		gameTextures.pipe.head.preloadOnScene(this, this.#loaded_textures_names.pipe_head);
 		gameTextures.pipe_spacer.preloadOnScene(this, this.#loaded_textures_names.pipe_spacer);
 		gameTextures.ground.preloadOnScene(this, this.#loaded_textures_names.ground);
+		gameTextures.background.preloadOnScene(this, this.#loaded_textures_names.background);
 		gameTextures.player1.preloadOnScene(this, this.#loaded_textures_names.player1);
 		gameTextures.player2.preloadOnScene(this, this.#loaded_textures_names.player2);
 	}
@@ -49,6 +52,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#new_pipes_pair_trigger = gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
 		this.#createGround();
+		this.#createBackground();
 		this.#createPipesPool();
 		this.#createPlayers();
 		this.#createPhysicalInteractions();
@@ -56,6 +60,14 @@ class SceneBoot extends Phaser.Scene{
 
 		this.#introduceNewPipePair();
 	}
+
+		#createGround(){
+			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
+		}
+
+		#createBackground(){
+			this.#background = new Background(this, this.#loaded_textures_names.background);
+		}
 
 		#createPipesPool()
 		{
@@ -69,10 +81,6 @@ class SceneBoot extends Phaser.Scene{
 			#calculatePipeWidth(){
 				return (Math.max(gameConfig.pipe.core_width, gameConfig.pipe.head_width))
 			}
-
-		#createGround(){
-			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
-		}
 
 		#createPlayers(){
 			this.#player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);

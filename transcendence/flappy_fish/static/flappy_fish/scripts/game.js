@@ -4,11 +4,11 @@ const gameTextures = {
 			core : new Texture("pipe_core", "images/pipe_core.png", "image", 230, 460),
 			head: new Texture("pipe_head", "images/pipe_head.png", "image", 250, 120),
 		},
-		// pipe_spacer: new Texture("pipe_spacer", "images/to_dell_test.png", "image", 1536, 2048),
 		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
-		ground: new Texture("ground", "images/ground.png", "image", 336, 112),
 		player1: new Texture("player1", "images/bird.png", "image", 816, 576),
 		player2: new Texture("player2", "images/bird1.png", "image", 816, 576),
+		ground: new Texture("ground", "images/ground.png", "image", 336, 112),
+		background: new Texture("background", "images/background.png", "image", 1781, 1785),
 	}
 
 let gameMode = {
@@ -38,7 +38,6 @@ const gameConfig = {
 		acceleration: 0,
 	},
 
-	pipes_pool_size: 8,
 	player: {
 		width: 816 * 0.15,
 		height: 576 * 0.15,
@@ -48,7 +47,7 @@ const gameConfig = {
 		jump_strength : 800,
 	},
 	ground: {
-		height: 100,
+		height: 200,
 		speed_factor : 1
 	},
 	pipe :{
@@ -78,7 +77,7 @@ const gameConfig = {
 		ground: 0,
 		pipes: -1,
 		players: -1,
-		background: -1
+		background: -2
 	},
 	preload: function() {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -95,7 +94,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false
+			debug: true
 		}
 	},
 	
