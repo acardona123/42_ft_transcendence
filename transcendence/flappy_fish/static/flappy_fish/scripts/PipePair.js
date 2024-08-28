@@ -64,7 +64,8 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#calculateScaleSpacer(targeted_spacer_height);
 	}
 		#calculateScaleCore(){
-			this.#pipe_core_height = gameConfig.height - gameConfig.ground.height - gameConfig.pipe_spacer.height_min - 2 * gameConfig.pipe.head_height;
+			const flyable_zone_height = gameConfig.height - gameConfig.ground.height - gameConfig.ceiling.height;
+			this.#pipe_core_height = flyable_zone_height - gameConfig.pipe_spacer.height_min - 2 * gameConfig.pipe.head_height;
 			this.scales.core = {
 				x: gameConfig.pipe.core_width / gameTextures.pipe.core.width,
 				y: this.#pipe_core_height / gameTextures.pipe.core.height
@@ -214,7 +215,13 @@ class PipePair extends Phaser.GameObjects.Container{
 
 	setVerticalOffset(offset_to_middle){
 		offset_to_middle = clamp(offset_to_middle, -gameConfig.pipe_repartition.vertical_offset_max, gameConfig.pipe_repartition.vertical_offset_max);
-		this.y = offset_to_middle + (gameConfig.height - gameConfig.ground.height) / 2;
+		this.y = this.#calculateFlyableZoneCenterY() + offset_to_middle;
 	}
+		#calculateFlyableZoneCenterY(){
+			const flyable_zone_min_y = gameConfig.ceiling.height
+			const flyable_zone_max_y = gameConfig.height - gameConfig.ground.height
+			const flyable_zone_center_y =  flyable_zone_min_y + (flyable_zone_max_y - flyable_zone_min_y) / 2
+			return (flyable_zone_center_y);
+		}
 
 }

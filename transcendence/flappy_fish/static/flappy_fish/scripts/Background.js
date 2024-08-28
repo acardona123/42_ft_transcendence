@@ -13,7 +13,7 @@ class Background {
 
 	#createObject(){
 		const coordinates_x = 0;
-		const coordinates_y = 0;
+		const coordinates_y = gameConfig.ceiling.height;
 		const width = gameConfig.width;
 		const height = gameTextures.background.height;
 		this.object = this.#scene.add.tileSprite(coordinates_x, coordinates_y, width, height, this.#loaded_texture_name);
@@ -22,6 +22,7 @@ class Background {
 	}
 
 	#resizeObject(){
-		this.object.setScale(1, (gameConfig.height - gameConfig.ground.height) / gameTextures.background.height);
+		const background_display_height = gameConfig.height - gameConfig.ground.height - gameConfig.ceiling.height;
+		this.object.setScale(1, background_display_height / gameTextures.background.height);
 	}
 }

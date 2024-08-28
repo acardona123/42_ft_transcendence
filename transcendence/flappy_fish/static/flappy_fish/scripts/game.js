@@ -7,6 +7,7 @@ const gameTextures = {
 		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
 		player1: new Texture("player1", "images/bird.png", "image", 816, 576),
 		player2: new Texture("player2", "images/bird1.png", "image", 816, 576),
+		ceiling: new Texture("ceiling", "images/ceiling.png", "image", 336, 112),
 		ground: new Texture("ground", "images/ground.png", "image", 336, 112),
 		background: new Texture("background", "images/background.png", "image", 1781, 1785),
 	}
@@ -14,7 +15,7 @@ const gameTextures = {
 let gameMode = {
 	activeBoosters: [],
 	maxTime: -1,
-	maxPoints: -1,
+	maxDeath: -1,
 	players:[],
 	bot_level: -1,
 }
@@ -38,13 +39,9 @@ const gameConfig = {
 		acceleration: 0,
 	},
 
-	player: {
-		width: 816 * 0.15,
-		height: 576 * 0.15,
-		alpha: 0.7,   
-		position_x: 100,
-		gravity_intensity: 3000,
-		jump_strength : 800,
+	ceiling :{
+		height : 200,
+		speed_factor: 1
 	},
 	ground: {
 		height: 200,
@@ -67,6 +64,14 @@ const gameConfig = {
 		horizontal_distance_max: 1500,
 		horizontal_distance_min: 200,
 	},
+	player: {
+		width: 816 * 0.15,
+		height: 576 * 0.15,
+		alpha: 0.7,   
+		position_x: 100,
+		gravity_intensity: 3000,
+		jump_strength : 800,
+	},
 
 	
 	scale: {
@@ -74,6 +79,9 @@ const gameConfig = {
 		mode: Phaser.Scale.FIT
 	},
 	depth: {
+		score: 1,
+		clock: 1,
+		ceiling: 0,
 		ground: 0,
 		pipes: -1,
 		players: -1,

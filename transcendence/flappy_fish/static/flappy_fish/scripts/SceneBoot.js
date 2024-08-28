@@ -5,6 +5,7 @@ class SceneBoot extends Phaser.Scene{
 	#pipes_pairs_pool;
 	#active_pipes;
 	#ground;
+	#ceiling;
 	#background;
 	#player1;
 	#player2;
@@ -20,6 +21,7 @@ class SceneBoot extends Phaser.Scene{
 			pipe_core: "tex_pipe_core",
 			pipe_head: "tex_pipe_head",
 			pipe_spacer: "tex_pipe_spacer",
+			ceiling: "tex_ceiling",
 			ground: "tex_ground",
 			background: "tex_background",
 			player1: "tex_player1",
@@ -37,6 +39,7 @@ class SceneBoot extends Phaser.Scene{
 		gameTextures.pipe.core.preloadOnScene(this, this.#loaded_textures_names.pipe_core);
 		gameTextures.pipe.head.preloadOnScene(this, this.#loaded_textures_names.pipe_head);
 		gameTextures.pipe_spacer.preloadOnScene(this, this.#loaded_textures_names.pipe_spacer);
+		gameTextures.ceiling.preloadOnScene(this, this.#loaded_textures_names.ceiling);
 		gameTextures.ground.preloadOnScene(this, this.#loaded_textures_names.ground);
 		gameTextures.background.preloadOnScene(this, this.#loaded_textures_names.background);
 		gameTextures.player1.preloadOnScene(this, this.#loaded_textures_names.player1);
@@ -52,6 +55,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#new_pipes_pair_trigger = gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
 		this.#createGround();
+		this.#createCeiling();
 		this.#createBackground();
 		this.#createPipesPool();
 		this.#createPlayers();
@@ -63,6 +67,10 @@ class SceneBoot extends Phaser.Scene{
 
 		#createGround(){
 			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
+		}
+
+		#createCeiling(){
+			this.#ceiling = new Ceiling(this, this.#loaded_textures_names.ceiling);
 		}
 
 		#createBackground(){
@@ -90,6 +98,7 @@ class SceneBoot extends Phaser.Scene{
 		#createPhysicalInteractions(){
 			this.#createPlayerPipeCollision();
 			this.#createPlayerGroundCollision();
+			this.#createPlayerCeilingCollision();
 
 		}
 			#createPlayerPipeCollision(){
@@ -105,6 +114,14 @@ class SceneBoot extends Phaser.Scene{
 					this.#repositionPlayer(this.#player1);
 				});
 				this.physics.add.collider(this.#player2.object, this.#ground.object, () => {
+					this.#repositionPlayer(this.#player2);
+				});
+			}
+			#createPlayerCeilingCollision(){
+				this.physics.add.collider(this.#player1.object, this.#ceiling.object, () => {
+					this.#repositionPlayer(this.#player1);
+				});
+				this.physics.add.collider(this.#player2.object, this.#ceiling.object, () => {
 					this.#repositionPlayer(this.#player2);
 				});
 			}
@@ -159,7 +176,7 @@ class SceneBoot extends Phaser.Scene{
 			}
 			#introduceNewPipePair(){
 				const targeted_spacer_height = gameConfig.pipe_spacer.height_default;
-				const offset_to_middle = this.#calculateRandomPipePairOffset()
+				const offset_to_middle = this.#calculateRandomPipePairOffset();
 				const new_pipe_pair = this.#pipes_pairs_pool.getPipePair(targeted_spacer_height, offset_to_middle);
 				this.#active_pipes.push(new_pipe_pair);
 
@@ -172,12 +189,16 @@ class SceneBoot extends Phaser.Scene{
 			const delta_sec = delta / 1000;
 			this.#velocity_x += delta_sec * gameConfig.velocity_x.acceleration;
 			this.#updateVelocityPlayers();
+			this.#updateVelocityCeiling(delta);
 			this.#updateVelocityGround(delta);
 			this.#updateVelocityPipes();
 		}
 			#updateVelocityPlayers(){
 				this.#player1.update(this.#velocity_x);
 				this.#player2.update(this.#velocity_x);
+			}
+			#updateVelocityCeiling(delta){
+				this.#ceiling.update(this.#velocity_x, delta);
 			}
 			#updateVelocityGround(delta){
 				this.#ground.update(this.#velocity_x, delta);
