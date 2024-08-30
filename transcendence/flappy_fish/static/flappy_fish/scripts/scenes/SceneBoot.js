@@ -1,6 +1,6 @@
 class SceneBoot extends Phaser.Scene{
 
-	#loaded_textures_names;
+	#scene_textures;
 	#pipes_group;
 	#pipes_pairs_pool;
 	#active_pipes;
@@ -17,33 +17,33 @@ class SceneBoot extends Phaser.Scene{
 
 	constructor(){
 		super("bootGame");
-		this.#loaded_textures_names = {
-			pipe_core: "tex_pipe_core",
-			pipe_head: "tex_pipe_head",
-			pipe_spacer: "tex_pipe_spacer",
-			ceiling: "tex_ceiling",
-			ground: "tex_ground",
-			background: "tex_background",
-			player1: "tex_player1",
-			player2: "tex_player2",
+		this.#scene_textures = {
+			pipe_core:		new SceneTexture(this,	"pipe_core",	gameTextures.pipe.core),
+			pipe_head:		new SceneTexture(this,	"pipe_head",	gameTextures.pipe.head),
+			pipe_spacer:	new SceneTexture(this,	"pipe_spacer",	gameTextures.pipe_spacer),
+			player1:		new SceneTexture(this,	"player1",		gameTextures.player1),
+			player2:		new SceneTexture(this,	"player2",		gameTextures.player2),
+			ceiling:		new SceneTexture(this,	"ceiling",		gameTextures.ceiling),
+			ground:			new SceneTexture(this,	"ground",		gameTextures.ground),
+			background:		new SceneTexture(this,	"background",	gameTextures.background)
 		}
 	}
 
 	//=== preload ===
 
 	preload(){
-		this.#preloadAllTextures();
+		this.#preloadAllSceneTextures();
 	}
 
-	#preloadAllTextures(){
-		gameTextures.pipe.core.preloadOnScene(this, this.#loaded_textures_names.pipe_core);
-		gameTextures.pipe.head.preloadOnScene(this, this.#loaded_textures_names.pipe_head);
-		gameTextures.pipe_spacer.preloadOnScene(this, this.#loaded_textures_names.pipe_spacer);
-		gameTextures.ceiling.preloadOnScene(this, this.#loaded_textures_names.ceiling);
-		gameTextures.ground.preloadOnScene(this, this.#loaded_textures_names.ground);
-		gameTextures.background.preloadOnScene(this, this.#loaded_textures_names.background);
-		gameTextures.player1.preloadOnScene(this, this.#loaded_textures_names.player1);
-		gameTextures.player2.preloadOnScene(this, this.#loaded_textures_names.player2);
+	#preloadAllSceneTextures(){
+		this.#scene_textures.pipe_core.preloadOnScene();
+		this.#scene_textures.pipe_head.preloadOnScene();
+		this.#scene_textures.pipe_spacer.preloadOnScene();
+		this.#scene_textures.ceiling.preloadOnScene();
+		this.#scene_textures.ground.preloadOnScene();
+		this.#scene_textures.background.preloadOnScene();
+		this.#scene_textures.player1.preloadOnScene();
+		this.#scene_textures.player2.preloadOnScene();
 	}
 
 	create(){
@@ -66,23 +66,23 @@ class SceneBoot extends Phaser.Scene{
 	}
 
 		#createGround(){
-			this.#ground = new Ground(this, this.#loaded_textures_names.ground);
+			this.#ground = new Ground(this.#scene_textures.ground);
 		}
 
 		#createCeiling(){
-			this.#ceiling = new Ceiling(this, this.#loaded_textures_names.ceiling);
+			this.#ceiling = new Ceiling(this.#scene_textures.ceiling);
 		}
 
 		#createBackground(){
-			this.#background = new Background(this, this.#loaded_textures_names.background);
+			this.#background = new Background(this.#scene_textures.background);
 		}
 
 		#createPipesPool()
 		{
 			const pipe_textures = {
-				core: this.#loaded_textures_names.pipe_core,
-				head: this.#loaded_textures_names.pipe_head,
-				spacer: this.#loaded_textures_names.pipe_spacer}
+				core: this.#scene_textures.pipe_core,
+				head: this.#scene_textures.pipe_head,
+				spacer: this.#scene_textures.pipe_spacer}
 			const pool_size = Math.fround(gameConfig.width / this.#calculatePipeWidth());
 			this.#pipes_pairs_pool = new PipePairsPool(this, this.#pipes_group, pipe_textures, pool_size);
 		}
@@ -91,8 +91,8 @@ class SceneBoot extends Phaser.Scene{
 			}
 
 		#createPlayers(){
-			this.#player1 = new Player(this, this.#loaded_textures_names.player1, gameTextures.player1);
-			this.#player2 = new Player(this, this.#loaded_textures_names.player2, gameTextures.player2);
+			this.#player1 = new Player(this.#scene_textures.player1);
+			this.#player2 = new Player(this.#scene_textures.player2);
 		}
 
 		#createPhysicalInteractions(){

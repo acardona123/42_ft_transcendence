@@ -12,7 +12,7 @@ class PipePair extends Phaser.GameObjects.Container{
 	constructor(
 		scene,
 		pipe_group,
-		textures_names,
+		pipe_textures,
 		spacer_height = gameConfig.pipe_spacer.height_default,
 		offset_to_middle = 0,
 		x = gameConfig.width + (Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width))/2
@@ -21,7 +21,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#scene = scene;
 		this.#pipe_group = pipe_group;
 		this.depth = gameConfig.depth.pipes;
-		this.#generateComponents(textures_names);
+		this.#generateComponents(pipe_textures);
 		this.#setComponentsOrigin();
 		this.#calculateScales(spacer_height);
 		this.#resizeComponents();
@@ -34,14 +34,14 @@ class PipePair extends Phaser.GameObjects.Container{
 
 	}
 
-	#generateComponents(textures_names){
+	#generateComponents(pipe_textures){
 		this.components = {};
 
-		this.components.top_pipe_core = this.#scene.add.sprite(0, 0, textures_names.core);
-		this.components.top_pipe_head = this.#scene.add.sprite(0, 0, textures_names.head);
-		this.components.bottom_pipe_core =  this.#scene.add.sprite(0, 0, textures_names.core);
-		this.components.bottom_pipe_head = this.#scene.add.sprite(0, 0, textures_names.head);
-		this.components.pipe_spacer = this.#scene.add.sprite(0, 0, textures_names.spacer);
+		this.components.top_pipe_core = pipe_textures.core.createOnScene();
+		this.components.top_pipe_head = pipe_textures.head.createOnScene();
+		this.components.bottom_pipe_core = pipe_textures.core.createOnScene();
+		this.components.bottom_pipe_head = pipe_textures.head.createOnScene();
+		this.components.pipe_spacer = pipe_textures.spacer.createOnScene();
 	}
 
 	#setComponentsOrigin(){

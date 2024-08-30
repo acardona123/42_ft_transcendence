@@ -1,15 +1,10 @@
 class Player{
-	#scene;
-	#texture;
-	#texture_loaded_name;
+	#scene_texture;
 	object;
 	scale;
 
-	constructor(scene, texture_loaded_name, texture){
-		this.#scene = scene;
-		this.#texture = texture;
-		this.#texture_loaded_name = texture_loaded_name;
-	
+	constructor(scene_texture){
+		this.#scene_texture = scene_texture;
 		this.#createObject();
 		this.#resizeObject(gameConfig.player.width, gameConfig.player.height);
 		this.#addPhysics();
@@ -17,12 +12,9 @@ class Player{
 
 	#createObject(){
 		const init_x = gameConfig.player.position_x;
-		const init_y = (gameConfig.height - gameConfig.ground.height) / 2
-		if (this.#texture.type === "image"){
-			this.object = this.#scene.physics.add.image(init_x, init_y, this.#texture_loaded_name);
-		} else if (texture.type === "sprite"){
-			this.object = this.#scene.physics.add.sprite(init_x, init_y, this.#texture_loaded_name);
-		}
+		const init_y = (gameConfig.height - gameConfig.ground.height) / 2;
+		const addToPhysics = true;
+		this.object = this.#scene_texture.createOnScene(init_x, init_y, addToPhysics),
 		this.object.depth = gameConfig.depth.players;
 		this.object.setAlpha(gameConfig.player.alpha);
 	}
@@ -33,15 +25,15 @@ class Player{
 	}
 		#rescaleObject(new_width, new_height){
 			this.scales = {
-				x: new_width / this.#texture.width,
-				y: new_height / this.#texture.height
+				x: new_width / this.#scene_texture.texture.width,
+				y: new_height / this.#scene_texture.texture.height
 			}
 			this.object.setScale(this.scales.x, this.scales.y);
 
 		}
 		#updateObjectDimensions(){
-			this.object.width = this.#texture.width * this.scales.x;
-			this.object.height = this.#texture.height * this.scales.y;
+			this.object.width = this.#scene_texture.texture.width * this.scales.x;
+			this.object.height = this.#scene_texture.texture.height * this.scales.y;
 		}
 
 	#addPhysics(){
@@ -50,7 +42,7 @@ class Player{
 		this.#addBorderCollision();
 	}
 		#enablePhysic(){
-			this.#scene.physics.world.enable(this.object);
+			this.#scene_texture.scene.physics.world.enable(this.object);
 		}
 		#addGravity(){
 			this.object.setGravityY(gameConfig.player.gravity_intensity);

@@ -1,15 +1,15 @@
 const assets_path = static_url + "flappy_fish/assets/"
 const gameTextures = {
 		pipe: {
-			core : new Texture("pipe_core", "images/pipe_core.png", "image", 230, 460),
-			head: new Texture("pipe_head", "images/pipe_head.png", "image", 250, 120),
+			core :		new Texture("images/pipe_core.png", "image", 230, 460),
+			head:		new Texture("images/pipe_head.png", "image", 250, 120),
 		},
-		pipe_spacer: new Texture("pipe_spacer", "images/pipe_spacer.png", "image", 1024, 884),
-		player1: new Texture("player1", "images/bird.png", "image", 816, 576),
-		player2: new Texture("player2", "images/bird1.png", "image", 816, 576),
-		ceiling: new Texture("ceiling", "images/ceiling.png", "image", 336, 112),
-		ground: new Texture("ground", "images/ground.png", "image", 336, 112),
-		background: new Texture("background", "images/background.png", "image", 1781, 1785),
+		pipe_spacer:	new Texture("images/pipe_spacer.png", "image", 1024, 884),
+		player1:		new Texture("images/bird.png", "image", 816, 576),
+		player2:		new Texture("images/bird1.png", "image", 816, 576),
+		ceiling:		new Texture("images/ceiling.png", "image", 336, 112),
+		ground:			new Texture("images/ground.png", "image", 336, 112),
+		background:		new Texture("images/background.png", "image", 1781, 1785),
 	}
 
 let gameMode = {
@@ -108,5 +108,3 @@ const gameConfig = {
 	
 	//audio:
 }
-
-var game= new Phaser.Game(gameConfig);
