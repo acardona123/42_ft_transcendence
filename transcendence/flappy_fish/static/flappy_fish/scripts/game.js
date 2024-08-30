@@ -72,15 +72,19 @@ const gameConfig = {
 		gravity_intensity: 3000,
 		jump_strength : 800,
 	},
-
+	textboard: {
+		font: '"Goudy Bookletter 1911", Times, serif',
+		fontSize: '300px',
+		color: 'white',
+		eccentricity: 100
+	},
 	
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 		mode: Phaser.Scale.FIT
 	},
 	depth: {
-		score: 1,
-		clock: 1,
+		textboard: 1,
 		ceiling: 0,
 		ground: 0,
 		pipes: -1,
