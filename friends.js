@@ -124,17 +124,68 @@ function construct_friend_list()
 	}
 }
 
-function click_button_add_friend(event)
+function position_friend_popup(popup_add_friend)
 {
-	// console.log(event.currentTarget);
-	// open a new window with a prompt and a button
+	const add_friend_button = document.getElementById("add-friend-button");
+	var rect = add_friend_button.getBoundingClientRect();
+
+	const offsetX = rect.right + 10;
+	const offsetY = rect.bottom - (popup_add_friend.bottom - popup_add_friend.top);
+
+	popup_add_friend.style.left = offsetX.toString() + "px";
+	popup_add_friend.style.top = offsetY.toString() + "px";
 }
 
-function setup_friends_button()
+function fill_add_popup(popup_add_friend)
+{
+	const button_add = document.createElement('button');
+	button_add.className = "add-friend-popup-button btn";
+	button_add.textContent = "Confirm";
+	const input_text = document.createElement('input');
+	input_text.className = "add-friend-pseudo-input";
+	input_text.type = "text";
+	input_text.id = "add_friend_pseudo_input";
+	input_text.placeholder = "Pseudonyme";
+	popup_add_friend.appendChild(input_text);
+	popup_add_friend.appendChild(button_add);
+}
+
+function click_button_add_friend()
+{
+	deactivate_friends_button();
+	const popup_add_friend = document.createElement('div');
+	popup_add_friend.id = "popup_add_friend";
+	popup_add_friend.className = "popup-add-friend";
+	popup_add_friend.style.zIndex = "1";
+
+	position_friend_popup(popup_add_friend);
+	fill_add_popup(popup_add_friend);
+
+	const friend_text_title = document.getElementById("friend-title");
+	friend_text_title.appendChild(popup_add_friend);
+}
+
+function activate_friends_button()
 {
 	const elem = document.getElementById("add-friend-button");
-	elem.onclick = click_button_add_friend
+	elem.onclick = click_button_add_friend;
 }
 
-setup_friends_button();
+function deactivate_friends_button()
+{
+	const elem = document.getElementById("add-friend-button");
+	elem.onclick = null;
+}
+
+function onWindowResize()
+{
+	if (document.getElementById("add-friend-button").onclick == null)
+	{
+		const popup_add_friend = document.getElementById("popup_add_friend");
+		position_friend_popup(popup_add_friend);
+	}
+}
+
+window.onresize = onWindowResize;
+activate_friends_button();
 construct_friend_list();

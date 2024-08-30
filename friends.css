@@ -22,6 +22,8 @@
 }
 
 .profil-pic {
+	align-self: center;
+	justify-self: center;
 	width: 100%;
 	object-fit: cover;
 	border-radius: 50%;
@@ -60,7 +62,11 @@
 .button-add-friend {
 	max-height: 50%;
 	margin-left: 10px;
-	/* padding-left: 10px; */
+}
+
+.button-add-friend:focus
+{
+	border: thick black solid;
 }
 
 .friend-title
@@ -81,4 +87,44 @@
 	color: #cccccc;
 	margin-top: auto;
 	margin-bottom: auto;
+}
+
+.popup-add-friend
+{
+	position: absolute;
+	width: 30vw;
+	min-height: 50px;
+	max-width: 300px;
+	border-radius: 1vh;
+	border: solid thin black;
+	background-color: #cccccc;
+	display: flex;
+	align-items: center;
+}
+
+.add-friend-pseudo-input
+{
+	margin-right: auto;
+	margin-left: 5%;
+	width: 70%;
+	max-width: 200px;
+}
+
+.add-friend-popup-button
+{
+	margin-left: auto;
+	margin-right: 5%;
+	position: relative;
+	left: 2%;
+
+	background-color: blueviolet;
+}
+
+.add-friend-popup-button:hover
+{
+	background-color: blue;
+}
+.add-friend-popup-button:focus
+{
+	background-color: red;
 }
