@@ -150,8 +150,10 @@ function fill_add_popup(popup_add_friend)
 	popup_add_friend.appendChild(button_add);
 }
 
-function click_button_add_friend()
+function click_button_add_friend(event)
 {
+	if (event.key != "Enter" && event.key != null)
+		return ;
 	deactivate_friends_button();
 	const popup_add_friend = document.createElement('div');
 	popup_add_friend.id = "popup_add_friend";
@@ -169,6 +171,7 @@ function activate_friends_button()
 {
 	const elem = document.getElementById("add-friend-button");
 	elem.onclick = click_button_add_friend;
+	elem.onkeydown = click_button_add_friend;
 }
 
 function deactivate_friends_button()

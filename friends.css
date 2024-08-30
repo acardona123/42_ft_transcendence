@@ -64,11 +64,6 @@
 	margin-left: 10px;
 }
 
-.button-add-friend:focus
-{
-	border: thick black solid;
-}
-
 .friend-title
 {
 	min-height: 50px;
