@@ -25,6 +25,7 @@ class Ground {
 	}
 
 	update(velocity, delay){
-		this.object.tilePositionX += velocity * delay / 1000 * gameConfig.ground.speed_factor;
+		const position_step =  velocity * delay / 1000 * gameConfig.ground.speed_factor;
+		this.object.tilePositionX += position_step;
 	}
 }

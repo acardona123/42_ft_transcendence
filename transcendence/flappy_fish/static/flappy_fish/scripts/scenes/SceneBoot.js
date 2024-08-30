@@ -145,7 +145,7 @@ class SceneBoot extends Phaser.Scene{
 	
 		update(time, delta){
 			this.#updatePipesPairRecycling()
-			this.#updateVelocities(time, delta)
+			this.#updateVelocities(delta)
 			this.#updateJumpPlayers();
 		}
 
