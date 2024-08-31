@@ -2,22 +2,22 @@
 class Score extends Phaser.GameObjects.Container{
 	#scene;
 	#player_index;
+	#icon_scene_texture;
 	#icon;
 	#text;
 
-	constructor(scene, player_index, icon_name, icon_type){
+	constructor(scene, player_index, icon_scene_texture){
 		super(scene);
 		this.#scene = scene;
 		this.#player_index = player_index;
-		if (gameConfig)
-			this.icon_name = this.#scene.add.image()
+		this.#icon_scene_texture = icon_scene_texture;
 	}
 		#addText(){
 			this.#text = new ScoreText(this.#scene, this.#player_index);
-		}
-		#addIcon(icon_name, icon_type){
-			
-		}
 
-	
+		}
+		#addIcon(){
+			this.#icon = this.#icon_scene_texture.createOnScene();
+			this.#icon_scene_texture.playAnimationOn(this.#icon);
+		}
 }
