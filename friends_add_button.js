@@ -21,7 +21,10 @@ function fill_add_popup(popup_add_friend)
 	input_text.type = "text";
 	input_text.id = "add_friend_pseudo_input";
 	input_text.placeholder = "Pseudonyme";
-	input_text.onkeydown = send_friend_request;
+	input_text.onkeydown = (event) => {
+		if (event.type == "keydown" && event.key == "Enter")
+			send_friend_request();
+		};
 	popup_add_friend.appendChild(input_text);
 	popup_add_friend.appendChild(button_add);
 }
@@ -94,11 +97,6 @@ function onWindowClick(event)
 
 function send_friend_request(event)
 {
-	if (event.type == "keydown")
-	{
-		if (event.key != "Enter")
-			return;
-	}
 	const input_zone = document.getElementById("add_friend_pseudo_input")
 	// send JSON to the back
 	// JSON.stringify({"pseudo" : input_zone.value});
