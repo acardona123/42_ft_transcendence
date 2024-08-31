@@ -15,11 +15,13 @@ function fill_add_popup(popup_add_friend)
 	const button_add = document.createElement('button');
 	button_add.className = "add-friend-popup-button btn";
 	button_add.textContent = "Confirm";
+	button_add.onclick = send_friend_request;
 	const input_text = document.createElement('input');
 	input_text.className = "add-friend-pseudo-input";
 	input_text.type = "text";
 	input_text.id = "add_friend_pseudo_input";
 	input_text.placeholder = "Pseudonyme";
+	input_text.onkeydown = send_friend_request;
 	popup_add_friend.appendChild(input_text);
 	popup_add_friend.appendChild(button_add);
 }
@@ -74,11 +76,9 @@ function deactivate_friends_button()
 
 function onWindowResize()
 {
-	if (document.getElementById("add_friend_button") != null)
-	{
-		const popup_add_friend = document.getElementById("popup_add_friend");
+	const popup_add_friend = document.getElementById("popup_add_friend");
+	if (popup_add_friend != null)
 		position_friend_popup(popup_add_friend);
-	}
 }
 
 function onWindowClick(event)
@@ -90,6 +90,20 @@ function onWindowClick(event)
 	}
 	if (!document.getElementById("popup_add_friend")?.contains(event.target))
 		remove_friends_popup();
+}
+
+function send_friend_request(event)
+{
+	if (event.type == "keydown")
+	{
+		if (event.key != "Enter")
+			return;
+	}
+	const input_zone = document.getElementById("add_friend_pseudo_input")
+	// send JSON to the back
+	// JSON.stringify({"pseudo" : input_zone.value});
+	
+	remove_friends_popup();
 }
 
 window.onresize = onWindowResize;
