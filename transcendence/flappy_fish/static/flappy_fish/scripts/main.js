@@ -1,6 +1,6 @@
 const player_index = Object.freeze({
-	PLAYER1: Symbol("left"),
-	PLAYER2: Symbol("right"),
+	PLAYER1: Symbol("player1"),
+	PLAYER2: Symbol("player2"),
 });
 
 function areLivesLimited(){

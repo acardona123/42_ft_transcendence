@@ -25,7 +25,8 @@ const gameConfig = {
 	version: 0.1,
 	
 	parent: "phaser_flappy_fish_game", //html DOM element or id
-	scene: [SceneBoot, ScenePlay, SceneGameFinished],
+	scene: [SceneTest, SceneBoot, ScenePlay, SceneGameFinished],
+	// scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
 	width: 1920 * 1.5,
 	height: 1200 * 1.5,
@@ -73,10 +74,11 @@ const gameConfig = {
 		jump_strength : 800,
 	},
 	textboard: {
+		height: 200,
+		icon_size: 175,
 		font: '"Goudy Bookletter 1911", Times, serif',
-		fontSize: '300px',
-		color: 'white',
-		eccentricity: 100
+		fontSize: '150px',
+		color: 'black',
 	},
 	
 	scale: {
@@ -84,7 +86,7 @@ const gameConfig = {
 		mode: Phaser.Scale.FIT
 	},
 	depth: {
-		textboard: 1,
+		textboard: {background: 1, text: 2},
 		ceiling: 0,
 		ground: 0,
 		pipes: -1,

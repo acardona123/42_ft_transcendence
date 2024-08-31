@@ -1,25 +1,34 @@
 class ScoreText extends AlignedText{
-	#player_index;
+	#player_index_symbol;
 	#value;
 
-	constructor(scene, player_index, x = 0, y = 0){
-		if (player_index != player_index.PLAYER1 && player_index != player_index.PLAYER2){
+	constructor(scene, player_index_symbol, x = 0, y = 0, width = -1){
+		if (player_index_symbol != player_index.PLAYER1 && player_index_symbol != player_index.PLAYER2){
 			throw new Error("Wrong player side for the scores")
 		}
+		
 		const score_text = '0';
-		const score_style = {fontFamily: gameConfig.score.font, fontSize: gameConfig.score.fontSize, fill: gameConfig.score.color};
-		const score_alignment = this.#getTextAlignmentFromPlayerIndex(player_index);
+		const score_style = {
+			fontFamily: gameConfig.textboard.font,
+			fontSize: gameConfig.textboard.fontSize,
+			fill: gameConfig.textboard.color
+		};
+		const score_alignment = (player_index === player_index.PLAYER1) ? text_alignment.ALIGN_LEFT : text_alignment.ALIGN_RIGHT;
 		super(scene, score_alignment, x, y, score_text, score_style);
-		this.#value = 0;
 		scene.add.existing(this);
+		
+		this.#player_index_symbol = player_index_symbol;
+		this.#value = 123456789;/////////////////////////////////////////////////
+
+		this.#limitWidth(width);
+		this.updateDisplay();
 	}
-		#getTextAlignmentFromPlayerIndex(player_index){
-			if (player_index === player_index.PLAYER1){
-				return (text_alignment.ALIGN_LEFT);
-			} else{
-				return (text_alignment.ALIGN_RIGHT);
-			}
+	#limitWidth(width){
+		if (width > 0){
+			this.setSize(width, this.height);
+			///////////////////////////////////////////truncate text here ?
 		}
+	}
 
 	getScore(){
 		return (this.#value);
@@ -39,10 +48,10 @@ class ScoreText extends AlignedText{
 	}
 
 	updateDisplay(){
-		if (this.#player_index === player_index.PLAYER1){
-			this.setText("x " + this.#value);
+		if (this.#player_index_symbol === player_index.PLAYER1){
+			this.setText("×" + this.#value);
 		} else {
-			this.setText(this.#value + " x");
+			this.setText(this.#value + "×");
 		}
 	}
 
