@@ -1,11 +1,11 @@
 const DBfriendList = [
-	{pseudo: "chat mechant", online: false, picture: "./tiger.jpeg"},
-	{pseudo: "kitty", online: true, picture: "./dog.webp"},
-	{pseudo: "gros chat", online: true, picture: "./tiger.jpeg"},
-	{pseudo: "rose", online: true, picture: "./flower.jpeg"},
-	{pseudo: "tigre", online: false, picture: "./tiger.jpeg"},
-	{pseudo: "jordi", online: true, picture: "./dog.webp"},
-	{pseudo: "fleur", online: false, picture: "./flower.jpeg"}
+	{pseudo: "chat mechant", online: false, picture: "./img/tiger.jpeg"},
+	{pseudo: "kitty", online: true, picture: "./img/dog.webp"},
+	{pseudo: "gros chat", online: true, picture: "./img/tiger.jpeg"},
+	{pseudo: "rose", online: true, picture: "./img/flower.jpeg"},
+	{pseudo: "tigre", online: false, picture: "./img/tiger.jpeg"},
+	{pseudo: "jordi", online: true, picture: "./img/dog.webp"},
+	{pseudo: "fleur", online: false, picture: "./img/flower.jpeg"}
 ]
 
 function getFriendProfilPic(friendInfo) {
@@ -39,7 +39,7 @@ function getFriendOnline(friendInfo)
 	online_dot_div.style.position = "relative"
 
 	const online_dot_img = document.createElement('img');
-	online_dot_img.src = isOnline ? "./online.png" : "offline.png";
+	online_dot_img.src = isOnline ? "./img/online.png" : "./img/offline.png";
 	online_dot_img.className = "friend-online-dot";
 	online_dot_img.onclick = remove_friend;
 
@@ -53,7 +53,7 @@ function remove_friend_enter(event)
 {
 	const elem = event.currentTarget.childNodes[2].childNodes[0];
 	lastOnlineBuffer = elem.src;
-	elem.src = "./remove_friend.png";
+	elem.src = "./img/remove_friend.png";
 }
 
 function remove_friend_leave(event)
