@@ -1,6 +1,15 @@
 .button-add-friend {
 	max-height: 50%;
 	margin-left: 10px;
+	transition: transform 1s;
+}
+
+.button-add-friend:hover {
+	transform: rotate(90deg);
+}
+
+.button-add-friend:focus {
+	transform: rotate(90deg);
 }
 
 .friend-title
