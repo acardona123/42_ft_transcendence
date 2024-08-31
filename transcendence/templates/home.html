@@ -12,6 +12,7 @@
     <div>No Profile Picture</div>
   {% endif %}
   <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <p></p><a href="{% url 'update-profile' %}">Update Profile</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a> |

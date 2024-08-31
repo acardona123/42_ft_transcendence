@@ -10,8 +10,8 @@ from .managers import CustomUserManager
 # there is hidden an id 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
-    pseudo = models.CharField(max_length=20)
-    phone = models.CharField(max_length=12)
+    pseudo = models.CharField(max_length=20, unique=True)
+    phone = models.CharField(max_length=12, unique=True)
     profile_picture = models.ImageField(
         _("profile picture"),
         default='default_profile_picture.jpg',
@@ -20,8 +20,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
     is_connected = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True) #user.is_authenticated already exist maybe useless to have the boolean is_active
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
