@@ -27,6 +27,4 @@ class StartingLine {
 		this.object.body.setImmovable(true);
 		this.object.body.setVelocity(-gameConfig.velocity_x.init_value, 0);
 	}
-
-
 }

@@ -17,7 +17,7 @@ const gameTextures = {
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: -1,
+	maxTime: 20,
 	maxDeath: -1,
 	players:[],
 	bot_level: -1,

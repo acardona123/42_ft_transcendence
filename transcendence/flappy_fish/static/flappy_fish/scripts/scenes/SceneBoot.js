@@ -122,7 +122,6 @@ class SceneBoot extends Phaser.Scene{
 			this.#starting_line = new StartingLine(this.#scene_textures.starting_line);
 		}
 
-
 		#createPhysicalInteractions(){
 			this.#createStartingLineInteraction();
 			this.#createPlayerPipeCollision();
@@ -157,8 +156,12 @@ class SceneBoot extends Phaser.Scene{
 				});
 			}
 				#actionPlayerDeath(player){
-					this.#repositionPlayer(player);
-					this.#addDeathToScoreboard(player);
+					if (!this.#textboard.doesPlayerHasRemainingLife(player.index)){
+						this.#gameOver();
+					} else {
+						this.#repositionPlayer(player);
+						this.#addDeathToScoreboard(player);
+					}
 				}
 					#repositionPlayer(player){
 						if (this.#atLeastOneActivePipePair()){
@@ -185,7 +188,7 @@ class SceneBoot extends Phaser.Scene{
 			this.#updatePipesPairRecycling()
 			this.#updateVelocities(delta)
 			this.#updateJumpPlayers();
-			this.#textboard.update();
+			this.#updateTextboard();
 		}
 
 		#updatePipesPairRecycling(){
@@ -256,4 +259,15 @@ class SceneBoot extends Phaser.Scene{
 					player.jump();
 				}
 			}
+		
+		#updateTextboard(){
+			this.#textboard.update();
+			if (this.#textboard.isTimeOver()){
+				this.#gameOver();
+			}
+		}
+
+		#gameOver(){
+			this.scene.start("GameFinished",this.#textboard.getAllValues());
+		}
 }

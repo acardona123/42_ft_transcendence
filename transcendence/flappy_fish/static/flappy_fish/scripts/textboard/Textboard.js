@@ -81,12 +81,48 @@ class Textboard extends Phaser.GameObjects.Container{
 			this.pauseClock.pause();
 		}
 
-		addDeath(player_index_symbole){
-			if (player_index_symbole === player_index.PLAYER1){
+		addDeath(player_index_symbol){
+			if (player_index_symbol === player_index.PLAYER1){
 				this.#score_player1.updatePlayerDied();
 			} else {
 				this.#score_player2.updatePlayerDied();
 			}
+		}
+		
+		getPlayerScore(player_index_symbol){
+			if (player_index_symbol === player_index.PLAYER1){
+				return (this.#score_player1.getScoreValue());
+			} else {
+				return (this.#score_player2.getScoreValue());
+			}
+		}
+
+		doesPlayerHasRemainingLife(player_index_symbol){
+			if (areLivesLimited()){
+				if (player_index_symbol ===  player_index.PLAYER1){
+					return (this.#score_player1.getScoreValue() > 0)
+				} else {
+					return (this.#score_player2.getScoreValue() > 0)
+				}
+			} else {
+				return (true);
+			}
+		}
+
+		isTimeOver(){
+			if (isTimeLimited()){
+				return (this.#clock.isTimeOver());
+			} else {
+				return (false);
+			}
+		}
+
+		getAllValues(){
+			return ({
+				score_player1: this.#score_player1.getScoreValue(),
+				score_player2: this.#score_player2.getScoreValue(),
+				past_time: this.#clock.getPastTime()
+			})
 		}
 
 }
