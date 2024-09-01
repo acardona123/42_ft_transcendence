@@ -8,7 +8,7 @@ function areLivesLimited(){
 }
 
 function isTimeLimited(){
-	return (gameMode.Time <= 0);
+	return (gameMode.maxTime > 0);
 }
 
 
