@@ -49,7 +49,6 @@
 	overflow: hidden;
 	background-color: #01b801;
 	border: thin solid rgb(54, 54, 54);
-	text-shadow: 1px 1px 3px #008000;
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
@@ -80,7 +79,6 @@
 	overflow: hidden;
 	background-color: #ca2530;
 	border: thin solid rgb(54, 54, 54);
-	text-shadow: 1px 1px 2px #7c181e;
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
