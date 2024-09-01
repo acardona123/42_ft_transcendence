@@ -1,14 +1,20 @@
 class SceneBoot extends Phaser.Scene{
 
 	#scene_textures;
+
 	#pipes_group;
 	#pipes_pairs_pool;
 	#active_pipes;
-	#ground;
+
+	#textboard;
 	#ceiling;
 	#background;
+	#ground;
+
+	#player_group;
 	#player1;
 	#player2;
+
 	#controls;
 
 	#velocity_x;
@@ -58,19 +64,22 @@ class SceneBoot extends Phaser.Scene{
 		this.#pipes_pair_horizontal_distance = gameConfig.pipe_repartition.horizontal_distance_default;
 		this.#new_pipes_pair_trigger = gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
-		this.#createGround();
+		this.#createTextboard();
 		this.#createCeiling();
 		this.#createBackground();
+		this.#createGround();
 		this.#createPipesPool();
 		this.#createPlayers();
 		this.#createPhysicalInteractions();
 		this.#createControls();
 
 		this.#introduceNewPipePair();
-	}
 
-		#createGround(){
-			this.#ground = new Ground(this.#scene_textures.ground);
+		//do a starting zone:
+		this.#textboard.start();
+	}
+		#createTextboard(){
+			this.#textboard = new Textboard(this, this.#scene_textures.textboard, this.#scene_textures.death, this.#scene_textures.player1, this.#scene_textures.player2);
 		}
 
 		#createCeiling(){
@@ -79,6 +88,10 @@ class SceneBoot extends Phaser.Scene{
 
 		#createBackground(){
 			this.#background = new Background(this.#scene_textures.background);
+		}
+
+		#createGround(){
+			this.#ground = new Ground(this.#scene_textures.ground);
 		}
 
 		#createPipesPool()
@@ -151,6 +164,7 @@ class SceneBoot extends Phaser.Scene{
 			this.#updatePipesPairRecycling()
 			this.#updateVelocities(delta)
 			this.#updateJumpPlayers();
+			this.#textboard.update();
 		}
 
 		#updatePipesPairRecycling(){

@@ -11,7 +11,7 @@ class Ceiling {
 
 	#createObject(){
 		const x = 0;
-		const y = 0;
+		const y = gameConfig.textboard.height;
 		const width = gameConfig.width;
 		const height = gameConfig.ceiling.height;
 		this.object = this.scene_texture.createTileSpriteScaledVertically(x, y, width, height);

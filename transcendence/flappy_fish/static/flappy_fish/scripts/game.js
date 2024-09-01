@@ -27,8 +27,8 @@ const gameConfig = {
 	version: 0.1,
 	
 	parent: "phaser_flappy_fish_game", //html DOM element or id
-	scene: [SceneTest, SceneBoot, ScenePlay, SceneGameFinished],
-	// scene: [SceneBoot, ScenePlay, SceneGameFinished],
+	// scene: [SceneTest, SceneBoot, ScenePlay, SceneGameFinished],
+	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
 	width: 1920 * 1.5,
 	height: 1200 * 1.5,
@@ -43,11 +43,11 @@ const gameConfig = {
 	},
 
 	ceiling :{
-		height : 200,
+		height : 100,
 		speed_factor: 1
 	},
 	ground: {
-		height: 200,
+		height: 100,
 		speed_factor : 1
 	},
 	pipe :{
@@ -92,7 +92,7 @@ const gameConfig = {
 		mode: Phaser.Scale.FIT
 	},
 	depth: {
-		textboard: {background: 1, text: 2},
+		textboard: 1,
 		ceiling: 0,
 		ground: 0,
 		pipes: -1,
