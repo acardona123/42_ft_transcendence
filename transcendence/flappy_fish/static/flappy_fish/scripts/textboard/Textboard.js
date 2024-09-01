@@ -27,26 +27,17 @@ class Textboard extends Phaser.GameObjects.Container{
 
 		}
 			#createBackground(texture_scene_background){
-				this.#createBackgroundObject(texture_scene_background);
-				this.#resizeBackgroundObject();
+				this.#background = texture_scene_background.createTileSprite(0, 0, this.width, this.height);
 				this.#background.setOrigin(0);
 			}
-				#createBackgroundObject(texture_scene_background){
-					this.#background = texture_scene_background.createOnScene();
-				}
-				#resizeBackgroundObject(){
-					const scale_x = this.width / this.#background.width;
-					const scale_y = this.height / this.#background.height;
-					this.#background.SetScale(scale_x, scale_y);
-				}
 			#createPlayersScores(texture_scene_death, texture_scene_player1, texture_scene_player2){
 				if (areLivesLimited()){
-					this.#score_player1 = new Score (this.#scene, player_index.PLAYER1, texture_scene_death, false);
-					this.#score_player2 = new Score (this.#scene, player_index.PLAYER2, texture_scene_death, true);
-				}
-				else{
 					this.#score_player1 = new Score (this.#scene, player_index.PLAYER1, texture_scene_player1, false);
 					this.#score_player2 = new Score (this.#scene, player_index.PLAYER2, texture_scene_player2, true);
+				}
+				else{
+					this.#score_player1 = new Score (this.#scene, player_index.PLAYER1, texture_scene_death, false);
+					this.#score_player2 = new Score (this.#scene, player_index.PLAYER2, texture_scene_death, true);
 				}
 			}
 			#createClock(){

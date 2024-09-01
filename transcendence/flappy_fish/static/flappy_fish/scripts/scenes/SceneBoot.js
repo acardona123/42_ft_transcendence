@@ -26,7 +26,8 @@ class SceneBoot extends Phaser.Scene{
 			ceiling:		new SceneTexture(this,	"ceiling",		gameTextures.ceiling),
 			ground:			new SceneTexture(this,	"ground",		gameTextures.ground),
 			background:		new SceneTexture(this,	"background",	gameTextures.background),
-			death:			new SceneTexture(this,	"death",		gameTextures.death)
+			death:			new SceneTexture(this,	"death",		gameTextures.death),
+			textboard:		new SceneTexture(this,	"textboard",	gameTextures.textboard)
 		}
 	}
 
@@ -46,6 +47,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#scene_textures.player1.preloadOnScene();
 		this.#scene_textures.player2.preloadOnScene();
 		this.#scene_textures.death.preloadOnScene();
+		this.#scene_textures.textboard.preloadOnScene();
 	}
 
 	create(){

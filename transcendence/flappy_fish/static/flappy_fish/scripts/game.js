@@ -11,12 +11,13 @@ const gameTextures = {
 		ground:			new Texture("images/ground.png", "image", 336, 112),
 		background:		new Texture("images/background.png", "image", 1781, 1785),
 		death:			new Texture("images/death.png", "image", 2118, 2256),
+		textboard:		new Texture("images/plank.jpg", "image", 256, 256),
 	}
 
 let gameMode = {
 	activeBoosters: [],
 	maxTime: -1,
-	maxDeath: -1,
+	maxDeath: 10,
 	players:[],
 	bot_level: -1,
 }
