@@ -18,7 +18,7 @@ class ScoreText extends AlignedText{
 		scene.add.existing(this);
 		
 		this.#player_index_symbol = player_index_symbol;
-		this.#value = 123456789;/////////////////////////////////////////////////
+		this.#value = 0;
 
 		this.#limitWidth(width);
 		this.updateDisplay();
@@ -26,7 +26,6 @@ class ScoreText extends AlignedText{
 	#limitWidth(width){
 		if (width > 0){
 			this.setSize(width, this.height);
-			///////////////////////////////////////////truncate text here ?
 		}
 	}
 
@@ -48,12 +47,20 @@ class ScoreText extends AlignedText{
 	}
 
 	updateDisplay(){
+		let displayed_value = this.#generateDisplayedValue();
 		if (this.#player_index_symbol === player_index.PLAYER1){
-			this.setText("×" + this.#value);
+			this.setText("×" + displayed_value);
 		} else {
-			this.setText(this.#value + "×");
+			this.setText(displayed_value + "×");
 		}
 	}
+		#generateDisplayedValue(){
+			if (this.#value > 99){
+				return ("99˖")
+			} else {
+				return (this.#value);
+			}
+		}
 
 	greaterThan(number){
 		return (this.#value >= number)

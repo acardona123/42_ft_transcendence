@@ -24,9 +24,9 @@ class Score extends Phaser.GameObjects.Container{
 		this.#positionComponents();
 		this.#scene.add.existing(this);
 
-		this.#scene.physics.world.enable(this);
-		this.#scene.physics.world.enable(this.#icon);
-		this.#scene.physics.world.enable(this.#text);
+		this.#scene.physics.world.enable(this);//
+		this.#scene.physics.world.enable(this.#icon);//
+		this.#scene.physics.world.enable(this.#text);//
 	}
 
 	#addComponents(){
@@ -38,7 +38,7 @@ class Score extends Phaser.GameObjects.Container{
 			this.#icon_scene_texture.playAnimationOn(this.#icon);
 		}
 		#addText(){
-			this.#text = new ScoreText(this.#scene, this.#player_index_symbol);
+			this.#text = new ScoreText(this.#scene, this.#player_index_symbol, 0, 0, this.width - this.#icon_size);
 		}
 
 	#resizeComponents(){
@@ -47,8 +47,6 @@ class Score extends Phaser.GameObjects.Container{
 		#resizeIcon(){
 			const icon_scale = this.#calculateIconScale();
 			this.#icon.setScale(icon_scale);
-			this.#icon.width *= icon_scale;
-			this.#icon.height *= icon_scale;
 		}
 			#calculateIconScale(){
 				const icon_width = this.#icon_scene_texture.texture.width;
@@ -57,36 +55,33 @@ class Score extends Phaser.GameObjects.Container{
 				const size_of_critical_dimension = Math.max(icon_width, icon_height);
 				return(target_size / size_of_critical_dimension)
 			}
+	
+	#addComponentsToContainer(){
+		this.add([this.#icon, this.#text]);
+	}
 
 	#positionComponents(){
 		this.#setComponentsOrigins();
-		const componentsLeftToRight = this.#getComponentsLeftToRight()
-		this.#setFirstElementPosition(componentsLeftToRight[0]);
-		this.#alignComponents(componentsLeftToRight);
+		this.#alignComponents();
 	}
 		#setComponentsOrigins(){
-			this.#icon.setOrigin(0);
-			this.#text.setOrigin(0);
-		}
-		#getComponentsLeftToRight(){
 			if (this.#player_index_symbol === player_index.PLAYER1){
-				return ([this.#icon, this.#text]);
+				this.#icon.setOrigin(0, 0.5);
+				this.#text.setOrigin(0, 0.5);
 			} else {
-				return (this.#text, this.#icon);
+				this.#icon.setOrigin(1, 0.5);
+				this.#text.setOrigin(1, 0.5);
 			}
 		}
-		#setFirstElementPosition(first_element){
-			first_element.setPosition(-this.width / 2 , -first_element.height / 2);
+		#alignComponents(){
+			if (this.#player_index_symbol === player_index.PLAYER1){
+				this.#icon.setPosition(-this.width / 2, 0);
+				this.#text.setPosition(this.#icon_size - this.width / 2, 0);
+			} else {
+				this.#text.setPosition(this.width / 2 -this.#icon_size, 0);
+				this.#icon.setPosition(this.width / 2, 0)
+			}
 		}
-		#alignComponents(componentsLeftToRight){
-			Phaser.Actions.AlignTo(componentsLeftToRight, Phaser.Display.Align.RIGHT_CENTER);
-		}
-	
-	#addComponentsToContainer(){
-		// this.add(this.#icon);
-		// this.add(this.#text);
-		this.add([this.#icon, this.#text]);
-	}
 
 	updatePlayerDied(){
 		if (areLivesLimited()){
@@ -94,5 +89,9 @@ class Score extends Phaser.GameObjects.Container{
 		} else {
 			this.#text.addPoints(1);
 		}
+	}
+
+	getScoreValue(){
+		return (this.#text.getScore());
 	}
 }
