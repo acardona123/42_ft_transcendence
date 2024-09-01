@@ -59,6 +59,7 @@ class SceneBoot extends Phaser.Scene{
 	create(){
 		this.physics.world.collideDebug = true;
 		this.#pipes_group = this.physics.add.group();
+this.#player_group = this.physics.add.group();
 		this.#active_pipes = []
 		this.#velocity_x = gameConfig.velocity_x.init_value;
 		this.#pipes_pair_horizontal_distance = gameConfig.pipe_repartition.horizontal_distance_default;
@@ -108,8 +109,8 @@ class SceneBoot extends Phaser.Scene{
 			}
 
 		#createPlayers(){
-			this.#player1 = new Player(this.#scene_textures.player1);
-			this.#player2 = new Player(this.#scene_textures.player2);
+			this.#player1 = new Player(this.#player_group, player_index.PLAYER1, this.#scene_textures.player1);
+			this.#player2 = new Player(this.#player_group, player_index.PLAYER2, this.#scene_textures.player2);
 		}
 
 		#createPhysicalInteractions(){
@@ -119,35 +120,33 @@ class SceneBoot extends Phaser.Scene{
 
 		}
 			#createPlayerPipeCollision(){
-				this.physics.add.overlap(this.#player1.object, this.#pipes_group, () => {
-					this.#repositionPlayer(this.#player1);
-				});
-				this.physics.add.overlap(this.#player2.object, this.#pipes_group, () => {
-					this.#repositionPlayer(this.#player2);
+				this.physics.add.collider(this.#player_group, this.#pipes_group, (player, pipe) => {
+					this.#actionPlayerDeath(player);
 				});
 			}
 			#createPlayerGroundCollision(){
-				this.physics.add.collider(this.#player1.object, this.#ground.object, () => {
-					this.#repositionPlayer(this.#player1);
-				});
-				this.physics.add.collider(this.#player2.object, this.#ground.object, () => {
-					this.#repositionPlayer(this.#player2);
+				this.physics.add.collider(this.#ground.object, this.#player_group, (ground, player) => {
+					this.#actionPlayerDeath(player);
 				});
 			}
 			#createPlayerCeilingCollision(){
-				this.physics.add.collider(this.#player1.object, this.#ceiling.object, () => {
-					this.#repositionPlayer(this.#player1);
+				this.physics.add.collider(this.#ceiling.object, this.#player_group, (ceiling, player) => {
+					this.#actionPlayerDeath(player);
 				});
-				this.physics.add.collider(this.#player2.object, this.#ceiling.object, () => {
-					this.#repositionPlayer(this.#player2);
-				});
+			}
+				#actionPlayerDeath(player){
+					this.#repositionPlayer(player);
+					this.#addDeathToScoreboard(player);
 			}
 				#repositionPlayer(player){
 					if (this.#atLeastOneActivePipePair()){
-						player.object.y = this.#active_pipes[0].y;
+							player.y = this.#active_pipes[0].y;
 					} else {
-						player.object.y = (gameConfig.height - gameConfig.ground.height) / 2;
+							player.y = (gameConfig.height - gameConfig.ground.height) / 2;
+						}
 					}
+					#addDeathToScoreboard(player){
+						this.#textboard.addDeath(player.index);
 				}
 
 		#createControls(){

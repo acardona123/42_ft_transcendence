@@ -134,9 +134,8 @@ class PipePair extends Phaser.GameObjects.Container{
 			this.components.bottom_pipe_head,
 			this.components.bottom_pipe_core
 		]
-		this.#enableBodies();
-		this.#makeBodiesImmovable();
 		this.#addComponentsToPipeGroup();
+		this.#makeBodiesImmovable();
 	}
 		#enableBodies(){
 			this.#physical_components.forEach(component => {

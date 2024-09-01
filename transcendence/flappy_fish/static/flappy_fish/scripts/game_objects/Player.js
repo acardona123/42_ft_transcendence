@@ -1,12 +1,17 @@
 class Player{
 	#scene_texture;
+	#group;
+	#index;
 	object;
 	scale;
 
-	constructor(scene_texture){
+	constructor(player_group, player_index_symbol, scene_texture){
+		this.#group = player_group;
 		this.#scene_texture = scene_texture;
+		this.#index = player_index_symbol;
 		this.#createObject();
 		this.#resizeObject(gameConfig.player.width, gameConfig.player.height);
+		player_group.add(this.object);
 		this.#addPhysics();
 	}
 
@@ -17,6 +22,8 @@ class Player{
 		this.object = this.#scene_texture.createOnScene(init_x, init_y, addToPhysics),
 		this.object.depth = gameConfig.depth.players;
 		this.object.setAlpha(gameConfig.player.alpha);
+		this.object.index = this.#index;
+
 	}
 
 	#resizeObject(new_width, new_height){

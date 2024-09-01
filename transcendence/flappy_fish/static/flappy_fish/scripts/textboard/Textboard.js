@@ -8,6 +8,7 @@ class Textboard extends Phaser.GameObjects.Container{
 	constructor(scene, texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2){
 		super(scene, gameConfig.width / 2, gameConfig.textboard.height / 2);
 		this.#scene = scene;
+		this.depth = gameConfig.depth.textboard;
 
 		this.#resize_textboard();
 		this.#createComponents(texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2);
@@ -80,5 +81,12 @@ class Textboard extends Phaser.GameObjects.Container{
 			this.pauseClock.pause();
 		}
 
+		addDeath(player_index_symbole){
+			if (player_index_symbole === player_index.PLAYER1){
+				this.#score_player1.updatePlayerDied();
+			} else {
+				this.#score_player2.updatePlayerDied();
+			}
+		}
 
 }
