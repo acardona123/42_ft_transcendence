@@ -20,6 +20,18 @@ function send_friend_request(event)
 	remove_friends_popup();
 }
 
+function accept_friend_req(event)
+{
+	const accepted_pseudo = event.target.previousSibling.textContent;
+	// send to back
+}
+
+function reject_friend_req(event)
+{
+	const rejected_pseudo = event.target.previousSibling.previousSibling.textContent;
+	// send to back
+}
+
 function get_requests_pseudo()
 {
 	// constant array since there is no back yet
@@ -57,10 +69,13 @@ function get_req_sub_container(request_info)
 	const button_accept = document.createElement('button');
 	button_accept.className = "req-accept-button btn";
 	button_accept.textContent = "Accept";
+	button_accept.onclick = accept_friend_req;
+
 
 	const button_reject = document.createElement('button');
 	button_reject.className = "req-reject-button btn";
 	button_reject.textContent = "Reject";
+	button_reject.onclick = reject_friend_req;
 
 	req_sub_container.appendChild(pseudo_text);
 	req_sub_container.appendChild(button_accept);
@@ -73,7 +88,6 @@ function generate_requests_list()
 {
 	const requests_pseudo = get_requests_pseudo();
 	const container = get_req_container();
-	console.log(container);
 
 	if (requests_pseudo.length == 0)
 	{

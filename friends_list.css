@@ -1,5 +1,6 @@
 .friends-list {
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	scroll-behavior: smooth;
 	scrollbar-color: black grey;
 	scrollbar-width: thin;
@@ -24,12 +25,13 @@
 
 .profil-pic {
 	align-self: center;
-	justify-self: center;
-	width: 100%;
+	justify-self: left;
+	width: 65%;
 	object-fit: cover;
 	border-radius: 50%;
 	aspect-ratio: 1/1;
-	padding: 5px;
+	border: 2px solid #684b2b;
+	margin: 5px;
 }
 
 .friend-container {

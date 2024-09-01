@@ -76,7 +76,7 @@ function remove_friend(event)
 			break;
 		}
 	}
-	console.log(elem.parentNode.parentNode.remove())
+	elem.parentNode.parentNode.remove()
 }
 
 function getFriendList()
