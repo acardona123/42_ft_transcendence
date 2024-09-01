@@ -214,13 +214,6 @@ class PipePair extends Phaser.GameObjects.Container{
 
 	setVerticalOffset(offset_to_middle){
 		offset_to_middle = clamp(offset_to_middle, -gameConfig.pipe_repartition.vertical_offset_max, gameConfig.pipe_repartition.vertical_offset_max);
-		this.y = this.#calculateFlyableZoneCenterY() + offset_to_middle;
+		this.y = flyable_zone_center_y + offset_to_middle;
 	}
-		#calculateFlyableZoneCenterY(){
-			const flyable_zone_min_y = gameConfig.ceiling.height
-			const flyable_zone_max_y = gameConfig.height - gameConfig.ground.height
-			const flyable_zone_center_y =  flyable_zone_min_y + (flyable_zone_max_y - flyable_zone_min_y) / 2
-			return (flyable_zone_center_y);
-		}
-
 }
