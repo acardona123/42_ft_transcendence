@@ -62,6 +62,7 @@ function remove_friend_leave(event)
 	elem.src = lastOnlineBuffer;
 }
 
+// remove do not reload all the friend list to save time
 function remove_friend(event)
 {
 	const elem = event.currentTarget;
@@ -76,7 +77,9 @@ function remove_friend(event)
 			break;
 		}
 	}
-	elem.parentNode.parentNode.remove()
+	elem.parentNode.parentNode.remove();
+	if (DB_friend_list.length == 0)
+		update_friend_list();
 }
 
 function add_friend(pseudo, is_online, picture)
@@ -95,7 +98,7 @@ function get_friend_list()
 
 	for (let i = 0; i < DB_friend_list.length; i++)
 	{
-		if (DB_friend_list[i].online)
+		if (DB_friend_list[i].is_online)
 			online_friend_list.push(DB_friend_list[i]);
 		else
 			offline_friend_list.push(DB_friend_list[i]);
@@ -118,15 +121,34 @@ function get_friend_list()
 	return online_friend_list.concat(offline_friend_list);
 }
 
-function construct_friend_list()
+function empty_friend_list()
+{
+	const friends_list = document.getElementById('friends-list');
+	while (friends_list.childNodes.length != 0)
+	{
+		friends_list.childNodes[0].remove();
+	}
+}
+
+function update_friend_list(is_init)
 {
 	const friend_list = get_friend_list();
+	if (!is_init)
+		empty_friend_list();
 	for (let i = 0; i < friend_list.length; i++)
 	{
 		const friends_list = document.getElementById('friends-list');
 		const new_friend = add_friend(friend_list[i].pseudo, friend_list[i].is_online, friend_list[i].picture)
 		friends_list.appendChild(new_friend);
 	}
+	if (friend_list.length == 0)
+	{
+		const friends_list = document.getElementById('friends-list');
+		const empty_text = document.createElement('p');
+		empty_text.textContent = "There is no friend to display yet."
+		empty_text.style.textAlign = "center";
+		friends_list.appendChild(empty_text);
+	}
 }
 
-construct_friend_list();
+update_friend_list(true);

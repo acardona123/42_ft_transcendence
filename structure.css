@@ -20,7 +20,7 @@
 	grid-area: 1 / 1 / 4 / 1;
 	height: 90vh;
 	max-height: 90vh;
-	/* border: thick solid red; */
+	margin-right: 1vw;
 }
 
 .sec-friends-line {

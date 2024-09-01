@@ -2,11 +2,13 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
-	scrollbar-color: black grey;
-	scrollbar-width: thin;
 	max-height: 60%;
 	min-height: 50px;
-	padding-right: 10px;
+}
+
+.friends-list::-webkit-scrollbar
+{
+	display: none;
 }
 
 .friend-div {
