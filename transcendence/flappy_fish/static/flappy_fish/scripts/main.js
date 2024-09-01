@@ -4,7 +4,7 @@ const player_index = Object.freeze({
 });
 
 function areLivesLimited(){
-	return (gameMode.maxDeath < 1);
+	return (gameMode.maxDeath > 0);
 }
 
 function isTimeLimited(){
