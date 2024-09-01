@@ -17,7 +17,7 @@ class Player{
 
 	#createObject(){
 		const init_x = gameConfig.player.position_x;
-		const init_y = (gameConfig.height - gameConfig.ground.height) / 2;
+		const init_y = flyable_zone_center_y;
 		const addToPhysics = true;
 		this.object = this.#scene_texture.createOnScene(init_x, init_y, addToPhysics),
 		this.object.depth = gameConfig.depth.players;
@@ -45,14 +45,10 @@ class Player{
 
 	#addPhysics(){
 		this.#enablePhysic();
-		this.#addGravity();
 		this.#addBorderCollision();
 	}
 		#enablePhysic(){
 			this.#scene_texture.scene.physics.world.enable(this.object);
-		}
-		#addGravity(){
-			this.object.setGravityY(gameConfig.player.gravity_intensity);
 		}
 		#addBorderCollision(){
 			this.object.setCollideWorldBounds(true, 0, 0);
@@ -70,5 +66,13 @@ class Player{
 
 	resize(new_width, new_height){
 		this.#resizeObject(new_width, new_height)
+	}
+
+	activateGravity(boolean){
+		if (boolean === true){
+			this.object.setGravityY(gameConfig.player.gravity_intensity);
+		} else {
+			this.object.setGravityY(0);
+		}
 	}
 }
