@@ -10,6 +10,7 @@ class SceneBoot extends Phaser.Scene{
 	#ceiling;
 	#background;
 	#ground;
+	#starting_line;
 
 	#player_group;
 	#player1;
@@ -20,6 +21,7 @@ class SceneBoot extends Phaser.Scene{
 	#velocity_x;
 	#pipes_pair_horizontal_distance;
 	#new_pipes_pair_trigger;
+	#game_started;
 
 	constructor(){
 		super("bootGame");
@@ -33,8 +35,10 @@ class SceneBoot extends Phaser.Scene{
 			ground:			new SceneTexture(this,	"ground",		gameTextures.ground),
 			background:		new SceneTexture(this,	"background",	gameTextures.background),
 			death:			new SceneTexture(this,	"death",		gameTextures.death),
-			textboard:		new SceneTexture(this,	"textboard",	gameTextures.textboard)
+			textboard:		new SceneTexture(this,	"textboard",	gameTextures.textboard),
+			starting_line:	new SceneTexture(this,	"starting_line",	gameTextures.starting_line)
 		}
+		this.#game_started = false;
 	}
 
 	//=== preload ===
@@ -54,12 +58,14 @@ class SceneBoot extends Phaser.Scene{
 		this.#scene_textures.player2.preloadOnScene();
 		this.#scene_textures.death.preloadOnScene();
 		this.#scene_textures.textboard.preloadOnScene();
+		this.#scene_textures.starting_line.preloadOnScene();
+		
 	}
 
 	create(){
 		this.physics.world.collideDebug = true;
 		this.#pipes_group = this.physics.add.group();
-this.#player_group = this.physics.add.group();
+		this.#player_group = this.physics.add.group();
 		this.#active_pipes = []
 		this.#velocity_x = gameConfig.velocity_x.init_value;
 		this.#pipes_pair_horizontal_distance = gameConfig.pipe_repartition.horizontal_distance_default;
@@ -71,13 +77,12 @@ this.#player_group = this.physics.add.group();
 		this.#createGround();
 		this.#createPipesPool();
 		this.#createPlayers();
+		this.#createStartingLine();
 		this.#createPhysicalInteractions();
 		this.#createControls();
 
-		this.#introduceNewPipePair();
+		this.#introduceNewPipePair(0);
 
-		//do a starting zone:
-		this.#textboard.start();
 	}
 		#createTextboard(){
 			this.#textboard = new Textboard(this, this.#scene_textures.textboard, this.#scene_textures.death, this.#scene_textures.player1, this.#scene_textures.player2);
@@ -113,14 +118,31 @@ this.#player_group = this.physics.add.group();
 			this.#player2 = new Player(this.#player_group, player_index.PLAYER2, this.#scene_textures.player2);
 		}
 
+		#createStartingLine(){
+			this.#starting_line = new StartingLine(this.#scene_textures.starting_line);
+		}
+
+
 		#createPhysicalInteractions(){
+			this.#createStartingLineInteraction();
 			this.#createPlayerPipeCollision();
 			this.#createPlayerGroundCollision();
 			this.#createPlayerCeilingCollision();
 
 		}
+			#createStartingLineInteraction(){
+				this.physics.add.overlap(this.#starting_line.object, this.#player_group, () =>
+				{
+					if (!this.#game_started){
+						this.#game_started = true;
+						this.#player1.activateGravity(true);
+						this.#player2.activateGravity(true);
+						this.#textboard.start();
+					}
+				})
+			}
 			#createPlayerPipeCollision(){
-				this.physics.add.collider(this.#player_group, this.#pipes_group, (player, pipe) => {
+				this.physics.add.collider(this.#pipes_group, this.#player_group, (pipe, player) => {
 					this.#actionPlayerDeath(player);
 				});
 			}
@@ -137,17 +159,17 @@ this.#player_group = this.physics.add.group();
 				#actionPlayerDeath(player){
 					this.#repositionPlayer(player);
 					this.#addDeathToScoreboard(player);
-			}
-				#repositionPlayer(player){
-					if (this.#atLeastOneActivePipePair()){
+				}
+					#repositionPlayer(player){
+						if (this.#atLeastOneActivePipePair()){
 							player.y = this.#active_pipes[0].y;
-					} else {
-							player.y = (gameConfig.height - gameConfig.ground.height) / 2;
+						} else {
+							player.y = flyable_zone_center_y;
 						}
 					}
 					#addDeathToScoreboard(player){
 						this.#textboard.addDeath(player.index);
-				}
+					}
 
 		#createControls(){
 			this.#controls = {
@@ -191,9 +213,8 @@ this.#player_group = this.physics.add.group();
 				const last_pipe_pair = this.#active_pipes[this.#active_pipes.length - 1];
 				return (last_pipe_pair.x < this.#new_pipes_pair_trigger)
 			}
-			#introduceNewPipePair(){
+			#introduceNewPipePair(offset_to_middle = this.#calculateRandomPipePairOffset()){
 				const targeted_spacer_height = gameConfig.pipe_spacer.height_default;
-				const offset_to_middle = this.#calculateRandomPipePairOffset();
 				const new_pipe_pair = this.#pipes_pairs_pool.getPipePair(targeted_spacer_height, offset_to_middle);
 				this.#active_pipes.push(new_pipe_pair);
 
@@ -231,7 +252,7 @@ this.#player_group = this.physics.add.group();
 			this.#updateJumpPlayer(this.#player2, this.#controls.player2);
 		}
 			#updateJumpPlayer(player, jumpKey){
-				if (Phaser.Input.Keyboard.JustDown(jumpKey)){
+				if (this.#game_started && Phaser.Input.Keyboard.JustDown(jumpKey)){
 					player.jump();
 				}
 			}

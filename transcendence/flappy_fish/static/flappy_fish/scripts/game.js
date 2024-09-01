@@ -12,12 +12,13 @@ const gameTextures = {
 		background:		new Texture("images/background.png", "image", 1781, 1785),
 		death:			new Texture("images/death.png", "image", 2118, 2256),
 		textboard:		new Texture("images/plank.jpg", "image", 256, 256),
+		starting_line:	new Texture("images/starting_line.png", "image", 100, 100)
 	}
 
 let gameMode = {
 	activeBoosters: [],
 	maxTime: -1,
-	maxDeath: 10,
+	maxDeath: -1,
 	players:[],
 	bot_level: -1,
 }
@@ -42,6 +43,14 @@ const gameConfig = {
 		acceleration: 0,
 	},
 
+	player: {
+		width: 816 * 0.15,
+		height: 576 * 0.15,
+		alpha: 0.7,   
+		position_x: 100,
+		gravity_intensity: 3000,
+		jump_strength : 800,
+	},
 	ceiling :{
 		height : 100,
 		speed_factor: 1
@@ -62,18 +71,14 @@ const gameConfig = {
 		width: 100,
 	},
 	pipe_repartition: {
-		vertical_offset_max: 300,
+		vertical_offset_max: 400,
 		horizontal_distance_default: 600,
 		horizontal_distance_max: 1500,
 		horizontal_distance_min: 200,
 	},
-	player: {
-		width: 816 * 0.15,
-		height: 576 * 0.15,
-		alpha: 0.7,   
-		position_x: 100,
-		gravity_intensity: 3000,
-		jump_strength : 800,
+	starting_line: {
+		width: 100,
+		alpha: 0.9
 	},
 	textboard: {
 		height: 200,
@@ -97,7 +102,8 @@ const gameConfig = {
 		ground: 0,
 		pipes: -1,
 		players: -1,
-		background: -2
+		starting_line: -2,
+		background: -3
 	},
 	preload: function() {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
