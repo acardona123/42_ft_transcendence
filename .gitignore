@@ -2,4 +2,5 @@ backend/*/.env
 backend/*/*/.env
 backend/*/*/__pycache__
 backend/*/*/*/__pycache__
+backend/*/*/migrations
 backend/vault/data/*.crt

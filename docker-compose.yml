@@ -16,8 +16,13 @@ services:
       - website-network
     depends_on:
       - friends_app
+      # - frontend
       # - users_app
       # - history_app
+  # frontend:
+  #   build: ./frontend
+  #   container_name: frontend
+  #   restart: always
   vault:
     build: ./backend/vault
     container_name: vault
