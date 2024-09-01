@@ -4,6 +4,7 @@
 	scrollbar-color: black grey;
 	scrollbar-width: thin;
 	max-height: 60%;
+	min-height: 50px;
 	padding-right: 10px;
 }
 
@@ -12,7 +13,7 @@
 	margin-bottom: 5px;
 	margin-right: 5px;
 	border: 3px solid #725330;
-	border-radius: 2vh;
+	border-radius: 10px;
 }
 
 .friend-div:hover {

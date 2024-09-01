@@ -95,14 +95,7 @@ function onWindowClick(event)
 		remove_friends_popup();
 }
 
-function send_friend_request(event)
-{
-	const input_zone = document.getElementById("add_friend_pseudo_input")
-	// send JSON to the back
-	// JSON.stringify({"pseudo" : input_zone.value});
-	
-	remove_friends_popup();
-}
+send_friend_request();
 
 window.onresize = onWindowResize;
 const elem = document.getElementById("add_friend_button");

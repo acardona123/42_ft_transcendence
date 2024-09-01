@@ -1,0 +1,73 @@
+.req-container
+{
+	flex: 1;
+	overflow: scroll;
+	scroll-behavior: smooth;
+	scrollbar-color: black grey;
+	scrollbar-width: thin;
+	min-height: 50px;
+}
+
+.req-sub-container
+{
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	margin-bottom: 1px;
+	border: 2px solid #725330;
+	border-radius: 5px;
+}
+
+.req-pseudo
+{
+	height: 100%;
+	display: flex;
+	justify-content: left;
+	margin-left: 10%;
+	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.req-accept-button
+{
+	height: 80%;
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: center;
+	overflow: hidden;
+	background-color: #01b801;
+	border: thin solid rgb(54, 54, 54);
+	box-shadow: 1px 1px 1px #5c4326;
+}
+
+.req-accept-button:hover, .req-accept-button:focus
+{
+	background-color: #01af01;
+	border: thin solid rgb(54, 54, 54);
+	transition: 0.1s;
+	transform: scale(1.05);
+}
+
+.req-reject-button
+{
+	height: 80%;
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	align-items: center;
+	overflow: hidden;
+	background-color: #ca2530;
+	border: thin solid rgb(54, 54, 54);
+	box-shadow: 1px 1px 1px #5c4326;
+}
+
+.req-reject-button:focus, .req-reject-button:hover
+{
+	background-color: #b92a2c;
+	border: thin solid rgb(54, 54, 54);
+	transition: 0.1s;
+	transform: scale(1.05);
+}
