@@ -76,9 +76,12 @@ const gameConfig = {
 	textboard: {
 		height: 200,
 		icon_size: 175,
-		font: '"Goudy Bookletter 1911", Times, serif',
-		fontSize: '150px',
-		color: 'black',
+		icon_padding: 30,
+		text_style: {
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '150px',
+			fill: 'black'
+		}
 	},
 	
 	scale: {

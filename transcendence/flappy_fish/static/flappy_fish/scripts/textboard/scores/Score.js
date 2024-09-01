@@ -4,10 +4,13 @@ class Score extends Phaser.GameObjects.Container{
 	#player_index_symbol;
 	#icon_scene_texture;
 	#icon_size;
+	#icon_padding;
+	#texture_flipped;
+
 	#icon;
 	#text;
 
-	constructor(scene, player_index_symbol, icon_scene_texture, width = gameConfig.width / 3, height = gameConfig.textboard.height, icon_size = gameConfig.textboard.icon_size){
+	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = gameConfig.width / 3, height = gameConfig.textboard.height, icon_size = gameConfig.textboard.icon_size, icon_padding = gameConfig.textboard.icon_padding){
 		super(scene);
 		this.height = height;
 		this.width = width;
@@ -17,6 +20,8 @@ class Score extends Phaser.GameObjects.Container{
 		this.#player_index_symbol = player_index_symbol;
 		this.#icon_scene_texture = icon_scene_texture;
 		this.#icon_size = icon_size;
+		this.#icon_padding = icon_padding;
+		this.#texture_flipped = flip_texture;
 
 		this.#addComponents();
 		this.#resizeComponents();
@@ -32,9 +37,10 @@ class Score extends Phaser.GameObjects.Container{
 		#addIcon(){
 			this.#icon = this.#icon_scene_texture.createOnScene();
 			this.#icon_scene_texture.playAnimationOn(this.#icon);
+			this.#icon.flipX = this.#texture_flipped;
 		}
 		#addText(){
-			this.#text = new ScoreText(this.#scene, this.#player_index_symbol, 0, 0, this.width - this.#icon_size);
+			this.#text = new ScoreText(this.#scene, this.#player_index_symbol, 0, 0, this.width - this.#icon_size - this.#icon_padding);
 		}
 
 	#resizeComponents(){
@@ -72,9 +78,9 @@ class Score extends Phaser.GameObjects.Container{
 		#alignComponents(){
 			if (this.#player_index_symbol === player_index.PLAYER1){
 				this.#icon.setPosition(-this.width / 2, 0);
-				this.#text.setPosition(this.#icon_size - this.width / 2, 0);
+				this.#text.setPosition(this.#icon_size + this.#icon_padding - this.width / 2, 0);
 			} else {
-				this.#text.setPosition(this.width / 2 -this.#icon_size, 0);
+				this.#text.setPosition(this.width / 2 -this.#icon_size - this.#icon_padding, 0);
 				this.#icon.setPosition(this.width / 2, 0)
 			}
 		}
@@ -97,6 +103,4 @@ class Score extends Phaser.GameObjects.Container{
 	getScoreValue(){
 		return (this.#text.getScore());
 	}
-
-
 }
