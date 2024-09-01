@@ -132,8 +132,8 @@ function update_requests_list(is_init)
 	if (requests_pseudo.length == 0)
 	{
 		const empty_text = document.createElement('p');
-		empty_text.textContent = "There is no friend request yet."
-		empty_text.style.textAlign = "center";
+		empty_text.textContent = "There is no friend request yet.";
+		empty_text.className = "req-empty-text";
 		container.appendChild(empty_text);
 		return;
 	}

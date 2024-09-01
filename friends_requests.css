@@ -35,6 +35,17 @@
 	align-items: center;
 	overflow: hidden;
 	white-space: nowrap;
+	text-shadow: 2px 2px 2px #684a2b;
+}
+
+.req-empty-text {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	font-size: large;
+	overflow: hidden;
+	white-space: nowrap;
+	text-shadow: 2px 2px 2px #684a2b;
 }
 
 .req-accept-button
@@ -48,6 +59,7 @@
 	overflow: hidden;
 	background-color: #01b801;
 	border: thin solid rgb(54, 54, 54);
+	text-shadow: 1px 1px 3px #008000;
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
@@ -78,6 +90,7 @@
 	overflow: hidden;
 	background-color: #ca2530;
 	border: thin solid rgb(54, 54, 54);
+	text-shadow: 1px 1px 3px #631318;
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
