@@ -3,9 +3,8 @@ class AbstractClock extends Phaser.GameObjects.Text {
 	scene;
 	#is_paused;
 
-	constructor(scene, x, y, time_s = 0){
-		const clock_style = {fontFamily: gameConfig.clock.font, fontSize: gameConfig.clock.fontSize, fill: gameConfig.clock.color};
-		super(scene, x, y, "", clock_style);
+	constructor(scene, x, y, style, time_s = 0){
+		super(scene, x, y, "", style);
 		this.scene = scene;
 		this.#is_paused = true;
 		this.updateDisplay(time_s);

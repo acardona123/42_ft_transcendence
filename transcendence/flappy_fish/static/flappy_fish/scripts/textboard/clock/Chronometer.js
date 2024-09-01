@@ -3,9 +3,9 @@ class Chronometer extends AbstractClock{
 	#start_time;
 	#time_past;
 
-	constructor(scene, x, y)
+	constructor(scene, x, y, style)
 	{
-		super (scene, x, y);
+		super (scene, x, y, style);
 		this.#start_time = scene.time.now;
 		this.#time_past = 0;
 		this.updateDisplay(0);

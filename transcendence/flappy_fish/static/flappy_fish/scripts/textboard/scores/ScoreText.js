@@ -14,7 +14,11 @@ class ScoreText extends AlignedText{
 		scene.add.existing(this);
 		
 		this.#player_index_symbol = player_index_symbol;
-		this.#value = 0;
+		if (areLivesLimited()){
+			this.#value = gameMode.maxDeath;
+		} else {
+			this.#value = 0;
+		}
 
 		this.#limitWidth(width);
 		this.updateDisplay();

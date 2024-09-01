@@ -10,6 +10,7 @@ const gameTextures = {
 		ceiling:		new Texture("images/ceiling.png", "image", 336, 112),
 		ground:			new Texture("images/ground.png", "image", 336, 112),
 		background:		new Texture("images/background.png", "image", 1781, 1785),
+		death:			new Texture("images/death.png", "image", 2118, 2256),
 	}
 
 let gameMode = {
@@ -75,6 +76,7 @@ const gameConfig = {
 	},
 	textboard: {
 		height: 200,
+		side_padding: 30,
 		icon_size: 175,
 		icon_padding: 30,
 		text_style: {

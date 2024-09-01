@@ -1,21 +1,33 @@
 class SceneTest extends Phaser.Scene{
-	textureScene;
+	texturesScene;
+	time_test;
+	textboard;
 
 	constructor(){
 		super("TestScene");
-		this.textureScene = new SceneTexture(this, "icon", gameTextures.player1);
+		this.texturesScene = {
+			death: new SceneTexture(this, "death", gameTextures.death),
+			player1: new SceneTexture(this, "player1", gameTextures.player1),
+			player2: new SceneTexture(this, "player2", gameTextures.player2) 
+		};
+		this.time_test = 0
 	}
 
 	preload(){
-		this.textureScene.preloadOnScene();
+		this.texturesScene.death.preloadOnScene();
+		this.texturesScene.player1.preloadOnScene();
+		this.texturesScene.player2.preloadOnScene();
 	}
 
 	create(){
-		let score1 = new Score(this, player_index.PLAYER1, this.textureScene, 500);
-		score1.x = 600;
-		score1.y = 600
-		score1.body.setVelocity(10, 10)
-
+		this.textboard = new Textboard(this, this.texturesScene.player1, this.texturesScene.death, this.texturesScene.player1, this.texturesScene.player2);
 	}
+
+	// update(time, delta){
+	// 	if (Math.floor(time / 500) != this.time_test){
+	// 		this.time_test = Math.floor(time / 1000);
+	// 		// this.textboard.updatePlayerDied();
+	// 	}
+	// }
 
 }
