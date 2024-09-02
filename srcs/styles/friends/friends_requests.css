@@ -54,7 +54,7 @@
 
 .req-accept-button:hover, .req-accept-button:focus
 {
-	background-color: #01af01;
+	background-color: #01a001;
 	border: thin solid rgb(54, 54, 54);
 	transition: 0.1s;
 	transform: scale(1.05);
@@ -82,7 +82,7 @@
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
-.req-reject-button:focus, .req-reject-button:hover, .req-reject-button:not(:disabled):active
+.req-reject-button:focus, .req-reject-button:hover
 {
 	background-color: #b92a2c;
 	border: thin solid rgb(54, 54, 54);
