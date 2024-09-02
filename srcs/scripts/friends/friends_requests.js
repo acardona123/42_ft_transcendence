@@ -95,6 +95,7 @@ function get_req_sub_container(request_info)
 	pseudo_text.className = "req-pseudo";
 
 	const button_accept = document.createElement('button');
+	button_accept.tabIndex = "0";
 	button_accept.className = "req-accept-button btn";
 	button_accept.textContent = "Accept";
 	button_accept.onclick = accept_friend_req;
