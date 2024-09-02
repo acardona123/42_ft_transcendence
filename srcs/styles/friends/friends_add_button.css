@@ -5,7 +5,9 @@
 }
 
 .button-add-friend:hover {
-	transform: rotate(90deg);
+	background-color: #00000003;
+	border-radius: 50%;
+	transform: rotate(90deg) scale(1.05);
 }
 
 .button-add-friend:focus {
@@ -60,15 +62,14 @@
 	margin-right: 5%;
 	position: relative;
 	left: 2%;
-
-	background-color: blueviolet;
+	border: thin solid rgb(54, 54, 54);
+	background-color: #01b801;
 }
 
-.add-friend-popup-button:hover
+.add-friend-popup-button:hover, .add-friend-popup-button:focus, .add-friend-popup-button:not(:disabled):active
 {
-	background-color: blue;
-}
-.add-friend-popup-button:focus
-{
-	background-color: red;
+	background-color: #01af01;
+	border: thin solid rgb(54, 54, 54);
+	transition: 0.1s;
+	transform: scale(1.05);
 }
