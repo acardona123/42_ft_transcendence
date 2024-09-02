@@ -52,8 +52,8 @@ function getFriendOnline(f_is_online)
 	return online_dot_div;
 }
 
-var lastReplacedElemFocus = undefined;
-var lastReplacedElemHover = undefined;
+let lastReplacedElemFocus = undefined;
+let lastReplacedElemHover = undefined;
 
 function remove_friend_enter(event)
 {
@@ -62,6 +62,7 @@ function remove_friend_enter(event)
 	{
 		lastReplacedElemFocus = elem;
 		elem.src = "./img/remove_friend.png";
+		clicked_once = false;
 	}
 	else // on mouse
 	{
@@ -77,19 +78,29 @@ function remove_friend_leave(event)
 	if (event.type == 'focusout') // on focus
 	{
 		if (lastReplacedElemHover != elem)
+		{
+			clicked_once = false;
 			elem.src = elem.href;
+		}
 		lastReplacedElemFocus = undefined;
 	}
 	else // on mouse
 	{
-		if (lastReplacedElemFocus != elem.childNodes[2].childNodes[0])
+		if (lastReplacedElemFocus != elem.childNodes[2].childNodes[0] || clicked_once)
 		{
 			elem = elem.childNodes[2].childNodes[0];
 			elem.src = elem.href;
+			clicked_once = false;
 		}
 		lastReplacedElemHover = undefined;
-
 	}
+}
+
+let clicked_once = false;
+
+function set_confim_remove(target)
+{
+	target.src = "./img/confirm_remove_friend.png";
 }
 
 // remove do not reload all the friend list to save time
@@ -99,6 +110,12 @@ function remove_friend(event)
 	{
 		if (event.key != "Enter")
 			return;
+	}
+	if (!clicked_once)
+	{
+		set_confim_remove(event.currentTarget);
+		clicked_once = true;
+		return ;
 	}
 	const elem = event.currentTarget;
 	const pseudoToRemove = elem.parentNode.parentNode.childNodes[1].textContent;
