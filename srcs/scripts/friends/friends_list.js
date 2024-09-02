@@ -1,11 +1,11 @@
 const DB_friend_list = [
-	// {pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
-	// {pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
-	// {pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
-	// {pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
-	// {pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
-	// {pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
-	// {pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
+	{pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
+	{pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
+	{pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
+	{pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
+	{pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
+	{pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
+	{pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
 ]
 
 function getFriendProfilPic(picture) {
@@ -36,8 +36,7 @@ function getFriendOnline(f_is_online)
 {
 	const is_online = f_is_online;
 	const online_dot_div = document.createElement('div');
-	online_dot_div.style.position = "relative"
-
+	online_dot_div.className = "online-dot-div";
 	const online_dot_img = document.createElement('img');
 	online_dot_img.src = is_online ? "./img/online.png" : "./img/offline.png";
 	online_dot_img.className = "friend-online-dot";
@@ -81,6 +80,7 @@ function remove_friend_leave(event)
 		{
 			clicked_once = false;
 			elem.src = elem.href;
+			elem.parentNode.childNodes[1]?.remove();
 		}
 		lastReplacedElemFocus = undefined;
 	}
@@ -88,6 +88,7 @@ function remove_friend_leave(event)
 	{
 		if (lastReplacedElemFocus != elem.childNodes[2].childNodes[0] || clicked_once)
 		{
+			elem.childNodes[2].childNodes[1]?.remove();
 			elem = elem.childNodes[2].childNodes[0];
 			elem.src = elem.href;
 			clicked_once = false;
@@ -101,6 +102,10 @@ let clicked_once = false;
 function set_confim_remove(target)
 {
 	target.src = "./img/confirm_remove_friend.png";
+	const confirm_text = document.createElement('p');
+	confirm_text.className = "confirm-remove-friend";
+	confirm_text.textContent = "confirm?";
+	target.parentNode.appendChild(confirm_text);
 }
 
 // remove do not reload all the friend list to save time

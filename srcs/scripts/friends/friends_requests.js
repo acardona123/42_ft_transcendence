@@ -1,15 +1,15 @@
 const g_requests = [
-	// {pseudo : "7", date :  7},
-	// {pseudo : "2", date :  2},
-	// {pseudo : "8", date :  8},
-	// {pseudo : "4", date :  4},
-	// {pseudo : "6", date :  6},
-	// {pseudo : "9", date :  9},
-	// {pseudo : "1", date :  1},
-	// {pseudo : "11", date : 11},
-	// {pseudo : "10", date : 10},
-	// {pseudo : "3", date :  3},
-	// {pseudo : "5", date :  5}
+	{pseudo : "7", date :  7},
+	{pseudo : "2", date :  2},
+	{pseudo : "8", date :  8},
+	{pseudo : "4", date :  4},
+	{pseudo : "6", date :  6},
+	{pseudo : "9", date :  9},
+	{pseudo : "1", date :  1},
+	{pseudo : "11", date : 11},
+	{pseudo : "10", date : 10},
+	{pseudo : "3", date :  3},
+	{pseudo : "5", date :  5}
 ];
 
 function send_friend_request(event)
