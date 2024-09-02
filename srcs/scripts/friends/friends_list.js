@@ -41,30 +41,65 @@ function getFriendOnline(f_is_online)
 	const online_dot_img = document.createElement('img');
 	online_dot_img.src = is_online ? "./img/online.png" : "./img/offline.png";
 	online_dot_img.className = "friend-online-dot";
+	online_dot_img.href = online_dot_img.src;
+	online_dot_img.tabIndex = "0";
 	online_dot_img.onclick = remove_friend;
+	online_dot_img.onkeydown = remove_friend;
+	online_dot_img.addEventListener('focusin', remove_friend_enter);
+	online_dot_img.addEventListener('focusout', remove_friend_leave);
 
 	online_dot_div.appendChild(online_dot_img);
 	return online_dot_div;
 }
 
-let lastReplacedImg = "";
+var lastReplacedElemFocus = undefined;
+var lastReplacedElemHover = undefined;
 
 function remove_friend_enter(event)
 {
-	const elem = event.currentTarget.childNodes[2].childNodes[0];
-	lastOnlineBuffer = elem.src;
-	elem.src = "./img/remove_friend.png";
+	let elem = event.currentTarget;
+	if (event.type == 'focusin') // on focus
+	{
+		lastReplacedElemFocus = elem;
+		elem.src = "./img/remove_friend.png";
+	}
+	else // on mouse
+	{
+		elem = elem.childNodes[2].childNodes[0];
+		lastReplacedElemHover = elem;
+		elem.src = "./img/remove_friend.png";
+	}
 }
 
 function remove_friend_leave(event)
 {
-	const elem = event.currentTarget.childNodes[2].childNodes[0];
-	elem.src = lastOnlineBuffer;
+	let elem = event.currentTarget;
+	if (event.type == 'focusout') // on focus
+	{
+		if (lastReplacedElemHover != elem)
+			elem.src = elem.href;
+		lastReplacedElemFocus = undefined;
+	}
+	else // on mouse
+	{
+		if (lastReplacedElemFocus != elem.childNodes[2].childNodes[0])
+		{
+			elem = elem.childNodes[2].childNodes[0];
+			elem.src = elem.href;
+		}
+		lastReplacedElemHover = undefined;
+
+	}
 }
 
 // remove do not reload all the friend list to save time
 function remove_friend(event)
 {
+	if (event.type == "keydown")
+	{
+		if (event.key != "Enter")
+			return;
+	}
 	const elem = event.currentTarget;
 	const pseudoToRemove = elem.parentNode.parentNode.childNodes[1].textContent;
 	// DELETE on database
