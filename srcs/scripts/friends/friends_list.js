@@ -1,11 +1,11 @@
 const DB_friend_list = [
-	{pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
-	{pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
-	{pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
-	{pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
-	{pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
-	{pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
-	{pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
+	// {pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
+	// {pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
+	// {pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
+	// {pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
+	// {pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
+	// {pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
+	// {pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
 ]
 
 function getFriendProfilPic(picture) {
