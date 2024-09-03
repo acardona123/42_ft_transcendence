@@ -60,14 +60,14 @@ function remove_friend_enter(event)
 	if (event.type == 'focusin') // on focus
 	{
 		lastReplacedElemFocus = elem;
-		elem.src = "./img/remove_friend.png";
+		elem.src = "./img/trash.png";
 		clicked_once = false;
 	}
 	else // on mouse
 	{
 		elem = elem.childNodes[2].childNodes[0];
 		lastReplacedElemHover = elem;
-		elem.src = "./img/remove_friend.png";
+		elem.src = "./img/trash.png";
 	}
 }
 
@@ -88,6 +88,11 @@ function remove_friend_leave(event)
 	{
 		if (lastReplacedElemFocus != elem.childNodes[2].childNodes[0] || clicked_once)
 		{
+			if (clicked_once)
+			{
+				elem.childNodes[2].childNodes[1]?.remove();
+				elem.childNodes[2].childNodes[0].style.display = "";
+			}
 			elem.childNodes[2].childNodes[1]?.remove();
 			elem = elem.childNodes[2].childNodes[0];
 			elem.src = elem.href;
@@ -101,11 +106,29 @@ let clicked_once = false;
 
 function set_confim_remove(target)
 {
-	target.src = "./img/confirm_remove_friend.png";
-	const confirm_text = document.createElement('p');
-	confirm_text.className = "confirm-remove-friend";
-	confirm_text.textContent = "confirm?";
-	target.parentNode.appendChild(confirm_text);
+	target.style.display = "none";
+
+	const confirm_trash = document.createElement('img');
+	const cancel_trash = document.createElement('img');
+
+	confirm_trash.src = "./img/confirm_remove_friend.png";
+	cancel_trash.src = "./img/remove_friend.png";
+	confirm_trash.className = "confirm-remove-friend";
+	cancel_trash.className = "confirm-remove-friend";
+	confirm_trash.onclick = remove_friend;
+	cancel_trash.onclick = cancel_confirm_remove;
+
+	target.parentNode.appendChild(confirm_trash);
+	target.parentNode.appendChild(cancel_trash);
+}
+
+function cancel_confirm_remove(event)
+{
+	const elem = event.currentTarget.parentNode;
+
+	elem.childNodes[0].style.display = "";
+	elem.childNodes[1].remove();
+	elem.childNodes[1].remove();
 }
 
 // remove do not reload all the friend list to save time

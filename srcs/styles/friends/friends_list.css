@@ -59,11 +59,13 @@
 	text-shadow: 2px 2px 2px #684a2b;
 }
 
-.online-dot-div
-{
+.online-dot-div {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+	display: flex;
+	align-content: center;
+	justify-content: space-evenly;
 }
 
 .friend-online-dot {
@@ -76,14 +78,18 @@
 	width: 25%;
 }
 
-.confirm-remove-friend
-{
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	text-align: center;
-	font-size: 75%;
+.friend-online-dot:hover {
+	transform: scale(1.05);
+}
+
+.confirm-remove-friend {
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 25%;
+	aspect-ratio: 1/1;
 	text-shadow: 2px 2px 2px #684a2b;
+}
+
+.confirm-remove-friend:hover {
+	transform: scale(1.05)
 }
