@@ -1,5 +1,5 @@
 include:
-  - ./backend/friends/docker-compose.yml
+  - ./backend/users/docker-compose.yml
   # - ./backend/users/docker-compose.yml
   # - ./backend/history/docker-compose.yml
 
@@ -15,7 +15,7 @@ services:
     networks:
       - website-network
     depends_on:
-      - friends_app
+      - users_app
       # - frontend
       # - users_app
       # - history_app

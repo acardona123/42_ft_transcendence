@@ -8,24 +8,24 @@ docker exec vault /bin/sh /usr/local/bin/vault_init.sh
 
 vault secrets enable database
 
-vault write database/config/friends-db \
+vault write database/config/users-db \
     plugin_name=postgresql-database-plugin \
-    allowed_roles="friends-db-role" \
-    connection_url="postgresql://{{username}}:{{password}}@friends_db:5432/postgre" \
+    allowed_roles="users-db-role" \
+    connection_url="postgresql://{{username}}:{{password}}@users_db:5432/postgre" \
     username="user" \
     password="password"
 
-vault write database/roles/friends-db-role \
-    db_name=friends-db \
+vault write database/roles/users-db-role \
+    db_name=users-db \
     default_ttl="1h" \
     max_ttl="24h" \
     creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
         GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";"
 
-vault write -f database/rotate-root/friends-db
+vault write -f database/rotate-root/users-db
 
 # create new credential 
-vault read database/creds/friends-db-role
+vault read database/creds/users-db-role
 
 # revoke credentials
-vault lease revoke database/creds/friends-db-role/lIjWAg6iJqJf5zAlG36NIjCH
+vault lease revoke database/creds/users-db-role/lIjWAg6iJqJf5zAlG36NIjCH
