@@ -1,0 +1,47 @@
+services:
+  friends_app_dev:
+    build: .
+    container_name: friends_app_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8003'"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=friends_db_dev
+    volumes:
+      - .:/usr/src/app/django
+    ports:
+      - "8002:8002"
+    networks:
+      - website-network
+      - friends-network
+    depends_on:
+      friends_db_dev:
+        condition: service_healthy
+
+  friends_db_dev:
+    build: ./postgre
+    container_name: friends_db_dev
+    restart: always
+    volumes:
+      - friends_db:/var/lib/postgresql/data/
+    networks:
+      - friends-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  friends_db:
+
+networks:
+  website-network:
+    name: website_network
+  friends-network:
+    name: friends_network

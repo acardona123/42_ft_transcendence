@@ -1,6 +1,6 @@
 include:
   - ./backend/users/docker-compose.yml
-  # - ./backend/users/docker-compose.yml
+  - ./backend/friends/docker-compose.yml
   # - ./backend/history/docker-compose.yml
 
 services:
@@ -17,8 +17,7 @@ services:
       - website-network
     depends_on:
       - users_app
-      # - frontend
-      # - users_app
+      - friends_app
       # - history_app
   vault:
     build: ./backend/vault

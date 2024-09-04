@@ -1,0 +1,48 @@
+services:
+  friends_app:
+    build: .
+    container_name: friends_app
+    command: bash -c "python3 ./django/app/vault/vault_init.py"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=friends_db
+      - REQUESTS_CA_BUNDLE=/usr/src/app/vault/vault.crt
+    volumes:
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
+    networks:
+      - website-network
+      - friends-network
+    depends_on:
+      friends_db:
+        condition: service_healthy
+  friends_db:
+    build: ./postgre
+    container_name: friends_db
+    restart: always
+    volumes:
+      - friends_db:/var/lib/postgresql/data/
+    networks:
+      - friends-network
+      - vault-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  friends_db:
+
+networks:
+  website-network:
+    name: website_network
+  friends-network:
+    name: friends_network
+  vault-network:
+    name: vault_network
