@@ -7,8 +7,12 @@ import os
 
 # Create your views here.
 
-def index(request):
-	return render(request, 'index.html', context={})
+def get_url_api(request):
+	client_id = os.getenv('CLIENT_ID')
+	state = os.getenv('STATE')
+	redirect = os.getenv('REDIRECT_URL')
+	url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect}&response_type=code&scope=public&state={state}"
+	return url
 
 def get_token(code):
 	data = {
@@ -16,7 +20,7 @@ def get_token(code):
 		'client_id' : os.getenv('CLIENT_ID'),
 		'client_secret' : os.getenv('CLIENT_SECRET'),
 		'code' : code,
-		'redirect_uri' : 'https://localhost:8443/api/users/auth/',
+		'redirect_uri' : os.getenv('REDIRECT_URL'),
 		'state' : os.getenv('STATE'),
 	}
 	response = requests.post('https://api.intra.42.fr/oauth/token', data=data, verify=certifi.where())
