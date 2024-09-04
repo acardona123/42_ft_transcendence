@@ -45,6 +45,7 @@ class SceneTexture{
 				frames: this.scene.anims.generateFrameNumbers(this.#texture_name),
 				frameRate: this.texture.frameRates,
 				repeat: this.texture.repeat,
+				hideOnComplete: this.texture.hide_on_complete,
 			});
 			this.#animation_loaded = true;
 		}

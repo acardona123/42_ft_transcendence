@@ -22,6 +22,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#pipe_group = pipe_group;
 		this.depth = gameConfig.depth.pipes;
 		this.#generateComponents(pipe_textures);
+		this.#runComponentsAnimations(pipe_textures);
 		this.#setComponentsOrigin();
 		this.#calculateScales(spacer_height);
 		this.#resizeComponents();
@@ -42,6 +43,14 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.components.bottom_pipe_core = pipe_textures.core.createOnScene();
 		this.components.bottom_pipe_head = pipe_textures.head.createOnScene();
 		this.components.pipe_spacer = pipe_textures.spacer.createOnScene();
+	}
+
+	#runComponentsAnimations(pipe_textures){
+		pipe_textures.core.playAnimationOn(this.components.top_pipe_core);
+		pipe_textures.head.playAnimationOn(this.components.top_pipe_head);
+		pipe_textures.core.playAnimationOn(this.components.bottom_pipe_core);
+		pipe_textures.head.playAnimationOn(this.components.bottom_pipe_head);
+		pipe_textures.spacer.playAnimationOn(this.components.pipe_spacer);
 	}
 
 	#setComponentsOrigin(){

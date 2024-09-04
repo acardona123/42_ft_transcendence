@@ -11,14 +11,15 @@ const gameTextures = {
 		ground:			new Texture("images/ground.png", "image", 336, 112),
 		background:		new Texture("images/background.png", "image", 1781, 1785),
 		death:			new Texture("images/death.png", "image", 2118, 2256),
+		explosion:		new Texture("sprites/explosion.png", "sprite", 16, 16, 10, 0, true),
 		textboard:		new Texture("images/plank.jpg", "image", 256, 256),
-		starting_line:	new Texture("images/starting_line.png", "image", 100, 100)
+		starting_line:	new Texture("images/starting_line.png", "image", 100, 100),
 	}
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: 20,
-	maxDeath: -1,
+	maxTime: -1,
+	maxDeath: 3,
 	players:[],
 	bot_level: -1,
 }
@@ -46,7 +47,7 @@ const gameConfig = {
 	player: {
 		width: 816 * 0.15,
 		height: 576 * 0.15,
-		alpha: 0.7,   
+		alpha: 1,   
 		position_x: 100,
 		gravity_intensity: 3000,
 		jump_strength : 800,
@@ -71,7 +72,7 @@ const gameConfig = {
 		width: 100,
 	},
 	pipe_repartition: {
-		vertical_offset_max: 400,
+		vertical_offset_max: 300,
 		horizontal_distance_default: 600,
 		horizontal_distance_max: 1500,
 		horizontal_distance_min: 200,
@@ -120,7 +121,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true
+			debug: false
 		}
 	},
 	

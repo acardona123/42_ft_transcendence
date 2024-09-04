@@ -25,21 +25,25 @@ class SceneBoot extends Phaser.Scene{
 
 	constructor(){
 		super("bootGame");
-		this.#scene_textures = {
-			pipe_core:		new SceneTexture(this,	"pipe_core",	gameTextures.pipe.core),
-			pipe_head:		new SceneTexture(this,	"pipe_head",	gameTextures.pipe.head),
-			pipe_spacer:	new SceneTexture(this,	"pipe_spacer",	gameTextures.pipe_spacer),
-			player1:		new SceneTexture(this,	"player1",		gameTextures.player1),
-			player2:		new SceneTexture(this,	"player2",		gameTextures.player2),
-			ceiling:		new SceneTexture(this,	"ceiling",		gameTextures.ceiling),
-			ground:			new SceneTexture(this,	"ground",		gameTextures.ground),
-			background:		new SceneTexture(this,	"background",	gameTextures.background),
-			death:			new SceneTexture(this,	"death",		gameTextures.death),
-			textboard:		new SceneTexture(this,	"textboard",	gameTextures.textboard),
-			starting_line:	new SceneTexture(this,	"starting_line",	gameTextures.starting_line)
-		}
+		this.#constructTextures();
 		this.#game_started = false;
 	}
+		#constructTextures(){
+			this.#scene_textures = {
+				pipe_core:		new SceneTexture(this,	"pipe_core",	gameTextures.pipe.core),
+				pipe_head:		new SceneTexture(this,	"pipe_head",	gameTextures.pipe.head),
+				pipe_spacer:	new SceneTexture(this,	"pipe_spacer",	gameTextures.pipe_spacer),
+				player1:		new SceneTexture(this,	"player1",		gameTextures.player1),
+				player2:		new SceneTexture(this,	"player2",		gameTextures.player2),
+				ceiling:		new SceneTexture(this,	"ceiling",		gameTextures.ceiling),
+				ground:			new SceneTexture(this,	"ground",		gameTextures.ground),
+				background:		new SceneTexture(this,	"background",	gameTextures.background),
+				death:			new SceneTexture(this,	"death",		gameTextures.death),
+				explosion:		new SceneTexture(this,	"explosion",		gameTextures.explosion),
+				textboard:		new SceneTexture(this,	"textboard",	gameTextures.textboard),
+				starting_line:	new SceneTexture(this,	"starting_line",	gameTextures.starting_line)
+			}
+		}
 
 	//=== preload ===
 
@@ -48,18 +52,9 @@ class SceneBoot extends Phaser.Scene{
 	}
 
 	#preloadAllSceneTextures(){
-		this.#scene_textures.pipe_core.preloadOnScene();
-		this.#scene_textures.pipe_head.preloadOnScene();
-		this.#scene_textures.pipe_spacer.preloadOnScene();
-		this.#scene_textures.ceiling.preloadOnScene();
-		this.#scene_textures.ground.preloadOnScene();
-		this.#scene_textures.background.preloadOnScene();
-		this.#scene_textures.player1.preloadOnScene();
-		this.#scene_textures.player2.preloadOnScene();
-		this.#scene_textures.death.preloadOnScene();
-		this.#scene_textures.textboard.preloadOnScene();
-		this.#scene_textures.starting_line.preloadOnScene();
-		
+		for (const [key, value] of Object.entries(this.#scene_textures)){
+			value.preloadOnScene();
+		}		
 	}
 
 	create(){
@@ -71,6 +66,7 @@ class SceneBoot extends Phaser.Scene{
 		this.#pipes_pair_horizontal_distance = gameConfig.pipe_repartition.horizontal_distance_default;
 		this.#new_pipes_pair_trigger = gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
+		this.#createAnimations();
 		this.#createTextboard();
 		this.#createCeiling();
 		this.#createBackground();
@@ -84,6 +80,11 @@ class SceneBoot extends Phaser.Scene{
 		this.#introduceNewPipePair(0);
 
 	}
+		#createAnimations(){
+			for (const [key, value] of Object.entries(this.#scene_textures)){
+				value.createAnimationOnScene();
+			}		
+		}
 		#createTextboard(){
 			this.#textboard = new Textboard(this, this.#scene_textures.textboard, this.#scene_textures.death, this.#scene_textures.player1, this.#scene_textures.player2);
 		}
@@ -141,37 +142,54 @@ class SceneBoot extends Phaser.Scene{
 				})
 			}
 			#createPlayerPipeCollision(){
-				this.physics.add.collider(this.#pipes_group, this.#player_group, (pipe, player) => {
-					this.#actionPlayerDeath(player);
+				this.physics.add.collider(this.#pipes_group, this.#player_group, (pipe, player_object) => {
+					if (player_object.is_active){
+						this.#actionPlayerDeath(player_object);
+					}
 				});
 			}
 			#createPlayerGroundCollision(){
-				this.physics.add.collider(this.#ground.object, this.#player_group, (ground, player) => {
-					this.#actionPlayerDeath(player);
+				this.physics.add.collider(this.#ground.object, this.#player_group, (ground, player_object) => {
+					if (player_object.is_active){
+						this.#actionPlayerDeath(player_object);
+					}
 				});
 			}
 			#createPlayerCeilingCollision(){
-				this.physics.add.collider(this.#ceiling.object, this.#player_group, (ceiling, player) => {
-					this.#actionPlayerDeath(player);
+				this.physics.add.collider(this.#ceiling.object, this.#player_group, (ceiling, player_object) => {
+					if (player_object.is_active){
+						this.#actionPlayerDeath(player_object);
+					}
 				});
 			}
-				#actionPlayerDeath(player){
-					if (!this.#textboard.doesPlayerHasRemainingLife(player.index)){
+				#actionPlayerDeath(player_object){
+					
+					this.#createExplosion(player_object);
+					if (!this.#textboard.doesPlayerHasRemainingLife(player_object.index)){
 						this.#gameOver();
 					} else {
-						this.#repositionPlayer(player);
-						this.#addDeathToScoreboard(player);
+						this.#respawnPlayer(player_object);
+						this.#addDeathToScoreboard(player_object);
 					}
 				}
-					#repositionPlayer(player){
+					#createExplosion(player_object){
+						new PlayerExplosion(this.#scene_textures.explosion, player_object.x, player_object.y);
+					}
+					#respawnPlayer(player_object){
+						let y;
 						if (this.#atLeastOneActivePipePair()){
-							player.y = this.#active_pipes[0].y;
+							y = this.#active_pipes[0].y;
 						} else {
-							player.y = flyable_zone_center_y;
+							y = flyable_zone_center_y;
+						}
+						if (player_object.index === player_index.PLAYER1){
+							this.#player1.respawn(y, this.#velocity_x);
+						} else {
+							this.#player2.respawn(y, this.#velocity_x);
 						}
 					}
-					#addDeathToScoreboard(player){
-						this.#textboard.addDeath(player.index);
+					#addDeathToScoreboard(player_object){
+						this.#textboard.addDeath(player_object.index);
 					}
 
 		#createControls(){
@@ -255,7 +273,7 @@ class SceneBoot extends Phaser.Scene{
 			this.#updateJumpPlayer(this.#player2, this.#controls.player2);
 		}
 			#updateJumpPlayer(player, jumpKey){
-				if (this.#game_started && Phaser.Input.Keyboard.JustDown(jumpKey)){
+				if (this.#game_started && player.object.is_active && Phaser.Input.Keyboard.JustDown(jumpKey)){
 					player.jump();
 				}
 			}

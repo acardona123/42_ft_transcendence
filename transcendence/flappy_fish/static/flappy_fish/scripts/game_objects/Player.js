@@ -13,6 +13,7 @@ class Player{
 		this.#resizeObject(gameConfig.player.width, gameConfig.player.height);
 		player_group.add(this.object);
 		this.#addPhysics();
+		this.#playAnimation();
 	}
 
 	#createObject(){
@@ -23,7 +24,7 @@ class Player{
 		this.object.depth = gameConfig.depth.players;
 		this.object.setAlpha(gameConfig.player.alpha);
 		this.object.index = this.#index;
-
+		this.object.is_active = true;
 	}
 
 	#resizeObject(new_width, new_height){
@@ -54,6 +55,11 @@ class Player{
 			this.object.setCollideWorldBounds(true, 0, 0);
 		}
 
+	#playAnimation(){
+		this.#scene_texture.playAnimationOn(this.object);
+	}
+	
+
 	jump(){
 		this.object.setVelocityY(-gameConfig.player.jump_strength);
 	}
@@ -74,5 +80,27 @@ class Player{
 		} else {
 			this.object.setGravityY(0);
 		}
+	}
+
+	respawn(respawn_y, velocity){
+		this.object.is_active = false;
+		this.object.alpha = 0;
+		this.object.setVelocityY(0);
+		this.activateGravity(false);
+		var tween = this.#scene_texture.scene.tweens.add({
+			targets: this.object,
+			y: respawn_y,
+			alpha: gameConfig.player.alpha / 2,
+			ease: 'Power1',
+			duration: 1000, //gameConfig.pipe_repartition.horizontal_distance_default * 0.5 / velocity,
+			repeat: 0,
+			onComplete: function(){
+				this.object.alpha = gameConfig.player.alpha;
+				this.activateGravity(true);
+				this.object.is_active = true;
+			},
+			callbackScope: this
+		})
+
 	}
 }
