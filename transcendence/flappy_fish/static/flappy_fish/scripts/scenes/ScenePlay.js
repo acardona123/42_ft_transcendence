@@ -144,11 +144,11 @@ class ScenePlay extends Phaser.Scene{
 				#actionPlayerDeath(player_object){
 					
 					this.#createExplosion(player_object);
+					this.#addDeathToScoreboard(player_object);
 					if (!this.#textboard.doesPlayerHasRemainingLife(player_object.index)){
 						this.#gameOver();
 					} else {
 						this.#respawnPlayer(player_object);
-						this.#addDeathToScoreboard(player_object);
 					}
 				}
 					#createExplosion(player_object){
