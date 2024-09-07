@@ -35,6 +35,10 @@ class SceneTexture{
 		this.preloadOnScene();
 	}
 
+	transferToScene(new_scene){
+		this.scene = new_scene;
+	}
+
 	createAnimationOnScene(){
 		if (!this.#images_loaded){
 			this.#implicitPreloadOnScene();
