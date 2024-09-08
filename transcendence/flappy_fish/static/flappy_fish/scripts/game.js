@@ -19,9 +19,9 @@ const gameTextures = {
 const gameOverTextures = {
 		player1_icon:		new Texture("images/bird.png", "image", 816, 576),
 		player2_icon:		new Texture("images/bird1.png", "image", 816, 576),
-		ceiling:		new Texture("images/ceiling.png", "image", 336, 112),
-		ground:			new Texture("images/ground.png", "image", 336, 112),
-		background:		new Texture("images/background.png", "image", 1781, 1785),
+		ceiling:			new Texture("images/ceiling.png", "image", 336, 112),
+		ground:				new Texture("images/ground.png", "image", 336, 112),
+		background:			new Texture("images/background.png", "image", 1781, 1785),
 		confetti:			new Texture("sprites/confetti.png", "sprite", 150, 84, 25, -1),
 }
 
@@ -126,6 +126,19 @@ const gameConfig = {
 					fill: 'black'
 				}
 			},
+		ceiling :{
+			height : 100,
+		},
+		ground: {
+			height: 100,
+		},
+		depth: {
+			confetti: 2,
+			panel: 1,
+			ceiling: 0,
+			ground: 0,
+			background: -3
+		},
 	},
 	
 	
