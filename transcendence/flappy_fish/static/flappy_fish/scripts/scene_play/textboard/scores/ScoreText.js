@@ -8,7 +8,7 @@ class ScoreText extends AlignedText{
 		}
 		
 		const score_text = '0';
-		const score_style = gameConfig.textboard.text_style;
+		const score_style = gameConfig.scenePlay.textboard.text_style;
 		const score_alignment = (player_index === player_index.PLAYER1) ? text_alignment.ALIGN_LEFT : text_alignment.ALIGN_RIGHT;
 		super(scene, score_alignment, x, y, score_text, score_style);
 		scene.add.existing(this);

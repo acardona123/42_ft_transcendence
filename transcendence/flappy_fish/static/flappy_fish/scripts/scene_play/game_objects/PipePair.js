@@ -13,14 +13,14 @@ class PipePair extends Phaser.GameObjects.Container{
 		scene,
 		pipe_group,
 		pipe_textures,
-		spacer_height = gameConfig.pipe_spacer.height_default,
+		spacer_height = gameConfig.scenePlay.pipe_spacer.height_default,
 		offset_to_middle = 0,
-		x = gameConfig.width + (Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width))/2
+		x = gameConfig.width + (Math.max (gameConfig.scenePlay.pipe.core_width, gameConfig.scenePlay.pipe.head_width, gameConfig.scenePlay.pipe_spacer.width))/2
 		){
 		super(scene);
 		this.#scene = scene;
 		this.#pipe_group = pipe_group;
-		this.depth = gameConfig.depth.pipes;
+		this.depth = gameConfig.scenePlay.depth.pipes;
 		this.#generateComponents(pipe_textures);
 		this.#runComponentsAnimations(pipe_textures);
 		this.#setComponentsOrigin();
@@ -73,23 +73,23 @@ class PipePair extends Phaser.GameObjects.Container{
 		this.#calculateScaleSpacer(targeted_spacer_height);
 	}
 		#calculateScaleCore(){
-			const flyable_zone_height = gameConfig.height - gameConfig.ground.height - gameConfig.ceiling.height;
-			this.#pipe_core_height = flyable_zone_height - gameConfig.pipe_spacer.height_min - 2 * gameConfig.pipe.head_height;
+			const flyable_zone_height = gameConfig.height - gameConfig.scenePlay.ground.height - gameConfig.scenePlay.ceiling.height;
+			this.#pipe_core_height = flyable_zone_height - gameConfig.scenePlay.pipe_spacer.height_min - 2 * gameConfig.scenePlay.pipe.head_height;
 			this.scales.core = {
-				x: gameConfig.pipe.core_width / gameTextures.pipe.core.width,
+				x: gameConfig.scenePlay.pipe.core_width / gameTextures.pipe.core.width,
 				y: this.#pipe_core_height / gameTextures.pipe.core.height
 			};
 		}
 		#calculateScaleHead(){
 			this.scales.head = {
-				x: gameConfig.pipe.head_width / gameTextures.pipe.head.width,
-				y: gameConfig.pipe.head_height / gameTextures.pipe.head.height
+				x: gameConfig.scenePlay.pipe.head_width / gameTextures.pipe.head.width,
+				y: gameConfig.scenePlay.pipe.head_height / gameTextures.pipe.head.height
 			}
 		}
 		#calculateScaleSpacer(targeted_spacer_height){
-			this.#spacer_height = clamp(targeted_spacer_height, gameConfig.pipe_spacer.height_min, gameConfig.pipe_spacer.height_max);
+			this.#spacer_height = clamp(targeted_spacer_height, gameConfig.scenePlay.pipe_spacer.height_min, gameConfig.scenePlay.pipe_spacer.height_max);
 			this.scales.spacer = {
-				x: gameConfig.pipe_spacer.width / gameTextures.pipe_spacer.width,
+				x: gameConfig.scenePlay.pipe_spacer.width / gameTextures.pipe_spacer.width,
 				y: this.#spacer_height / gameTextures.pipe_spacer.height
 			}
 		}
@@ -130,7 +130,7 @@ class PipePair extends Phaser.GameObjects.Container{
 	}
 		#positionFirstComponent(container_components){
 			container_components[0];
-			container_components[0].y = - (this.#pipe_core_height + gameConfig.pipe.head_height + this.#spacer_height / 2);
+			container_components[0].y = - (this.#pipe_core_height + gameConfig.scenePlay.pipe.head_height + this.#spacer_height / 2);
 		}
 		#verticallyAlignComponent(container_components){
 			Phaser.Actions.AlignTo(container_components, Phaser.Display.Align.BOTTOM_CENTER);
@@ -176,13 +176,13 @@ class PipePair extends Phaser.GameObjects.Container{
 			this.#fitContainerToComponentsHeight();
 		}
 			#fitContainerToComponentsWidth(){
-				const container_width = Math.max (gameConfig.pipe.core_width, gameConfig.pipe.head_width, gameConfig.pipe_spacer.width);
+				const container_width = Math.max (gameConfig.scenePlay.pipe.core_width, gameConfig.scenePlay.pipe.head_width, gameConfig.scenePlay.pipe_spacer.width);
 				const container_height = this.height;
 				this.setSize(container_width, container_height);
 			}
 			#fitContainerToComponentsHeight(){
 				const container_width = this.width;
-				const container_height = 2 * (this.#pipe_core_height + gameConfig.pipe.head_height) + this.#spacer_height;
+				const container_height = 2 * (this.#pipe_core_height + gameConfig.scenePlay.pipe.head_height) + this.#spacer_height;
 				this.setSize(container_width, container_height);
 			}
 
@@ -199,7 +199,7 @@ class PipePair extends Phaser.GameObjects.Container{
 			});
 		}
 
-	reactivate(targeted_spacer_height = gameConfig.pipe_spacer.height_default, offset_to_middle = 0, x = gameConfig.width + this.width/2){
+	reactivate(targeted_spacer_height = gameConfig.scenePlay.pipe_spacer.height_default, offset_to_middle = 0, x = gameConfig.width + this.width/2){
 		this.#resetSpacerSize(targeted_spacer_height);
 		this.#enableBodies();
 		this.#moveToInitialPosition(offset_to_middle, x);
@@ -222,7 +222,7 @@ class PipePair extends Phaser.GameObjects.Container{
 		}
 
 	setVerticalOffset(offset_to_middle){
-		offset_to_middle = clamp(offset_to_middle, -gameConfig.pipe_repartition.vertical_offset_max, gameConfig.pipe_repartition.vertical_offset_max);
+		offset_to_middle = clamp(offset_to_middle, -gameConfig.scenePlay.pipe_repartition.vertical_offset_max, gameConfig.scenePlay.pipe_repartition.vertical_offset_max);
 		this.y = flyable_zone_center_y + offset_to_middle;
 	}
 }

@@ -12,30 +12,43 @@
 	</script>
     <script src="{% static 'flappy_fish/scripts/tools.js' %}"></script>
     <script src="{% static 'flappy_fish/scripts/phaser.min.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/Texture.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/SceneTexture.js' %}"></script>
 
-    <script src="{% static 'flappy_fish/scripts/game_objects/PipePair.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/PipePairsPool.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/Player.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/Ground.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/Ceiling.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/Background.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/StartingLine.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/game_objects/PlayerExplosion.js' %}"></script>
-
-    <script src="{% static 'flappy_fish/scripts/textboard/clock/AbstractClock.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/clock/Timer.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/clock/Chronometer.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/scores/AlignedText.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/scores/ScoreText.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/scores/Score.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/textboard/Textboard.js' %}"></script>
+    <!-- Shared between scenes -->
+    <script src="{% static 'flappy_fish/scripts/shared_between_scene/AbstractVerticallyScaledTileSprite.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/shared_between_scene/Texture.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/shared_between_scene/SceneTexture.js' %}"></script>
     
-    <script src="{% static 'flappy_fish/scripts/scenes/SceneBoot.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/scenes/ScenePlay.js' %}"></script>
-    <script src="{% static 'flappy_fish/scripts/scenes/SceneGameFinished.js' %}"></script>
+    <!-- SceneBoot -->
+    <script src="{% static 'flappy_fish/scripts/scene_boot/SceneBoot.js' %}"></script>
 
+    <!-- scene_play -->
+        <!-- objects -->
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PipePair.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PipePairsPool.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/Player.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PlayGround.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PlayCeiling.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PlayBackground.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/StartingLine.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/game_objects/PlayerExplosion.js' %}"></script>
+        <!-- Textboard -->
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/clock/AbstractClock.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/clock/Timer.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/clock/Chronometer.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/scores/AlignedText.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/scores/ScoreText.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/scores/Score.js' %}"></script>
+    <script src="{% static 'flappy_fish/scripts/scene_play/textboard/Textboard.js' %}"></script>
+        <!-- scene -->
+        <script src="{% static 'flappy_fish/scripts/scene_play/ScenePlay.js' %}"></script>
+
+    <!-- scene game finished -->
+        <!-- objects -->
+    <script src="{% static 'flappy_fish/scripts/scene_game_finished/objects/GameOverPlayerData.js' %}"></script>
+        <!-- scene -->
+    <script src="{% static 'flappy_fish/scripts/scene_game_finished/SceneGameFinished.js' %}"></script>
+
+    
     <script src="{% static 'flappy_fish/scripts/game.js' %}"></script>
     <script src="{% static 'flappy_fish/scripts/main.js' %}"></script>
 

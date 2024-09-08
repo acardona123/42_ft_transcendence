@@ -6,9 +6,9 @@ class Textboard extends Phaser.GameObjects.Container{
 	#clock;
 
 	constructor(scene, texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2){
-		super(scene, gameConfig.width / 2, gameConfig.textboard.height / 2);
+		super(scene, gameConfig.width / 2, gameConfig.scenePlay.textboard.height / 2);
 		this.#scene = scene;
-		this.depth = gameConfig.depth.textboard;
+		this.depth = gameConfig.scenePlay.depth.textboard;
 
 		this.#resize_textboard();
 		this.#createComponents(texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2);
@@ -19,7 +19,7 @@ class Textboard extends Phaser.GameObjects.Container{
 	}
 		#resize_textboard(){
 			this.width = gameConfig.width;
-			this.height = gameConfig.textboard.height;
+			this.height = gameConfig.scenePlay.textboard.height;
 		}
 		#createComponents(texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2){
 			this.#createBackground(texture_scene_background);
@@ -49,9 +49,9 @@ class Textboard extends Phaser.GameObjects.Container{
 			}
 				#createClockObject(){
 					if (isTimeLimited()){
-						this.#clock = new Timer(this.#scene, 0, 0, gameConfig.textboard.text_style, gameMode.maxTime);
+						this.#clock = new Timer(this.#scene, 0, 0, gameConfig.scenePlay.textboard.text_style, gameMode.maxTime);
 					} else{
-						this.#clock = new Chronometer(this.#scene, 0, 0, gameConfig.textboard.text_style)
+						this.#clock = new Chronometer(this.#scene, 0, 0, gameConfig.scenePlay.textboard.text_style)
 					}
 				}
 				#resizeClock(){
@@ -64,9 +64,9 @@ class Textboard extends Phaser.GameObjects.Container{
 		}
 		#positionComponents(){
 			this.#background.setPosition(-this.width / 2, - this.height / 2);
-			this.#score_player1.setPositionCenterLeft(gameConfig.textboard.side_padding - this.width / 2, 0);
+			this.#score_player1.setPositionCenterLeft(gameConfig.scenePlay.textboard.side_padding - this.width / 2, 0);
 			this.#clock.setPosition(0, 0);
-			this.#score_player2.setPositionCenterRight(this.width / 2 - gameConfig.textboard.side_padding, 0);
+			this.#score_player2.setPositionCenterRight(this.width / 2 - gameConfig.scenePlay.textboard.side_padding, 0);
 		}
 		
 		update(){

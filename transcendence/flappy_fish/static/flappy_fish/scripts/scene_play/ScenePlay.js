@@ -1,5 +1,6 @@
 class ScenePlay extends Phaser.Scene{
 
+	#boot_textures;
 	#scene_textures;
 
 	#pipes_group;
@@ -28,8 +29,9 @@ class ScenePlay extends Phaser.Scene{
 		this.#game_started = false;
 	}
 	
-	init(loaded_scene_textures){
-		this.#scene_textures = loaded_scene_textures;
+	init(loaded_boot_textures){
+		this.#boot_textures = loaded_boot_textures;
+		this.#scene_textures = loaded_boot_textures.scenePlay;
 		for (const [key, value] of Object.entries(this.#scene_textures)){
 			value.transferToScene(this);
 		}	
@@ -41,8 +43,8 @@ class ScenePlay extends Phaser.Scene{
 		this.#pipes_group = this.physics.add.group();
 		this.#player_group = this.physics.add.group();
 		this.#active_pipes = []
-		this.#velocity_x = gameConfig.velocity_x.init_value;
-		this.#pipes_pair_horizontal_distance = gameConfig.pipe_repartition.horizontal_distance_default;
+		this.#velocity_x = gameConfig.scenePlay.velocity_x.init_value;
+		this.#pipes_pair_horizontal_distance = gameConfig.scenePlay.pipe_repartition.horizontal_distance_default;
 		this.#new_pipes_pair_trigger = gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
 		this.#createAnimations();
@@ -69,15 +71,15 @@ class ScenePlay extends Phaser.Scene{
 		}
 
 		#createCeiling(){
-			this.#ceiling = new Ceiling(this.#scene_textures.ceiling);
+			this.#ceiling = new PlayCeiling(this.#scene_textures.ceiling);
 		}
 
 		#createBackground(){
-			this.#background = new Background(this.#scene_textures.background);
+			this.#background = new PlayBackground(this.#scene_textures.background);
 		}
 
 		#createGround(){
-			this.#ground = new Ground(this.#scene_textures.ground);
+			this.#ground = new PlayGround(this.#scene_textures.ground);
 		}
 
 		#createPipesPool()
@@ -90,7 +92,7 @@ class ScenePlay extends Phaser.Scene{
 			this.#pipes_pairs_pool = new PipePairsPool(this, this.#pipes_group, pipe_textures, pool_size);
 		}
 			#calculatePipeWidth(){
-				return (Math.max(gameConfig.pipe.core_width, gameConfig.pipe.head_width))
+				return (Math.max(gameConfig.scenePlay.pipe.core_width, gameConfig.scenePlay.pipe.head_width))
 			}
 
 		#createPlayers(){
@@ -173,8 +175,8 @@ class ScenePlay extends Phaser.Scene{
 
 		#createControls(){
 			this.#controls = {
-				player1:  this.input.keyboard.addKey(gameConfig.controls.player1),
-				player2: this.input.keyboard.addKey(gameConfig.controls.player2)
+				player1:  this.input.keyboard.addKey(gameConfig.scenePlay.controls.player1),
+				player2: this.input.keyboard.addKey(gameConfig.scenePlay.controls.player2)
 			};
 		}
 
@@ -214,18 +216,18 @@ class ScenePlay extends Phaser.Scene{
 				return (last_pipe_pair.x < this.#new_pipes_pair_trigger)
 			}
 			#introduceNewPipePair(offset_to_middle = this.#calculateRandomPipePairOffset()){
-				const targeted_spacer_height = gameConfig.pipe_spacer.height_default;
+				const targeted_spacer_height = gameConfig.scenePlay.pipe_spacer.height_default;
 				const new_pipe_pair = this.#pipes_pairs_pool.getPipePair(targeted_spacer_height, offset_to_middle);
 				this.#active_pipes.push(new_pipe_pair);
 
 			}
 				#calculateRandomPipePairOffset(){
-					return (Phaser.Math.Between(-gameConfig.pipe_repartition.vertical_offset_max, gameConfig.pipe_repartition.vertical_offset_max));
+					return (Phaser.Math.Between(-gameConfig.scenePlay.pipe_repartition.vertical_offset_max, gameConfig.scenePlay.pipe_repartition.vertical_offset_max));
 				}
 
 		#updateVelocities(delta){
 			const delta_sec = delta / 1000;
-			this.#velocity_x += delta_sec * gameConfig.velocity_x.acceleration;
+			this.#velocity_x += delta_sec * gameConfig.scenePlay.velocity_x.acceleration;
 			this.#updateVelocityPlayers();
 			this.#updateVelocityCeiling(delta);
 			this.#updateVelocityGround(delta);
@@ -265,6 +267,6 @@ class ScenePlay extends Phaser.Scene{
 		}
 
 		#gameOver(){
-			this.scene.start("GameFinished",this.#textboard.getAllValues());
+			this.scene.start("GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
 		}
 }

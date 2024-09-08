@@ -10,19 +10,19 @@ class Player{
 		this.#scene_texture = scene_texture;
 		this.#index = player_index_symbol;
 		this.#createObject();
-		this.#resizeObject(gameConfig.player.width, gameConfig.player.height);
+		this.#resizeObject(gameConfig.scenePlay.player.width, gameConfig.scenePlay.player.height);
 		player_group.add(this.object);
 		this.#addPhysics();
 		this.#playAnimation();
 	}
 
 	#createObject(){
-		const init_x = gameConfig.player.position_x;
+		const init_x = gameConfig.scenePlay.player.position_x;
 		const init_y = flyable_zone_center_y;
 		const addToPhysics = true;
 		this.object = this.#scene_texture.createOnScene(init_x, init_y, addToPhysics),
-		this.object.depth = gameConfig.depth.players;
-		this.object.setAlpha(gameConfig.player.alpha);
+		this.object.depth = gameConfig.scenePlay.depth.players;
+		this.object.setAlpha(gameConfig.scenePlay.player.alpha);
 		this.object.index = this.#index;
 		this.object.is_active = true;
 	}
@@ -61,7 +61,7 @@ class Player{
 	
 
 	jump(){
-		this.object.setVelocityY(-gameConfig.player.jump_strength);
+		this.object.setVelocityY(-gameConfig.scenePlay.player.jump_strength);
 	}
 
 	update(velocity_x){
@@ -76,7 +76,7 @@ class Player{
 
 	activateGravity(boolean){
 		if (boolean === true){
-			this.object.setGravityY(gameConfig.player.gravity_intensity);
+			this.object.setGravityY(gameConfig.scenePlay.player.gravity_intensity);
 		} else {
 			this.object.setGravityY(0);
 		}
@@ -90,12 +90,12 @@ class Player{
 		var tween = this.#scene_texture.scene.tweens.add({
 			targets: this.object,
 			y: respawn_y,
-			alpha: gameConfig.player.alpha / 2,
+			alpha: gameConfig.scenePlay.player.alpha / 2,
 			ease: 'Power1',
-			duration: 1000, //gameConfig.pipe_repartition.horizontal_distance_default * 0.5 / velocity,
+			duration: 1000, //gameConfig.scenePlay.pipe_repartition.horizontal_distance_default * 0.5 / velocity,
 			repeat: 0,
 			onComplete: function(){
-				this.object.alpha = gameConfig.player.alpha;
+				this.object.alpha = gameConfig.scenePlay.player.alpha;
 				this.activateGravity(true);
 				this.object.is_active = true;
 			},

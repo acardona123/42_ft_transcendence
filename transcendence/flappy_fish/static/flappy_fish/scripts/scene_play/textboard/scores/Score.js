@@ -10,11 +10,11 @@ class Score extends Phaser.GameObjects.Container{
 	#icon;
 	#text;
 
-	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = gameConfig.width / 3, height = gameConfig.textboard.height, icon_size = gameConfig.textboard.icon_size, icon_padding = gameConfig.textboard.icon_padding){
+	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = gameConfig.width / 3, height = gameConfig.scenePlay.textboard.height, icon_size = gameConfig.scenePlay.textboard.icon_size, icon_padding = gameConfig.scenePlay.textboard.icon_padding){
 		super(scene);
 		this.height = height;
 		this.width = width;
-		this.depth = gameConfig.depth.textboard.text;
+		this.depth = gameConfig.scenePlay.depth.textboard.text;
 
 		this.#scene = scene;
 		this.#player_index_symbol = player_index_symbol;

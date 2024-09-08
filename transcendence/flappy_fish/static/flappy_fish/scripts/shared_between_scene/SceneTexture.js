@@ -108,4 +108,16 @@ class SceneTexture{
 			object.play(this.#animation_name);
 		}
 	}
+
+	getScaleToTargetWidth(target_width){
+		return (target_width / this.texture.width);
+	}
+	getScaleToTargetHeight(targetHeight){
+		return (targetHeight / this.texture.height);
+	}
+	getScaleToFit(max_width, max_height){
+		const scale_width = this.getScaleToTargetWidth(max_width);
+		const scale_height = this.getScaleToTargetWidth(max_height);
+		return (Math.min(scale_width, scale_height));
+	}
 }

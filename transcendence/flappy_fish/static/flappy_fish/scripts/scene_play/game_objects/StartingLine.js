@@ -10,21 +10,21 @@ class StartingLine {
 	}
 
 	#createObject(){
-		const top_y = gameConfig.textboard.height + gameConfig.ceiling.height;
-		const bottom_y = gameConfig.height - gameConfig.ground.height;
+		const top_y = gameConfig.scenePlay.textboard.height + gameConfig.scenePlay.ceiling.height;
+		const bottom_y = gameConfig.height - gameConfig.scenePlay.ground.height;
 		const x = gameConfig.width * 0.7 ;
 		const y = top_y;
-		const width = Math.min (gameConfig.starting_line.width, 0.1 * gameConfig.width);
+		const width = Math.min (gameConfig.scenePlay.starting_line.width, 0.1 * gameConfig.width);
 		const height = bottom_y - top_y;
 		this.object = this.scene_texture.createTileSprite(x, y, width, height);
 		this.object.setOrigin(0, 0);
-		this.object.depth = gameConfig.depth.starting_line;
-		this.object.alpha = gameConfig.starting_line.alpha;
+		this.object.depth = gameConfig.scenePlay.depth.starting_line;
+		this.object.alpha = gameConfig.scenePlay.starting_line.alpha;
 	}
 
 	#addPhysics(){
 		this.scene_texture.scene.physics.world.enable(this.object);
 		this.object.body.setImmovable(true);
-		this.object.body.setVelocity(-gameConfig.velocity_x.init_value, 0);
+		this.object.body.setVelocity(-gameConfig.scenePlay.velocity_x.init_value, 0);
 	}
 }
