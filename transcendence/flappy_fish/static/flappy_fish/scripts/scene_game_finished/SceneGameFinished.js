@@ -119,7 +119,6 @@ class SceneGameFinished extends Phaser.Scene{
 			}
 				#positionPayer1Panel(){
 					this.#panel_player1.setTopRightCornerPosition(0, gameConfig.scene_game_finished.panel.top_padding);
-					console.log(`y = ${this.#panel_player1.y}`)
 					const final_x = Math.floor(gameConfig.width / 4);
 
 					var tween = this.tweens.add({
