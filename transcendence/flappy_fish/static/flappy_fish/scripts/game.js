@@ -116,9 +116,9 @@ const gameConfig = {
 	scene_game_finished :{
 		panel:
 			{
-				top_padding: 100,
+				top_padding: 150,
 				icon_size: 300,
-				icon_bottom_padding: 20,
+				icon_bottom_padding: 0,
 				line_spacing: 30, 
 				text_style: {
 					fontFamily: '"Goudy Bookletter 1911", Times, serif',

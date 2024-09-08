@@ -11,9 +11,13 @@ class Confetti {
 
 	#createObject(x, y){
 		this.object = this.scene_texture.createOnScene(x, y);
-		const scale = this.scene_texture.getScaleToFit(gameConfig.width / 2, gameConfig.height)
-		this.object .setScale(scale);
+		this.object.depth = gameConfig.scene_game_finished.depth.confetti;
+		this.#rescaleObject();
 	}
+		#rescaleObject(){
+			const scale = this.scene_texture.getScaleToFit(gameConfig.width / 2, gameConfig.height)
+			this.object.setScale(scale);			
+		}
 	
 	#playObjectAnimation(){
 		this.scene_texture.playAnimationOn(this.object );

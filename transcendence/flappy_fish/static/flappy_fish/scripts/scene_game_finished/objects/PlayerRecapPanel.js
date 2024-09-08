@@ -1,4 +1,4 @@
-class GameOverPlayerData extends Phaser.GameObjects.Container{
+class PlayerRecapPanel extends Phaser.GameObjects.Container{
 	#scene;
 	#player_index_symbol;
 	#player_texture;
@@ -21,6 +21,7 @@ class GameOverPlayerData extends Phaser.GameObjects.Container{
 		text_style = gameConfig.scene_game_finished.panel.text_style
 		){
 		super(player_scene_texture.scene);
+
 		this.#player_index_symbol = player_index_symbol;
 		this.#player_texture = player_scene_texture;
 		this.#score = player_score;
@@ -29,7 +30,6 @@ class GameOverPlayerData extends Phaser.GameObjects.Container{
 		this.#text_style = text_style;
 
 		this.#scene = this.#player_texture.scene;
-		this.#components_array = [this.#icon, this.#text_victory_status, this.#text_score];
 
 		this.#addContainerToScene();
 		this.#createComponents();
@@ -42,6 +42,7 @@ class GameOverPlayerData extends Phaser.GameObjects.Container{
 			this.#createIcon();
 			this.#createTextVictoryStatus();
 			this.#createTextScore();
+			this.#components_array = [this.#icon, this.#text_victory_status, this.#text_score];
 		}
 
 			#createIcon(){
@@ -97,19 +98,13 @@ class GameOverPlayerData extends Phaser.GameObjects.Container{
 		}
 
 		#addComponentsToContainer(){
-			this.add(this.#icon);
-			this.add(this.#text_victory_status);
-			this.add(this.#text_score);
-			// // Object.values(this.#components_array).forEach(value => {
-			// // 	this.add(value);
-			// // });
-			// this.add(this.#components_array);
+			this.add(this.#components_array);
 		}
 
 		#positionComponents(){
 			this.#setComponentsOrigins();
 			this.#setComponentsPosition();
-
+			this.depth = gameConfig.scene_game_finished.depth.panel;
 		}
 			#setComponentsOrigins(){
 				this.#icon.setOrigin(0.5, 0);

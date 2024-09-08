@@ -9,7 +9,7 @@ class SceneGameFinished extends Phaser.Scene{
 
 	#background;
 	#ceiling;
-	#floor;
+	#ground;
 	#panel_player1;
 	#panel_player2;
 	#confetti;
@@ -74,6 +74,8 @@ class SceneGameFinished extends Phaser.Scene{
 	create(){
 		this.#createAnimations();
 		this.#createBackground();
+		this.#createGround();
+		this.#createCeiling();
 		this.#createConfetti();
 		this.#createPlayerPanels();
 	}
@@ -83,9 +85,17 @@ class SceneGameFinished extends Phaser.Scene{
 				value.createAnimationOnScene();
 			}
 		}
+		
+		#createCeiling(){
+			this.#ceiling = new GameFinishedCeiling(this.#scene_textures.ceiling);
+		}
 
 		#createBackground(){
+			this.#background = new GameFinishedBackground(this.#scene_textures.background);
+		}
 
+		#createGround(){
+			this.#ground = new GameFinishedGround(this.#scene_textures.ground);
 		}
 
 		#createConfetti(){
@@ -100,8 +110,8 @@ class SceneGameFinished extends Phaser.Scene{
 			this.#positionPayerPanels();
 		}
 			#createPlayerPanelsObjects(){
-				this.#panel_player1 = new GameOverPlayerData(player_index.PLAYER1, this.#scene_textures.player1_icon, this.#score.player1, this.#getPlayerWinningStatus(player_index.PLAYER1));
-				this.#panel_player2 = new GameOverPlayerData(player_index.PLAYER2, this.#scene_textures.player2_icon, this.#score.player2, this.#getPlayerWinningStatus(player_index.PLAYER2), true);
+				this.#panel_player1 = new PlayerRecapPanel(player_index.PLAYER1, this.#scene_textures.player1_icon, this.#score.player1, this.#getPlayerWinningStatus(player_index.PLAYER1));
+				this.#panel_player2 = new PlayerRecapPanel(player_index.PLAYER2, this.#scene_textures.player2_icon, this.#score.player2, this.#getPlayerWinningStatus(player_index.PLAYER2), true);
 			}
 			#positionPayerPanels(){
 				this.#positionPayer1Panel();
@@ -143,4 +153,6 @@ class SceneGameFinished extends Phaser.Scene{
 						callbackScope: this
 					})
 				}
+
+			
 }
