@@ -14,6 +14,18 @@ const DB_history =
 
 	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
+
+	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
+
+	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
+
+	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276}
 ];
 
@@ -159,7 +171,6 @@ function add_element_to_history(history_elem, id)
 	const history_list = document.getElementById("history_list");
 	const history_elem_div = get_history_elem_div(history_elem);
 	history_elem_div.id = id.toString();
-
 	history_list.appendChild(history_elem_div);
 }
 
