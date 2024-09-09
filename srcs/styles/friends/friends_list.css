@@ -69,6 +69,7 @@
 }
 
 .friend-online-dot {
+	cursor: pointer;
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -83,6 +84,7 @@
 }
 
 .confirm-remove-friend {
+	cursor: pointer;
 	margin-top: auto;
 	margin-bottom: auto;
 	width: 25%;

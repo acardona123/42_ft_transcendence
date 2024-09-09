@@ -2,6 +2,7 @@
 	max-height: 50%;
 	margin-left: 10px;
 	transition: transform 1s;
+	cursor: pointer;
 }
 
 .button-add-friend:hover {
