@@ -144,7 +144,6 @@ class ScenePlay extends Phaser.Scene{
 				});
 			}
 				#actionPlayerDeath(player_object){
-					
 					this.#createExplosion(player_object);
 					this.#addDeathToScoreboard(player_object);
 					if (!this.#textboard.doesPlayerHasRemainingLife(player_object.index)){
@@ -267,6 +266,13 @@ class ScenePlay extends Phaser.Scene{
 		}
 
 		#gameOver(){
-			this.scene.start("GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
+			this.#sendGameResultsToServer();
+			this.#goToFinishScene();
 		}
+			#sendGameResultsToServer(){
+				//TODO
+			}
+			#goToFinishScene(){
+				this.scene.start("GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
+			}
 }
