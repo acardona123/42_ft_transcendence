@@ -176,14 +176,29 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 
 	playDefeatTween(){
 		const initial_icon_y = this.#icon.y;
-		this.#scene.tweens.add({
+		
+		this.#scene.tweens.chain({
 			targets: this.#icon,
-			angle: gameConfig.scene_game_finished.panel.defeat.kneeing_angle * (this.#flip_icon ? -1 : 1),
-			y: initial_icon_y + gameConfig.scene_game_finished.panel.defeat.kneeing_translation_y,
-			ease: 'Power1',
-			duration: 1000,
-			repeat: 0,
-			callbackScope: this
+			tweens: [
+				{
+					y: initial_icon_y + gameConfig.scene_game_finished.panel.defeat.kneeing_translation_y,
+					angle: gameConfig.scene_game_finished.panel.defeat.kneeing_angle / 2 * (this.#flip_icon ? -1 : 1),
+					duration: 1000,
+					ease: 'Power1',
+					repeat: 0,
+				},
+				{
+					angle: {
+						from: gameConfig.scene_game_finished.panel.defeat.kneeing_angle / 2 * (this.#flip_icon ? -1 : 1),
+						to: gameConfig.scene_game_finished.panel.defeat.kneeing_angle * (this.#flip_icon ? -1 : 1)
+					},
+					duration: 2000,
+					ease: 'Sine.easeInOut',
+					yoyo: true,
+					repeat: -1,
+				}
+			],
+			loop: 0
 		})
 	}
 }
