@@ -25,7 +25,7 @@ function unload_elements()
 
 function load_elements(elem)
 {
-	update_history_list();
+	update_history_list({type : elem.textContent});
 }
 
 function on_click_tab_history(elem)
@@ -42,7 +42,7 @@ function on_click_tab_history(elem)
 	}
 	// load tab
 	clicked_element = elem;
-	load_elements();
+	load_elements(clicked_element);
 
 	elem.style.backgroundColor = '#755632';
 

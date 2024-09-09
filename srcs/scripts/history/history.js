@@ -1,30 +1,30 @@
 const DB_history =
 [
-	{"game" : "pong", "is_victory" : true, "score_left" : 10,
+	{"game" : "Pong", "is_victory" : true, "score_left" : 10,
 		"score_right" : 14, "game_duration" : 120,
 		"user_against" : "alex", "date" : 1725732245789},
 
-	{"game" : "flappy", "is_victory" : false, "score_left" : 6,
+	{"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
 		"score_right" : 1, "game_duration" : 31,
 		"user_against" : "alex", "date" : 1725700000000},
 
-	{"game" : "pong", "is_victory" : false, "score_left" : 1,
+	{"game" : "Pong", "is_victory" : false, "score_left" : 1,
 		"score_right" : 11, "game_duration" : 184,
 		"user_against" : "alex", "date" : Date.now()},
 
-	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "flappy", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276}
 ];
@@ -167,19 +167,19 @@ function add_element_to_history(history_elem, id)
 	const history_elem_div = get_history_elem_div(history_elem);
 	history_elem_div.id = id.toString();
 	history_list.appendChild(history_elem_div);
+	// TODO: remove padding for last one
 }
 
 
 let date_now;
 const history_list = get_history_from_DB(DB_history);
 
-function update_history_list()
+function update_history_list(tab)
 {
 	date_now = Date.now();
 	for (let i = 0; i < history_list.length; i++)
 	{
-		add_element_to_history(history_list[i], i);
+		if (tab.type == history_list[i].game)
+			add_element_to_history(history_list[i], i);
 	}
 }
-
-update_history_list();
