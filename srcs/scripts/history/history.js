@@ -97,16 +97,23 @@ function get_date_since_now(epoch_history)
 	}
 }
 
+function format(digits)
+{
+	if (digits.length == 1)
+		return "0" + digits;
+	return digits;
+}
+
 function get_date(epoch_history)
 {
 	let date = new Date(epoch_history);
 
-	return date.getDate().toString() + "/" +
-				date.getMonth().toString() + "/" +
-				date.getFullYear().toString() + " " +
-				date.getHours().toString() + ":" +
-				date.getMinutes().toString() + ":"
-				+ date.getSeconds().toString();
+	return		format(date.getHours().toString()) + ":" +
+				format(date.getMinutes().toString()) + ":" +
+				format(date.getSeconds().toString()) + " " +
+				format(date.getDate().toString()) + "/" +
+				format(date.getMonth().toString()) + "/" +
+				format(date.getFullYear().toString());
 }
 
 function hover_date_since_enter(event)
