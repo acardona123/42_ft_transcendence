@@ -163,11 +163,10 @@ function get_history_elem_div(history_elem)
 
 function add_element_to_history(history_elem, id)
 {
-	const history_list = document.getElementById("history_list");
+	const _history_list = document.getElementById("history_list");
 	const history_elem_div = get_history_elem_div(history_elem);
 	history_elem_div.id = id.toString();
-	history_list.appendChild(history_elem_div);
-	// TODO: remove padding for last one
+	_history_list.appendChild(history_elem_div);
 }
 
 
@@ -182,4 +181,7 @@ function update_history_list(tab)
 		if (tab.type == history_list[i].game)
 			add_element_to_history(history_list[i], i);
 	}
+	// remove last element margin bottom
+	const _history_list = document.getElementById("history_list");
+	_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
 }
