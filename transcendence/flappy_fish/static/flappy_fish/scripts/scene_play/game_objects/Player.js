@@ -87,12 +87,13 @@ class Player{
 		this.object.alpha = 0;
 		this.object.setVelocityY(0);
 		this.activateGravity(false);
+		const respawn_time = gameConfig.scenePlay.pipe_repartition.horizontal_distance_default / (velocity / 1000) / 4;
 		var tween = this.#scene_texture.scene.tweens.add({
 			targets: this.object,
 			y: respawn_y,
 			alpha: gameConfig.scenePlay.player.alpha / 2,
 			ease: 'Power1',
-			duration: 1000, //gameConfig.scenePlay.pipe_repartition.horizontal_distance_default * 0.5 / velocity,
+			duration: respawn_time,
 			repeat: 0,
 			onComplete: function(){
 				this.object.alpha = gameConfig.scenePlay.player.alpha;
