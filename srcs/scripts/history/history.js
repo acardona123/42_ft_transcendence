@@ -135,11 +135,6 @@ function get_date_time(elem_date, game_duration)
 	date.onmouseenter = hover_date_since_enter;
 	date.onmouseleave = hover_date_since_leave;
 
-	const span_tooltip = document.createElement('span');
-	span_tooltip.className = "tooltip";
-	span_tooltip.textContent = get_date(date_now);
-	date.appendChild(span_tooltip);
-
 	const time = document.createElement('p');
 	time.textContent = game_duration.toString();
 	time.className = "time-text";
