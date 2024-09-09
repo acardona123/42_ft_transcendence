@@ -114,38 +114,41 @@ const gameConfig = {
 	},
 
 	scene_game_finished :{
-		panel:
-			{
-				top_padding: 150,
-				icon_size: 300,
-				icon_bottom_padding: 0,
-				line_spacing: 30, 
-				text_style: {
-					fontFamily: '"Goudy Bookletter 1911", Times, serif',
-					fontSize: '150px',
-					fill: 'black'
-				},
-				cellebration: {
-					jump_height: 60,
-					jump_duration: 300,
-					jump_angle: 5,
-					bounce_duration: 600,
-					loop_delay: 100
-				},
-				defeat: {
-					kneeing_angle: 30,
-					kneeing_translation_y: 20 
-				}
+		padding:{
+			top: 100,
+			under_panels: 30
+		},
+		panel:{
+			icon_size: 300,
+			icon_bottom_padding: 0,
+			line_spacing: 30, 
+			cellebration: {
+				jump_height: 60,
+				jump_duration: 300,
+				jump_angle: 5,
+				bounce_duration: 600,
+				loop_delay: 100
 			},
+			defeat: {
+				kneeing_angle: 30,
+				kneeing_translation_y: 20 
+			}
+		},
 		ceiling :{
 			height : 100,
 		},
 		ground: {
 			height: 100,
 		},
+		text_style: {
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '150px',
+			fill: 'black'
+		},
 		depth: {
 			confetti: 2,
 			panel: 1,
+			game_duration: 1,
 			ceiling: 0,
 			ground: 0,
 			background: -3

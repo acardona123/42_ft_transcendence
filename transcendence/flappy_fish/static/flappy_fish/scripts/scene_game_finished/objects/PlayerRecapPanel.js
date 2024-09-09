@@ -20,7 +20,7 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 		player_score,
 		victory_status_symbol,
 		flip_icon = false,
-		text_style = gameConfig.scene_game_finished.panel.text_style
+		text_style = gameConfig.scene_game_finished.text_style
 		){
 		super(player_scene_texture.scene);
 
@@ -41,6 +41,10 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 		this.#positionComponents();
 	}
 
+		#addContainerToScene(){
+			this.#scene.add.existing(this);
+		}
+		
 		#createComponents(){
 			this.#createIcon();
 			this.#createTextVictoryStatus();
@@ -122,10 +126,6 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 				y +=  this.#text_victory_status.height + gameConfig.scene_game_finished.panel.icon_bottom_padding;
 				this.#text_score.setPosition(0, y);
 			}
-
-		#addContainerToScene(){
-			this.#scene.add.existing(this);
-		}
 
 		#createTextObject(text_content){
 			return (this.#scene.add.text(0, 0, text_content, this.#text_style));

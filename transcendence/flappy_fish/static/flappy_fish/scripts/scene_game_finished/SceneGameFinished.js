@@ -12,7 +12,7 @@ class SceneGameFinished extends Phaser.Scene{
 	#ground;
 	#panel_player1;
 	#panel_player2;
-	#confetti;
+	#match_duration;
 
 	constructor(){
 		super("GameFinished");
@@ -77,6 +77,7 @@ class SceneGameFinished extends Phaser.Scene{
 		this.#createGround();
 		this.#createCeiling();
 		this.#createPlayerPanels();
+		this.#createMatchDurationDisplay();
 	}
 
 		#createAnimations(){
@@ -123,12 +124,12 @@ class SceneGameFinished extends Phaser.Scene{
 				this.#positionPayer2Panel();
 			}
 				#positionPayer1Panel(){
-					this.#panel_player1.setTopRightCornerPosition(0, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.panel.top_padding);
+					this.#panel_player1.setTopRightCornerPosition(0, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.padding.top);
 					const final_x = Math.floor(gameConfig.width / 4);
 					this.#panelPositioningTween(this.#panel_player1, final_x, this.#victory_status.player1);
 				}
 				#positionPayer2Panel(){
-					this.#panel_player2.setTopLeftCornerPosition(gameConfig.width, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.panel.top_padding);
+					this.#panel_player2.setTopLeftCornerPosition(gameConfig.width, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.padding.top);
 					const final_x = Math.floor(3 * gameConfig.width / 4);
 					this.#panelPositioningTween(this.#panel_player2, final_x, this.#victory_status.player2);
 				}
@@ -149,7 +150,12 @@ class SceneGameFinished extends Phaser.Scene{
 							callbackScope: this
 						})
 					}
-					
+
+		#createMatchDurationDisplay(){
+			this.#match_duration = new MatchDurationDisplay(this, this.#past_time / 1000);
+			const y = gameConfig.scene_game_finished.padding.under_panels + Math.max(this.#panel_player1.y + this.#panel_player1.height / 2, this.#panel_player2.y + this.#panel_player2.height / 2);
+			this.#match_duration.setTopCenterPosition(gameConfig.width / 2, y)
+		}
 
 			
 }
