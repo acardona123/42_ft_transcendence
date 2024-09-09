@@ -76,7 +76,6 @@ class SceneGameFinished extends Phaser.Scene{
 		this.#createBackground();
 		this.#createGround();
 		this.#createCeiling();
-		this.#createConfetti();
 		this.#createPlayerPanels();
 	}
 
@@ -98,60 +97,59 @@ class SceneGameFinished extends Phaser.Scene{
 			this.#ground = new GameFinishedGround(this.#scene_textures.ground);
 		}
 
-		#createConfetti(){
-			this.#confetti = {
-				player1: false,
-				player2: false
-			}
-		}
-
 		#createPlayerPanels(){
 			this.#createPlayerPanelsObjects();
 			this.#positionPayerPanels();
 		}
 			#createPlayerPanelsObjects(){
-				this.#panel_player1 = new PlayerRecapPanel(player_index.PLAYER1, this.#scene_textures.player1_icon, this.#score.player1, this.#getPlayerWinningStatus(player_index.PLAYER1));
-				this.#panel_player2 = new PlayerRecapPanel(player_index.PLAYER2, this.#scene_textures.player2_icon, this.#score.player2, this.#getPlayerWinningStatus(player_index.PLAYER2), true);
+				this.#panel_player1 = new PlayerRecapPanel(
+					player_index.PLAYER1,
+					this.#scene_textures.player1_icon,
+					this.#scene_textures.confetti,
+					this.#score.player1,
+					this.#getPlayerWinningStatus(player_index.PLAYER1)
+				);
+				this.#panel_player2 = new PlayerRecapPanel(
+					player_index.PLAYER2,
+					this.#scene_textures.player2_icon,
+					this.#scene_textures.confetti,
+					this.#score.player2,
+					this.#getPlayerWinningStatus(player_index.PLAYER2),
+					true
+				);
 			}
 			#positionPayerPanels(){
 				this.#positionPayer1Panel();
 				this.#positionPayer2Panel();
 			}
 				#positionPayer1Panel(){
-					this.#panel_player1.setTopRightCornerPosition(0, gameConfig.scene_game_finished.panel.top_padding);
+					this.#panel_player1.setTopRightCornerPosition(0, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.panel.top_padding);
 					const final_x = Math.floor(gameConfig.width / 4);
-
-					var tween = this.tweens.add({
-						targets: this.#panel_player1,
-						x: final_x,
-						ease: 'Power1',
-						duration: 1000,
-						repeat: 0,
-						onComplete: function(){
-							if (this.#victory_status.player1 === victory_status.WIN || this.#victory_status.player1 === victory_status.TIE ) {
-								this.#confetti.player1 = new Confetti(this.#scene_textures.confetti, final_x, this.#panel_player1.y);
-							}
-						},
-						callbackScope: this
-					})
+					this.#panelPositioningTween(this.#panel_player1, final_x, this.#victory_status.player1);
 				}
 				#positionPayer2Panel(){
-					this.#panel_player2.setTopLeftCornerPosition(gameConfig.width, gameConfig.scene_game_finished.panel.top_padding);
+					this.#panel_player2.setTopLeftCornerPosition(gameConfig.width, gameConfig.scene_game_finished.ceiling.height + gameConfig.scene_game_finished.panel.top_padding);
 					const final_x = Math.floor(3 * gameConfig.width / 4);
-					var tween = this.tweens.add({
-						targets: this.#panel_player2,
-						x: final_x,
-						ease: 'Power1',
-						duration: 1000,
-						repeat: 0,
-						onComplete: function(){
-							if (this.#victory_status.player2 === victory_status.WIN || this.#victory_status.player2 === victory_status.TIE ) {
-								this.#confetti.player2 = new Confetti(this.#scene_textures.confetti, final_x, this.#panel_player2.y);
-							}
-						},
-						callbackScope: this
-					})
+					this.#panelPositioningTween(this.#panel_player2, final_x, this.#victory_status.player2);
 				}
+					#panelPositioningTween(target, final_x, target_victory_status){
+						this.tweens.add({
+							targets: target,
+							x: final_x,
+							ease: 'Power1',
+							duration: 1000,
+							repeat: 0,
+							onComplete: function(){
+								if (target_victory_status === victory_status.WIN || target_victory_status === victory_status.TIE ) {
+									target.playCelebrationTween();
+								} else {
+									target.playDefeatTween();
+								}
+							},
+							callbackScope: this
+						})
+					}
+					
 
 			
 }

@@ -2,6 +2,7 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 	#scene;
 	#player_index_symbol;
 	#player_texture;
+	#confetti_texture;
 	#score;
 	#victory_status_symbol;
 	#flip_icon;
@@ -15,6 +16,7 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 	constructor(
 		player_index_symbol,
 		player_scene_texture,
+		confetti_scene_texture,
 		player_score,
 		victory_status_symbol,
 		flip_icon = false,
@@ -24,6 +26,7 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 
 		this.#player_index_symbol = player_index_symbol;
 		this.#player_texture = player_scene_texture;
+		this.#confetti_texture = confetti_scene_texture;
 		this.#score = player_score;
 		this.#victory_status_symbol = victory_status_symbol;
 		this.#flip_icon = flip_icon;
@@ -129,15 +132,58 @@ class PlayerRecapPanel extends Phaser.GameObjects.Container{
 		}
 
 
-		setTopCenterPosition(x, y){
-			this.setPosition(x, y + this.height / 2);
+	setTopCenterPosition(x, y){
+		this.setPosition(x, y + this.height / 2);
+	}
+	
+	setTopLeftCornerPosition(x, y){
+		this.setPosition(x + this.width / 2, y + this.height / 2);
+	}
+	
+	setTopRightCornerPosition(x, y){
+		this.setPosition(x - this.width / 2, y + this.height / 2);
+	}
+
+	playCelebrationTween(){
+		this.#playCelebrationJump();
+		this.#playCelebrationConfetti();
+	}
+		#playCelebrationJump(){
+			const initial_icon_y = this.#icon.y;
+			this.#scene.tweens.chain({
+				targets: this.#icon,
+				tweens: [
+					{
+						y: initial_icon_y - gameConfig.scene_game_finished.panel.cellebration.jump_height,
+						angle: gameConfig.scene_game_finished.panel.cellebration.jump_angle * (this.#flip_icon ? 1 : -1),
+						duration: gameConfig.scene_game_finished.panel.cellebration.jump_duration,
+						ease: 'quad.out'
+					},
+					{
+						y: initial_icon_y,
+						angle: 0,
+						duration: gameConfig.scene_game_finished.panel.cellebration.bounce_duration,
+						ease: 'bounce.out'
+					},
+				],
+				loop: -1,
+				loopDelay: gameConfig.scene_game_finished.panel.cellebration.loop_delay,
+			});
 		}
-		
-		setTopLeftCornerPosition(x, y){
-			this.setPosition(x + this.width / 2, y + this.height / 2);
+		#playCelebrationConfetti(){
+			new Confetti(this.#confetti_texture, this.x, this.y);
 		}
-		
-		setTopRightCornerPosition(x, y){
-			this.setPosition(x - this.width / 2, y + this.height / 2);
-		}
+
+	playDefeatTween(){
+		const initial_icon_y = this.#icon.y;
+		this.#scene.tweens.add({
+			targets: this.#icon,
+			angle: gameConfig.scene_game_finished.panel.defeat.kneeing_angle * (this.#flip_icon ? -1 : 1),
+			y: initial_icon_y + gameConfig.scene_game_finished.panel.defeat.kneeing_translation_y,
+			ease: 'Power1',
+			duration: 1000,
+			repeat: 0,
+			callbackScope: this
+		})
+	}
 }

@@ -28,7 +28,7 @@ const gameOverTextures = {
 let gameMode = {
 	activeBoosters: [],
 	maxTime: 1,
-	maxDeath: 10,
+	maxDeath: -1,
 	players:[],
 	bot_level: -1,
 }
@@ -124,6 +124,17 @@ const gameConfig = {
 					fontFamily: '"Goudy Bookletter 1911", Times, serif',
 					fontSize: '150px',
 					fill: 'black'
+				},
+				cellebration: {
+					jump_height: 60,
+					jump_duration: 300,
+					jump_angle: 5,
+					bounce_duration: 600,
+					loop_delay: 100
+				},
+				defeat: {
+					kneeing_angle: 30,
+					kneeing_translation_y: 20 
 				}
 			},
 		ceiling :{
