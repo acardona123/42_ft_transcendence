@@ -115,7 +115,8 @@ class SceneMenu extends Phaser.Scene{
 			#positionButton(){
 				const x = gameConfig.width / 2;
 				const y = gameConfig.height - gameConfig.scene_menu.ground.height - gameConfig.scene_menu.padding.under_deaths_limit;
-				this.#start_button.setBottomCenterPosition(x, y)
+				this.#start_button.setBottomCenterPosition(x, y);
+				this.#start_button.depth = gameConfig.scene_menu.depth.button
 			}
 			#setButtonInteraction(){
 				this.#start_button.on('pointerdown', () => {this.#startGame();});
