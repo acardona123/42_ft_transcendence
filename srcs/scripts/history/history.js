@@ -191,7 +191,17 @@ function update_history_list(tab)
 		if (tab.type == history_list[i].game)
 			add_element_to_history(history_list[i], i);
 	}
-	// remove last element margin bottom
+
 	const _history_list = document.getElementById("history_list");
-	_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
+	if (_history_list.childNodes.length == 1) // display message if the history is empty
+	{
+		const no_history_message = document.createElement('p');
+		no_history_message.textContent = "There is no history to display yet."
+		no_history_message.style.textAlign = "center";
+		_history_list.appendChild(no_history_message);
+	}
+	else // remove last element margin bottom
+	{
+		_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
+	}
 }
