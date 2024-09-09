@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pong',
-    'tuto_shooter'
+    'tuto_shooter',
+	'flappy_fish'
 ]
 
 MIDDLEWARE = [

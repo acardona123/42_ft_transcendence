@@ -8,7 +8,7 @@ const gameTextures = {
 let gameMode = {
 	activeBoosters: [],
 	maxTime: 30,
-	maxPoints: 2,
+	maxPoints: -1,
 	players:[],
 	bot_level: -1,
 }
@@ -20,15 +20,15 @@ const gameConfig = {
 	parent: "phaser_pong_game", //html DOM element or id
 	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
-	width: 1920,
+	width: 3000,
 	height: 1200,
 	player: {
 		max_speed: 1000,
 		paddle_length: 300,
-		paddle_width: 200,
-		distance_to_border: 200,
-		left: {color: 0x00FF00, alpha: 1},
-		right: {color: 0x00FF00, alpha: 1},
+		paddle_width: 60,
+		distance_to_border: 100,
+		left: {color: 0xFFFFFF, alpha: 1},
+		right: {color: 0xFFFFFF, alpha: 1},
 	},
 	ball: {
 		default_radius: 50,
