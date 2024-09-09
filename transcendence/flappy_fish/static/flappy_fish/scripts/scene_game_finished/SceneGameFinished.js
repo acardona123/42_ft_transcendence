@@ -13,6 +13,7 @@ class SceneGameFinished extends Phaser.Scene{
 	#panel_player1;
 	#panel_player2;
 	#match_duration;
+	#quit_button;
 
 	constructor(){
 		super("GameFinished");
@@ -78,6 +79,7 @@ class SceneGameFinished extends Phaser.Scene{
 		this.#createCeiling();
 		this.#createPlayerPanels();
 		this.#createMatchDurationDisplay();
+		this.#createQuitButton();
 	}
 
 		#createAnimations(){
@@ -154,8 +156,27 @@ class SceneGameFinished extends Phaser.Scene{
 		#createMatchDurationDisplay(){
 			this.#match_duration = new EntitledTimeDisplay(this, "Match duration", this.#past_time / 1000, gameConfig.scene_game_finished.text_style);
 			const y = gameConfig.scene_game_finished.padding.under_panels + Math.max(this.#panel_player1.y + this.#panel_player1.height / 2, this.#panel_player2.y + this.#panel_player2.height / 2);
-			this.#match_duration.setTopCenterPosition(gameConfig.width / 2, y)
+			this.#match_duration.setTopCenterPosition(gameConfig.width / 2, y);
+			this.#match_duration.depth = gameConfig.scene_game_finished.depth.match_duration;
 		}
 
+		#createQuitButton(){
+			this.#quit_button = new Button(this, "Home", gameConfig.scene_game_finished.button_style);
+			this.#positionBotton();
+			this.#setButtonInteraction();
+		}
+			#positionBotton(){
+				const x = gameConfig.width / 2;
+				const y = gameConfig.height - gameConfig.scene_game_finished.ground.height - gameConfig.scene_game_finished.padding.under_match_duration;
+				this.#quit_button.setBottomCenterPosition(x, y);
+				this.#quit_button.depth = gameConfig.scene_game_finished.depth.button;
+			}
+			#setButtonInteraction(){
+				this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
+			}
+			#goBackHome(){
+				console.log("Generate a https request to go back to home");
+				//TODO
+			}
 			
 }

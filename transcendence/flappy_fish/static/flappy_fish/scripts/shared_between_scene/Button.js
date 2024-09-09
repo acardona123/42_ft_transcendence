@@ -68,7 +68,6 @@ class Button extends Phaser.GameObjects.Container{
 		this.#text.setOrigin(0.5);
 		this.#text.setPosition(0);
 		this.#background_shape.setPosition(-this.width / 2, - this.height / 2);
-		this.depth = gameConfig.scene_game_finished.depth.game_time;
 	}
 
 	#setInteraction(){

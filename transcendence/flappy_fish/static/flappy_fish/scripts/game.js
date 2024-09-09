@@ -163,7 +163,8 @@ const gameConfig = {
 	scene_game_finished :{
 		padding:{
 			top: 150,
-			under_panels: 30
+			under_panels: 30,
+			under_match_duration: 30
 		},
 		panel:{
 			icon_size: 300,
@@ -192,10 +193,26 @@ const gameConfig = {
 			fontSize: '150px',
 			fill: 'black'
 		},
+		button_style:{
+			margin : 50,
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '150px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: 15
+			}
+		},
 		depth: {
+			button: 3,
 			confetti: 2,
 			panel: 1,
-			game_duration: 1,
+			match_duration: 1,
 			ceiling: 0,
 			ground: 0,
 			background: -3
@@ -222,7 +239,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true
+			debug: false
 		}
 	},
 	
