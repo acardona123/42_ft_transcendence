@@ -68,19 +68,19 @@ class ScenePlay extends Phaser.Scene{
 
 	createClock(){
 		if (gameMode.maxTime > 0){
-			this.clock = new Timer(this, gameConfig.width / 2, gameConfig.clock.padding_top, gameMode.maxTime)
+			this.clock = new Timer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameMode.maxTime)
 		} else {
-			this.clock = new Chronometer(this, gameConfig.width / 2, gameConfig.clock.padding_top)
+			this.clock = new Chronometer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top)
 		}
 	}
 
 	createBall(x = gameConfig.width / 2,
 			y = gameConfig.height / 2,
-			radius = gameConfig.ball.default_radius,
+			radius = gameConfig.scene_play.ball.default_radius,
 			velocityX = 0,
 			velocityY = 0,
-			color = gameConfig.ball.default_color,
-			alpha = gameConfig.ball.default_alpha){
+			color = gameConfig.scene_play.ball.default_color,
+			alpha = gameConfig.scene_play.ball.default_alpha){
 		let new_ball = new Ball(this, x, y, radius, velocityX, velocityY, color, alpha);
 		return new_ball;
 	}
@@ -105,8 +105,8 @@ class ScenePlay extends Phaser.Scene{
 			duration: 1500,
 			repeat: 0,
 			onComplete: function(){
-				const random_trajectory_angle = Phaser.Math.Between(90 - gameConfig.ball.max_bounce_angle, -90 + gameConfig.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
-				this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.ball.init_velocity, ball.body.velocity);
+				const random_trajectory_angle = Phaser.Math.Between(90 - gameConfig.scene_play.ball.max_bounce_angle, -90 + gameConfig.scene_play.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
+				this.physics.velocityFromAngle(random_trajectory_angle, gameConfig.scene_play.ball.init_velocity, ball.body.velocity);
 				},
 				callbackScope: this
 			})
@@ -117,11 +117,11 @@ class ScenePlay extends Phaser.Scene{
 		this.#createPlayerRight();
 	}
 	#createPlayerLeft(){
-		this.player_left = new Paddle(this, "left", gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.left.color, gameConfig.player.left.alpha);
+		this.player_left = new Paddle(this, "left", gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.left.color, gameConfig.scene_play.player.left.alpha);
 		
 	}
 	#createPlayerRight(){
-		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.player.distance_to_border, gameConfig.height / 2, gameConfig.player.paddle_length, gameConfig.player.paddle_width, gameConfig.player.right.color, gameConfig.player.right.alpha);
+		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.right.color, gameConfig.scene_play.player.right.alpha);
 	}
 
 
@@ -148,7 +148,7 @@ class ScenePlay extends Phaser.Scene{
 				// const contact_point = ball.body.touching.paddle.y;
 				const contact_point = ball.y;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
-				bounce_angle = normal_angle + relative_contact * gameConfig.ball.max_bounce_angle;
+				bounce_angle = normal_angle + relative_contact * gameConfig.scene_play.ball.max_bounce_angle;
 			} else if (paddle.orientation === "right"){
 				if (ball.x > paddle.getMiddleX()){
 					ball.velocityY *= -1;
@@ -157,7 +157,7 @@ class ScenePlay extends Phaser.Scene{
 				const normal_angle = 180;
 				const contact_point = ball.y;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
-				bounce_angle = normal_angle - relative_contact * gameConfig.ball.max_bounce_angle;
+				bounce_angle = normal_angle - relative_contact * gameConfig.scene_play.ball.max_bounce_angle;
 			} else if (paddle.orientation === "top"){
 				if (ball.y < paddle.getMiddleY()){
 					ball.velocityX *= -1;
@@ -166,7 +166,7 @@ class ScenePlay extends Phaser.Scene{
 				const normal_angle = 270;
 				const contact_point = ball.x;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
-				bounce_angle = normal_angle + relative_contact * gameConfig.ball.max_bounce_angle;
+				bounce_angle = normal_angle + relative_contact * gameConfig.scene_play.ball.max_bounce_angle;
 			}
 			else{ //paddle.orientation === "bottom"
 				if (ball.y > paddle.getMiddleY()){
@@ -176,10 +176,10 @@ class ScenePlay extends Phaser.Scene{
 				const normal_angle = 90;
 				const contact_point = ball.x;
 				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
-				bounce_angle = normal_angle - relative_contact * gameConfig.ball.max_bounce_angle;
+				bounce_angle = normal_angle - relative_contact * gameConfig.scene_play.ball.max_bounce_angle;
 			}
 			
-			const new_velocity = ball.body.velocity.length() * gameConfig.ball.bounce_coefficient;
+			const new_velocity = ball.body.velocity.length() * gameConfig.scene_play.ball.bounce_coefficient;
 			this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
 
 		});
@@ -248,7 +248,7 @@ class ScenePlay extends Phaser.Scene{
 		const key_up_pressed = player.key_up.isDown;
 		const key_down_pressed = player.key_down.isDown;
 		const player_vertical_direction = key_down_pressed - key_up_pressed;
-		player.body.setVelocityY(gameConfig.player.max_speed * player_vertical_direction);
+		player.body.setVelocityY(gameConfig.scene_play.player.max_speed * player_vertical_direction);
 	}
 
 	#isPartyFinished(){

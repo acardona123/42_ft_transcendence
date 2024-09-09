@@ -9,7 +9,8 @@ let gameMode = {
 	activeBoosters: [],
 	maxTime: 30,
 	maxPoints: -1,
-	players:[],
+	player1: "username1",
+	player2: "username2",
 	bot_level: -1,
 }
 
@@ -20,40 +21,44 @@ const gameConfig = {
 	parent: "phaser_pong_game", //html DOM element or id
 	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
+	
 	width: 3000,
 	height: 1200,
-	player: {
-		max_speed: 1000,
-		paddle_length: 300,
-		paddle_width: 60,
-		distance_to_border: 100,
-		left: {color: 0xFFFFFF, alpha: 1},
-		right: {color: 0xFFFFFF, alpha: 1},
-	},
-	ball: {
-		default_radius: 50,
-		default_color: 0xFFFFFF,
-		default_alpha: 1,
-		init_velocity: 750,
-		max_bounce_angle: 45, //degrees
-		bounce_coefficient: 1.1,
-	},
-	border: {
-		color: 0x6666ff,
-		alpha: 0.5,
-		thickness:50 
-	},
-	score: {
-		font: '"Goudy Bookletter 1911", Times, serif',
-		fontSize: '300px',
-		color: 'white',
-		eccentricity: 100
-	},
-	clock: {
-		font: '"Goudy Bookletter 1911", Times, serif',
-		fontSize: '200px',
-		color: 'white',
-		padding_top: 50
+
+	scene_play: {
+		player: {
+			max_speed: 1000,
+			paddle_length: 300,
+			paddle_width: 60,
+			distance_to_border: 100,
+			left: {color: 0xFFFFFF, alpha: 1},
+			right: {color: 0xFFFFFF, alpha: 1},
+		},
+		ball: {
+			default_radius: 50,
+			default_color: 0xFFFFFF,
+			default_alpha: 1,
+			init_velocity: 750,
+			max_bounce_angle: 45, //degrees
+			bounce_coefficient: 1.1,
+		},
+		border: {
+			color: 0x6666ff,
+			alpha: 0.5,
+			thickness:50 
+		},
+		score: {
+			font: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '300px',
+			color: 'white',
+			eccentricity: 100
+		},
+		clock: {
+			font: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '200px',
+			color: 'white',
+			padding_top: 50
+		}
 	},
 	recapText: {
 		font: '"Goudy Bookletter 1911", Times, serif',

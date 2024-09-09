@@ -10,22 +10,35 @@
 	<script>
 		var static_url = "{% get_static_prefix %}";
 	</script>
-    <script src="{% static 'pong/scripts/phaser.min.js' %}"></script>
-    <script src="{% static 'pong/scripts/Texture.js' %}"></script>
-    <script src="{% static 'pong/scripts/Ball.js' %}"></script>
-    <script src="{% static 'pong/scripts/Paddle.js' %}"></script>
-    <script src="{% static 'pong/scripts/AbstractBorder.js' %}"></script>
-    <script src="{% static 'pong/scripts/DeathBorder.js' %}"></script>
-    <script src="{% static 'pong/scripts/BounceBorder.js' %}"></script>
-    <script src="{% static 'pong/scripts/AlignedText.js' %}"></script>
-    <script src="{% static 'pong/scripts/Score.js' %}"></script>
-    <script src="{% static 'pong/scripts/AbstractClock.js' %}"></script>
-    <script src="{% static 'pong/scripts/Timer.js' %}"></script>
-    <script src="{% static 'pong/scripts/Chronometer.js' %}"></script>
-    <script src="{% static 'pong/scripts/SceneBoot.js' %}"></script>
-    <script src="{% static 'pong/scripts/ScenePlay.js' %}"></script>
-    <script src="{% static 'pong/scripts/SceneGameFinished.js' %}"></script>
-    <script src="{% static 'pong/scripts/game.js' %}"></script>
+	<script src="{% static 'pong/scripts/phaser.min.js' %}"></script>
+
+	<!-- shared between scene -->
+	<script src="{% static 'pong/scripts/shared_between_scenes/Texture.js' %}"></script>
+
+	<!-- scene boot -->
+	<script src="{% static 'pong/scripts/scene_boot/SceneBoot.js' %}"></script>
+
+	<!-- scene play -->
+		<!-- objects -->
+	<script src="{% static 'pong/scripts/scene_play/objects/Ball.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/Paddle.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/AlignedText.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/Score.js' %}"></script>
+			<!-- borders -->
+	<script src="{% static 'pong/scripts/scene_play/objects/borders/AbstractBorder.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/borders/DeathBorder.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/borders/BounceBorder.js' %}"></script>
+			<!-- clock -->
+	<script src="{% static 'pong/scripts/scene_play/objects/clock/AbstractClock.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/clock/Timer.js' %}"></script>
+	<script src="{% static 'pong/scripts/scene_play/objects/clock/Chronometer.js' %}"></script>
+		<!-- scene -->
+	<script src="{% static 'pong/scripts/scene_play/ScenePlay.js' %}"></script>
+
+	<!-- scene game finished -->
+	<script src="{% static 'pong/scripts/scene_game_finished/SceneGameFinished.js' %}"></script>
+
+	<script src="{% static 'pong/scripts/game.js' %}"></script>
 
 </head>
 <body>

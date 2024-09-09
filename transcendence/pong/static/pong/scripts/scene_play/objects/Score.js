@@ -12,14 +12,14 @@ class Score extends AlignedText{
 		}
 		const score_y = gameConfig.height / 2;
 		const score_text = '0';
-		const score_style = {fontFamily: gameConfig.score.font, fontSize: gameConfig.score.fontSize, fill: gameConfig.score.color};
+		const score_style = {fontFamily: gameConfig.scene_play.score.font, fontSize: gameConfig.scene_play.score.fontSize, fill: gameConfig.scene_play.score.color};
 		if (player_side === playerSide.LEFT){
 			const score_alignment = text_alignment.ALIGN_RIGHT;
-			const score_x = gameConfig.width / 2 - gameConfig.score.eccentricity;
+			const score_x = gameConfig.width / 2 - gameConfig.scene_play.score.eccentricity;
 			super(scene, score_alignment, score_x, score_y, score_text, score_style);
 		} else{
 			const score_alignment = text_alignment.ALIGN_LEFT;
-			const score_x = gameConfig.width / 2 + gameConfig.score.eccentricity;
+			const score_x = gameConfig.width / 2 + gameConfig.scene_play.score.eccentricity;
 			super(scene, score_alignment, score_x, score_y, score_text, score_style);
 		}
 		this.#value = 0;
