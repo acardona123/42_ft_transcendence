@@ -15,27 +15,40 @@ function set_border_hider(elem)
 	elem.appendChild(hider);
 }
 
+function unload_elements()
+{
+	const elem = document.getElementById("history_list");
+
+	while (elem.childNodes.length > 1)
+		elem.childNodes[1].remove();
+}
+
+function load_elements(elem)
+{
+	update_history_list();
+}
+
 function on_click_tab_history(elem)
 {
 	if (clicked_element == elem)
 		return;
+	
 	// unload all other tabs
 	if (clicked_element)
 	{
-		console.log(clicked_element.childNodes);
 		clicked_element.style.backgroundColor = '#795833';
 		clicked_element.childNodes[1]?.remove();
+		unload_elements();
 	}
 	// load tab
 	clicked_element = elem;
+	load_elements();
 
 	elem.style.backgroundColor = '#755632';
 
 	// remove border bottom
-
 	set_border_hider(elem);
 }
 
 // set click on first tab by default
 on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
-console.log("coucou")

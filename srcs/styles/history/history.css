@@ -2,7 +2,7 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
-	max-height: 81.5%;
+	max-height: 82.5%;
 	min-height: 50px;
 	margin-left: 5%;
 	max-width: 100%;
@@ -101,7 +101,7 @@
 }
 
 .tab-text {
-	margin-right: 5px;
+	margin-right:2px;
 	margin-bottom: 0px;
 	border: 5px solid #6b4e2d;
 	border-bottom: none;
