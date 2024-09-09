@@ -27,8 +27,8 @@ const gameOverTextures = {
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: 1,
-	maxDeath: -1,
+	maxTime: 20,
+	maxDeath: 10,
 	players:[],
 	bot_level: -1,
 }
@@ -41,8 +41,8 @@ const gameConfig = {
 	// scene: [SceneTest, SceneBoot, ScenePlay, SceneGameFinished],
 	scene: [SceneBoot, ScenePlay, SceneGameFinished],
 
-	width: 1000 * 2,
-	height: 800 * 2,
+	width: 1200 * 2.25,
+	height: 800 * 2.25,
 
 	scenePlay:{
 		controls: {
@@ -76,14 +76,14 @@ const gameConfig = {
 			core_width: 230 * 0.7,
 		},
 		pipe_spacer: {
-			height_default: 500,
+			height_default: 300,
 			height_min : 0,
 			height_max: 900,
 			width: 100,
 		},
 		pipe_repartition: {
-			vertical_offset_max: 400,
-			horizontal_distance_default: 600,
+			vertical_offset_max: 350,
+			horizontal_distance_default: 500,
 			horizontal_distance_max: 1500,
 			horizontal_distance_min: 200,
 		},
@@ -115,7 +115,7 @@ const gameConfig = {
 
 	scene_game_finished :{
 		padding:{
-			top: 100,
+			top: 150,
 			under_panels: 30
 		},
 		panel:{
