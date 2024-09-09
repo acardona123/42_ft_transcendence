@@ -43,7 +43,7 @@ class SceneTexture{
 		if (!this.#images_loaded){
 			this.#implicitPreloadOnScene();
 		}
-		if (this.texture.type === "sprite"){
+		if (!this.#animation_loaded && this.texture.type === "sprite"){
 			this.scene.anims.create({
 				key: this.#animation_name,
 				frames: this.scene.anims.generateFrameNumbers(this.#texture_name),
