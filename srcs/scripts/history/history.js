@@ -156,7 +156,10 @@ function get_history_elem_div(history_elem)
 	const history_elem_div = document.createElement("div");
 
 	history_elem_div.className = "history-elem-div";
-	history_elem_div.style.backgroundImage = history_elem.is_victory ? "url(../../../img/flappy_background_history_win.png)" : "url(../../../img/flappy_background_history_loose.png)";
+	if (history_elem.game == "Pong")
+		history_elem_div.style.backgroundImage = history_elem.is_victory ? "url(../../../img/pong_background_history_img_win.png)" : "url(../../../img/pong_background_history_img_loose.png)";
+	else if (history_elem.game == "Flappy fish")
+		history_elem_div.style.backgroundImage = history_elem.is_victory ? "url(../../../img/flappy_background_history_win.png)" : "url(../../../img/flappy_background_history_loose.png)";
 
 	const text_victory = get_victory(history_elem.is_victory);
 	const text_score = get_score(history_elem.score_left, history_elem.score_right, history_elem.user_against);
