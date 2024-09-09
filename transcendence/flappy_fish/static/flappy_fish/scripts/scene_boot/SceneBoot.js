@@ -1,6 +1,6 @@
 class SceneBoot extends Phaser.Scene{
 	#scene_play_textures
-	#scene_game_over_textures
+	#scene_menu_and_game_over_textures
 
 	constructor(){
 		super("bootGame");
@@ -24,13 +24,13 @@ class SceneBoot extends Phaser.Scene{
 			}
 		}
 		#constructSceneGameOverTextures(){
-			this.#scene_game_over_textures = {
-				player1_icon:	new SceneTexture(this,	"player1",		gameOverTextures.player1_icon),
-				player2_icon:	new SceneTexture(this,	"player2",		gameOverTextures.player2_icon),
+			this.#scene_menu_and_game_over_textures = {
+				player1_icon:	new SceneTexture(this,	"player1",		MenuAndGameOverTextures.player1_icon),
+				player2_icon:	new SceneTexture(this,	"player2",		MenuAndGameOverTextures.player2_icon),
 				ceiling:		new SceneTexture(this,	"ceiling",			gameTextures.ceiling),
 				ground:			new SceneTexture(this,	"ground",			gameTextures.ground),
 				background:		new SceneTexture(this,	"background",		gameTextures.background),
-				confetti:		new SceneTexture(this,	"confetti",		gameOverTextures.confetti),
+				confetti:		new SceneTexture(this,	"confetti",		MenuAndGameOverTextures.confetti),
 			}
 		}
 	
@@ -39,21 +39,22 @@ class SceneBoot extends Phaser.Scene{
 
 	preload(){
 		this.#preloadAllTexturesFromMap(this.#scene_play_textures);
-		this.#preloadAllTexturesFromMap(this.#scene_game_over_textures);
+		this.#preloadAllTexturesFromMap(this.#scene_menu_and_game_over_textures);
 	}
 
 	#preloadAllTexturesFromMap(texture_map){
 		for (const [key, value] of Object.entries(texture_map)){
 			value.preloadOnScene();
-		}		
+		}
 	}
 
 	create(){
 		let boot_textures = {
+			sceneMenu: this.#scene_menu_and_game_over_textures,
 			scenePlay: this.#scene_play_textures,
-			sceneGameOver: this.#scene_game_over_textures
+			sceneGameOver: this.#scene_menu_and_game_over_textures
 		}
-		this.scene.start("playGame", boot_textures);
+		this.scene.start("Menu", boot_textures);
 	}
 
 }

@@ -152,7 +152,7 @@ class SceneGameFinished extends Phaser.Scene{
 					}
 
 		#createMatchDurationDisplay(){
-			this.#match_duration = new MatchDurationDisplay(this, this.#past_time / 1000);
+			this.#match_duration = new EntitledTimeDisplay(this, "Match duration", this.#past_time / 1000, gameConfig.scene_game_finished.text_style);
 			const y = gameConfig.scene_game_finished.padding.under_panels + Math.max(this.#panel_player1.y + this.#panel_player1.height / 2, this.#panel_player2.y + this.#panel_player2.height / 2);
 			this.#match_duration.setTopCenterPosition(gameConfig.width / 2, y)
 		}

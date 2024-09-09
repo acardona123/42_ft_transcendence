@@ -1,36 +1,36 @@
 const assets_path = static_url + "flappy_fish/assets/"
-const gameTextures = {
-		pipe: {
-			core :		new Texture("images/pipe_core.png", "image", 230, 460),
-			head:		new Texture("images/pipe_head.png", "image", 250, 120),
-		},
-		pipe_spacer:	new Texture("images/pipe_spacer.png", "image", 1024, 884),
-		player1:		new Texture("images/bird.png", "image", 816, 576),
-		player2:		new Texture("images/bird1.png", "image", 816, 576),
-		ceiling:		new Texture("images/ceiling.png", "image", 336, 112),
-		ground:			new Texture("images/ground.png", "image", 336, 112),
-		background:		new Texture("images/background.png", "image", 1781, 1785),
-		death:			new Texture("images/death.png", "image", 2118, 2256),
-		explosion:		new Texture("sprites/explosion.png", "sprite", 16, 16, 10, 0, true),
-		textboard:		new Texture("images/plank.jpg", "image", 256, 256),
-		starting_line:	new Texture("images/starting_line.png", "image", 100, 100),
-	}
 
-const gameOverTextures = {
-		player1_icon:		new Texture("images/bird.png", "image", 816, 576),
-		player2_icon:		new Texture("images/bird1.png", "image", 816, 576),
-		ceiling:			new Texture("images/ceiling.png", "image", 336, 112),
-		ground:				new Texture("images/ground.png", "image", 336, 112),
-		background:			new Texture("images/background.png", "image", 1781, 1785),
-		confetti:			new Texture("sprites/confetti.png", "sprite", 150, 84, 25, -1),
+const gameTextures = {
+	pipe: {
+		core :		new Texture("images/pipe_core.png", "image", 230, 460),
+		head:		new Texture("images/pipe_head.png", "image", 250, 120),
+	},
+	pipe_spacer:	new Texture("images/pipe_spacer.png", "image", 1024, 884),
+	player1:		new Texture("images/bird.png", "image", 816, 576),
+	player2:		new Texture("images/bird1.png", "image", 816, 576),
+	ceiling:		new Texture("images/ceiling.png", "image", 336, 112),
+	ground:			new Texture("images/ground.png", "image", 336, 112),
+	background:		new Texture("images/background.png", "image", 1781, 1785),
+	death:			new Texture("images/death.png", "image", 2118, 2256),
+	explosion:		new Texture("sprites/explosion.png", "sprite", 16, 16, 10, 0, true),
+	textboard:		new Texture("images/plank.jpg", "image", 256, 256),
+	starting_line:	new Texture("images/starting_line.png", "image", 100, 100),
+}
+
+const MenuAndGameOverTextures = {
+	player1_icon:		new Texture("images/bird.png", "image", 816, 576),
+	player2_icon:		new Texture("images/bird1.png", "image", 816, 576),
+	ceiling:			new Texture("images/ceiling.png", "image", 336, 112),
+	ground:				new Texture("images/ground.png", "image", 336, 112),
+	background:			new Texture("images/background.png", "image", 1781, 1785),
+	confetti:			new Texture("sprites/confetti.png", "sprite", 150, 84, 25, -1),
 }
 
 let gameMode = {
-	activeBoosters: [],
+	username_player1:"username1",
+	username_player2: "username2",
 	maxTime: 20,
-	maxDeath: 10,
-	players:[],
-	bot_level: -1,
+	maxDeath: -1,
 }
 
 const gameConfig = {
@@ -39,10 +39,57 @@ const gameConfig = {
 	
 	parent: "phaser_flappy_fish_game", //html DOM element or id
 	// scene: [SceneTest, SceneBoot, ScenePlay, SceneGameFinished],
-	scene: [SceneBoot, ScenePlay, SceneGameFinished],
+	scene: [SceneBoot, SceneMenu, ScenePlay, SceneGameFinished],
 
 	width: 1200 * 2.25,
 	height: 800 * 2.25,
+
+	scene_menu :{
+		padding:{
+			top: 50,
+			under_panels: 30,
+			under_time_limit: 30,
+			under_deaths_limit: 40
+		},
+		panel:{
+			icon_size: 300,
+			icon_bottom_padding: 0,
+			line_spacing: 30, 
+		},
+		ceiling :{
+			height : 100,
+		},
+		ground: {
+			height: 100,
+		},
+		text_style: {
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '150px',
+			fill: 'black'
+		},
+		button_style:{
+			margin : 50,
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '150px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: 15
+			}
+		},
+		depth: {
+			panel: 1,
+			game_duration: 1,
+			ceiling: 0,
+			ground: 0,
+			background: -3
+		},
+	},
 
 	scenePlay:{
 		controls: {
@@ -175,7 +222,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false
+			debug: true
 		}
 	},
 	
