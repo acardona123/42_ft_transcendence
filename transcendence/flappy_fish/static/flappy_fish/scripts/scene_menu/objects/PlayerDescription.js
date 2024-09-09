@@ -67,7 +67,7 @@ class PlayerDescriptionPanel extends Phaser.GameObjects.Container{
 				this.#text_username = this.#createTextObject(username);
 			}
 				#getUsername(){
-					if (this.#player_index_symbol === this.#player_index_symbol.PLAYER1){
+					if (this.#player_index_symbol === player_index.PLAYER1){
 						return (gameMode.username_player1);
 					} else {
 						return (gameMode.username_player2);
