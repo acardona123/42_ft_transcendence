@@ -19,8 +19,8 @@ function unload_elements()
 {
 	const elem = document.getElementById("history_list");
 
-	while (elem.childNodes.length > 1)
-		elem.childNodes[1].remove();
+	while (elem.childNodes.length > 0)
+		elem.childNodes[0].remove();
 }
 
 function load_elements(elem)
