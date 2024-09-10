@@ -17,7 +17,7 @@ class Paddle extends Phaser.GameObjects.Graphics {
 		
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
-		scene.paddles.add(this);
+		scene.addToPaddlesGroup(this);
 
 		this.fillStyle(color, alpha);
 		this.#buildRoundedRectangle(middleX, middleY);

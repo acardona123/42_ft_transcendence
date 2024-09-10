@@ -1,76 +1,92 @@
 class ScenePlay extends Phaser.Scene{
 
-	background;
-	borders;
-	scores;
-	clock;
-	player_left;
-	player_right;
-	ball;
+	#boot_textures;
+	#scene_textures;
+
+	#background;
+	#borders;
+	#scores;
+	#clock;
+	#player_left;
+	#player_right;
+	#ball;
 
 	//physic groups
-	balls;
-	paddles;
-	bounce_borders;
-	death_borders;
+	#balls;
+	#paddles;
+	#bounce_borders;
+	#death_borders;
 
 	constructor(){
 		super("playGame");
 	}
-	
-	preload(){
+
+	init(loaded_boot_textures){
+		this.#boot_textures = loaded_boot_textures;
+		this.#scene_textures = loaded_boot_textures.scenePlay;
+		for (const [key, value] of Object.entries(this.#scene_textures)){
+			value.transferToScene(this);
+		}	
 	}
+	
 	
 	create(){
-		this.balls = this.physics.add.group();
-		this.paddles = this.physics.add.group();
-		this.bounce_borders = this.physics.add.group();
-		this.death_borders = this.physics.add.group();
+		this.#createAnimations();
+		this.#createGroups();
+		this.#createBackground();
+		this.#createBorders();
+		this.#createScores();
+		this.#createClock();
+		this.#createPlayers();
+		this.#createInteractions();
 
-		this.createBackground();
-		this.createBorders();
-		this.createScores();
-		this.createClock();
-		this.createPlayers();
-		this.createInteractions();
-
-		this.newRound();
-		this.clock.start();
+		this.#newRound();
+		this.#clock.start();
+	}
+		
+	#createAnimations(){
+		for (const [key, value] of Object.entries(this.#scene_textures)){
+			value.createAnimationOnScene();
+		}		
 	}
 
-	createBackground(){
-		this.background = this.add.sprite(0, 0, "background");
-		this.background.setDisplaySize(this.scale.width, this.scale.height);
-		this.background.setSize(this.scale.width, this.scale.height);
-		this.background.setOrigin(0, 0);
+	#createGroups(){
+		this.#balls = this.physics.add.group();
+		this.#paddles = this.physics.add.group();
+		this.#bounce_borders = this.physics.add.group();
+		this.#death_borders = this.physics.add.group();
 	}
 
-	createBorders(){
-		this.borders = {};
+	#createBackground(){
+		this.#background = new PlayBackground (this.#scene_textures.background);
+	}
+
+	#createBorders(){
+		this.#borders = {};
 		this.#createBounceBorders();
 		this.#createDeathBorders();
 	}
 	#createBounceBorders(){
-		this.borders.top = new BounceBorder(this, border_side.TOP);
-		this.borders.bottom = new BounceBorder(this, border_side.BOTTOM);
+		this.#borders.top = new BounceBorder(this, border_side.TOP);
+		this.#borders.bottom = new BounceBorder(this, border_side.BOTTOM);
 	}
 	#createDeathBorders(){
-		this.borders.right = new DeathBorder(this, border_side.RIGHT);
-		this.borders.left = new DeathBorder(this, border_side.LEFT);
+		this.#borders.right = new DeathBorder(this, border_side.RIGHT);
+		this.#borders.left = new DeathBorder(this, border_side.LEFT);
 	}
 
-	createScores(){
-		this.scores= {
+	#createScores(){
+		this.#scores= {
 			left: new Score(this, playerSide.LEFT),
 			right: new Score(this, playerSide.RIGHT)	
 		}
 	}
 
-	createClock(){
+	#createClock(){
 		if (gameMode.maxTime > 0){
-			this.clock = new Timer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameMode.maxTime)
+			this.#clock = new Timer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameMode.maxTime)
 		} else {
-			this.clock = new Chronometer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top)
+			this.#clock = new Chronometer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top)
 		}
 	}
 
@@ -112,20 +128,20 @@ class ScenePlay extends Phaser.Scene{
 			})
 	}
 
-	createPlayers(){
+	#createPlayers(){
 		this.#createPlayerLeft();
 		this.#createPlayerRight();
 	}
 	#createPlayerLeft(){
-		this.player_left = new Paddle(this, "left", gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.left.color, gameConfig.scene_play.player.left.alpha);
+		this.#player_left = new Paddle(this, "left", gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.left.color, gameConfig.scene_play.player.left.alpha);
 		
 	}
 	#createPlayerRight(){
-		this.player_right = new Paddle(this, "right", gameConfig.width - gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.right.color, gameConfig.scene_play.player.right.alpha);
+		this.#player_right = new Paddle(this, "right", gameConfig.width - gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.right.color, gameConfig.scene_play.player.right.alpha);
 	}
 
 
-	createInteractions(){
+	#createInteractions(){
 		// this.physics.add.collider(this.balls, this.balls);
 		this.#createBallPaddleCollision();
 		this.#createPlayerBordersCollisions();
@@ -136,7 +152,7 @@ class ScenePlay extends Phaser.Scene{
 
 	
 	#createBallPaddleCollision(){
-		this.physics.add.collider(this.balls, this.paddles, (ball, paddle) => {
+		this.physics.add.collider(this.#balls, this.#paddles, (ball, paddle) => {
 			//bounce angle
 			let bounce_angle;
 			if (paddle.orientation === "left"){
@@ -187,25 +203,25 @@ class ScenePlay extends Phaser.Scene{
 
 	#createPlayerBordersCollisions()
 	{
-		this.physics.add.collider(this.paddles, this.bounce_borders, );
+		this.physics.add.collider(this.#paddles, this.#bounce_borders, );
 	}
 
 	#createBallDeathBorderCollision(){
-		this.physics.add.collider(this.balls, this.death_borders, (ball, border) => {
+		this.physics.add.collider(this.#balls, this.#death_borders, (ball, border) => {
 			ball.destroy();
 			if (border.orientation === border_side.LEFT){
-				this.scores.right.addPoints(1);
+				this.#scores.right.addPoints(1);
 			} else if (border.orientation === border_side.RIGHT){
-				this.scores.left.addPoints(1);
+				this.#scores.left.addPoints(1);
 			} else {
 				throw new Error (`Undefined behavior for the collision of the ball with a Death border with the orientation ${border.orientation}`);
 			}
-			this.newRound();
+			this.#newRound();
 		});
 	}
 
 	#createBallBounceBorderCollision(){
-		this.physics.add.collider(this.balls, this.bounce_borders);
+		this.physics.add.collider(this.#balls, this.#bounce_borders);
 	}
 
 	#calculateRelativeContact(paddle, contact_point, middle_point){
@@ -219,30 +235,30 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	#createPlayersControls(){
-		this.#setPlayerControls(this.player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
-		this.#setPlayerControls(this.player_right, Phaser.Input.Keyboard.KeyCodes.I , Phaser.Input.Keyboard.KeyCodes.K);
+		this.#setPlayerControls(this.#player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
+		this.#setPlayerControls(this.#player_right, Phaser.Input.Keyboard.KeyCodes.I , Phaser.Input.Keyboard.KeyCodes.K);
 	}
 	#setPlayerControls(player, key_code_up, key_code_down){
 		player.key_up = this.input.keyboard.addKey(key_code_up);
 		player.key_down = this.input.keyboard.addKey(key_code_down);
 	}
 	
-	newRound(){
-		this.ball = this.createBall();
-		this.resetBall(this.ball);
+	#newRound(){
+		this.#ball = this.createBall();
+		this.resetBall(this.#ball);
 	}
 
 	update(){
 		this.#movePlayersManager();
-		this.clock.update();
+		this.#clock.update();
 		if (this.#isPartyFinished()){
-			this.scene.start("GameFinished", {scores: this.scores, duration_ms: this.clock.getPastTime()});
+			this.scene.start("GameFinished", {scores: this.#scores, duration_ms: this.#clock.getPastTime()});
 		}
 	}
 
 	#movePlayersManager(){
-		this.#setPlayerVelocity(this.player_left);
-		this.#setPlayerVelocity(this.player_right);
+		this.#setPlayerVelocity(this.#player_left);
+		this.#setPlayerVelocity(this.#player_right);
 	}
 	#setPlayerVelocity(player){
 		const key_up_pressed = player.key_up.isDown;
@@ -254,12 +270,34 @@ class ScenePlay extends Phaser.Scene{
 	#isPartyFinished(){
 		let party_finished = false;
 		if (gameMode.maxPoints > 0){
-			party_finished |= this.scores.left.greaterThan(gameMode.maxPoints) || this.scores.right.greaterThan(gameMode.maxPoints);
+			party_finished |= this.#scores.left.greaterThan(gameMode.maxPoints) || this.#scores.right.greaterThan(gameMode.maxPoints);
 		}
 		if (gameMode.maxTime > 0){
-			party_finished |= this.clock.isTimeOver();
+			party_finished |= this.#clock.isTimeOver();
 		}
 		return party_finished;
+	}
+
+
+
+	addToBallsGroup(object)
+	{
+		this.#balls.add(object)
+	}
+
+	addToPaddlesGroup(object)
+	{
+		this.#paddles.add(object)
+	}
+
+	addToBounceBordersGroup(object)
+	{
+		this.#bounce_borders.add(object)
+	}
+
+	addToDeathBordersGroup(object)
+	{
+		this.#death_borders.add(object)
 	}
 
 

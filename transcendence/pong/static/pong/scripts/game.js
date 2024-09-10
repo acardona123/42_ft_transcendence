@@ -1,9 +1,15 @@
 const assets_path = static_url + "pong/assets/"
 const gameTextures = {
-	background: new Texture("background_classic", "images/background.jpeg", "image", 256, 272),
-	ball: new Texture("ball_pacman", "images/to_dell.png", "image", 225, 224),
-	// ball: new Texture("ball_pacman", "images/pacman.png", "image", 2000, 2000),
+	background:	new Texture("images/background.jpeg",	"image", 256, 272),
+	// ball:		new Texture("images/to_dell.png",		"image", 225, 224),
 }
+const MenuAndGameOverTextures = {
+	background:		new Texture("images/background.png",		"image", 1781, 1785),
+	player_icon:	new Texture("images/profile_icon.png",	"image", 676, 676),
+	bot_icon:		new Texture("images/bot_icon.png",		"image", 828, 828),
+	confetti:		new Texture("sprites/confetti.png",			"sprite", 150, 84, 25, -1),
+}
+
 
 let gameMode = {
 	activeBoosters: [],
@@ -24,6 +30,13 @@ const gameConfig = {
 	
 	width: 3000,
 	height: 1200,
+
+	scene_menu: {
+
+		depths: {
+			background: -1,
+		}
+	},
 
 	scene_play: {
 		player: {

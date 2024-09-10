@@ -1,34 +1,24 @@
 class Texture {
-	constructor(name, path, type, width, height, frameRates = 20, repeat = -1){
+
+	path;
+	type;
+	width;
+	height;
+	frameRates;
+	repeat;
+	hide_on_complete;
+
+	constructor(path, type, width, height, frameRates = 20, repeat = -1, hide_on_complete = false){
 		const allowedTypes = ["image", "sprite"];
 		if (!allowedTypes.includes(type)){
 			throw new Error("Invalid texture type. Allowed types are 'image' or 'sprite'.");
 		}
-		this.name = name;
-		this.path = path;
+		this.path = assets_path + path;
 		this.type = type;
 		this.width = width;
 		this.height = height;
 		this.frameRates = frameRates;
-		this.repeat = repeat
-	}
-
-	preloadOnScene(scene, name){
-		if (this.type === "image"){
-			scene.load.image(name, assets_path + this.path);
-		} else if (this.type === "sprite"){
-			scene.load.spritesheet(name, assets_path + this.path, {frameWidth: this.width, frameHeight: this.height});
-		}
-	}
-
-	createAnimationOnScene(scene, sprite_name){
-		if (this.type === "sprite"){
-			scene.anims.create({
-				key: sprite_name + "_anim",
-				frames: scene.anims.generateFrameNumbers(sprite_name),
-				frameRate: this.frameRates,
-				repeat: this.repeat,
-			});
-		}
+		this.repeat = repeat;
+		this.hide_on_complete = hide_on_complete;
 	}
 }

@@ -1,53 +1,46 @@
 class SceneBoot extends Phaser.Scene{
+	#scene_play_textures;
+	#scene_menu_and_game_over_textures;
+
 	constructor(){
 		super("bootGame");
-		this.ball_name = "ball";
-		this.background_name = "background";
+		this.#constructScenePlayTextures();
+		this.#constructSceneGameOverTextures();
+	}
+	#constructScenePlayTextures(){
+		this.#scene_play_textures = {
+			background:		new SceneTexture(this, "background", gameTextures.background),
+		}
+	}
+	#constructSceneGameOverTextures(){
+		this.#scene_menu_and_game_over_textures = {
+			player_icon:	new SceneTexture(this, "player_icon",	MenuAndGameOverTextures.player_icon),
+			bot_icon:		new SceneTexture(this, "bot_icon",		MenuAndGameOverTextures.bot_icon),
+			background:		new SceneTexture(this, "background",	MenuAndGameOverTextures.background),
+			confetti:		new SceneTexture(this, "confetti",		MenuAndGameOverTextures.confetti)
+		}
 	}
 
 	//=== preload ===
 
 	preload(){
-		this.#preloadAllTextures();
+		this.#preloadAllTexturesFromMap(this.#scene_play_textures);
+		this.#preloadAllTexturesFromMap(this.#scene_menu_and_game_over_textures);
 	}
 
-	#preloadAllTextures(){
-		gameTextures.background.preloadOnScene(this, this.background_name);
-		gameTextures.ball.preloadOnScene(this, this.ball_name);
+	#preloadAllTexturesFromMap(texture_map){
+		for (const [key, value] of Object.entries(texture_map)){
+			value.preloadOnScene();
+		}
 	}
 
-	//=== create ===
-
-	#createAllAnimations(){
-		gameTextures.background.createAnimationOnScene(this, this.background_name);
-		gameTextures.ball.createAnimationOnScene(this, this.ball_name);
-	}
-
-
-	//=== controls ===
-	#createPlayerControlsDisplay(){
-
-	}
-	#setPlayerControlKeys(player, key){
-		//allowing the players to change input keys when button clicked
-	}
-
-
-
-	//=== start game Button ===
-	#createStartButton(){
-		//
-	}
-	#startGame(){
-		//action done when the start button is clicked
-		this.scene.start("playGame");
-	}
-	
 	create(){
-		this.#createAllAnimations();
-		this.#createStartButton();
-		this.#createPlayerControlsDisplay();
-		this.#startGame();
+		let boot_textures = {
+			sceneMenu: this.#scene_menu_and_game_over_textures,
+			scenePlay: this.#scene_play_textures,
+			sceneGameOver: this.#scene_menu_and_game_over_textures
+		}
+		this.scene.start("playGame", boot_textures);
 	}
 
 

@@ -4,7 +4,7 @@ class Ball extends Phaser.GameObjects.Ellipse {
         super(scene, x, y, radius * 2, radius * 2,color, alpha);
         
 		scene.add.existing(this);
-		scene.balls.add(this);
+		scene.addToBallsGroup(this);
 		
         scene.physics.add.existing(this)
 		this.body.setVelocityX(velocityX);
