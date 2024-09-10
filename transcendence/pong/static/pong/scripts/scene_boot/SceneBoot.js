@@ -40,7 +40,7 @@ class SceneBoot extends Phaser.Scene{
 			scenePlay: this.#scene_play_textures,
 			sceneGameOver: this.#scene_menu_and_game_over_textures
 		}
-		this.scene.start("playGame", boot_textures);
+		this.scene.start("Menu", boot_textures);
 	}
 
 

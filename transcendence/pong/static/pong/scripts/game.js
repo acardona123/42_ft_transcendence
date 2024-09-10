@@ -1,10 +1,10 @@
 const assets_path = static_url + "pong/assets/"
 const gameTextures = {
-	background:	new Texture("images/background.jpeg",	"image", 256, 272),
+	background:	new Texture("images/background.jpeg",	"image", 474, 372),
 	// ball:		new Texture("images/to_dell.png",		"image", 225, 224),
 }
 const MenuAndGameOverTextures = {
-	background:		new Texture("images/background.png",		"image", 1781, 1785),
+	background:		new Texture("images/background.png",		"image", 474, 372),
 	player_icon:	new Texture("images/profile_icon.png",	"image", 676, 676),
 	bot_icon:		new Texture("images/bot_icon.png",		"image", 828, 828),
 	confetti:		new Texture("sprites/confetti.png",			"sprite", 150, 84, 25, -1),
@@ -15,8 +15,8 @@ let gameMode = {
 	activeBoosters: [],
 	maxTime: 30,
 	maxPoints: -1,
-	player1: "username1",
-	player2: "username2",
+	username_player1: "username1",
+	username_player2: "username2",
 	bot_level: -1,
 }
 
@@ -25,16 +25,48 @@ const gameConfig = {
 	version: 0.1,
 	
 	parent: "phaser_pong_game", //html DOM element or id
-	scene: [SceneBoot, ScenePlay, SceneGameFinished],
+	scene: [SceneBoot, SceneMenu, ScenePlay, SceneGameFinished],
 
 	
-	width: 3000,
-	height: 1200,
+	width: 1200 * 2.25,
+	height: 800 * 2.25,
 
 	scene_menu: {
-
+		padding:{
+			top: 50,
+			under_panels: 30,
+			under_time_limit: 30,
+			under_deaths_limit: 40
+		},
+		player_panel:{
+			icon_size: 600,
+			icon_angle: 30,
+			icon_bottom_padding: 30,
+			line_spacing: 30, 
+		},
+		text_style:{
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '150px',
+			fill: 'white'
+		},
+		button_style:{
+			margin : 50,
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '150px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: 15
+			}
+		},
 		depths: {
 			background: -1,
+			player_panels: 0,
 		}
 	},
 
@@ -44,8 +76,24 @@ const gameConfig = {
 			paddle_length: 300,
 			paddle_width: 60,
 			distance_to_border: 100,
-			left: {color: 0xFFFFFF, alpha: 1},
-			right: {color: 0xFFFFFF, alpha: 1},
+			color:{
+				left: 0xFF0000,
+				right: 0xFF00
+			},
+			alpha:{
+				left: 1,
+				right: 1
+			},
+			controls:{
+				left: {
+					up: {key_name: "W", key_code: Phaser.Input.Keyboard.KeyCodes.W},
+					down: {key_name: "S", key_code: Phaser.Input.Keyboard.KeyCodes.S}
+				},
+				right : {
+					up: {key_name: "UP", key_code: Phaser.Input.Keyboard.KeyCodes.UP},
+					down: {key_name: "DOWN", key_code:Phaser.Input.Keyboard.KeyCodes.DOWN}
+				},
+			},
 		},
 		ball: {
 			default_radius: 50,
@@ -108,11 +156,9 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: false
+			debug: true
 		}
 	},
 	
 	//audio:
 }
-
-var game= new Phaser.Game(gameConfig);

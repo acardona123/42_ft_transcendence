@@ -133,11 +133,11 @@ class ScenePlay extends Phaser.Scene{
 		this.#createPlayerRight();
 	}
 	#createPlayerLeft(){
-		this.#player_left = new Paddle(this, "left", gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.left.color, gameConfig.scene_play.player.left.alpha);
+		this.#player_left = new Paddle(this, "left", gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.color.left, gameConfig.scene_play.player.alpha.left);
 		
 	}
 	#createPlayerRight(){
-		this.#player_right = new Paddle(this, "right", gameConfig.width - gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.right.color, gameConfig.scene_play.player.right.alpha);
+		this.#player_right = new Paddle(this, "right", gameConfig.width - gameConfig.scene_play.player.distance_to_border, gameConfig.height / 2, gameConfig.scene_play.player.paddle_length, gameConfig.scene_play.player.paddle_width, gameConfig.scene_play.player.color.right, gameConfig.scene_play.player.alpha.right);
 	}
 
 
@@ -235,8 +235,8 @@ class ScenePlay extends Phaser.Scene{
 	}
 
 	#createPlayersControls(){
-		this.#setPlayerControls(this.#player_left, Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.S);
-		this.#setPlayerControls(this.#player_right, Phaser.Input.Keyboard.KeyCodes.I , Phaser.Input.Keyboard.KeyCodes.K);
+		this.#setPlayerControls(this.#player_left, gameConfig.scene_play.player.controls.left.up.key_code, gameConfig.scene_play.player.controls.left.down.key_code);
+		this.#setPlayerControls(this.#player_right, gameConfig.scene_play.player.controls.right.up.key_code, gameConfig.scene_play.player.controls.right.down.key_code);
 	}
 	#setPlayerControls(player, key_code_up, key_code_down){
 		player.key_up = this.input.keyboard.addKey(key_code_up);
