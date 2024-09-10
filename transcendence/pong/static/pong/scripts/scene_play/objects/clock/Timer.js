@@ -5,9 +5,10 @@ class Timer extends AbstractClock{
 	#remaining_time;
 	#targetedDuration;
 
-	constructor(scene, x, y, duration_sec)
+	constructor(scene, x, y, style, duration_sec)
 	{
-		super (scene, x, y, duration_sec);
+		super (scene, x, y, style, duration_sec);
+		this.setOrigin(0.5, 0);
 		this.#targetedDuration = duration_sec * 1000;
 		this.#end_time = scene.time.now + this.#targetedDuration;
 		this.#remaining_time = this.#targetedDuration;

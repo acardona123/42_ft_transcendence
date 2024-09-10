@@ -1,34 +1,13 @@
-class AbstractClock extends Phaser.GameObjects.Text {
+class AbstractClock extends TimeDisplay {
 
 	scene;
 	#is_paused;
 
-	constructor(scene, x, y, time_s = 0){
-		const clock_style = {fontFamily: gameConfig.scene_play.clock.font, fontSize: gameConfig.scene_play.clock.fontSize, fill: gameConfig.scene_play.clock.color};
-		super(scene, x, y, "", clock_style).setOrigin(0.5, 0);
-		this.depth = gameConfig.scene_play.depths.clock;
+	constructor(scene, x, y, style, time_s = 0){
+		super(scene, x, y, style, time_s);
 		this.scene = scene;
 		this.#is_paused = true;
-		this.updateDisplay(time_s);
-		scene.add.existing(this);
-	}
-
-	updateDisplay(time_s){
-		let updated_clock_text;
-		if (time_s <= 0){
-			updated_clock_text = this.#formatClockText(0, 0);
-		} else {
-			const min = Math.floor(time_s / 60)
-			const sec =  Math.ceil(time_s % 60);
-			updated_clock_text = this.#formatClockText(sec, min);
-		}
-		this.setText(updated_clock_text);
-	}
-	#formatClockText(sec, min){
-		return (this.#ZeroPad(min) + ":" + this.#ZeroPad(sec))
-	}
-	#ZeroPad(number){
-		return ((number >= 0 && number < 10) ? "0" : "") + number;
+		this.depth = gameConfig.scene_play.depths.clock;
 	}
 
 	pause(){

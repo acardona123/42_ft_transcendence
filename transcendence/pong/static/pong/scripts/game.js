@@ -1,10 +1,10 @@
 const assets_path = static_url + "pong/assets/"
 const gameTextures = {
-	background:	new Texture("images/background.jpeg",	"image", 474, 372),
+	background:	new Texture("images/background_sky.jpg",	"image", 1920, 1080),
 	// ball:		new Texture("images/to_dell.png",		"image", 225, 224),
 }
 const MenuAndGameOverTextures = {
-	background:		new Texture("images/background.png",		"image", 474, 372),
+	background:		new Texture("images/background_sky.jpg",		"image", 1920, 1080),
 	player_icon:	new Texture("images/profile_icon.png",	"image", 676, 676),
 	bot_icon:		new Texture("images/bot_icon.png",		"image", 828, 828),
 	confetti:		new Texture("sprites/confetti.png",			"sprite", 150, 84, 25, -1),
@@ -33,13 +33,13 @@ const gameConfig = {
 
 	scene_menu: {
 		padding:{
-			top: 50,
-			under_panels: 30,
+			top: 100,
+			under_panels: 50,
 			under_time_limit: 30,
-			under_deaths_limit: 40
+			under_button: 100
 		},
 		player_panel:{
-			icon_size: 600,
+			icon_size: 400,
 			icon_angle: 30,
 			icon_bottom_padding: 30,
 			line_spacing: 30, 
@@ -67,6 +67,9 @@ const gameConfig = {
 		depths: {
 			background: -1,
 			player_panels: 0,
+			time_limit: 0,
+			points_limit: 0,
+			button: 0
 		}
 	},
 
@@ -115,9 +118,9 @@ const gameConfig = {
 			eccentricity: 100
 		},
 		clock: {
-			font: '"Goudy Bookletter 1911", Times, serif',
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
 			fontSize: '200px',
-			color: 'white',
+			fill: 'white',
 			padding_top: 50
 		},
 
@@ -156,7 +159,7 @@ const gameConfig = {
 	physics: {
 		default: "arcade",
 		arcade: {
-			debug: true
+			debug: false
 		}
 	},
 	

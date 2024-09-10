@@ -18,7 +18,7 @@ class ScenePlay extends Phaser.Scene{
 	#death_borders;
 
 	constructor(){
-		super("playGame");
+		super("PlayGame");
 	}
 
 	init(loaded_boot_textures){
@@ -84,9 +84,9 @@ class ScenePlay extends Phaser.Scene{
 
 	#createClock(){
 		if (gameMode.maxTime > 0){
-			this.#clock = new Timer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameMode.maxTime)
+			this.#clock = new Timer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameConfig.scene_play.clock, gameMode.maxTime)
 		} else {
-			this.#clock = new Chronometer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top)
+			this.#clock = new Chronometer(this, gameConfig.width / 2, gameConfig.scene_play.clock.padding_top, gameConfig.scene_play.clock)
 		}
 	}
 

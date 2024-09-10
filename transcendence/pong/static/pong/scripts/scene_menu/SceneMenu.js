@@ -6,8 +6,8 @@ class SceneMenu extends Phaser.Scene{
 	#background;
 	#panel_player1;
 	#panel_player2;
-	#match_duration;
-	#points_limitation;
+	#time_limit;
+	#points_limit;
 	#start_button;
 
 	constructor(){
@@ -26,6 +26,9 @@ class SceneMenu extends Phaser.Scene{
 		this.#createAnimations();
 		this.#createBackground()
 		this.#createPlayerDescriptionPanels();
+		this.#createTimeLimit();
+		this.#createPointsLimit();
+		this.#createStartButton();
 	}
 		
 	#createAnimations(){
@@ -67,4 +70,42 @@ class SceneMenu extends Phaser.Scene{
 				const y = gameConfig.scene_menu.padding.top;
 				this.#panel_player2.setTopCenterPosition(x, y);
 			}
+
+		#createTimeLimit(){
+			this.#time_limit = new EntitledTimeDisplay(this, "Time limit", gameMode.maxTime, gameConfig.scene_menu.text_style, gameConfig.scene_menu.depths.time_limit);
+			const x = gameConfig.width / 2;
+			const y = Math.max(this.#panel_player1.y + this.#panel_player1.height / 2, this.#panel_player2.y + this.#panel_player2.height / 2) + gameConfig.scene_menu.padding.under_panels;
+			this.#time_limit.setTopCenterPosition(x, y)
+		}
+
+		#createPointsLimit(){
+			const deaths_limit_content = `Points limit: ${(gameMode.maxPoints < 0) ? "∞" : gameMode.maxPoints}`;
+			this.#points_limit = this.add.text(0, 0, deaths_limit_content, gameConfig.scene_menu.text_style);
+			this.#positionDeathsLimit();
+		}
+			#positionDeathsLimit(){
+				this.#points_limit.setOrigin(0.5, 0);
+				const x = gameConfig.width / 2;
+				const y = this.#time_limit.y + this.#time_limit.height / 2 + gameConfig.scene_menu.padding.under_time_limit;
+				this.#points_limit.setPosition(x, y);
+			}
+		
+		#createStartButton(){
+			this.#start_button = new Button(this, "START", gameConfig.scene_menu.button_style);
+			this.#positionButton();
+			this.#setButtonInteraction();
+		}
+			#positionButton(){
+				const x = gameConfig.width / 2;
+				const y = gameConfig.height - gameConfig.scene_menu.padding.under_button;
+				this.#start_button.setBottomCenterPosition(x, y);
+				this.#start_button.depth = gameConfig.scene_menu.depths.button
+			}
+			#setButtonInteraction(){
+				this.#start_button.on('pointerdown', () => {this.#startGame();});
+			}
+
+		#startGame(){
+			this.scene.start("PlayGame", this.#boot_textures);
+		}
 }

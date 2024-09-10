@@ -1,6 +1,6 @@
-https://user-images.githubusercontent.com/64851720/101292838-eee2ae80-37df-11eb-89e8-4f6d3ca4a5f1.png
-http://upload.wikimedia.org/wikipedia/commons/2/26/Pacman_HD.png
-https://pngimg.com/uploads/pacman/pacman_PNG28.png
+background sky:
+	https://wallpaperaccess.com/black-void
+
 profile icon:
 	https://www.freeiconspng.com/img/39421
 bot icon:
