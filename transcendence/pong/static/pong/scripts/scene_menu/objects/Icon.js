@@ -21,7 +21,6 @@ class Icon extends Phaser.GameObjects.Container {
 		this.#resizeContainer();
 		this.#addComponentsToContainer();
 		this.#positionComponents();
-		this.#rotate_icon();
 	}
 
 	#addContainerToScene(){
@@ -70,7 +69,7 @@ class Icon extends Phaser.GameObjects.Container {
 		this.depth = gameConfig.scene_menu.depths.player_panels;
 	}
 	
-	#rotate_icon(){
+	tiltIcon(){
 		let angle = gameConfig.scene_menu.player_panel.icon_angle;
 		if (this.#player_index_symbol === player_index.PLAYER2){
 			angle *= -1;

@@ -13,8 +13,8 @@ const MenuAndGameOverTextures = {
 
 let gameMode = {
 	activeBoosters: [],
-	maxTime: 30,
-	maxPoints: -1,
+	maxTime: -1,
+	maxPoints: 10,
 	username_player1: "username1",
 	username_player2: "username2",
 	bot_level: -1,

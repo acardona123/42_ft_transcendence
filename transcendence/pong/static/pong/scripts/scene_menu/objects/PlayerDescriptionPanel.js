@@ -43,6 +43,7 @@ class PlayerDescriptionPanel extends Phaser.GameObjects.Container{
 
 			#createIcon(){
 				this.#icon = new Icon(this.#player_index_symbol, this.#player_icon_texture);
+				this.#icon.tiltIcon();
 			}
 
 			#createTextUsername(){

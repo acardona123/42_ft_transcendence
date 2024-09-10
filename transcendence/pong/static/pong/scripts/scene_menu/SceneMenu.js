@@ -50,10 +50,14 @@ class SceneMenu extends Phaser.Scene{
 				player_index.PLAYER1,
 				this.#scene_textures.player_icon
 			);
-			this.#panel_player2 = new PlayerDescriptionPanel(
-				player_index.PLAYER2,
-				this.#scene_textures.player_icon
-			);
+			if (gameMode.bot_level < 0){
+				this.#panel_player2 = new PlayerDescriptionPanel(
+					player_index.PLAYER2,
+					this.#scene_textures.player_icon
+				);
+			} else {
+				this.#panel_player2 = new BotDescriptionPanel(this.#scene_textures.bot_icon);
+			}
 		}
 		#positionPayerPanels(){
 			this.#positionPayer1Panel();
