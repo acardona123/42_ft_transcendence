@@ -1,7 +1,7 @@
 services:
-  friends_app:
+  friends:
     build: .
-    container_name: friends_app
+    container_name: friends
     command: bash -c "python3 ./django/app/vault/vault_init.py"
     restart: always
     environment:

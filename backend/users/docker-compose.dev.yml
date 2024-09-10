@@ -1,7 +1,7 @@
 services:
-  users_app_dev:
+  users_dev:
     build: .
-    container_name: users_app_dev
+    container_name: users_dev
     command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'"
     restart: always
     environment:

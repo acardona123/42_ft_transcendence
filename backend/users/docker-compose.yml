@@ -1,7 +1,7 @@
 services:
-  users_app:
+  users:
     build: .
-    container_name: users_app
+    container_name: users
     command: bash -c "python3 ./django/app/vault/vault_init.py"
     restart: always
     environment:
