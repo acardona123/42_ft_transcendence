@@ -71,6 +71,16 @@ const gameConfig = {
 			fontSize: '200px',
 			color: 'white',
 			padding_top: 50
+		},
+
+		depths: {
+			background: 5,
+			bounce_border: 4,
+			death_border: 3,
+			score: 1,
+			clock: 1,
+			paddles:0,
+			balls: 0
 		}
 	},
 	recapText: {

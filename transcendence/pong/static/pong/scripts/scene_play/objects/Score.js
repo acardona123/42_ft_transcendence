@@ -22,6 +22,7 @@ class Score extends AlignedText{
 			const score_x = gameConfig.width / 2 + gameConfig.scene_play.score.eccentricity;
 			super(scene, score_alignment, score_x, score_y, score_text, score_style);
 		}
+		this.depth = gameConfig.scene_play.depths.score;
 		this.#value = 0;
 		scene.add.existing(this);
 	}

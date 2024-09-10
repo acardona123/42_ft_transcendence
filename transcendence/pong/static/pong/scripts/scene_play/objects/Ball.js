@@ -2,6 +2,7 @@
 class Ball extends Phaser.GameObjects.Ellipse {
     constructor(scene, x, y, radius, velocityX = 0, velocityY = 0, color = 0xFFFFFF, alpha = 1) {
         super(scene, x, y, radius * 2, radius * 2,color, alpha);
+		this.depth = gameConfig.scene_play.depths.balls;
         
 		scene.add.existing(this);
 		scene.addToBallsGroup(this);

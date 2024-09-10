@@ -20,7 +20,7 @@ class PlayBackground {
 		}
 		#positionObject(){
 			this.object.setOrigin(0);
-			this.object.depth = gameConfig.scene_menu.background;
+			this.object.depth = gameConfig.scene_play.background;
 		}
 		#applyObjectAnimation(){
 			this.#scene_texture.playAnimationOn(this.object);

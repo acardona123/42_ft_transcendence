@@ -13,6 +13,7 @@ class Paddle extends Phaser.GameObjects.Graphics {
 		this.middleY = middleY;
 		this.length = length;
 		this.width = width;
+		this.depth = gameConfig.scene_play.depths.paddles;
 		this.scale = 1;
 		
 		scene.add.existing(this);
