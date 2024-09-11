@@ -1,32 +1,32 @@
 const DB_history =
 [
-	// {"game" : "Pong", "is_victory" : true, "score_left" : 10,
-	// 	"score_right" : 14, "game_duration" : 120,
-	// 	"user_against" : "alex", "date" : 1725732245789},
+	{"game" : "Pong", "is_victory" : true, "score_left" : 10,
+		"score_right" : 14, "game_duration" : 350,
+		"user_against" : "alex", "date" : 1725732245789},
 
-	// {"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
-	// 	"score_right" : 1, "game_duration" : 31,
-	// 	"user_against" : "alex", "date" : 1725700000000},
+	{"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
+		"score_right" : 1, "game_duration" : 31,
+		"user_against" : "alex", "date" : 1725700000000},
 
-	// {"game" : "Pong", "is_victory" : false, "score_left" : 1,
-	// 	"score_right" : 11, "game_duration" : 184,
-	// 	"user_against" : "alex", "date" : Date.now()},
+	{"game" : "Pong", "is_victory" : false, "score_left" : 1,
+		"score_right" : 11, "game_duration" : 184,
+		"user_against" : "alex", "date" : Date.now()},
 
-	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-	// 	"score_right" : 9, "game_duration" : 5,
-	// 	"user_against" : "alex", "date" : 1725732932276},
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
 
-	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-	// 	"score_right" : 9, "game_duration" : 5,
-	// 	"user_against" : "alex", "date" : 1725732932276},
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
 
-	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-	// 	"score_right" : 9, "game_duration" : 5,
-	// 	"user_against" : "alex", "date" : 1725732932276},
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276},
 
-	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-	// 	"score_right" : 9, "game_duration" : 5,
-		// "user_against" : "alex", "date" : 1725732932276}
+	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+		"score_right" : 9, "game_duration" : 5,
+		"user_against" : "alex", "date" : 1725732932276}
 ];
 
 function get_history_from_DB()
@@ -68,8 +68,6 @@ function get_score(score_left, score_right, user_against)
 	span_right.className = "score-right";
 	span_right.textContent = format(score_right.toString())
 							+ " - " + user_against;
-	// span_right.style.justifyContent = "right";
-
 
 	score.appendChild(span_right);
 	return score;
@@ -146,6 +144,26 @@ function hover_date_since_leave(event)
 	elem.textContent = get_date_since_now(history_list[id].date);
 }
 
+function convert_sec_to_duration(duration_in_sec)
+{
+	let minutes = 0;
+	let res = "";
+
+	minutes = Math.floor(duration_in_sec / 60);
+	if (minutes != 0)
+	{
+		res = format(minutes.toString());
+		res += "min ";
+		res += format((duration_in_sec % 60).toString());
+		res += "s";
+	}
+	else
+	{
+		res += (duration_in_sec % 60).toString();
+		res += "s";
+	}
+	return res;
+}
 
 function get_date_time(elem_date, game_duration)
 {
@@ -159,7 +177,7 @@ function get_date_time(elem_date, game_duration)
 	date.onmouseleave = hover_date_since_leave;
 
 	const time = document.createElement('p');
-	time.textContent = game_duration.toString();
+	time.textContent = convert_sec_to_duration(game_duration);
 	time.className = "time-text";
 	text_date_time.appendChild(date);
 	text_date_time.appendChild(time);
