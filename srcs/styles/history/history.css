@@ -35,6 +35,7 @@
 	border-radius: 1vw;
 	aspect-ratio: 8/1;
 	width: 100%;
+	max-width: 100%;
 }
 
 .text-victory {
@@ -47,21 +48,52 @@
 	text-shadow: 1px 1px 1px black;
 	font-size: 25px;
 	font-weight: bolder;
-	width: 33.33%;
+	width: 20%;
+	overflow: hidden;
 }
 
-.text-score {
+.score-div {
 	display: flex;
-	justify-content: center;
-	align-content: center;
+
+	width: 60%;
+	/* white-space: nowrap; */
+	overflow: hidden;
+}
+
+.score-left {
+	width: 45%;
+	margin-top: 0px;
+	margin-bottom: 0px;
 
 	color: aliceblue;
-	margin: 0px;
+	text-align: right;
+
 	text-shadow: 1px 1px 1px black;
 	font-size: 15px;
 	font-weight: bolder;
-	width: 33.33%;
-	overflow: hidden;
+}
+
+.score-mid {
+	width: 10%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	color: aliceblue;
+	text-align: center;
+
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.score-right {
+	width: 45%;
+	color: aliceblue;
+	text-align: left;
+
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bolder;
 }
 
 .date-duration-div {
@@ -70,10 +102,11 @@
 
 	color: aliceblue;
 	margin: 0px;
-	width: 33.33%;
+	width: 20%;
 	text-shadow: 1px 1px 1px black;
 	font-size: 15px;
 	font-weight: bold;
+	overflow: hidden;
 }
 
 .date-text {
@@ -85,6 +118,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	overflow: hidden;
 }
 
 .time-text {
@@ -93,6 +127,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	overflow: hidden;
 }
 
 .tabs-history {

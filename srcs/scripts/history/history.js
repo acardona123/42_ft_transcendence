@@ -50,13 +50,29 @@ function get_victory(is_victory)
 
 function get_score(score_left, score_right, user_against)
 {
-	const text_score = document.createElement('p');
+	const score = document.createElement('div');
+	score.className = "score-div"
 
-	text_score.textContent = "You - " + score_left.toString()
-							+ " | " + score_right.toString()
+	const span_left = document.createElement('span');
+	span_left.className = "score-left";
+	span_left.textContent = "You - " + format(score_left.toString());
+	score.appendChild(span_left);
+
+	const mid_text = document.createElement('p');
+	mid_text.textContent = " | ";
+	mid_text.className = "score-mid";
+
+	score.appendChild(mid_text);
+	
+	const span_right = document.createElement('span');
+	span_right.className = "score-right";
+	span_right.textContent = format(score_right.toString())
 							+ " - " + user_against;
-	text_score.className = "text-score";
-	return text_score;
+	// span_right.style.justifyContent = "right";
+
+
+	score.appendChild(span_right);
+	return score;
 }
 
 function get_date_since_now(epoch_history)
