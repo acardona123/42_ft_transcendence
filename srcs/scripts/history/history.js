@@ -1,32 +1,32 @@
 const DB_history =
 [
-	{"game" : "Pong", "is_victory" : true, "score_left" : 10,
-		"score_right" : 14, "game_duration" : 120,
-		"user_against" : "alex", "date" : 1725732245789},
+	// {"game" : "Pong", "is_victory" : true, "score_left" : 10,
+	// 	"score_right" : 14, "game_duration" : 120,
+	// 	"user_against" : "alex", "date" : 1725732245789},
 
-	{"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
-		"score_right" : 1, "game_duration" : 31,
-		"user_against" : "alex", "date" : 1725700000000},
+	// {"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
+	// 	"score_right" : 1, "game_duration" : 31,
+	// 	"user_against" : "alex", "date" : 1725700000000},
 
-	{"game" : "Pong", "is_victory" : false, "score_left" : 1,
-		"score_right" : 11, "game_duration" : 184,
-		"user_against" : "alex", "date" : Date.now()},
+	// {"game" : "Pong", "is_victory" : false, "score_left" : 1,
+	// 	"score_right" : 11, "game_duration" : 184,
+	// 	"user_against" : "alex", "date" : Date.now()},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
+	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	// 	"score_right" : 9, "game_duration" : 5,
+	// 	"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
+	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	// 	"score_right" : 9, "game_duration" : 5,
+	// 	"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
+	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	// 	"score_right" : 9, "game_duration" : 5,
+	// 	"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276}
+	// {"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	// 	"score_right" : 9, "game_duration" : 5,
+		// "user_against" : "alex", "date" : 1725732932276}
 ];
 
 function get_history_from_DB()
@@ -209,7 +209,7 @@ function update_history_list(tab)
 	}
 
 	const _history_list = document.getElementById("history_list");
-	if (_history_list.childNodes.length == 1) // display message if the history is empty
+	if (_history_list.childNodes.length == 0) // display message if the history is empty
 	{
 		const no_history_message = document.createElement('p');
 		no_history_message.textContent = "There is no history to display yet."
