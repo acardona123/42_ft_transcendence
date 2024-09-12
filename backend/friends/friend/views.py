@@ -7,10 +7,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from friend.models import FriendRequest, Friendship
 from friend.serializer import FriendRequestSerializer
+from django.conf import settings
 import requests
 
 def get_id(username):
-	url = 'http://users:8002/api/users/id/'
+	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/id/"
 	response = requests.get(url)
 	if response.status_code != 200:
 		raise NotFound
@@ -29,7 +30,7 @@ def send_friend_request(request):
 	# if not request.auth:
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
-	sender = 1 #request.auth.get('id')
+	sender = 8 #request.auth.get('id')
 	receiver_name = request.POST.get('name')
 	if not receiver_name:
 		return Response({'error' : 'Username not provide'},
@@ -94,9 +95,13 @@ def request_list(request):
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
 	friend_request = FriendRequest.objects.filter(receiver=user_id)
-	serializer = FriendRequestSerializer(friend_request, many=True)
-	print(serializer.data)
-	return JsonResponse(serializer.data, safe=False)
+	try:
+		serializer = FriendRequestSerializer(friend_request, fields=['id', 'sender'], many=True)
+		print(serializer.data)
+		return JsonResponse(serializer.data, safe=False)
+	except:
+		return Response({'error': 'retrieving username'},
+			status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 	# {'id' : '1', 'username' : 'coucou'}
 
