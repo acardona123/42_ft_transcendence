@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.urls import path
 
-from . import views
+from .views import get_id, auth, get_usernames
 
 urlpatterns = [
-    path("auth/", views.auth, name="auth"),
+	path("id/", get_id, name="id"),
+	path("usernames/", get_usernames, name="get_usernames"),
+    path("auth/", auth, name="auth"),
 ]

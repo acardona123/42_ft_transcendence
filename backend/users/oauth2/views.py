@@ -1,9 +1,38 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+from rest_framework.decorators import api_view
 from django.core.exceptions import BadRequest
+from rest_framework.response import Response
 import certifi
 import requests
 import os
+import json
+
+@api_view(['GET'])
+def get_id(request):
+	body = request.body
+	# json.loads(body).get('name')
+	# check name in database
+	dic = {"id" : "7"}
+	return JsonResponse(dic)
+	# return HttpResponse(status=status.HTTP_408_REQUEST_TIMEOUT)
+
+@api_view(['POST'])
+def get_usernames(request):
+	body = request.body
+	print(body)
+	users = json.loads(body).get('users')
+	print(users)
+	#get username in the database
+	list = ['johanne', 'quentin', 'arthur', 'alex', 'alexandre', 'jeanne', 'ulysse', 'user1', 'user2']
+	dic = dict()
+	i = 0
+	for user in users:
+		dic[user] = list[i]
+		i+=1
+
+	return Response(dic)
+
 
 # Create your views here.
 
