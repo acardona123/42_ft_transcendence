@@ -252,7 +252,7 @@ class ScenePlay extends Phaser.Scene{
 		this.#movePlayersManager();
 		this.#clock.update();
 		if (this.#isPartyFinished()){
-			this.scene.start("GameFinished", {scores: this.#scores, duration_ms: this.#clock.getPastTime()});
+			this.scene.start("GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
 		}
 	}
 

@@ -9,12 +9,12 @@ class Icon extends Phaser.GameObjects.Container {
 	#background;
 	#components_array;
 
-	constructor(player_index_symbol, scene_icon_texture){
+	constructor(player_index_symbol, scene_icon_texture, size = gameConfig.scene_menu.player_panel.icon_size){
 		super (scene_icon_texture.scene);
 		this.#scene = scene_icon_texture.scene;
 		this.#player_index_symbol = player_index_symbol;
 		this.#scene_texture = scene_icon_texture;
-		this.#size = gameConfig.scene_menu.player_panel.icon_size;
+		this.#size = size;
 
 		this.#addContainerToScene();
 		this.#createComponents();

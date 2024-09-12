@@ -4,17 +4,16 @@ const gameTextures = {
 	// ball:		new Texture("images/to_dell.png",		"image", 225, 224),
 }
 const MenuAndGameOverTextures = {
-	background:		new Texture("images/background_sky.jpg",		"image", 1920, 1080),
-	player_icon:	new Texture("images/profile_icon.png",	"image", 676, 676),
-	bot_icon:		new Texture("images/bot_icon.png",		"image", 828, 828),
+	background:		new Texture("images/background_sky.jpg",	"image", 1920, 1080),
+	player_icon:	new Texture("images/profile_icon.png",		"image", 676, 676),
+	bot_icon:		new Texture("images/bot_icon.png",			"image", 828, 828),
 	confetti:		new Texture("sprites/confetti.png",			"sprite", 150, 84, 25, -1),
 }
 
 
 let gameMode = {
-	activeBoosters: [],
-	maxTime: -1,
-	maxPoints: 10,
+	maxTime: 15,
+	maxPoints: 5,
 	username_player1: "username1",
 	username_player2: "username2",
 	bot_level: -1,
@@ -81,7 +80,7 @@ const gameConfig = {
 			distance_to_border: 100,
 			color:{
 				left: 0xFF0000,
-				right: 0xFF00
+				right: 0xFF
 			},
 			alpha:{
 				left: 1,
@@ -134,10 +133,56 @@ const gameConfig = {
 			balls: 0
 		}
 	},
-	recapText: {
-		font: '"Goudy Bookletter 1911", Times, serif',
-		fontSize: '200px',
-		color: 'white',
+
+	scene_game_finished :{
+		padding:{
+			top: 300,
+			under_panels: 30,
+			under_match_duration: 150
+		},
+		panel:{
+			icon_size: 300,
+			icon_bottom_padding: 30,
+			line_spacing: 30, 
+			celebration: {
+				jump_height: 60,
+				jump_duration: 300,
+				jump_angle: 5,
+				bounce_duration: 600,
+				loop_delay: 100
+			},
+			defeat: {
+				kneeing_angle: 30,
+				kneeing_translation_y: 20 
+			}
+		},
+		text_style: {
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '150px',
+			fill: 'white'
+		},
+		button_style:{
+			margin : 50,
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '150px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: 15
+			}
+		},
+		depths: {
+			button: 3,
+			confetti: 2,
+			panel: 1,
+			match_duration: 1,
+			background: -3
+		},
 	},
 	
 	scale: {
