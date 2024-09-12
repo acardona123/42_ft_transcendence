@@ -93,7 +93,7 @@ class SceneGameFinished extends Phaser.Scene{
 				);
 				this.#panel_player2 = new PlayerRecapPanel(
 					player_index.PLAYER2,
-					this.#scene_textures.player_icon,
+					(gameMode.bot_level < 0) ? this.#scene_textures.player_icon : this.#scene_textures.bot_icon,
 					this.#scene_textures.confetti,
 					this.#score.player2.getScore(),
 					this.#getPlayerWinningStatus(player_index.PLAYER2)
