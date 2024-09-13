@@ -28,6 +28,15 @@ function get_stat_name(id, is_pong)
 	return name;
 }
 
+function get_right_statistique()
+{
+	// since there is no back yet
+	const stat_text = document.createElement('p');
+	stat_text.className = "stats-stat-text";
+	stat_text.textContent = "41%";
+	return stat_text;
+}
+
 function build_container(container, id, is_pong)
 {
 	const left_div = document.createElement('div');
@@ -37,6 +46,7 @@ function build_container(container, id, is_pong)
 
 	const right_div = document.createElement('div');
 	right_div.className = "stats-container-right";
+	right_div.appendChild(get_right_statistique());
 
 	container.appendChild(left_div);
 	container.appendChild(right_div);

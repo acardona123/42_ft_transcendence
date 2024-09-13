@@ -70,6 +70,8 @@
 	background-color: #ece0d1;
 	border-radius: 0 10px 10px 0;
 	width: 60%;
+	align-content: center;
+	justify-content: center;
 }
 
 .stats-container-picture {
@@ -90,4 +92,11 @@
 	margin-left: auto;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+.stats-stat-text {
+	font-family: 'Courier New', monospace;
+	font-size: 25px;
+	text-align: center;
+	margin: 0;
 }
