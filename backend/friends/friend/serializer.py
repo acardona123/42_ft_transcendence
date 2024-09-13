@@ -18,15 +18,15 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 				self.fields.pop(field_name)
 
 class FriendRequestSerializer(DynamicFieldsModelSerializer):
+	username = serializers.IntegerField(source='sender')
 	class Meta:
 		model = FriendRequest
-		fields = ('id', 'sender', 'receiver') #'__all__'
+		fields = ('id', 'username', 'receiver') #'__all__'
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		
-		if hasattr(self, 'instance') and "sender" in self.fields:
-			
+		if hasattr(self, 'instance') and "username" in self.fields:
 			sender_ids = [friend_request.sender for friend_request in self.instance]
 			self.usernames_map = self.get_usernames(sender_ids)
 		else:
@@ -43,7 +43,44 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 	
 	def to_representation(self, instance):
 		representation = super().to_representation(instance)
-		sender_id = representation['sender']
-		representation['sender'] = self.usernames_map.get(str(sender_id))
+		sender_id = representation['username']
+		representation['username'] = self.usernames_map.get(str(sender_id))
 		print(representation)
 		return representation
+	
+class FriendshipSerializer(serializers.ModelSerializer):
+	username = serializers.SerializerMethodField()
+
+	class Meta:
+		model = Friendship
+		fields = 'id', 'username'
+	
+	def get_username(self, obj):
+		if obj.user1 == self.context['user_id']:
+			return self.usernames_map.get(str(obj.user2))
+		else:
+			return self.usernames_map.get(str(obj.user1))
+
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		
+		if hasattr(self, 'instance') and "username" in self.fields:
+			friends_id = list()
+			for friend_request in self.instance:
+				if friend_request.user1 == self.context['user_id']:
+					friends_id.append(friend_request.user2)
+				else:
+					friends_id.append(friend_request.user1)
+			self.usernames_map = self.get_usernames_request(friends_id)
+		else:
+			self.usernames_map = {}
+	
+	def get_usernames_request(self, users_id):
+		url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
+		print(url)
+		response = requests.post(url, json={'users' : users_id})
+		if response.status_code != 200:
+			raise BadRequest
+		print(response.json())
+		return response.json()
