@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/structure.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_list.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_add_button.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_requests.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/history/history.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/stats/stats.css">
+</head>
+
+<body style="background-color: #795833">
+	<h1 class="font" style="text-align: center;">PROFILE</h1>
+
+	<div class="container global-container"> <!-- remove the container class for modal ?-->
+		<div class="sec-friends" id="sec_friend">
+			<div class="friend-title" id="friend-title">
+				<h1 class="friend-text-title">FRIENDS</h1>
+				<img class="button-add-friend" id="add_friend_button" src="./img/add_friend.png" tabindex="0">
+			</div>
+			<div class="friends-list" id="friends-list"></div>
+			<div>
+				<h1 class="font" style="text-align: center;">REQUESTS</h1>
+			</div>
+			<div class="req-container" id="req_container"></div>
+			<script src="./srcs/scripts/friends/friends_requests.js"></script>
+			<script src="./srcs/scripts/friends/friends_list.js"></script>
+			<script src="./srcs/scripts/friends/friends_add_button.js"></script>
+		</div>
+
+		<div class="sec-friends-line">
+			<div class="line-vertical"></div>
+		</div>
+
+		<div class="glob-right-sec-div">
+			<div class="sec-stats">
+				<h1 class="font" style="text-align: center;">STATS</h1>
+				<div class="stats-div">
+					<div class="stats-pong-div" id="stats_pong_div">
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+					</div>
+					<div class="vertical-stats-line"></div>
+					<div class="stats-flappy-div" id="stats_flappy_div">
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+						<div class="stats-container-div"></div>
+					</div>
+					<script src="./srcs/scripts/stats/stats.js"></script>
+				</div>
+			</div>
+
+			<div class="sec-stats-line">
+				<div class="line-horizontal"></div>
+			</div>
+
+			<div class="sec-history">
+				<h1 class="font" style="text-align: center">HISTORY</h1>
+				<div class="tabs-history">
+					<p class="tab-text" onclick="on_click_tab_history(this)">Pong</p>
+					<p class="tab-text" onclick="on_click_tab_history(this)">Flappy fish</p>
+				</div>
+				<div class="history-scroll">
+					<div id="history_list"></div>
+				</div>
+				<script src="./srcs/scripts/history/history.js"></script>
+				<script src="./srcs/scripts/history/history_tabs.js"></script>
+			</div>
+		</div>
+	</div>
+
+</body>
