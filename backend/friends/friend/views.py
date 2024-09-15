@@ -39,7 +39,7 @@ def send_friend_request(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	sender = 7 #request.auth.get('id')
-	receiver_name = request.POST.get('name')
+	receiver_name = request.data.get('name')
 	if not receiver_name:
 		return Response({'error' : 'Username not provide'},
 			status=status.HTTP_400_BAD_REQUEST)
