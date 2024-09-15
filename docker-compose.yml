@@ -1,6 +1,7 @@
 include:
   - ./backend/users/docker-compose.yml
   - ./backend/friends/docker-compose.yml
+  - ./backend/matches/docker-compose.yml
 
 services:
   nginx:
@@ -17,6 +18,7 @@ services:
     depends_on:
       - users
       - friends
+      - matches
   vault:
     build: ./backend/vault
     container_name: vault

@@ -1,0 +1,47 @@
+services:
+  matches_dev:
+    build: .
+    container_name: matches_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8004'"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=matches_db_dev
+    volumes:
+      - .:/usr/src/app/django
+    ports:
+      - "8004:8004"
+    networks:
+      - website-network
+      - matches-network
+    depends_on:
+      matches_db_dev:
+        condition: service_healthy
+
+  matches_db_dev:
+    build: ./postgre
+    container_name: matches_db_dev
+    restart: always
+    volumes:
+      - matches_db:/var/lib/postgresql/data/
+    networks:
+      - matches-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  matches_db:
+
+networks:
+  website-network:
+    name: website_network
+  matches-network:
+    name: matches_network
