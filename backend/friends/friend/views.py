@@ -30,6 +30,24 @@ def add_frienship(user1, user2):
 	friendship, created = Friendship.objects.get_or_create(user1=user1, user2=user2)
 	return created
 
+def get_friend_request(user_id):
+	friend_request = FriendRequest.objects.filter(receiver=user_id)
+	try:
+		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username'], many=True)
+		print(serializer.data)
+		return (True, {'requests': serializer.data})
+	except:
+		return (False, {'requests': serializer.errors})
+	
+def get_friend(user_id):
+	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
+	try:
+		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
+		return (True, {'friends': serializer.data})
+	except:
+		return (False, {'friends': serializer.errors})
+
+
 # ------------------------FRIENDREQUEST-------------------------
 
 @api_view(['POST'])
@@ -38,7 +56,7 @@ def send_friend_request(request):
 	# if not request.auth:
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
-	sender = 7 #request.auth.get('id')
+	sender = 12 #request.auth.get('id')
 	receiver_name = request.POST.get('name')
 	if not receiver_name:
 		return Response({'error' : 'Username not provide'},
@@ -55,20 +73,16 @@ def send_friend_request(request):
 	if request:
 		created = add_frienship(sender, receiver_id)
 		FriendRequest.objects.filter(sender=receiver_id, receiver=sender).delete()
-		if created:
-			return Response({'error': 'friend request accepted'},
-					status=status.HTTP_200_OK)
-		else:
-			return Response({'error': 'friendship already exist'},
-					status=status.HTTP_200_OK)
-	friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver_id)
-	print(created)
-	if created:
-		return Response({'message' : 'friend request send'},
-				status=status.HTTP_200_OK)
 	else:
-		return Response({'message' : 'friend request already exist'},
-				status=status.HTTP_200_OK)
+		friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver_id)
+	is_serialized_request, data_request = get_friend_request(receiver_id)
+	if not is_serialized_request:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	is_serialized_friend, data_friend = get_friend(receiver_id)
+	if not is_serialized_friend:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	else:
+		return JsonResponse([data_request, data_friend], safe=False)
 
 @api_view(['POST', 'DELETE'])
 # @permission_classes([IsAuthenticated])
@@ -88,16 +102,21 @@ def manage_request(request, request_id):
 	if request.method == 'POST':
 		created = add_frienship(receiver_id, friend_request.sender)
 		friend_request.delete()
-		if created:
-			return Response({'error': 'friend request accepted'},
-					status=status.HTTP_200_OK)
+		is_serialized_request, data_request = get_friend_request(receiver_id)
+		if not is_serialized_request:
+			return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		is_serialized_friend, data_friend = get_friend(receiver_id)
+		if not is_serialized_friend:
+			return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		else:
-			return Response({'error': 'friendship already exist'},
-					status=status.HTTP_200_OK)
+			return JsonResponse([data_request, data_friend], safe=False)
 	elif request.method == 'DELETE':
 		friend_request.delete()
-		return Response({'error': 'friendship rejected'},
-				status=status.HTTP_200_OK)
+	is_serialized, data = get_friend_request(receiver_id)
+	if (is_serialized):
+		return JsonResponse(data, safe=False)
+	else:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
@@ -106,14 +125,12 @@ def request_list(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
-	friend_request = FriendRequest.objects.filter(receiver=user_id)
-	try:
-		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username'], many=True)
-		print(serializer.data)
-		return JsonResponse(serializer.data, safe=False)
-	except:
-		return Response({'error': 'retrieving username'},
-			status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	is_serialized, data = get_friend_request(user_id)
+	if (is_serialized):
+		return JsonResponse(data, safe=False)
+	else:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 # ------------------------FRIENDSHIP-------------------------
 
@@ -125,15 +142,11 @@ def friend_list(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
-	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
-	print(friendship)
-	try:
-		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
-		print(serializer.data)
-		return JsonResponse(serializer.data, safe=False)
-	except:
-		return Response({'error': 'retrieving username and picture'},
-			status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	is_serialized, data = get_friend(user_id)
+	if is_serialized:
+		return JsonResponse(data, safe=False)
+	else:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
@@ -152,4 +165,8 @@ def remove_friend(request, friendship_id):
 		return Response({'error' : 'not part of the friendship'},
 				status=status.HTTP_401_UNAUTHORIZED)
 	friendship.delete()
-	return Response({'message' : 'friendship delete'}, status=status.HTTP_200_OK)
+	is_serialized, data = get_friend(user_id)
+	if is_serialized:
+		return JsonResponse(data, safe=False)
+	else:
+		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

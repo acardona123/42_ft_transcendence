@@ -34,18 +34,18 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 	
 	def get_usernames(self, users_id):
 		url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
-		print(url)
+		# print(url)
 		response = requests.post(url, json={'users' : users_id})
 		if response.status_code != 200:
 			raise BadRequest
-		print(response.json())
+		# print(response.json())
 		return response.json()
 	
 	def to_representation(self, instance):
 		representation = super().to_representation(instance)
 		sender_id = representation['username']
 		representation['username'] = self.usernames_map.get(str(sender_id))
-		print(representation)
+		# print(representation)
 		return representation
 	
 class FriendshipSerializer(serializers.ModelSerializer):
@@ -78,9 +78,9 @@ class FriendshipSerializer(serializers.ModelSerializer):
 	
 	def get_usernames_request(self, users_id):
 		url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
-		print(url)
+		# print(url)
 		response = requests.post(url, json={'users' : users_id})
 		if response.status_code != 200:
 			raise BadRequest
-		print(response.json())
+		# print(response.json())
 		return response.json()
