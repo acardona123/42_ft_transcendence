@@ -163,7 +163,7 @@ async function remove_friend(event)
 	catch (error)
 	{
 		// TODO: popup error
-		console.log("Friend request reject failed: " + error.message);
+		console.log("Friend remove failed: " + error.message);
 		return ;
 	}
 }

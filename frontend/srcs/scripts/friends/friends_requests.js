@@ -12,12 +12,36 @@ const g_requests = [
 	{pseudo : "5"/*, date :  5*/}
 ];
 
-function send_friend_request(event)
+async function send_friend_request(event)
 {
-	const input_zone = document.getElementById("add_friend_pseudo_input")
-	// send JSON to the back
-	// JSON.stringify({"pseudo" : input_zone.value});
+	const input_zone = document.getElementById("add_friend_pseudo_input");
+	console.log(input_zone);
+	const url = "https://localhost:8443/api/friends/request/send/";
+	const body = JSON.stringify({name: input_zone.value});
+
+	console.log(body);
+
+	let data = await fetch(url, {
+		method: 'POST',
+		headers: new Headers({'content-type': 'application/json'}),
+		body: body
+	});
+	try
+	{
+		if (!data.ok)
+		{
+			throw new Error(`Response status: ${data.status}`);
+		}
+		// TODO: update friend request with the body returned
+	}
+	catch (error)
+	{
+		// TODO: popup error
+		console.log("Friend request accept failed: " + error.message);
+		return ;
+	}
 	remove_friends_popup();
+	
 }
 
 async function accept_friend_req(event)
@@ -25,10 +49,10 @@ async function accept_friend_req(event)
 	const accepted_pseudo = event.target.previousSibling.textContent;
 	const url = "https://localhost:8443/api/friends/request/" + data_requests.find(o => o.username === accepted_pseudo).id + "/";
 
+	let data = await fetch(url, {method: 'POST'});
 	try
 	{
-		const response = await fetch(url, {method: 'POST'});
-		if (!response.ok)
+		if (!data.ok)
 		{
 			throw new Error(`Response status: ${data.status}`);
 		}
@@ -66,10 +90,10 @@ async function remove_req_sub_container_div(pseudo_to_remove)
 	{
 		if (req_container.childNodes[i].childNodes[0].textContent == pseudo_to_remove)
 		{
+			const url = "https://localhost:8443/api/friends/request/" + data_requests.find(o => o.username === pseudo_to_remove).id + "/";
+			const response = await fetch(url, {method:'DELETE'});
 			try
 			{
-				const url = "https://localhost:8443/api/friends/request/" + data_requests.find(o => o.username === pseudo_to_remove).id + "/";
-				const response = await fetch(url, {method:'DELETE'});
 				if (!response.ok)
 				{
 					throw new Error(`Response status: ${data.status}`);
@@ -164,8 +188,9 @@ function update_requests_list(is_init)
 
 async function get_data_from_database()
 {
+	const url = "https://localhost:8443/api/friends/request/";
+	let data = await fetch(url);
 	try {
-		let data = await fetch("https://localhost:8443/api/friends/request/");
 		if (!data.ok)
 		{
 			throw new Error(`Response status: ${data.status}`);

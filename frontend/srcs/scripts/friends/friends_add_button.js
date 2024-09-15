@@ -95,7 +95,7 @@ function onWindowClick(event)
 		remove_friends_popup();
 }
 
-send_friend_request();
+// send_friend_request();
 
 window.onresize = onWindowResize;
 const elem = document.getElementById("add_friend_button");
