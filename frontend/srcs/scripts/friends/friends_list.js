@@ -1,12 +1,12 @@
-const DB_friend_list = [
-	{pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
-	{pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
-	{pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
-	{pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
-	{pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
-	{pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
-	{pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
-]
+// const friend_list_data = [
+// 	{pseudo: "chat mechant", is_online: false, picture: "./img/tiger.jpeg"},
+// 	{pseudo: "kitty", is_online: true, picture: "./img/dog.webp"},
+// 	{pseudo: "gros chat", is_online: true, picture: "./img/tiger.jpeg"},
+// 	{pseudo: "rose", is_online: true, picture: "./img/flower.jpeg"},
+// 	{pseudo: "tigre", is_online: false, picture: "./img/tiger.jpeg"},
+// 	{pseudo: "jordi", is_online: true, picture: "./img/dog.webp"},
+// 	{pseudo: "fleur", is_online: false, picture: "./img/flower.jpeg"}
+// ]
 
 function getFriendProfilPic(picture) {
 	const profil_pic = document.createElement("img");
@@ -132,7 +132,7 @@ function cancel_confirm_remove(event)
 }
 
 // remove do not reload all the friend list to save time
-function remove_friend(event)
+async function remove_friend(event)
 {
 	if (event.type == "keydown")
 	{
@@ -146,20 +146,26 @@ function remove_friend(event)
 		return ;
 	}
 	const elem = event.currentTarget;
-	const pseudoToRemove = elem.parentNode.parentNode.childNodes[1].textContent;
-	// DELETE on database
-	// since no databse yet, do :
-	for (let i = 0; i < DB_friend_list.length; i++)
+	const pseudo_to_remove = elem.parentNode.parentNode.childNodes[1].textContent;
+
+	const url = "https://localhost:8443/api/friends/remove/"
+		+ friend_list_data.find(o => o.username === pseudo_to_remove).id + "/";
+
+	let data = await fetch(url, {method:'DELETE'});
+	try
 	{
-		if (pseudoToRemove == DB_friend_list[i].pseudo)
+		if (!data.ok)
 		{
-			DB_friend_list.splice(i, 1);
-			break;
+			throw new Error(`Response status: ${data.status}`);
 		}
+		// TODO: update friends with the body returned
 	}
-	elem.parentNode.parentNode.remove();
-	if (DB_friend_list.length == 0)
-		update_friend_list();
+	catch (error)
+	{
+		// TODO: popup error
+		console.log("Friend request reject failed: " + error.message);
+		return ;
+	}
 }
 
 function add_friend(pseudo, is_online, picture)
@@ -171,34 +177,58 @@ function add_friend(pseudo, is_online, picture)
 	return newElement;
 }
 
-function get_friend_list()
+function sort_by_online_alpha(data)
 {
 	const online_friend_list = [];
 	const offline_friend_list = [];
 
-	for (let i = 0; i < DB_friend_list.length; i++)
+	for (let i = 0; i < data.length; i++)
 	{
-		if (DB_friend_list[i].is_online)
-			online_friend_list.push(DB_friend_list[i]);
+		if (data[i].is_online)
+			online_friend_list.push(data[i]);
 		else
-			offline_friend_list.push(DB_friend_list[i]);
+			offline_friend_list.push(data[i]);
 	}
 
 	online_friend_list.sort((a, b) =>
 	{
-		const name1 = a.pseudo.toLowerCase();
-		const name2 = b.pseudo.toLowerCase();
+		const name1 = a.username.toLowerCase();
+		const name2 = b.username.toLowerCase();
 		return name1.localeCompare(name2);
 	});
 
 	offline_friend_list.sort((a, b) =>
 	{
-		const name1 = a.pseudo.toLowerCase();
-		const name2 = b.pseudo.toLowerCase();
+		const name1 = a.username.toLowerCase();
+		const name2 = b.username.toLowerCase();
 		return name1.localeCompare(name2);
 	});
 
 	return online_friend_list.concat(offline_friend_list);
+}
+
+async function get_friend_list()
+{
+	const url = "https://localhost:8443/api/friends/";
+	let data = await fetch(url);
+	try
+	{
+		if (!data.ok)
+		{
+			throw new Error(`Response status: ${data.status}`);
+		}
+		data = await data.json();
+	}
+	catch (error)
+	{
+		// TODO: popup error
+		console.log("Display friends failed: " + error.message);
+		return undefined;
+	}
+	data = data.map(data => (
+		{id: data.id, username: data.username, is_online: (Math.random() <= 0.5)}
+	));
+	return sort_by_online_alpha(data);
 }
 
 function empty_friend_list()
@@ -212,16 +242,15 @@ function empty_friend_list()
 
 function update_friend_list(is_init)
 {
-	const friend_list = get_friend_list();
 	if (!is_init)
 		empty_friend_list();
-	for (let i = 0; i < friend_list.length; i++)
+	for (let i = 0; i < friend_list_data.length; i++)
 	{
 		const friends_list = document.getElementById('friends-list');
-		const new_friend = add_friend(friend_list[i].pseudo, friend_list[i].is_online, friend_list[i].picture)
+		const new_friend = add_friend(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
 		friends_list.appendChild(new_friend);
 	}
-	if (friend_list.length == 0)
+	if (friend_list_data.length == 0)
 	{
 		const friends_list = document.getElementById('friends-list');
 		const empty_text = document.createElement('p');
@@ -231,4 +260,11 @@ function update_friend_list(is_init)
 	}
 }
 
-update_friend_list(true);
+let friend_list_data = undefined;
+
+(async () => {
+	friend_list_data = await get_friend_list()
+	if (friend_list_data != undefined)
+		update_friend_list(true);
+})()
+
