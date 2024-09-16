@@ -30,17 +30,11 @@
 }
 
 .stats-pong-div {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
 	height: 100%;
 	width: 50%;
 }
 
 .stats-flappy-div {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
 	height: 100%;
 	width: 50%;
 }
@@ -70,7 +64,7 @@
 	background-color: #ece0d1;
 	border-radius: 0 10px 10px 0;
 	width: 60%;
-	align-content: center;
+	display: flex;
 	justify-content: center;
 }
 
@@ -98,5 +92,6 @@
 	font-family: 'Courier New', monospace;
 	font-size: 25px;
 	text-align: center;
+	align-self: center;
 	margin: 0;
 }
