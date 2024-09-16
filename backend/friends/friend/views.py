@@ -33,8 +33,8 @@ def add_frienship(user1, user2):
 def get_friend_request(user_id):
 	friend_request = FriendRequest.objects.filter(receiver=user_id)
 	try:
-		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username'], many=True)
-		print(serializer.data)
+		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username', 'date'], many=True)
+		# print(serializer.data)
 		return (True, {'requests': serializer.data})
 	except:
 		return (False, {'requests': serializer.errors})
@@ -56,7 +56,7 @@ def send_friend_request(request):
 	# if not request.auth:
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
-	sender = 12 #request.auth.get('id')
+	sender = 4 #request.auth.get('id')
 	receiver_name = request.POST.get('name')
 	if not receiver_name:
 		return Response({'error' : 'Username not provide'},
@@ -160,7 +160,7 @@ def remove_friend(request, friendship_id):
 	except Friendship.DoesNotExist:
 		return Response({'error' : 'invalid friendship id'},
 				status=status.HTTP_400_BAD_REQUEST)
-	print(friendship)
+	# print(friendship)
 	if user_id != friendship.user1 and user_id != friendship.user2:
 		return Response({'error' : 'not part of the friendship'},
 				status=status.HTTP_401_UNAUTHORIZED)

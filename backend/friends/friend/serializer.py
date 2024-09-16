@@ -21,7 +21,7 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 	username = serializers.IntegerField(source='sender')
 	class Meta:
 		model = FriendRequest
-		fields = ('id', 'username', 'receiver') #'__all__'
+		fields = ('id', 'username', 'receiver', 'date') #'__all__'
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)

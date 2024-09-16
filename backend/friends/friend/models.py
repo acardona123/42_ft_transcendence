@@ -14,6 +14,7 @@ class Friendship(models.Model):
 class FriendRequest(models.Model):
 	sender = models.IntegerField()
 	receiver = models.IntegerField()
+	date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
 
 	class Meta:
 		unique_together = ('sender', 'receiver')
