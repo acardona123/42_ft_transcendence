@@ -1,25 +1,23 @@
-const g_requests = [
-	{pseudo : "7"/*, date :  7*/},
-	{pseudo : "2"/*, date :  2*/},
-	{pseudo : "8"/*, date :  8*/},
-	{pseudo : "4"/*, date :  4*/},
-	{pseudo : "6"/*, date :  6*/},
-	{pseudo : "9"/*, date :  9*/},
-	{pseudo : "1"/*, date :  1*/},
-	{pseudo : "11"/*, date : 11*/},
-	{pseudo : "10"/*, date : 10*/},
-	{pseudo : "3"/*, date :  3*/},
-	{pseudo : "5"/*, date :  5*/}
-];
+// const g_requests = [
+// 	{pseudo : "7"/*, date :  7*/},
+// 	{pseudo : "2"/*, date :  2*/},
+// 	{pseudo : "8"/*, date :  8*/},
+// 	{pseudo : "4"/*, date :  4*/},
+// 	{pseudo : "6"/*, date :  6*/},
+// 	{pseudo : "9"/*, date :  9*/},
+// 	{pseudo : "1"/*, date :  1*/},
+// 	{pseudo : "11"/*, date : 11*/},
+// 	{pseudo : "10"/*, date : 10*/},
+// 	{pseudo : "3"/*, date :  3*/},
+// 	{pseudo : "5"/*, date :  5*/}
+// ];
 
-async function send_friend_request(event)
+async function send_friend_request()
 {
 	const input_zone = document.getElementById("add_friend_pseudo_input");
 	console.log(input_zone);
 	const url = "https://localhost:8443/api/friends/request/send/";
 	const body = JSON.stringify({name: input_zone.value});
-
-	console.log(body);
 
 	let data = await fetch(url, {
 		method: 'POST',
@@ -38,10 +36,8 @@ async function send_friend_request(event)
 	{
 		// TODO: popup error
 		console.log("Friend request accept failed: " + error.message);
-		return ;
 	}
 	remove_friends_popup();
-	
 }
 
 async function accept_friend_req(event)
