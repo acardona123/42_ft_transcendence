@@ -80,8 +80,12 @@ class FriendshipSerializer(serializers.ModelSerializer):
 					friends_id.append(friend_request.user1)
 			self.usernames_map = self.get_usernames_request(friends_id)
 		else:
-			print('coucou')
-			if self.instance.user1 == self.context.get('user_id'):
+			print(self.context.get('username'))
+			if self.context.get('username') == None and self.instance.user1 == self.context.get('user_id'):
+				self.usernames_map = self.get_usernames_request([str(self.instance.user2)])
+			elif self.context.get('username') == None and self.instance.user2 == self.context.get('user_id'):
+				self.usernames_map = self.get_usernames_request([str(self.instance.user1)])
+			elif self.instance.user1 == self.context.get('user_id'):
 				self.usernames_map = {str(self.instance.user2) : self.context.get('username')}
 			else:
 				self.usernames_map = {str(self.instance.user1) : self.context.get('username')}

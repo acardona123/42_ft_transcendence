@@ -36,7 +36,7 @@ def get_friend_request(user_id):
 		# print(serializer.data)
 		return (True, {'requests': serializer.data})
 	except:
-		return (False, {'requests': serializer.errors})
+		return (False, {'requests': 'serializer.errors'})
 	
 def get_friend(user_id):
 	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
@@ -44,7 +44,7 @@ def get_friend(user_id):
 		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
 		return (True, {'friends': serializer.data})
 	except:
-		return (False, {'friends': serializer.errors})
+		return (False, {'friends': 'serializer.errors'})
 
 
 # ------------------------FRIENDREQUEST-------------------------
@@ -93,29 +93,26 @@ def manage_request(request, request_id):
 	try:
 		friend_request = FriendRequest.objects.get(id=request_id)
 	except FriendRequest.DoesNotExist:
-		return Response({'error' : 'invalid request id'},
+		return Response({'message' : 'invalid request id'},
 				status=status.HTTP_400_BAD_REQUEST)
 	if friend_request.receiver != receiver_id:
-		return Response({'error': 'friend request invalid'},
+		return Response({'message': 'friend request invalid'},
 				status=status.HTTP_400_BAD_REQUEST)
 	if request.method == 'POST':
-		created = add_frienship(receiver_id, friend_request.sender)
+		friendship, created = add_frienship(receiver_id, friend_request.sender)
 		friend_request.delete()
-		is_serialized_request, data_request = get_friend_request(receiver_id)
-		if not is_serialized_request:
-			return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		is_serialized_friend, data_friend = get_friend(receiver_id)
-		if not is_serialized_friend:
-			return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		else:
-			return JsonResponse([data_request, data_friend], safe=False)
-	elif request.method == 'DELETE':
-		friend_request.delete()
-	is_serialized, data = get_friend_request(receiver_id)
-	if (is_serialized):
-		return JsonResponse(data, safe=False)
+		try:
+			data = {'message': 'friendship '+('created' if created else 'exist')+', and friend request deleted',
+				'data': {'friendship': FriendshipSerializer(friendship, context= {'user_id':receiver_id}).data,
+						'remove_friend_request': request_id}}
+			return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+		except:
+			return Response({'message': 'error will retreiving username'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	else:
-		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		friend_request.delete()
+		data = {'message': 'friend request deleted',
+				'data': {'friend_request': request_id}}
+		return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
