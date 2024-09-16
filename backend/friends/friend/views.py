@@ -34,17 +34,17 @@ def get_friend_request(user_id):
 	try:
 		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username', 'date'], many=True)
 		# print(serializer.data)
-		return (True, {'requests': serializer.data})
+		return (True, serializer.data)
 	except:
-		return (False, {'requests': 'serializer.errors'})
+		return (False, 'error')
 	
 def get_friend(user_id):
 	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
 	try:
 		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
-		return (True, {'friends': serializer.data})
+		return (True, serializer.data)
 	except:
-		return (False, {'friends': 'serializer.errors'})
+		return (False, 'error')
 
 
 # ------------------------FRIENDREQUEST-------------------------
@@ -107,7 +107,8 @@ def manage_request(request, request_id):
 						'remove_friend_request': request_id}}
 			return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 		except:
-			return Response({'message': 'error will retreiving username'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+			return Response({'message': 'error will retreiving username'},
+					status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	else:
 		friend_request.delete()
 		data = {'message': 'friend request deleted',
@@ -122,10 +123,12 @@ def request_list(request):
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
 	is_serialized, data = get_friend_request(user_id)
-	if (is_serialized):
-		return JsonResponse(data, safe=False)
+	if is_serialized:
+		return Response({'message':'list friend request',
+					'data': data}, status=status.HTTP_200_OK)
 	else:
-		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		return Response({'message': 'error will retreiving username'},
+				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # ------------------------FRIENDSHIP-------------------------
@@ -140,9 +143,11 @@ def friend_list(request):
 	user_id = 7 #request.auth.get('id')
 	is_serialized, data = get_friend(user_id)
 	if is_serialized:
-		return JsonResponse(data, safe=False)
+		return Response({'message':'list friendship',
+					'data': data}, status=status.HTTP_200_OK)
 	else:
-		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		return Response({'message': 'error will retreiving username'},
+				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
@@ -154,15 +159,13 @@ def remove_friend(request, friendship_id):
 	try:
 		friendship = Friendship.objects.get(id=friendship_id)
 	except Friendship.DoesNotExist:
-		return Response({'error' : 'invalid friendship id'},
+		return Response({'message' : 'invalid friendship id'},
 				status=status.HTTP_400_BAD_REQUEST)
 	# print(friendship)
 	if user_id != friendship.user1 and user_id != friendship.user2:
-		return Response({'error' : 'not part of the friendship'},
-				status=status.HTTP_401_UNAUTHORIZED)
+		return Response({'message' : 'not part of the friendship'},
+				status=status.HTTP_400_BAD_REQUEST)
 	friendship.delete()
-	is_serialized, data = get_friend(user_id)
-	if is_serialized:
-		return JsonResponse(data, safe=False)
-	else:
-		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	data = {'message': 'friendship deleted',
+				'data': {'friendship': friendship_id}}
+	return Response(data, status=status.HTTP_200_OK)
