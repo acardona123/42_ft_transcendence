@@ -94,7 +94,8 @@ if (database_name.endswith('_dev') == False):
 
 	client = create_client()
 	cred = create_cred(client, database_name)
-
+	
+	print('use database')
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.postgresql',

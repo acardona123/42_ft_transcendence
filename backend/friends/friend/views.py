@@ -29,24 +29,6 @@ def add_frienship(user1, user2):
 	user1, user2 = sorted([user1, user2])
 	return Friendship.objects.get_or_create(user1=user1, user2=user2)
 
-def get_friend_request(user_id):
-	friend_request = FriendRequest.objects.filter(receiver=user_id)
-	try:
-		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username', 'date'], many=True)
-		# print(serializer.data)
-		return (True, serializer.data)
-	except:
-		return (False, 'error')
-	
-def get_friend(user_id):
-	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
-	try:
-		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
-		return (True, serializer.data)
-	except:
-		return (False, 'error')
-
-
 # ------------------------FRIENDREQUEST-------------------------
 
 @api_view(['POST'])
@@ -56,7 +38,7 @@ def send_friend_request(request):
 	# 	return Response({'message': 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	sender = 4 #request.auth.get('id')
-	receiver_name = request.POST.get('name')
+	receiver_name = request.data.get('name')
 	if not receiver_name:
 		return Response({'message': 'Username not provide'},
 			status=status.HTTP_400_BAD_REQUEST)
@@ -122,11 +104,12 @@ def request_list(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
-	is_serialized, data = get_friend_request(user_id)
-	if is_serialized:
+	friend_request = FriendRequest.objects.filter(receiver=user_id)
+	try:
+		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username', 'date'], many=True)
 		return Response({'message':'list friend request',
-					'data': data}, status=status.HTTP_200_OK)
-	else:
+					'data': serializer.data}, status=status.HTTP_200_OK)
+	except:
 		return Response({'message': 'error will retreiving username'},
 				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -141,11 +124,12 @@ def friend_list(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
-	is_serialized, data = get_friend(user_id)
-	if is_serialized:
+	friendship = Friendship.objects.filter(Q(user1=user_id) | Q(user2=user_id))
+	try:
+		serializer = FriendshipSerializer(friendship, many=True, context={'user_id': user_id})
 		return Response({'message':'list friendship',
-					'data': data}, status=status.HTTP_200_OK)
-	else:
+					'data': serializer.data}, status=status.HTTP_200_OK)
+	except:
 		return Response({'message': 'error will retreiving username'},
 				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -161,7 +145,6 @@ def remove_friend(request, friendship_id):
 	except Friendship.DoesNotExist:
 		return Response({'message' : 'invalid friendship id'},
 				status=status.HTTP_400_BAD_REQUEST)
-	# print(friendship)
 	if user_id != friendship.user1 and user_id != friendship.user2:
 		return Response({'message' : 'not part of the friendship'},
 				status=status.HTTP_400_BAD_REQUEST)

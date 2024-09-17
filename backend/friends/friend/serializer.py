@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import FriendRequest, Friendship
 from django.core.exceptions import BadRequest
+from django.db.models.query import QuerySet
 
 from django.conf import settings
 import requests
@@ -27,8 +28,7 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 		super().__init__(*args, **kwargs)
 		
 		self.has_username = "username" in self.fields
-
-		if hasattr(self, 'instance') and "username" in self.fields and isinstance(self.instance, list):
+		if hasattr(self, 'instance') and "username" in self.fields and isinstance(self.instance, QuerySet):
 			sender_ids = [friend_request.sender for friend_request in self.instance]
 			self.usernames_map = self.get_usernames(sender_ids)
 		else:
@@ -36,11 +36,9 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 	
 	def get_usernames(self, users_id):
 		url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
-		# print(url)
 		response = requests.post(url, json={'users' : users_id})
 		if response.status_code != 200:
 			raise BadRequest
-		# print(response.json())
 		return response.json()
 	
 	def to_representation(self, instance):
@@ -49,7 +47,6 @@ class FriendRequestSerializer(DynamicFieldsModelSerializer):
 			return representation
 		sender_id = representation['username']
 		representation['username'] = self.usernames_map.get(str(sender_id))
-		# print(representation)
 		return representation
 	
 class FriendshipSerializer(serializers.ModelSerializer):
@@ -70,8 +67,7 @@ class FriendshipSerializer(serializers.ModelSerializer):
 		super().__init__(*args, **kwargs)
 
 		self.has_username = "username" in self.fields
-		
-		if hasattr(self, 'instance') and "username" in self.fields and isinstance(self.instance, list):
+		if hasattr(self, 'instance') and "username" in self.fields and isinstance(self.instance, QuerySet):
 			friends_id = list()
 			for friend_request in self.instance:
 				if friend_request.user1 == self.context.get('user_id'):
@@ -80,7 +76,6 @@ class FriendshipSerializer(serializers.ModelSerializer):
 					friends_id.append(friend_request.user1)
 			self.usernames_map = self.get_usernames_request(friends_id)
 		else:
-			print(self.context.get('username'))
 			if self.context.get('username') == None and self.instance.user1 == self.context.get('user_id'):
 				self.usernames_map = self.get_usernames_request([str(self.instance.user2)])
 			elif self.context.get('username') == None and self.instance.user2 == self.context.get('user_id'):
@@ -93,9 +88,7 @@ class FriendshipSerializer(serializers.ModelSerializer):
 	
 	def get_usernames_request(self, users_id):
 		url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
-		# print(url)
 		response = requests.post(url, json={'users' : users_id})
 		if response.status_code != 200:
 			raise BadRequest
-		# print(response.json())
 		return response.json()
