@@ -9,11 +9,12 @@
 	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_requests.css">
 	<link rel="stylesheet" type="text/css" href="./srcs/styles/history/history.css">
 	<link rel="stylesheet" type="text/css" href="./srcs/styles/stats/stats.css">
+	<link rel="stylesheet" type="text/css" href="./srcs/styles/popup/popup.css">
 </head>
 
 <body style="background-color: #795833">
 	<h1 class="font" style="text-align: center;">PROFILE</h1>
-
+	<div class="notif-main-div"></div>
 	<div class="container global-container"> <!-- remove the container class for modal ?-->
 		<div class="sec-friends" id="sec_friend">
 			<div class="friend-title" id="friend-title">
@@ -73,5 +74,6 @@
 			</div>
 		</div>
 	</div>
-
+	<button onclick="create_popup()" style="width: 100px; height: 20px;"></button>
+	<script src="./srcs/scripts/popup/popup.js"></script>
 </body>

@@ -1,0 +1,26 @@
+.popup-main-div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+
+	height: 20px;
+	width: 100px;
+	border: thin solid black;
+	background-color: #00ff0080;
+	transition: transform 1s;
+
+	animation: popup_disapear_anim 1s ease-in;
+	animation-play-state: paused;
+	animation-iteration-count: 1
+}
+
+.popup-main-div:hover {
+	background-color: #00ff00ff;
+}
+
+@keyframes popup_disapear_anim {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}
