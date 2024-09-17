@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'rest_framework',
+	'drf_yasg',
 	'friend',
 ]
 
@@ -166,3 +167,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # microservice url
 
 USERS_MICROSERVICE_URL = 'http://users:8002'
+
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}

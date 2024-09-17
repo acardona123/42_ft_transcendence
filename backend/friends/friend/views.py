@@ -10,6 +10,10 @@ from friend.serializer import FriendRequestSerializer, FriendshipSerializer
 from django.db.models import Q
 from django.conf import settings
 import requests
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+
 
 def get_id(username):
 	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/id/"
@@ -29,15 +33,138 @@ def add_frienship(user1, user2):
 	user1, user2 = sorted([user1, user2])
 	return Friendship.objects.get_or_create(user1=user1, user2=user2)
 
+# -----------------------SWAGGER(DOC)---------------------------
+def get_error_object():
+	return openapi.Response(
+				description="Error",
+				examples={
+					"application/json": {
+						'message': 'Invalid input'
+					}
+				}
+			)
+
+def post_send_request():
+	return openapi.Response(
+			description="return friend request existing",
+			examples={
+				"application/json": {
+
+					"message": "friend request exist",
+					"data": {
+						"friend_request": {
+							"id": 1,
+							"username": "coucou",
+							"date": "2024-09-17T15:31:48.750295Z"
+						}
+					}
+				}
+			}
+		)
+
+def post_add_friends():
+	return openapi.Response(
+			description="return friend ship existing",
+			examples={
+				"application/json": {
+				"message": "friendship exist, and friend request deleted",
+				"data": {
+					"friendship": {
+						"id": 1,
+						"username": "coucou"
+					},
+					"remove_friend_request": 1
+					}
+				}
+			}
+		)
+
+def delete_friend_request():
+	return openapi.Response(
+			description="friend request deleted",
+			examples={
+				"application/json": {
+				'message': 'friend request deleted',
+				'data': {'friend_request': 2}
+				}
+			}
+		)
+
+def list_request():
+	return openapi.Response(
+			description="friend request deleted",
+			examples={
+				"application/json": {
+					"message": "list friend request",
+					"data": [
+						{
+							"id": 3,
+							"username": "johanne",
+							"date": "2024-09-17T16:10:37.678583Z"
+						},
+						{
+							"id": 4,
+							"username": "quentin",
+							"date": "2024-09-17T16:10:46.163827Z"
+						}
+					]
+				}
+			}
+		)
+
+def list_friendship():
+	return openapi.Response(
+			description="friend request deleted",
+			examples={
+				"application/json": {
+					"message": "list friendship",
+					"data": [
+						{
+						"id": 3,
+						"username": "johanne"
+						},
+						{
+						"id": 4,
+						"username": "quentin"
+						}
+					]
+				}
+			}
+		)
+
+def delete_friend():
+	return openapi.Response(
+			description="friend request deleted",
+			examples={
+				"application/json": {
+					'message': 'friendship deleted',
+					'data': {'friendship': 1}
+				}
+			}
+		)
+
 # ------------------------FRIENDREQUEST-------------------------
 
+@swagger_auto_schema(method='post', 
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT, 
+		properties={
+			'name': openapi.Schema(type=openapi.TYPE_STRING, description='input'),
+		}
+	),
+	responses={
+		200: post_send_request(),
+		'200bis': post_add_friends(),
+		201: 'friend request created',
+		'400/401/404': get_error_object(),
+	})
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def send_friend_request(request):
 	# if not request.auth:
 	# 	return Response({'message': 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
-	sender = 4 #request.auth.get('id')
+	sender = 1 #request.auth.get('id')
 	receiver_name = request.data.get('name')
 	if not receiver_name:
 		return Response({'message': 'Username not provide'},
@@ -65,6 +192,17 @@ def send_friend_request(request):
 			'data': {'friend_request': FriendRequestSerializer(friend_request, fields=('id', 'username', 'date'), context={'username': receiver_name}).data}}
 	return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
+@swagger_auto_schema(method='post',
+	responses={
+		200: post_add_friends(),
+		201: 'friend request created',
+		'400/401/500': get_error_object(),
+	})
+@swagger_auto_schema(method='delete',
+	responses={
+		200: delete_friend_request(),
+		'400/401': get_error_object(),
+	})
 @api_view(['POST', 'DELETE'])
 # @permission_classes([IsAuthenticated])
 def manage_request(request, request_id):
@@ -97,6 +235,11 @@ def manage_request(request, request_id):
 				'data': {'friend_request': request_id}}
 		return Response(data, status=status.HTTP_200_OK)
 
+@swagger_auto_schema(method='get',
+	responses={
+		200: list_request(),
+		'401/500': get_error_object(),
+	})
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def request_list(request):
@@ -116,9 +259,13 @@ def request_list(request):
 
 # ------------------------FRIENDSHIP-------------------------
 
+@swagger_auto_schema(method='get',
+	responses={
+		200: list_friendship(),
+		'401/500': get_error_object(),
+	})
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
-
 def friend_list(request):
 # if not request.auth:
 	# 	return Response({'error' : 'Invalid Token, not user login'},
@@ -133,6 +280,11 @@ def friend_list(request):
 		return Response({'message': 'error will retreiving username'},
 				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@swagger_auto_schema(method='delete',
+	responses={
+		200: delete_friend(),
+		'400/401': get_error_object(),
+	})
 @api_view(['DELETE'])
 # @permission_classes([IsAuthenticated])
 def remove_friend(request, friendship_id):
