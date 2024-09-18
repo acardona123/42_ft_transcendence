@@ -1,5 +1,6 @@
 let popup_list = [];
 const space_between_popups = 3; // in px
+const margin_top = 3; // in px
 
 async function delay(ms, print)
 {
@@ -8,16 +9,24 @@ async function delay(ms, print)
 	return new Promise(res => setTimeout(res, ms));
 }
 
-function update_all_popups_pos(one_pop = undefined)
+function update_all_popups_pos()
 {
 	popup_list.forEach((pop, index) =>
 	{
 		if (!pop.is_hover)
 		{
-			let pos = ((popup_list.length - 1) - index) * (pop.popup.getBoundingClientRect().height + space_between_popups);
+			let pos = ((popup_list.length - 1) - index)
+				* (pop.popup.getBoundingClientRect().height + space_between_popups)
+				+ margin_top;
 			pop.popup.style.top = pos.toString() + "px";
 		}
 	})
+}
+
+function on_click_popup_close()
+{
+	remove_popup(this.parentNode);
+	update_all_popups_pos();
 }
 
 /**
@@ -43,11 +52,21 @@ function create_popup(text, t_before_decay,
 					t_after_hover, hex_color, hover_hex_color)
 {
 	const popup_main = document.createElement('div');
-
 	popup_main.className = "popup-main-div";
 	popup_main.style.backgroundColor = hex_color;
 
-	popup_main.onanimationend = remove_popup;
+	const popup_text = document.createElement('p');
+	popup_text.className = "popup-text";
+	popup_text.textContent = text;
+	popup_main.appendChild(popup_text);
+
+	const popup_close = document.createElement('img');
+	popup_close.className = "popup-close";
+	popup_close.src = "../../../img/remove_friend.png";
+	popup_close.onclick = on_click_popup_close;
+	popup_main.appendChild(popup_close);
+
+	popup_main.onanimationend = remove_popup_auto;
 	popup_main.onmouseenter = popup_mouse_enter;
 	popup_main.onmouseleave = popup_mouse_leave;
 
@@ -79,10 +98,15 @@ function popup_mouse_leave()
 	popup_elem.popup.style.backgroundColor = popup_elem.base_color;
 }
 
-function remove_popup()
+function remove_popup(popup)
 {
-	this.remove();
-	popup_list.splice(popup_list.findIndex(pop => pop.popup === this), 1);
+	popup.remove();
+	popup_list.splice(popup_list.findIndex(pop => pop.popup === popup), 1);
+}
+
+function remove_popup_auto()
+{
+	remove_popup(this);
 }
 
 async function popup_handler(popup, t_before_decay, t_after_hover)
