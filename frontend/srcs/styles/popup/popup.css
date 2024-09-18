@@ -11,7 +11,7 @@
 	border-radius: 7px;
 	border: 3px solid rgba(240, 248, 255, 0.5);
 	
-	animation: popup_disapear_anim 1s ease-in;
+	animation: popup_disapear_anim 0.3s ease-in;
 	animation-play-state: paused;
 	animation-iteration-count: 1;
 
