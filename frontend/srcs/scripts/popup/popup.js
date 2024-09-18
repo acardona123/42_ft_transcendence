@@ -94,10 +94,10 @@ async function popup_handler(popup, t_before_decay, t_after_hover)
 		should_redo = false;
 		if (popup.is_hover || popup.have_been_hover)
 		{
+			popup.have_been_hover = false;
 			await delay(t_after_hover);
 			should_redo = true;
 		}
-		popup.have_been_hover = false;
 	}
 	popup.popup.style.animationPlayState = "running";
 }
