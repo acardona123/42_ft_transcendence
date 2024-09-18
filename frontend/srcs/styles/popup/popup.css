@@ -6,11 +6,10 @@
 	left: 0;
 
 	height: 20px;
-	width: 100px;
+	width: 200px;
 	border: thin solid black;
 	background-color: #00ff0080;
-	transition: transform 1s;
-
+	
 	animation: popup_disapear_anim 1s ease-in;
 	animation-play-state: paused;
 	animation-iteration-count: 1

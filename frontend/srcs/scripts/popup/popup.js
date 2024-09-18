@@ -1,9 +1,19 @@
 let popup_list = [];
+const space_between_popups = 3; // in px
 
 async function delay(ms)
 {
 	// console.log(ms)
 	return new Promise(res => setTimeout(res, ms));
+}
+
+function update_all_popups_pos()
+{
+	popup_list.forEach((pop, index) =>
+	{
+		let pos = ((popup_list.length - 1) - index) * (pop.popup.getBoundingClientRect().height + space_between_popups);
+		pop.popup.style.top = pos.toString() + "px";
+	})
 }
 
 function create_popup(text, time_before_decay, time_to_decay, hex_color)
@@ -19,6 +29,7 @@ function create_popup(text, time_before_decay, time_to_decay, hex_color)
 	popup_list.push({popup : popup_main, is_hover : false});
 	popup_handler(popup_id);
 	document.body.appendChild(popup_main);
+	update_all_popups_pos();
 }
 
 function popup_mouse_enter()
@@ -48,7 +59,7 @@ async function popup_handler(popup_id)
 		let delay_end = delay(2000);
 		while (inner_loop)
 		{
-			delay_end.then(() => {console.log("promise fullfilled"); inner_loop = false});
+			delay_end.then(() => {inner_loop = false});
 			if (popup_list[popup_id].is_hover)
 				should_redo = true;
 			await delay(100);
@@ -56,5 +67,3 @@ async function popup_handler(popup_id)
 	}
 	popup_list[popup_id].popup.style.animationPlayState = "running";
 }
-
-// test.style.transform = "translate(0px, 100px)";
