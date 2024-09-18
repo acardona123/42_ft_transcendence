@@ -20,14 +20,14 @@ function update_all_popups_pos(one_pop = undefined)
 	})
 }
 
-function create_popup(text, t_before_decay, t_decay,
+function create_popup(text, t_before_decay,
 					t_after_hover, hex_color, hover_hex_color)
 {
 	const popup_main = document.createElement('div');
 
 	popup_main.className = "popup-main-div";
 	popup_main.style.backgroundColor = hex_color;
-	
+
 	popup_main.onanimationend = remove_popup;
 	popup_main.onmouseenter = popup_mouse_enter;
 	popup_main.onmouseleave = popup_mouse_leave;
