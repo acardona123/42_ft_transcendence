@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	# 'matches'
+	'rest_framework',
+	'matches'
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+USERS_MICROSERVICE_URL = 'http://users:8002'

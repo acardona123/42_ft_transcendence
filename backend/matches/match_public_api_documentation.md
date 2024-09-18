@@ -2,15 +2,15 @@
 
 ## List match
 `GET /api/matches/`
-returns the data of all matches:
+returns the data of all finished matches to which the player doing the request participated:
 {
 	game,
-	player1,
-	player2,
-	score1,
-	score2,
+	date,
 	duration,
-	date
+	main_player_username,
+	opponent_username,
+	main_player_score,
+	opponent_score
 }
 
 ## Finish match
