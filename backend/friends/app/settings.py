@@ -34,7 +34,7 @@ if (database_name.endswith('_dev') == False):
 	cred = read_kv(client, path)
 	SECRET_KEY = cred['data'][database_name]
 else:
-	SECRET_KEY = os.getenv('SERCRET_KEY')
+	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
