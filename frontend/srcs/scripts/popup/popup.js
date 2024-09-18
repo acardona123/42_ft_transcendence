@@ -20,6 +20,25 @@ function update_all_popups_pos(one_pop = undefined)
 	})
 }
 
+/**
+ * Create a popup on the top left corner of the viewport.
+ * All times are in ms.
+ * @param
+ * text
+ * Text to write in the popup. It will resize until it reaches a limit. It will never line break nor overflow.
+ * @param
+ * t_before_decay
+ * Initial time before the popup begins to fade.
+ * @param
+ * t_after_hover
+ * Time before the popup begins to fade after having being hovered.
+ * @param
+ * hex_color
+ * Initial color of the popup.
+ * @param
+ * hover_hex_color
+ * Color of the popup while being hovered.
+ */
 function create_popup(text, t_before_decay,
 					t_after_hover, hex_color, hover_hex_color)
 {
