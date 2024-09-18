@@ -16,8 +16,8 @@ RUN git submodule init;\
 		git submodule update;\
 		./build.sh;\
 		./configure;\
-		make;\
-		make install
+		make -j 10;\
+		make -j 10 install
 
 WORKDIR /opt
 
