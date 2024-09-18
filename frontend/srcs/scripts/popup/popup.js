@@ -1,6 +1,10 @@
 let popup_list = [];
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+async function delay(ms)
+{
+	// console.log(ms)
+	return new Promise(res => setTimeout(res, ms));
+}
 
 function create_popup(text, time_before_decay, time_to_decay, hex_color)
 {
@@ -20,17 +24,13 @@ function create_popup(text, time_before_decay, time_to_decay, hex_color)
 function popup_mouse_enter()
 {
 	const popup_id = popup_list.findIndex(p => p.popup === this);
-
 	popup_list[popup_id].is_hover = true;
-	console.log("set popup " + popup_id + " to true");
 }
 
 function popup_mouse_leave()
 {
 	const popup_id = popup_list.findIndex(p => p.popup === this);
-
 	popup_list[popup_id].is_hover = false;
-	console.log("set popup " + popup_id + " to false");
 }
 
 function remove_popup()
@@ -38,22 +38,22 @@ function remove_popup()
 	this.remove();
 }
 
-
 async function popup_handler(popup_id)
 {
 	should_redo = true;
 	while (should_redo)
 	{
+		inner_loop = true;
 		should_redo = false;
-		await delay(2000);
-		while (popup_list[popup_id].is_hover)
+		let delay_end = delay(2000);
+		while (inner_loop)
 		{
+			delay_end.then(() => {console.log("promise fullfilled"); inner_loop = false});
+			if (popup_list[popup_id].is_hover)
+				should_redo = true;
 			await delay(100);
-			should_redo = true;
-			// console.log("is hovered !");
 		}
 	}
-	console.log("fade");
 	popup_list[popup_id].popup.style.animationPlayState = "running";
 }
 
