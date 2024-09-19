@@ -163,7 +163,7 @@ async function remove_friend(event)
 					break;
 				}
 			}
-		} // normal back commucation case
+		} // normal back communication case
 		else
 			elem.parentNode.parentNode.remove();
 	}
@@ -175,7 +175,12 @@ async function remove_friend(event)
 	}
 }
 
-function add_friend(pseudo, is_online, picture)
+function add_friend_array(elem)
+{
+	friend_list_data.push(elem);
+}
+
+function add_friend_front(pseudo, is_online, picture)
 {
 	const newElement = getFriendDiv();
 	newElement.appendChild(getFriendProfilPic(picture));
@@ -256,7 +261,7 @@ function update_friend_list(is_init)
 	for (let i = 0; i < friend_list_data.length; i++)
 	{
 		const friends_list = document.getElementById('friends-list');
-		const new_friend = add_friend(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
+		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
 		friends_list.appendChild(new_friend);
 	}
 	if (friend_list_data.length == 0)
