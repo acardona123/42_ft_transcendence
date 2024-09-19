@@ -260,7 +260,7 @@ def request_list(request):
 	# 	return Response({'error' : 'Invalid Token, not user login'},
 	# 		status=status.HTTP_401_UNAUTHORIZED)
 	user_id = 7 #request.auth.get('id')
-	friend_request = FriendRequest.objects.filter(receiver=user_id)
+	friend_request = FriendRequest.objects.filter(receiver=user_id).order_by('-date')
 	try:
 		serializer = FriendRequestSerializer(friend_request, fields=['id', 'username', 'date'], many=True)
 		return Response({'message': MSG_LIST_FRIEND_REQUEST,
