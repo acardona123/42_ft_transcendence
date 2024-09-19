@@ -40,7 +40,8 @@ body:
 	player2_id,
 	player2_pin,
 	max_score,
-	max_duration
+	max_duration,
+	clean_when_finished
 }
 ### me against guest
 `POST /api/matches/new/me-guest`

@@ -14,6 +14,7 @@ from matches.serializer import MatchSerializer
 
 from django.db.models import Q
 from django.conf import settings
+from django.core.exceptions import BadRequest
 import requests
 
 
@@ -58,12 +59,19 @@ def test_create_matches(request):
 	# Bulk create all matches in the database
 	Match.objects.bulk_create(matches)
 	return HttpResponse("10 Matches created!")
+# # ========== End Tests ==========
 
+
+def get_authenticated_user_id(request):
+	user_id = 7 #request.auth.get('id')
+	return user_id
+
+
+# === Historic display ===
 
 @api_view(['GET'])
-
 def match_history(request):
-	user_id = 7 #request.auth.get('id')
+	user_id = get_authenticated_user_id()
 
 	# if player_is_not_authenticated():
 	# 	return Response({'error': 'can\'t access the historic without being identified as a player'},
@@ -80,3 +88,72 @@ def match_history(request):
 		return Response({'error': 'retrieving match historic'},
 			status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+#  === New game ===
+
+
+def new_match(request, player_id1, player_id2):
+
+	request_game = request.POST.get('game')
+	request_max_score = request.POST.get('max_score')
+	request_max_duration = request.POST.get('max_duration')
+	request_clean_when_finished = request.POST.get('clean_when_finished')
+	if not request_game or (request_game != 'FB' and request_game != 'PG'):
+		return Response({'error' : 'Wrong/missing game identifier'},
+			status=status.HTTP_400_BAD_REQUEST)
+	if not request_max_score: 
+		return Response({'error' : 'Match max score not provide'},
+			status=status.HTTP_400_BAD_REQUEST)
+	if not request_max_duration:
+		return Response({'error' : 'Match max duration not provide'},
+			status=status.HTTP_400_BAD_REQUEST)
+	if not request_clean_when_finished: #TODO: check is a False value does not trigger this...
+		return Response({'error' : 'Match clean when finished indication not provide'},
+			status=status.HTTP_400_BAD_REQUEST)
+
+	match = Match(
+			user1 = player_id1,
+			user2 = player_id2,
+			game = request_game,
+			max_score = request_max_score,
+			max_duration = request_max_duration,
+			clean_when_finished = request_clean_when_finished
+		)
+	match.save()
+
+
+@api_view(['POST'])
+def new_match_against_ai(request):
+	user_id = get_authenticated_user_id()
+	ai = get_new_ai_request()
+	ai_id = ai.get("id")
+	new_match(request, user_id, ai_id)
+
+def get_new_ai_request():
+	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/new/ai"
+	response = requests.get(url)
+	if response.status_code != 200:
+		raise BadRequest
+	return response.json()
+
+
+@api_view(['POST'])
+def new_match_against_guest(request):
+	user_id = get_authenticated_user_id()
+	guest = get_new_guest_request()
+	guest_id = guest.get("id")
+	new_match(request, user_id, guest_id)
+
+def get_new_guest_request():
+	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/new/guest"
+	response = requests.get(url)
+	if response.status_code != 200:
+		raise BadRequest
+	return response.json()
+
+
+@api_view(['POST'])
+def new_match_against_player(request):
+	user_id = get_authenticated_user_id(request)
+	# check le pin ici ??? sinon il faut que ca ne puisse etre fait que par le back apres verification...
