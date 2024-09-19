@@ -1,30 +1,34 @@
 const DB_history =
 [
-	{"game" : "Pong", "is_victory" : true, "score_left" : 10,
+	{"game" : "Pong", "victory" : "victory", "score_left" : 10,
 		"score_right" : 14, "game_duration" : 350,
 		"user_against" : "alex", "date" : 1725732245789},
 
-	{"game" : "Flappy fish", "is_victory" : false, "score_left" : 6,
+	{"game" : "Pong", "victory" : "defeat", "score_left" : 10,
+		"score_right" : 14, "game_duration" : 350,
+		"user_against" : "alex", "date" : 1725732245789},
+
+	{"game" : "Flappy fish", "victory" : "victory", "score_left" : 6,
 		"score_right" : 1, "game_duration" : 31,
 		"user_against" : "alex", "date" : 1725700000000},
 
-	{"game" : "Pong", "is_victory" : false, "score_left" : 1,
+	{"game" : "Pong", "victory" : "tie", "score_left" : 1,
 		"score_right" : 11, "game_duration" : 184,
 		"user_against" : "alex", "date" : Date.now()},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "victory" : "defeat", "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276},
 
-	{"game" : "Flappy fish", "is_victory" : true, "score_left" : 14,
+	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
 		"score_right" : 9, "game_duration" : 5,
 		"user_against" : "alex", "date" : 1725732932276}
 ];
@@ -40,10 +44,15 @@ function get_history_from_DB()
 	return history_list;
 }
 
-function get_victory(is_victory)
+function get_victory(victory)
 {
 	const text_victory = document.createElement('p');
-	text_victory.textContent = is_victory ? "Victory" : "Defeat";
+	if (victory == "victory")
+		text_victory.textContent = "Victory";
+	else if (victory == "defeat")
+		text_victory.textContent = "Defeat";
+	else
+		text_victory.textContent = "Tie";
 	text_victory.className = "text-victory";
 	return text_victory;
 }
@@ -191,11 +200,24 @@ function get_history_elem_div(history_elem)
 
 	history_elem_div.className = "history-elem-div";
 	if (history_elem.game == "Pong")
-		history_elem_div.style.backgroundImage = history_elem.is_victory ? "url(../../../img/pong_background_history_img_win.png)" : "url(../../../img/pong_background_history_img_loose.png)";
+	{
+		if (history_elem.victory == "victory")
+			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_win.png)";
+		else if (history_elem.victory == "defeat")
+			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_loose.png)";
+		else
+			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_tie.png)";
+	}
 	else if (history_elem.game == "Flappy fish")
-		history_elem_div.style.backgroundImage = history_elem.is_victory ? "url(../../../img/flappy_background_history_win.png)" : "url(../../../img/flappy_background_history_loose.png)";
-
-	const text_victory = get_victory(history_elem.is_victory);
+	{
+		if (history_elem.victory == "victory")
+			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_win.png)";
+		else if (history_elem.victory == "defeat")
+			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_loose.png)";
+		else
+			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_tie.png)";
+	}
+	const text_victory = get_victory(history_elem.victory);
 	const text_score = get_score(history_elem.score_left, history_elem.score_right, history_elem.user_against);
 	const text_date_time = get_date_time(history_elem.date, history_elem.game_duration);
 	
