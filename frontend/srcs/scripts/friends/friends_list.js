@@ -147,16 +147,36 @@ async function remove_friend(event)
 	}
 	const elem = event.currentTarget;
 	const pseudo_to_remove = elem.parentNode.parentNode.childNodes[1].textContent;
+	const id_to_remove = friend_list_data.find(o => o.username === pseudo_to_remove).id;
 
-	const url = "https://localhost:8443/api/friends/remove/"
-		+ friend_list_data.find(o => o.username === pseudo_to_remove).id + "/";
+	const url = "https://localhost:8443/api/friends/remove/" + id_to_remove + "/";
 
-	let data = await fetch(url, {method:'DELETE'});
+	let fetched_data = await fetch(url, {method:'DELETE'});
 	try
 	{
-		if (!data.ok)
+		if (!fetched_data.ok)
 		{
-			throw new Error(`Response status: ${data.status}`);
+			throw new Error(`Response status: ${fetched_data.status}`);
+		}
+		fetched_data = await fetched_data.json();
+		let id_to_remove_back = fetched_data.data.friendship;
+		if (id_to_remove != id_to_remove_back)
+		{
+			// kind of heavy to perform but it should not happen in a normal back communication
+			let new_pseudo_to_remove = friend_list_data.find(o => o.id === id_to_remove_back).username;
+			let children = elem.parentNode.parentNode.parentNode.children;
+			for (let i = 0; i < children.length; i++)
+			{
+				if (children[i].children[1].textContent == new_pseudo_to_remove)
+				{
+					children[i].remove();
+					break;
+				}
+			}
+		} // normal back commucation case
+		else
+		{
+			elem.parentNode.parentNode.remove();
 		}
 		// TODO: update friends with the body returned
 	}
@@ -210,25 +230,27 @@ function sort_by_online_alpha(data)
 async function get_friend_list()
 {
 	const url = "https://localhost:8443/api/friends/";
-	let data = await fetch(url);
+	let fetched_data = await fetch(url);
 	try
 	{
-		if (!data.ok)
-		{
-			throw new Error(`Response status: ${data.status}`);
-		}
-		data = await data.json();
+		if (!fetched_data.ok)
+			throw new Error(`Response status: ${fetched_data.status}`);
+
+		fetched_data = await fetched_data.json();
+		let data = fetched_data.data;
+
+		// TODO: add online and picture
+		data = data.map(data => (
+			{id: data.id, username: data.username, is_online: (Math.random() <= 0.5)}
+		));
+		return sort_by_online_alpha(data);
 	}
 	catch (error)
 	{
 		// TODO: popup error
-		console.log("Display friends failed: " + error.message);
+		console.log("Error: " + error.message);
 		return undefined;
 	}
-	data = data.map(data => (
-		{id: data.id, username: data.username, is_online: (Math.random() <= 0.5)}
-	));
-	return sort_by_online_alpha(data);
 }
 
 function empty_friend_list()
