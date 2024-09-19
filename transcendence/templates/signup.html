@@ -1,12 +1,24 @@
-{% extends '_base.html' %}
+<form action="{% url 'signup' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 
-{% block title %}Sign Up{% endblock %}
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required />
 
-{% block content %}
-<h2>Sign Up</h2>
-<form method = "post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Sign Up</button>
+    <label for="pseudo">Pseudo:</label>
+    <input type="text" name="pseudo" id="pseudo" required />
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone" required />
+
+    <label for="password1">Password:</label>
+    <input type="password" name="password1" id="password1" required />
+
+    <label for="password2">Confirm Password:</label>
+    <input type="password" name="password2" id="password2" required />
+
+    <label for="profile_picture">Profile Picture:</label>
+    <input type="file" name="profile_picture" id="profile_picture" />
+
+
+    <button type="submit">Sign Up</button>
 </form>
-{% endblock %}

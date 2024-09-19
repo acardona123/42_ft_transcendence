@@ -13,4 +13,6 @@ RUN pip install -r requirements.txt
 # for profile picture
 RUN pip install Pillow
 
+RUN pip install djangorestframework
+
 COPY . /usr/src/app/

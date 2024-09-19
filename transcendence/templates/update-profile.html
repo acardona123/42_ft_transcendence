@@ -1,12 +1,23 @@
-{% extends '_base.html' %}
+<form action="{% url 'update-profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 
-{% block title %}Update Profile{% endblock %}
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" value="{{ user.email }}" />
 
-{% block content %}
-<h2>Update Your Profile</h2>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Update</button>
+    <label for="pseudo">Pseudo:</label>
+    <input type="text" name="pseudo" id="pseudo" value="{{ user.pseudo }}" />
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone" value="{{ user.phone }}" />
+
+    <label for="profile_picture">Profile Picture:</label>
+    <input type="file" name="profile_picture" id="profile_picture" />
+
+    <label for="password1">New Password:</label>
+    <input type="password" name="password1" id="password1" />
+
+    <label for="password2">Confirm New Password:</label>
+    <input type="password" name="password2" id="password2" />
+
+    <button type="submit">Update</button>
 </form>
-{% endblock %}

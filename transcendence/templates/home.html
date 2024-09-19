@@ -11,8 +11,11 @@
     <!-- Fallback or alternative content when there's no profile picture -->
     <div>No Profile Picture</div>
   {% endif %}
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-  <p></p><a href="{% url 'update-profile' %}">Update Profile</a></p>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+  <p><a href="{% url 'update-profile' %}">Update Profile</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a> |
