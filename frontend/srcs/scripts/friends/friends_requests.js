@@ -13,34 +13,37 @@ function send_request(data, status)
 	console.log("send")
 }
 
+function remove_request_from_data(username_to_remove)
+{
+	data_requests.splice(data_requests.findIndex(o => o.username === username_to_remove), 1);
+}
 
 function send_request_lead_to_friendship(data, status)
 {
+	// add friendship
 	const id_to_remove = data.remove_friend_request;
+	const username_to_remove = data_requests.find(o => o.id === id_to_remove).username;
+	const request_container = document.getElementById("req_container");
+	console.log(request_container.children)
+	for (let i = 0; i < request_container.children.length; i++)
+	{
+		console.log(request_container.children[i].children[0].textContent)
+		if (request_container.children[i].children[0].textContent == username_to_remove)
+		{
+			request_container.children[i].remove();
+			remove_request_from_data(username_to_remove);
+			update_requests_list(false);
+			break;
+		}
+	}
+	// in case of 200 status response, which sould not happen, don't create
+	// friendship as it already exists
 	if (status == "201")
 	{
-		// remove request + add friendship
-		// remove request
-		const username_to_remove = data_requests.find(o => o.id == id_to_remove).username;
-		const request_container = document.getElementById("req_container");
-		for (let i = 0; i < request_container.length; i++)
-		{
-			if (request_container[i].children[1].textContent == username_to_remove)
-			{
-				request_container[i].children[1].remove();
-				break;
-			}
-		}
-		// add friendship
 		// TODO: add online and picture
 		add_friend_array({id : data.friendship.id, username : data.friendship.username, is_online : Math.random() <= 0.5});
+		update_friend_list(false);
 	}
-	else
-	{
-		// remove request
-		console.log(status.toString());
-	}
-	console.log("send f")
 }
 
 async function send_friend_request()
@@ -64,13 +67,16 @@ async function send_friend_request()
 		}
 		let data = await fetched_data.json();
 		data = data.data;
+		console.log("send request data : ");
 		console.log(data);
-		if (data.data?.remove_friend_request != undefined)
+		if (data.hasOwnProperty('remove_friend_request'))
 		{
+			console.log("send_request friendship");
 			send_request_lead_to_friendship(data, fetched_data.status);
 		}
 		else
 		{
+			console.log("send_request alone");
 			send_request(data, fetched_data.status);
 		}
 
