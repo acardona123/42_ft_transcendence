@@ -4,6 +4,8 @@
 `GET /api/matches/`
 returns the data of all finished matches to which the player doing the request participated:
 {
+	status,
+	message,
 	game,
 	date,
 	duration,
@@ -21,6 +23,11 @@ body:
 	score2,
 	duration
 }
+return:
+{
+	status,
+	message,
+}
 
 
 ## start match
@@ -33,6 +40,11 @@ body:
 	max_score,
 	max_duration
 }
+return:
+{
+	status,
+	message,
+}
 ### me against identified player
 `POST /api/matches/new/me-player`
 body:
@@ -43,10 +55,20 @@ body:
 	max_duration,
 	clean_when_finished
 }
+return:
+{
+	status,
+	message,
+}
 ### me against guest
 `POST /api/matches/new/me-guest`
 body:
 {
 	max_score,
 	max_duration
+}
+return:
+{
+	status,
+	message,
 }

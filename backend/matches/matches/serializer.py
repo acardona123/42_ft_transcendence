@@ -20,7 +20,18 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 				self.fields.pop(field_name)
 
 
+
 class MatchSerializer(DynamicFieldsModelSerializer):
+
+	class Meta:
+		model = Match
+		fields = '__all__'
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(self, *args, **kwargs)
+
+
+class MatchHistorySerializer(DynamicFieldsModelSerializer):
 	main_player_id = serializers.SerializerMethodField()
 	opponent_id = serializers.SerializerMethodField()
 	main_player_username = serializers.SerializerMethodField()
@@ -34,7 +45,9 @@ class MatchSerializer(DynamicFieldsModelSerializer):
 
 
 	def __init__(self, *args, **kwargs):
+		print("toto1")
 		super().__init__(*args, **kwargs)
+		print("toto2")
 
 		if hasattr(self, 'instance') and 'opponent_username' in self.fields:
 			opponents_ids = list()

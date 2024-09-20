@@ -1,0 +1,33 @@
+### --- test display hello ---
+GET /api/matches/test/hello HTTP/1.1
+Host: localhost:8004
+
+### --- test create matches ---
+GET /api/matches/test/create_bunk  HTTP/1.1
+Host: localhost:8004
+
+### --- test delete all matches ---
+GET /api/matches/test/delete_all  HTTP/1.1
+Host: localhost:8004
+
+### --- List matches ---
+GET /api/matches/ HTTP/1.1
+Host: localhost:8004
+
+### --- new match verified users id ---
+POST private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{'player1': 1, 'player2':2, 'max_score':42, 'max_duration':21}
+
+### --- Send request ---
+POST /api/matches/new/me-ai HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{"max_score": 10, "max_duration": 60}
+
+### --- Reject request ---
+DELETE /api/friends/request/7/ HTTP/1.1
+Host: localhost:8004
