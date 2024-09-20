@@ -1,49 +1,64 @@
-from django.views import generic
+from rest_framework.views import APIView
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from .models import CustomUser
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from .serializer import UserSerializer
 
-class SignUp(generic.View):
+class SignUp(APIView):
 	template_name = "signup.html"
 
 	def get(self, request):
 		return render(request, self.template_name)
 
+	@csrf_exempt
 	def post(self, request):
-		email = request.POST.get('email')
-		pseudo = request.POST.get('pseudo')
-		phone = request.POST.get('phone')
-		password1 = request.POST.get('password1')
-		password2 = request.POST.get('password2')
-		profile_picture = request.FILES.get('profile_picture')
+		data = JSONParser().parse(request)
+		serializer = UserSerializer(data=data)
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status=201)
+		print('coucou')
+		# print(serializer.data)
+		# print(serializer.validated_data)
+		print(serializer.errors)
+		return JsonResponse(serializer.data, status=400)
+		# print(data.data)
+		# email = request.POST.get('email')
+		# pseudo = request.POST.get('pseudo')
+		# phone = request.POST.get('phone')
+		# password1 = request.POST.get('password1')
+		# password2 = request.POST.get('password2')
+		# profile_picture = request.FILES.get('profile_picture')
 
-		if password1 != password2:
-			return render(request, self.template_name, {'error': "Passwords don't match"})
+		# if password1 != password2:
+		# 	return render(request, self.template_name, {'error': "Passwords don't match"})
 
-		if not phone.isdigit():
-			return render(request, self.template_name, {'error': "Phone number must contain only digits"})
+		# if not phone.isdigit():
+		# 	return render(request, self.template_name, {'error': "Phone number must contain only digits"})
 
-		try:
-			user = CustomUser(
-				email=email,
-				pseudo=pseudo,
-				phone=phone,
-				profile_picture=profile_picture,
-				password=make_password(password1)
-			)
-			user.full_clean()
-			user.save()
-			return redirect('home')
-		except ValidationError as e:
-			return render(request, self.template_name, {'error': str(e)})
+		# try:
+		# 	user = CustomUser(
+		# 		email=email,
+		# 		pseudo=pseudo,
+		# 		phone=phone,
+		# 		profile_picture=profile_picture,
+		# 		password=make_password(password1)
+		# 	)
+		# 	user.full_clean()
+		# 	user.save()
+		# 	return redirect('home')
+		# except ValidationError as e:
+		# 	return render(request, self.template_name, {'error': str(e)})
 
 
 from django.contrib.auth import update_session_auth_hash
 
-class UserProfileUpdateView(generic.View):
+class UserProfileUpdateView(APIView):
 	template_name = 'update-profile.html'
 	def get(self, request):
 		return render(request, self.template_name, {'user': request.user})

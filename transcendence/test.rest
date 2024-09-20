@@ -1,0 +1,12 @@
+
+POST http://localhost:8000/users/signup/ HTTP/1.1
+content-type: application/json
+
+{
+	"id" : "1",
+	"password" : "1",
+	"password1" : "1",
+	"username" : "bonjour",
+	"email" : "a@gmail.com",
+	"phone" : "1"
+}
