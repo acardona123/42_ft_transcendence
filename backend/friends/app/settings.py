@@ -93,7 +93,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if (database_name.endswith('_dev') == False):
-	load_dotenv(dotenv_path='/usr/src/app/vault/.env', override=True)
 
 	DATABASES = {
 		'default': {
