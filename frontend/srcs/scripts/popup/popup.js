@@ -4,8 +4,6 @@ const margin_top = 3; // in px
 
 async function delay(ms, print)
 {
-	if (print)
-		console.log(ms)
 	return new Promise(res => setTimeout(res, ms));
 }
 

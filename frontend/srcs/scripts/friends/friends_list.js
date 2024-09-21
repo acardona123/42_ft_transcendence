@@ -166,10 +166,12 @@ async function remove_friend(event)
 		} // normal back communication case
 		else
 			elem.parentNode.parentNode.remove();
+		if (elem.parentNode.parentNode.parentNode.children.length == 0)
+			update_friend_list(false);
 	}
 	catch (error)
 	{
-		create_popup("Removing friend failed: error code " + error.message,
+		create_popup("Removing friend failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
@@ -239,7 +241,7 @@ async function get_friend_list()
 	}
 	catch (error)
 	{
-		create_popup("Retrieving friend list failed: error code " + error.message,
+		create_popup("Retrieving friend list failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
@@ -255,7 +257,7 @@ function empty_friend_list()
 	}
 }
 
-function update_friend_list(is_init)
+function update_friend_list(is_init=false)
 {
 	if (!is_init)
 		empty_friend_list();
@@ -266,6 +268,7 @@ function update_friend_list(is_init)
 		empty_text.textContent = "There is no friend to display yet."
 		empty_text.style.textAlign = "center";
 		friends_list.appendChild(empty_text);
+		return ;
 	}
 	for (let i = 0; i < friend_list_data.length; i++)
 	{
@@ -278,7 +281,6 @@ function update_friend_list(is_init)
 let friend_list_data = undefined;
 
 (async () => {
-	friend_list_data = await get_friend_list()
-	if (friend_list_data != undefined)
-		update_friend_list(true);
+	friend_list_data = await get_friend_list();
+	update_friend_list(true);
 })()

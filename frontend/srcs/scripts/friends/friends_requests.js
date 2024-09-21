@@ -1,6 +1,5 @@
 function send_request(data, status)
 {
-	console.log(data.friend_request.username);
 	if (status == "201")
 	{
 		create_popup("Waiting for " + data.friend_request.username + " to accept.",
@@ -26,7 +25,6 @@ function send_request_lead_to_friendship(data, status)
 	const id_to_remove = data.remove_friend_request;
 	const username_to_remove = data_requests.find(o => o.id === id_to_remove).username;
 	const request_container = document.getElementById("req_container");
-	console.log(request_container.children)
 	for (let i = 0; i < request_container.children.length; i++)
 	{
 		if (request_container.children[i].children[0].textContent == username_to_remove)
@@ -71,23 +69,19 @@ async function send_friend_request()
 		}
 		let data = await fetched_data.json();
 		data = data.data;
-		console.log("send request data : ");
-		console.log(data);
 		if (data.hasOwnProperty('remove_friend_request'))
 		{
-			console.log("send_request friendship");
 			send_request_lead_to_friendship(data, fetched_data.status);
 		}
 		else
 		{
-			console.log("send_request alone");
 			send_request(data, fetched_data.status);
 		}
 
 	}
 	catch (error)
 	{
-		create_popup("Friend request failed: error code " + error.message,
+		create_popup("Friend request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
@@ -137,7 +131,7 @@ async function accept_friend_req(event)
 	}
 	catch (error)
 	{
-		create_popup("Accepting request failed: error code " + error.message,
+		create_popup("Accepting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
@@ -159,7 +153,6 @@ async function reject_friend_req(event)
 		}
 		let data = await fetched_data.json();
 		data = data.data;
-		console.log(data);
 
 		// remove request
 		let id_to_remove_back = data.friend_request;
@@ -183,7 +176,7 @@ async function reject_friend_req(event)
 	}
 	catch (error)
 	{
-		create_popup("Rejecting request failed: error code " + error.message,
+		create_popup("Rejecting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 		return ;
@@ -192,6 +185,8 @@ async function reject_friend_req(event)
 
 function get_requests_pseudo()
 {
+	if (data_requests == undefined)
+		return undefined;
 	const requests = [...data_requests];
 	return requests.map(req => req.username);
 }
@@ -233,15 +228,14 @@ function empty_requests_list()
 	}
 }
 
-function update_requests_list(is_init)
+function update_requests_list(is_init=false)
 {
 	const requests_pseudo = get_requests_pseudo();
 	const container = document.getElementById('req_container');
 	
 	if (!is_init)
 		empty_requests_list();
-	
-	if (requests_pseudo.length == 0)
+	if (requests_pseudo == undefined || requests_pseudo.length == 0)
 	{
 		const empty_text = document.createElement('p');
 		empty_text.textContent = "There is no friend request yet.";
@@ -270,7 +264,7 @@ async function get_data_from_database()
 	}
 	catch (error)
 	{
-		create_popup("Retrieving friend requests failed: error code " + error.message,
+		create_popup("Retrieving friend requests failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
@@ -280,6 +274,5 @@ async function get_data_from_database()
 let data_requests = undefined;
 (async () => {
 	data_requests = await get_data_from_database();
-	if (data_requests != undefined)
-		update_requests_list();
+	update_requests_list(true);
 })()
