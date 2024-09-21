@@ -13,12 +13,19 @@ from django.core.exceptions import BadRequest
 import requests
 
 @api_view(['POST'])
-def new_match_verified_id(request, player_id1, player_id2):
-
+def new_match_verified_id(request):
+	request_user1 = request.POST.get('player1')
+	request_user2 = request.POST.get('player2')
 	request_game = request.POST.get('game')
 	request_max_score = request.POST.get('max_score')
 	request_max_duration = request.POST.get('max_duration')
 	request_clean_when_finished = request.POST.get('clean_when_finished')
+	if not request_user1: 
+		return Response({'message' : 'First player\'s id not provide'},
+			status=status.HTTP_400_BAD_REQUEST)
+	if not request_user2: 
+		return Response({'message' : 'Second player\'s id id not provide'},
+			status=status.HTTP_400_BAD_REQUEST)
 	if not request_game or (request_game != 'FB' and request_game != 'PG'):
 		return Response({'message' : 'Wrong/missing game identifier'},
 			status=status.HTTP_400_BAD_REQUEST)
@@ -33,8 +40,8 @@ def new_match_verified_id(request, player_id1, player_id2):
 			status=status.HTTP_400_BAD_REQUEST)
 
 	match = Match(
-			user1 = player_id1,
-			user2 = player_id2,
+			user1 = request_user1,
+			user2 = request_user2,
 			game = request_game,
 			max_score = request_max_score,
 			max_duration = request_max_duration,
@@ -42,7 +49,7 @@ def new_match_verified_id(request, player_id1, player_id2):
 		)
 	match.save()
 	try:
-		serializer = MatchSerializer(match, context={'user_id': player_id1}, fields=['game', 'date', 'duration', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score'])
+		serializer = MatchSerializer(match, context={'user_id': request_user1}, fields=['game', 'date', 'duration', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score'])
 		print(serializer.data)
 		data = {'status':200, 'message':'matches created', 'match_data':serializer.data}
 		return JsonResponse(data, safe=False)

@@ -22,6 +22,8 @@ body:
 {
 	player1,
 	player2,
+	game,
 	max_score,
-	max_duration
+	max_duration,
+	clean_when_finished
 }

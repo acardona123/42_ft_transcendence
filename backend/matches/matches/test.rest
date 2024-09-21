@@ -15,7 +15,7 @@ GET /api/matches/ HTTP/1.1
 Host: localhost:8004
 
 ### --- new match verified users id ---
-POST private_api/matches/new_match_verified_id HTTP/1.1
+POST /private_api/matches/new_match_verified_id HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
 

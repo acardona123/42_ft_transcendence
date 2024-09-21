@@ -38,7 +38,8 @@ The user that do the request can be an identified player or a guest. If it is a 
 body:
 {
 	max_score,
-	max_duration
+	max_duration,
+	clean_when_finished
 }
 return:
 {
