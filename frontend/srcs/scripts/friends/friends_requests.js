@@ -112,6 +112,7 @@ async function accept_friend_req(event)
 		// remove request
 		let id_to_remove_back = data.remove_friend_request;
 		const elem = event.target;
+		const elem_parent_list = elem.parentNode.parentNode;
 		if (accepted_id != id_to_remove_back)
 		{
 			// kind of heavy to perform but it should not happen in a normal back communication
@@ -122,15 +123,22 @@ async function accept_friend_req(event)
 				if (children[i].children[0].textContent == new_pseudo_to_remove)
 				{
 					children[i].remove();
+					remove_request_from_data(new_pseudo_to_remove);
 					break;
 				}
 			}
-		} // normal back communication case
-		else
+		}
+		else // normal back communication case
+		{
 			elem.parentNode.remove();
+			remove_request_from_data(accepted_pseudo);
+		}
+		if (elem_parent_list.children.length == 0)
+			update_requests_list(false);
 	}
 	catch (error)
 	{
+		console.log(error.message)
 		create_popup("Accepting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
@@ -157,6 +165,7 @@ async function reject_friend_req(event)
 		// remove request
 		let id_to_remove_back = data.friend_request;
 		const elem = event.target;
+		const elem_parent_list = elem.parentNode.parentNode;
 		if (rejected_id != id_to_remove_back)
 		{
 			// kind of heavy to perform but it should not happen in a normal back communication
@@ -167,18 +176,25 @@ async function reject_friend_req(event)
 				if (children[i].children[0].textContent == new_pseudo_to_remove)
 				{
 					children[i].remove();
+					remove_request_from_data(new_pseudo_to_remove);
 					break;
 				}
 			}
 		}
 		else // normal back communication case
+		{
 			elem.parentNode.remove();
+			remove_request_from_data(rejected_pseudo);
+		}
+		if (elem_parent_list.children.length == 0)
+			update_requests_list(false);
 	}
 	catch (error)
 	{
 		create_popup("Rejecting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
+		console.log(error.message)
 		return ;
 	}
 }

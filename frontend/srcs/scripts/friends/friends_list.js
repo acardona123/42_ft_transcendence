@@ -136,6 +136,7 @@ async function remove_friend(event)
 		return ;
 	}
 	const elem = event.currentTarget;
+	const elem_list_parent = elem.parentNode.parentNode.parentNode;
 	const pseudo_to_remove = elem.parentNode.parentNode.childNodes[1].textContent;
 	const id_to_remove = friend_list_data.find(o => o.username === pseudo_to_remove).id;
 
@@ -160,13 +161,17 @@ async function remove_friend(event)
 				if (children[i].children[1].textContent == new_pseudo_to_remove)
 				{
 					children[i].remove();
+					remove_friend_array(new_pseudo_to_remove);
 					break;
 				}
 			}
 		} // normal back communication case
 		else
+		{
 			elem.parentNode.parentNode.remove();
-		if (elem.parentNode.parentNode.parentNode.children.length == 0)
+			remove_friend_array(pseudo_to_remove);
+		}
+		if (elem_list_parent.children.length == 0)
 			update_friend_list(false);
 	}
 	catch (error)
@@ -180,6 +185,11 @@ async function remove_friend(event)
 function add_friend_array(elem)
 {
 	friend_list_data.push(elem);
+}
+
+function remove_friend_array(username_to_remove)
+{
+	friend_list_data.splice(friend_list_data.findIndex(o => o.username === username_to_remove), 1);
 }
 
 function add_friend_front(pseudo, is_online, picture)
