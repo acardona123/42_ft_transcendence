@@ -1,16 +1,18 @@
 function send_request(data, status)
 {
+	console.log(data.friend_request.username);
 	if (status == "201")
 	{
-		// popup request sent 
-		console.log("request sent with success");// send popup
+		create_popup("Waiting for " + data.friend_request.username + " to accept.",
+			2000, 4000,
+			hex_color="#00FF0080", t_hover_color="#00FF00C0");
 	}
 	else
 	{
-		// popup sent request already exists
-		console.log("already exist");// already exist
+		create_popup("You already sent a request to " + data.friend_request.username + ".",
+			2000, 4000,
+			hex_color="#00FF0080", t_hover_color="#00FF00C0");
 	}
-	console.log("send")
 }
 
 function remove_request_from_data(username_to_remove)
@@ -27,7 +29,6 @@ function send_request_lead_to_friendship(data, status)
 	console.log(request_container.children)
 	for (let i = 0; i < request_container.children.length; i++)
 	{
-		console.log(request_container.children[i].children[0].textContent)
 		if (request_container.children[i].children[0].textContent == username_to_remove)
 		{
 			request_container.children[i].remove();
@@ -43,6 +44,9 @@ function send_request_lead_to_friendship(data, status)
 		// TODO: add online and picture
 		add_friend_array({id : data.friendship.id, username : data.friendship.username, is_online : Math.random() <= 0.5});
 		update_friend_list(false);
+		create_popup("You're now friend with " + data.friendship.username + "!",
+			2000, 4000,
+			hex_color="#00FF0080", t_hover_color="#00FF00C0");
 	}
 }
 
@@ -63,7 +67,7 @@ async function send_friend_request()
 	{
 		if (!fetched_data.ok)
 		{
-			throw new Error(`Response status: ${fetched_data.status}`);
+			throw new Error(`${fetched_data.status}`);
 		}
 		let data = await fetched_data.json();
 		data = data.data;
@@ -83,8 +87,9 @@ async function send_friend_request()
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Friend request accept failed: " + error.message);
+		create_popup("Friend request failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
 	remove_friends_popup();
 }
@@ -100,7 +105,7 @@ async function accept_friend_req(event)
 	{
 		if (!fetched_data.ok)
 		{
-			throw new Error(`Response status: ${fetched_data.status}`);
+			throw new Error(`${fetched_data.status}`);
 		}
 		let data = await fetched_data.json();
 		data = data.data;
@@ -132,9 +137,9 @@ async function accept_friend_req(event)
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Friend request accept failed: " + error.message);
-		return ;
+		create_popup("Accepting request failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
 }
 
@@ -172,14 +177,15 @@ async function reject_friend_req(event)
 					break;
 				}
 			}
-		} // normal back communication case
-		else
+		}
+		else // normal back communication case
 			elem.parentNode.remove();
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Friend request accept failed: " + error.message);
+		create_popup("Rejecting request failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 		return ;
 	}
 }
@@ -257,15 +263,16 @@ async function get_data_from_database()
 	try {
 		if (!fetched_data.ok)
 		{
-			throw new Error(`Response status: ${fetched_data.status}`);
+			throw new Error(`${fetched_data.status}`);
 		}
 		let data = await fetched_data.json();
 		return data.data;
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Friend request fetch failed: " + error.message);
+		create_popup("Retrieving friend requests failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
 	return undefined;
 }
