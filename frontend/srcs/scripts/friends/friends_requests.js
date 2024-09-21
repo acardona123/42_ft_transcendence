@@ -88,6 +88,38 @@ async function send_friend_request()
 	remove_friends_popup();
 }
 
+function remove_friend_request_front(elem, data, id, pseudo)
+{
+	let id_to_remove_back;
+	if (data.hasOwnProperty('remove_friend_request'))
+		id_to_remove_back = data.remove_friend_request;
+	else
+		id_to_remove_back = data.friend_request;
+	const elem_parent_list = elem.parentNode.parentNode;
+	if (id != id_to_remove_back)
+	{
+		// kind of heavy to perform but it should not happen in a normal back communication
+		let new_pseudo_to_remove = data_requests.find(o => o.id === id_to_remove_back).username;
+		let children = elem.parentNode.parentNode.children;
+		for (let i = 0; i < children.length; i++)
+		{
+			if (children[i].children[0].textContent == new_pseudo_to_remove)
+			{
+				children[i].remove();
+				remove_request_from_data(new_pseudo_to_remove);
+				break;
+			}
+		}
+	}
+	else // normal back communication case
+	{
+		elem.parentNode.remove();
+		remove_request_from_data(pseudo);
+	}
+	if (elem_parent_list.children.length == 0)
+		update_requests_list(false);
+}
+
 async function accept_friend_req(event)
 {
 	const accepted_pseudo = event.target.previousSibling.textContent;
@@ -108,37 +140,11 @@ async function accept_friend_req(event)
 			add_friend_array({id: data.friendship.id, username: data.friendship.username, is_online : (Math.random() <= 0.5)})
 			update_friend_list(false);
 		}
-
 		// remove request
-		let id_to_remove_back = data.remove_friend_request;
-		const elem = event.target;
-		const elem_parent_list = elem.parentNode.parentNode;
-		if (accepted_id != id_to_remove_back)
-		{
-			// kind of heavy to perform but it should not happen in a normal back communication
-			let new_pseudo_to_remove = data_requests.find(o => o.id === id_to_remove_back).username;
-			let children = elem.parentNode.parentNode.children;
-			for (let i = 0; i < children.length; i++)
-			{
-				if (children[i].children[0].textContent == new_pseudo_to_remove)
-				{
-					children[i].remove();
-					remove_request_from_data(new_pseudo_to_remove);
-					break;
-				}
-			}
-		}
-		else // normal back communication case
-		{
-			elem.parentNode.remove();
-			remove_request_from_data(accepted_pseudo);
-		}
-		if (elem_parent_list.children.length == 0)
-			update_requests_list(false);
+		remove_friend_request_front(event.target, data, accepted_id, accepted_pseudo);
 	}
 	catch (error)
 	{
-		console.log(error.message)
 		create_popup("Accepting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
@@ -161,41 +167,13 @@ async function reject_friend_req(event)
 		}
 		let data = await fetched_data.json();
 		data = data.data;
-
-		// remove request
-		let id_to_remove_back = data.friend_request;
-		const elem = event.target;
-		const elem_parent_list = elem.parentNode.parentNode;
-		if (rejected_id != id_to_remove_back)
-		{
-			// kind of heavy to perform but it should not happen in a normal back communication
-			let new_pseudo_to_remove = data_requests.find(o => o.id === id_to_remove_back).username;
-			let children = elem.parentNode.parentNode.children;
-			for (let i = 0; i < children.length; i++)
-			{
-				if (children[i].children[0].textContent == new_pseudo_to_remove)
-				{
-					children[i].remove();
-					remove_request_from_data(new_pseudo_to_remove);
-					break;
-				}
-			}
-		}
-		else // normal back communication case
-		{
-			elem.parentNode.remove();
-			remove_request_from_data(rejected_pseudo);
-		}
-		if (elem_parent_list.children.length == 0)
-			update_requests_list(false);
+		remove_friend_request_front(event.target, data, rejected_id, rejected_pseudo);
 	}
 	catch (error)
 	{
 		create_popup("Rejecting request failed.",
 			2000, 4000,
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
-		console.log(error.message)
-		return ;
 	}
 }
 
