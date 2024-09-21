@@ -146,7 +146,7 @@ async function remove_friend(event)
 	{
 		if (!fetched_data.ok)
 		{
-			throw new Error(`Response status: ${fetched_data.status}`);
+			throw new Error(`${fetched_data.status}`);
 		}
 		fetched_data = await fetched_data.json();
 		let id_to_remove_back = fetched_data.data.friendship;
@@ -169,9 +169,9 @@ async function remove_friend(event)
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Friend remove failed: " + error.message);
-		return ;
+		create_popup("Removing friend failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
 }
 
@@ -226,7 +226,7 @@ async function get_friend_list()
 	try
 	{
 		if (!fetched_data.ok)
-			throw new Error(`Response status: ${fetched_data.status}`);
+			throw new Error(`${fetched_data.status}`);
 
 		fetched_data = await fetched_data.json();
 		let data = fetched_data.data;
@@ -239,10 +239,11 @@ async function get_friend_list()
 	}
 	catch (error)
 	{
-		// TODO: popup error
-		console.log("Error: " + error.message);
-		return undefined;
+		create_popup("Retrieving friend list failed: error code " + error.message,
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 	}
+	return undefined;
 }
 
 function empty_friend_list()
@@ -258,19 +259,19 @@ function update_friend_list(is_init)
 {
 	if (!is_init)
 		empty_friend_list();
-	for (let i = 0; i < friend_list_data.length; i++)
-	{
-		const friends_list = document.getElementById('friends-list');
-		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
-		friends_list.appendChild(new_friend);
-	}
-	if (friend_list_data.length == 0)
+	if (friend_list_data == undefined || friend_list_data.length == 0)
 	{
 		const friends_list = document.getElementById('friends-list');
 		const empty_text = document.createElement('p');
 		empty_text.textContent = "There is no friend to display yet."
 		empty_text.style.textAlign = "center";
 		friends_list.appendChild(empty_text);
+	}
+	for (let i = 0; i < friend_list_data.length; i++)
+	{
+		const friends_list = document.getElementById('friends-list');
+		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
+		friends_list.appendChild(new_friend);
 	}
 }
 
