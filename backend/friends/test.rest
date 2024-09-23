@@ -1,0 +1,26 @@
+### --- List request ---
+GET /api/friends/request/ HTTP/1.1
+Host: localhost:8443
+
+### --- Send request ---
+POST /api/friends/request/send/ HTTP/1.1
+Host: localhost:8443
+Content-Type: application/json
+
+{"name": "coucou"}
+
+### --- Accept request ---
+POST /api/friends/request/5/ HTTP/1.1
+Host: localhost:8443
+
+### --- Reject request ---
+DELETE /api/friends/request/7/ HTTP/1.1
+Host: localhost:8443
+
+### --- List Friend ---
+GET /api/friends/ HTTP/1.1
+Host: localhost:8443
+
+### --- Remove Friend ---
+DELETE /api/friends/remove/9/ HTTP/1.1
+Host: localhost:8443
