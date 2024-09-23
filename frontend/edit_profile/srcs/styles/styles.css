@@ -54,10 +54,11 @@
 #password-edit-div
 {
 	display: flex;
+	flex-direction: column;
 }
 
 #password-edit-text
 {
+	cursor: pointer;
 	margin: 0;
-	/* justify-self: left; */
 }
