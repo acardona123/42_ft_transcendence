@@ -21,6 +21,7 @@ class SignUp(APIView):
 		serializer = UserSerializer(data=data)
 		if serializer.is_valid():
 			serializer.save()
+			print('serializer has been saved')
 			return JsonResponse(serializer.data, status=201)
 		print('coucou')
 		# print(serializer.data)
