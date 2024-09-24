@@ -46,6 +46,12 @@
 	cursor: pointer;
 }
 
+#input-pin
+{
+	width: 20%;
+	margin-bottom: 10px;
+}
+
 #profile-edit-text-button:hover
 {
 	text-decoration: underline;
