@@ -39,16 +39,21 @@ function create_input_error(input_element_id, error_message)
 	elem_parent.appendChild(new_text_elem);
 }
 
-function pre_verification_front(body)
+function pre_verification_front_user(body)
 {
 	let cancel_submit = false;
 
-	if (!body.passwordame)
+	if (body.username.length == 0)
 	{
 		cancel_submit = true;
 		create_input_error("text-username", "Username must not be empty.");
 	}
-	return cancel_submit;
+	if (body.pin.length == 0)
+	{
+		cancel_submit = true;
+		create_input_error("text-pin", "Pin code must not be empty.");
+	}
+	return !cancel_submit;
 }
 
 function submit_user_form(form)
@@ -61,23 +66,22 @@ function submit_user_form(form)
 		pin : form["pin"].value
 	}
 
-	if (!pre_verification_front(cancel_submit))
+	if (!pre_verification_front_user(body))
 		return;
-
 }
 
-function change_form_behavior_for_SPA(form)
+function change_form_behavior_for_SPA(form, new_function)
 {
 	form.addEventListener('submit', (event) =>
 	{
 		event.preventDefault();
-		submit_user_form(form);
+		new_function(form);
 	});
 }
 
-let form = document.getElementById("form-user");
+let form_user = document.getElementById("form-user");
 
-change_form_behavior_for_SPA(form);
+change_form_behavior_for_SPA(form_user, submit_user_form);
 
 document.getElementById("informations-edit-text").onclick = username_collapse;
 document.getElementById("password-edit-text").onclick = password_collapse;
