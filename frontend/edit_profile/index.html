@@ -13,10 +13,11 @@
 	<h1 id="main-title">Edit profile</h1>
 
 	<div id="main-div">
-		<form id="profile-edit">
-			<img id="profile-img" src="../stat_menu/img/flappy_background_history_loose.png">
-			<img id="profile-edit-img" src="./img/edit_button.png">
-		</form>
+		<div id="picture-div">
+			<img id="picture-img" src="../stat_menu/img/flappy_background_history_loose.png">
+			<img id="picture-edit-img" src="./img/edit_button.png">
+			<input type="file" id="picture-file-input" accept="image/png, image/jpg, image/jpeg" hidden>
+		</div>
 		<div id="input-fields-div">
 			<form id="form-user">
 				<hr>
@@ -73,4 +74,5 @@
 	</div>
 	<script src="./srcs/scripts/user_form.js"></script>
 	<script src="./srcs/scripts/pass_form.js"></script>
+	<script src="./srcs/scripts/picture_form.js"></script>
 </body>
