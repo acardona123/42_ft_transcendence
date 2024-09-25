@@ -37,6 +37,7 @@ The user that do the request can be an identified player or a guest. If it is a 
 `POST /api/matches/new/me-ai`
 body:
 {
+	game
 	max_score,
 	max_duration,
 	clean_when_finished
@@ -50,6 +51,7 @@ return:
 `POST /api/matches/new/me-player`
 body:
 {
+	game
 	player2_id,
 	player2_pin,
 	max_score,
@@ -65,8 +67,10 @@ return:
 `POST /api/matches/new/me-guest`
 body:
 {
+	game
 	max_score,
 	max_duration
+	clean_when_finished
 }
 return:
 {

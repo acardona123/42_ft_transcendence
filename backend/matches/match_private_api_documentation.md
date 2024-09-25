@@ -17,7 +17,7 @@ returns the data of all matches:
 
 ## start match
 ### player against identified player
-`POST /api/matches/new/player-player`
+`POST /api/matches/new/new_match_verified_id`
 body:
 {
 	player1,

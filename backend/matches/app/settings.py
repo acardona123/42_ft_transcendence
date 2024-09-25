@@ -163,3 +163,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 USERS_MICROSERVICE_URL = 'http://users:8002'
+MATCHES_MICROSERVICE_URL = 'http://localhost:8004'

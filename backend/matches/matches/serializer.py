@@ -25,10 +25,10 @@ class MatchSerializer(DynamicFieldsModelSerializer):
 
 	class Meta:
 		model = Match
-		fields = '__all__'
+		fields = ['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'date', 'score1', 'score2', 'duration', 'is_finished', 'clean_when_finished']
 	
 	def __init__(self, *args, **kwargs):
-		super().__init__(self, *args, **kwargs)
+		super().__init__(*args, **kwargs)
 
 
 class MatchHistorySerializer(DynamicFieldsModelSerializer):
@@ -45,14 +45,15 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 
 
 	def __init__(self, *args, **kwargs):
-		print("toto1")
 		super().__init__(*args, **kwargs)
-		print("toto2")
 
+		self.user_id = self.context.get('user_id')
+		if not self.user_id:
+			raise ("user_id is needed in context to use the match history serializer")
 		if hasattr(self, 'instance') and 'opponent_username' in self.fields:
 			opponents_ids = list()
 			for match in self.instance:
-				if match.user1 == self.context['user_id']:
+				if match.user1 == self.user_id:
 					opponents_ids.append(match.user2)
 				else:
 					opponents_ids.append(match.user1)
@@ -62,39 +63,40 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 
 
 	def get_main_player_id(self, obj):
-		return self.context['user_id']
+		return self.user_id
 
 	def get_opponent_id(self, obj):
-		if self.context['user_id'] == obj.user1:
+		if self.user_id == obj.user1:
 			return obj.user2
 		else:
 			return obj.user1
 
 	def get_main_player_score(self, obj):
-		if self.context['user_id'] == obj.user1:
+		if self.user_id == obj.user1:
 			return obj.score1
 		else:
 			return obj.score2
 
 	def get_opponent_score(self, obj):
-		if self.context['user_id'] == obj.user1:
+		if self.user_id == obj.user1:
 			return obj.score2
 		else:
 			return obj.score1
 
 	def get_main_player_username(self, obj):
 		if "main_player_username" in self.fields:
-			id_main_player = self.context['user_id']
-			return self.get_usernames_request([id_main_player]).get(str(id_main_player));
+			return self.get_usernames_request([self.user_id]).get(str(self.user_id));
 		else:
 			return ""
 	
 	def get_opponent_username(self, obj):
-		if self.context['user_id'] == obj.user1:
-			return self.opponents_id_map.get(str(obj.user2))
-		else:
-			return self.opponents_id_map.get(str(obj.user1))
-
+		if "opponent_username" in self.fields:
+			if self.user_id == obj.user1:
+				return self.opponents_id_map.get(str(obj.user2))
+			else:
+				return self.opponents_id_map.get(str(obj.user1))
+		else :
+			return ""
 
 	# def get_usernames_request(self, users_id):
 	# 	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"

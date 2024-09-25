@@ -14,20 +14,238 @@ Host: localhost:8004
 GET /api/matches/ HTTP/1.1
 Host: localhost:8004
 
+
+
+
+
+
+
 ### --- new match verified users id ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
 
-{'player1': 1, 'player2':2, 'max_score':42, 'max_duration':21}
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
 
-### --- Send request ---
+### --- Error: missing player1 ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	# "player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: missing player2  ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	# "player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: missing game  ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	# "game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: missing score  ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	# "max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: missing duration ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	# "max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: missing clean_when_finished  ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21
+	# "clean_when_finished": true
+}
+
+### --- Error: wrong format player ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": "abc",
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: wrong format game ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": 12,
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: wrong format score ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": "",
+	"max_duration": 21,
+	"clean_when_finished": true
+}
+### --- Error: wrong format duration ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": "21m",
+	"clean_when_finished": true
+}
+### --- Error: wrong format clean_when_finished ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": "abc"
+}
+### --- Error: game acronyme ---
+POST /private_api/matches/new_match_verified_id HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "abc",
+	"max_score": 42,
+	"max_duration": 21,
+	"clean_when_finished": "abc"
+}
+
+
+
+
+
+
+### --- new match ai ---
 POST /api/matches/new/me-ai HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
 
-{"max_score": 10, "max_duration": 60}
-
-### --- Reject request ---
-DELETE /api/friends/request/7/ HTTP/1.1
+{
+	"game": "PG",
+	"max_score": 10,
+	"max_duration": 60,
+	"clean_when_finished": true
+}
+### --- Error: new match ai missing field---
+POST /api/matches/new/me-ai HTTP/1.1
 Host: localhost:8004
+Content-Type: application/json
+
+{
+	"game": "PG",
+	# "max_score": 10,
+	"max_duration": 60,
+	"clean_when_finished": true
+}
+
+
+
+
+
+
+### --- new match guest ---
+POST /api/matches/new/me-guest HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"game": "PG",
+	"max_score": 10,
+	"max_duration": 60,
+	"clean_when_finished": true
+}
+### --- new match guest missing field---
+POST /api/matches/new/me-guest HTTP/1.1
+Host: localhost:8004
+Content-Type: application/json
+
+{
+	"game": "PG",
+	"max_score": 10,
+	# "max_duration": 60,
+	"clean_when_finished": true
+}
+
+
