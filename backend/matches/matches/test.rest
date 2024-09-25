@@ -254,12 +254,12 @@ Content-Type: application/json
 
 
 ### --- finish match ---
-POST /api/matches/finish/3 HTTP/1.1
+POST /api/matches/finish/62/ HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
 
 {
 	"score1": 5,
 	"score2": 10,
-	"duration": 60,
+	"duration": 60
 }

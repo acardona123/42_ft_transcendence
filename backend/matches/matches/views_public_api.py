@@ -116,12 +116,12 @@ def new_match_against_player(request):
 	player2_id = request.POST.get('player2_id')
 	player2_pin = request.POST.get('player2_pin')
 	if player2_id == None or player2_pin == None:
-		return Response({'status': 400,'error' : 'match creation impossible: missing id or pin for the second player'})
+		return Response({'status': 400,'message' : 'match creation impossible: missing id or pin for the second player'})
 	check_second_player = check_player_pin_ok(player2_id, player2_pin)
 	if check_second_player.get('status') != 200:
 		return JsonResponse(check_second_player, safe=False)
 	if check_second_player.get('valid') != True:
-		return Response({'status': 400, 'error' : 'match creation impossible: wrong pin for the second player'})
+		return Response({'status': 400, 'message' : 'match creation impossible: wrong pin for the second player'})
 	
 	new_match_request_data = generate_request_data_with_players(request, user_id, player2_id)
 	if new_match_request_data['status'] != 200:
@@ -136,20 +136,29 @@ def finish_match(request, match_id):
 	try:
 		match_instance = Match.objects.get(id = match_id)
 	except:
-		return Response({'status': 400,'error' : f"there is no match identified by the id ${match_id} to be ended"})
+		return Response({'status': 400,'message' : f"there is no match identified by the id ${match_id} to be ended"})
 	if match_instance.is_finished:
-		return Response({'status': 200,'error' : f"the match ${match_id} was already finished"})
+		return Response({'status': 200,'message' : f"the {match_id} was already finished"})
 
 	data = request.data
-	if not 'score1' in request or not 'score2' in request or not 'duration' in request :
-		return Response({'status': 400,'error' : 'missing "score1" or "score2" or "duration" field to successfully end a match'})
-	request_score1 = request.POST.get('score1')
-	request_score2 = request.POST.get('score2')
-	request_duration = request.POST.get('duration')
+	if not 'score1' in data or not 'score2' in data or not 'duration' in data :
+		return Response({'status': 400,'message' : 'missing "score1" or "score2" or "duration" field to successfully end a match'})
+	request_score1 = data.get('score1')
+	request_score2 = data.get('score2')
+	request_duration = data.get('duration')
+
+	print(f"request_score1 = {request_score1}")
+	print(f"request_score2 = {request_score2}")
+	print(f"request_duration = {request_duration}")
 	try:
-		match_instance.update(score1 = request_score1, score2 = request_score2, duration = request_duration, is_finished = True)
+		match_instance.score1 = request_score1
+		match_instance.score2 = request_score2
+		match_instance.duration = request_duration
+		match_instance.is_finished = True
+		match_instance.save()
 	except Exception as e:
-		return Response({'status': 400,'error' : f"match finish: {e}"})
+		return Response({'status': 400,'message' : f"match finish: {e}"})
 
 	# if match_instance.clean_when_finished:
 		# TODO: send the request to the users microservice to clean the ai/guest user of this match if needed. returns the player1 and player2 updated id
+	return Response ({'status': 200, 'message': f'{match_instance} successfully ended'})
