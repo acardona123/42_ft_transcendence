@@ -6,3 +6,7 @@ djangorestframework
 certifi
 requests
 gunicorn
+django-phonenumber-field
+django-phonenumbers
+Pillow
+djangorestframework-simplejwt

@@ -13,6 +13,8 @@ services:
     networks:
       - website-network
       - users-network
+    ports:
+      - "8002:8002"
     depends_on:
       users_db:
         condition: service_healthy
