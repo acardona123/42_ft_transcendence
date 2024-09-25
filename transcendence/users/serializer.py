@@ -3,10 +3,13 @@ from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
+
 	password1 = serializers.CharField(write_only=True, max_length=80)
+	profile_picture = serializers.ImageField(required=False)
+
 	class Meta:
 		model = CustomUser
-		fields = ('id', 'password', 'password1', 'username', 'email', 'phone')
+		fields = ('id', 'password', 'password1', 'username', 'email', 'phone', 'profile_picture')
 		extra_kwargs = {
 			'password': {'write_only': True}
 			}
@@ -25,8 +28,8 @@ class UserSerializer(serializers.ModelSerializer):
 		return user
 	
 
-	# def to_representation(self, instance):
-	# 	"""Override to_representation to exclude password1 from the output."""
-	# 	representation = super().to_representation(instance)
-	# 	representation.pop('password1', None)  # Remove password1 from the output
-	# 	return representation
+	def to_representation(self, instance):
+			representation = super().to_representation(instance)
+			if instance.profile_picture:
+				representation['profile_picture'] = instance.profile_picture.url
+			return representation

@@ -3,10 +3,10 @@ POST http://localhost:8000/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"id" : "1",
-	"password" : "1",
-	"password1" : "1",
-	"username" : "bonjour",
-	"email" : "a@gmail.com",
-	"phone" : "1"
+	"id" : "36",
+	"password" : "p@ssworD36",
+	"password1" : "p@ssworD36",
+	"username" : "36salut",
+	"email" : "36@gmail.com",
+	"phone" : "36"
 }

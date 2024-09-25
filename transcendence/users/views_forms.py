@@ -4,21 +4,24 @@ from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from .models import CustomUser
 from django.http import HttpResponse, JsonResponse
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from .serializer import UserSerializer
 
+
 class SignUp(APIView):
 	template_name = "signup.html"
 
+	parser_classes = [JSONParser, MultiPartParser]
 	def get(self, request):
 		return render(request, self.template_name)
 
 	@csrf_exempt
 	def post(self, request):
-		data = JSONParser().parse(request)
-		serializer = UserSerializer(data=data)
+		print("Here the request")
+		print(request)
+		serializer = UserSerializer(data=request.data)
 		if serializer.is_valid():
 			serializer.save()
 			print('serializer has been saved')

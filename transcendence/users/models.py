@@ -9,12 +9,12 @@ class CustomUser(AbstractBaseUser):
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField("email address", unique=True)
     phone = models.CharField(max_length=11, unique=True)
-    # profile_picture = models.ImageField(
-    #     "profile picture",
-    #     default='default_profile_picture.jpg',
-    #     upload_to='profile_pictures/',
-    #     validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
-    # )
+    profile_picture = models.ImageField(
+        "profile picture",
+        default='default_profile_picture.jpg',
+        upload_to='profile_pictures/',
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
+    )
     #is_connected
     #code match
     #
