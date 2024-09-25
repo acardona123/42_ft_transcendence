@@ -1,6 +1,6 @@
 import os
 from hvac_vault import *
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 VAULT_ENV_FILE = '/usr/src/app/vault/.env'
 

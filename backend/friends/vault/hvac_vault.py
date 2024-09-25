@@ -80,7 +80,7 @@ def create_role(client, name):
 			name=name+'-role',
 			db_name=name,
 			creation_statements=creation_statements,
-			default_ttl='15m',
+			default_ttl='1m',
 			max_ttl='1h'
 		)
 
