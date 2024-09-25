@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_client, read_kv
+	from vault.hvac_vault import create_client, read_kv
 
 	client = create_client()
 	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
@@ -95,17 +95,13 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_cred, create_client
-
-	client = create_client()
-	cred = create_cred(client, database_name)
 
 	DATABASES = {
 		'default': {
-			'ENGINE': 'django.db.backends.postgresql',
+			'ENGINE': 'myDatabase',
 			'NAME': os.getenv('DB_NAME'),
-			'USER': cred["data"]['username'],
-			'PASSWORD': cred["data"]['password'],
+			'USER': 'user',
+			'PASSWORD': 'password',
 			'HOST': database_name,
 			'PORT': '5432',
 			'OPTIONS': {
