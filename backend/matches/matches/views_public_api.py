@@ -128,3 +128,28 @@ def new_match_against_player(request):
 		return Response(new_match_request_data)
 	response_data = send_request_for_new_match(new_match_request_data['data'])
 	return JsonResponse(response_data)
+
+
+
+@api_view(['POST'])
+def finish_match(request, match_id):
+	try:
+		match_instance = Match.objects.get(id = match_id)
+	except:
+		return Response({'status': 400,'error' : f"there is no match identified by the id ${match_id} to be ended"})
+	if match_instance.is_finished:
+		return Response({'status': 200,'error' : f"the match ${match_id} was already finished"})
+
+	data = request.data
+	if not 'score1' in request or not 'score2' in request or not 'duration' in request :
+		return Response({'status': 400,'error' : 'missing "score1" or "score2" or "duration" field to successfully end a match'})
+	request_score1 = request.POST.get('score1')
+	request_score2 = request.POST.get('score2')
+	request_duration = request.POST.get('duration')
+	try:
+		match_instance.update(score1 = request_score1, score2 = request_score2, duration = request_duration, is_finished = True)
+	except Exception as e:
+		return Response({'status': 400,'error' : f"match finish: {e}"})
+
+	# if match_instance.clean_when_finished:
+		# TODO: send the request to the users microservice to clean the ai/guest user of this match if needed. returns the player1 and player2 updated id
