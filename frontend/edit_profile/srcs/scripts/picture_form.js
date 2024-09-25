@@ -5,6 +5,18 @@ function prompt_picture_file()
 	input_file_button.click();
 }
 
+function on_mouse_picture_enter()
+{
+	this.parentNode.children[0].style.filter = "brightness(70%)";
+	this.parentNode.children[1].style.filter = "brightness(70%)";
+}
+
+function on_mouse_picture_leave()
+{
+	this.parentNode.children[0].style.filter = "brightness(100%)";
+	this.parentNode.children[1].style.filter = "brightness(100%)";
+}
+
 function is_valid_file()
 {
 	if (input_file_button.files.length == 0) // cancel
@@ -16,7 +28,6 @@ function is_valid_file()
 			hex_color="#FF000080", t_hover_color="#FF0000C0");
 		return false;
 	}
-	console.log(input_file_button.files[0])
 	if (!correct_formats.includes(input_file_button.files[0].type))
 		return false;
 
@@ -32,6 +43,10 @@ function process_submitted_file()
 const form_pic = document.getElementById("picture-div");
 form_pic.children[0].onclick = prompt_picture_file;
 form_pic.children[1].onclick = prompt_picture_file;
+form_pic.children[0].onmouseenter = on_mouse_picture_enter;
+form_pic.children[0].onmouseleave = on_mouse_picture_leave;
+form_pic.children[1].onmouseenter = on_mouse_picture_enter;
+form_pic.children[1].onmouseleave = on_mouse_picture_leave;
 
 const input_file_button = document.getElementById("picture-file-input");
 input_file_button.onchange = process_submitted_file;
