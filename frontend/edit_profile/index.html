@@ -13,57 +13,56 @@
 	<h1 id="main-title">Edit profile</h1>
 
 	<div id="main-div">
+		<form id="profile-edit">
+			<img id="profile-img" src="../stat_menu/img/flappy_background_history_loose.png">
+			<img id="profile-edit-img" src="./img/edit_button.png">
+		</form>
 		<div id="input-fields-div">
 			<form id="form-user">
-				<div id="profile-edit-div">
-					<img id="profile-edit-img" src="../stat_menu/img/flappy_background_history_loose.png">
-					<p id="profile-edit-emoji">&#x1F4DD;</p>
-					<p id="profile-edit-text-button">Edit</p>
-				</div>
 				<hr>
-				<p id="informations-edit-text" data-parent="form-user" data-bs-toggle="collapse"
+				<p id="informations-edit-text" data-bs-toggle="collapse"
 					data-bs-target="#information-edit-collapse-div" aria-expanded="true">
 					<u>Edit informations</u>
 				</p>
-				<div class="collapse show" id="information-edit-collapse-div">
+				<div class="collapse show" style="margin-top: 10px" id="information-edit-collapse-div">
 					<div>
 						<p id="text-username" style="margin: 0">Username</p>
-						<input id="input-username" name="username">
+						<input class="input-class" id="input-username" name="username">
 					</div>
 					<div>
 						<p id="text-email" style="margin: 0">Email</p>
-						<input id="input-email" name="email">
+						<input class="input-class" id="input-email" name="email">
 					</div>
 					<div>
 						<p id="text-phone" style="margin: 0">Phone number</p>
-						<input id="input-phone" name="phone">
+						<input class="input-class" id="input-phone" name="phone">
 					</div>
 					<div>
 						<p id="text-pin" style="margin: 0">Pin code</p>
-						<input id="input-pin" name="pin">
+						<input class="input-class" id="input-pin" name="pin">
 					</div>
 					<button class="btn btn-primary" type="submit">Save</button>
 				</div>
 			</form>
 			<hr>
 			<div id="password-edit-div">
-				<p id="password-edit-text" data-parent="form-user" data-bs-toggle="collapse"
+				<p id="password-edit-text" data-bs-toggle="collapse"
 					data-bs-target="#password-edit-collapse-div" aria-expanded="false">
 					<u>Edit password</u>
 				</p>
-				<div class="collapse" id="password-edit-collapse-div">
+				<div class="collapse" style="margin-top: 10px" id="password-edit-collapse-div">
 					<form id="form-password">
 						<div>
-							<p style="margin: 0">Current password</p>
-							<input id="input-cur-password">
+							<p id="text-cur-pass" style="margin: 0">Current password</p>
+							<input class="input-class" id="input-cur-password" name="cur_pass">
 						</div>
 						<div>
-							<p style="margin: 0">New password</p>
-							<input id="input-new-password">
+							<p id="text-new-pass" style="margin: 0">New password</p>
+							<input class="input-class" id="input-new-password" name="new_pass">
 						</div>
 						<div>
-							<p style="margin: 0">Confirm password</p>
-							<input id="input-confirm-password">
+							<p id="text-confirm-pass" style="margin: 0">Confirm password</p>
+							<input class="input-class" id="input-confirm-password" name="conf_pass">
 						</div>
 						<button class="btn btn-primary">Save</button>
 					</form>
@@ -72,5 +71,6 @@
 			<hr>
 		</div>
 	</div>
-	<script src="./scripts/user_form.js"></script>
+	<script src="./srcs/scripts/user_form.js"></script>
+	<script src="./srcs/scripts/pass_form.js"></script>
 </body>
