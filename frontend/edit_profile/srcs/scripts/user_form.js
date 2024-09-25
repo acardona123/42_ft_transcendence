@@ -53,7 +53,6 @@ function pre_verification_front(body)
 
 function submit_user_form(form)
 {
-	let cancel_submit = false;
 	const body =
 	{
 		username : form["username"].value,
