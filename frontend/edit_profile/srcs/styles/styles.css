@@ -14,11 +14,6 @@
 	align-items: center;
 }
 
-#informations-edit-text
-{
-	width: 100%;
-}
-
 #input-fields-div
 {
 	display: flex;
@@ -52,20 +47,21 @@
 	cursor: pointer;
 }
 
-#input-pin
-{
-	width: 20%;
-	margin-bottom: 10px;
-}
-
 #informations-edit-text
 {
+	width: 100%;
 	margin: 0;
 }
 
 #information-edit-collapse-div
 {
 	margin-top: 10px;
+}
+
+#input-pin
+{
+	width: 20%;
+	margin-bottom: 10px;
 }
 
 #profile-edit-text-button:hover
