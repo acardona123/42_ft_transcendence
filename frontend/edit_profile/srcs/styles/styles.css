@@ -23,6 +23,7 @@
 
 #picture-img
 {
+	transition: filter 0.1s;
 	cursor: pointer;
 	width: 100px;
 	object-fit: cover;
@@ -32,6 +33,7 @@
 
 #picture-edit-img
 {
+	transition: filter 0.1s;
 	cursor: pointer;
 	z-index: 1;
 	position: relative;
