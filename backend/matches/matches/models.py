@@ -15,7 +15,7 @@ class Match(models.Model):
 	score1 = models.PositiveIntegerField("score of the player 1", blank=True, null=True)
 	score2 = models.PositiveIntegerField("score of the player 2", blank=True, null=True)
 	duration = models.PositiveIntegerField("match duration in seconds", blank=True, null=True)
-	is_finished = models.BooleanField("flag raised when the match ends", default = True)
+	is_finished = models.BooleanField("flag raised when the match ends", default = False)
 	clean_when_finished = models.BooleanField("need to clean the ia and guest at the end of the game")
 
 
