@@ -15,7 +15,7 @@ secret= {f'{os.getenv('VAULT_DATABASE_NAME')}': f"{os.getenv('SECRET_KEY')}"}
 
 create_kv(VAULT_CLIENT, path, secret)
 
-os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations \
+os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations friend\
 	&& python3 ./manage.py migrate && \
 	python3 ./manage.py runserver 0.0.0.0:8003'")
 	# gunicorn app.wsgi:application --bind 0.0.0.0:8003  --log-level \"debug\"'")
