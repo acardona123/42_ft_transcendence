@@ -20,32 +20,42 @@
 					<p id="profile-edit-emoji">&#x1F4DD;</p>
 					<p id="profile-edit-text-button">Edit</p>
 				</div>
-				<div>
-					<p id="text-username" style="margin: 0">Username</p>
-					<input id="input-username" name="username">
+
+				<hr>
+
+				<p id="informations-edit-text" data-parent="form-user" data-bs-toggle="collapse"
+					data-bs-target="#information-edit-collapse-div" aria-expanded="true">
+					<u>Edit informations</u>
+				</p>
+				<div class="collapse show" id="information-edit-collapse-div">
+					<div>
+						<p id="text-username" style="margin: 0">Username</p>
+						<input id="input-username" name="username">
+					</div>
+					<div>
+						<p id="text-email" style="margin: 0">Email</p>
+						<input id="input-email" name="email">
+					</div>
+					<div>
+						<p id="text-phone" style="margin: 0">Phone number</p>
+						<input id="input-phone" name="phone">
+					</div>
+					<div>
+						<p id="text-pin" style="margin: 0">Pin code</p>
+						<input id="input-pin" name="pin">
+					</div>
+					<button class="btn btn-primary" type="submit">Save</button>
 				</div>
-				<div>
-					<p id="text-email" style="margin: 0">Email</p>
-					<input id="input-email" name="email">
-				</div>
-				<div>
-					<p id="text-phone" style="margin: 0">Phone number</p>
-					<input id="input-phone" name="phone">
-				</div>
-				<div>
-					<p id="text-pin" style="margin: 0">Pin code</p>
-					<input id="input-pin" name="pin">
-				</div>
-				<button class="btn btn-primary" type="submit">Save</button>
-				<script src="./scripts/user_form.js"></script>
 			</form>
 
+			<hr>
 
 			<div id="password-edit-div">
-				<p class="collapsed" id="password-edit-text" data-bs-toggle="collapse" data-bs-target="#password-edit-collapsed-div" aria-expanded="false">
+				<p id="password-edit-text" data-parent="form-user" data-bs-toggle="collapse"
+					data-bs-target="#password-edit-collapse-div" aria-expanded="false">
 					<u>Edit password</u>
 				</p>
-				<div id="password-edit-collapsed-div" class="collapse">
+				<div class="collapse" id="password-edit-collapse-div">
 					<form id="form-password">
 						<div>
 							<p style="margin: 0">Current password</p>
@@ -63,6 +73,11 @@
 					</form>
 				</div>
 			</div>
+
+			<hr>
+
 		</div>
 	</div>
+
+	<script src="./scripts/user_form.js"></script>
 </body>
