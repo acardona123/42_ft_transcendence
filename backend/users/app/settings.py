@@ -35,12 +35,12 @@ if (database_name.endswith('_dev') == False):
 	cred = read_kv(client, path)
 	SECRET_KEY = cred['data'][database_name]
 else:
-	SECRET_KEY = os.getenv('SERCRET_KEY')
+	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'users']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'users']
 
 
 # Application definition
@@ -52,12 +52,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'myDatabase',
+	'vault',
 	'rest_framework',
 	'phonenumber_field',
 	'rest_framework_simplejwt',
-	'rest_framework_simplejwt.token_blacklist',
+	'drf_yasg',
 	'users',
-    'oauth2',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,6 @@ else:
 		}
 	}
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -163,10 +163,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "users.CustomUser"
+PHONENUMBER_DEFAULT_REGION = 'FR'
+PHONENUMBER_DEFAULT_FORMAT = 'E164'
 
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}
+
+AUTH_USER_MODEL = "users.CustomUser"
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -174,10 +178,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
-
-PHONENUMBER_DEFAULT_REGION = 'FR'
-PHONENUMBER_DEFAULT_FORMAT = 'E164'
-
 
 REST_FRAMEWORK = {
 	'DEFAULT_AUTHENTICATION_CLASSES': (
