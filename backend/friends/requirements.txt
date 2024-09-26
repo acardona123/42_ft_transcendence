@@ -7,3 +7,5 @@ djangorestframework
 PyJWT
 certifi
 requests
+setuptools
+drf-yasg
