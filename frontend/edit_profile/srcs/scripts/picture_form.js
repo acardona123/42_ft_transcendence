@@ -29,7 +29,12 @@ function is_valid_file()
 		return false;
 	}
 	if (!correct_formats.includes(input_file_button.files[0].type))
+	{
+		create_popup("Error: Accepted formats are [png, jpg, jpeg].",
+			4000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
 		return false;
+	}
 
 }
 
