@@ -24,3 +24,21 @@ class UserSerializer(serializers.ModelSerializer):
 		username = validated_data.pop('username', None)
 		user = CustomUser.objects.create_user(username, password, **validated_data)
 		return user
+
+# class OauthUserSerializer(serializers.ModelSerializer):
+# 	login = serializers.CharField(source='username')
+# 	id = serializers.IntegerField(source='oauth_id')
+# 	class Meta:
+# 		model = CustomUser
+# 		fields = ['id', 'email', 'phone', 'login']
+# 		extra_kwargs = {'password': {'write_only': True}}
+
+# 	def to_internal_value(self, data):
+# 		if data.get('phone') == 'hidden':
+# 			data.pop('phone')
+# 		return super(OauthUserSerializer, self).to_internal_value(data)
+
+# 	def create(self, validated_data):
+# 		username = validated_data.pop('username', None)
+# 		user = CustomUser.objects.create_user(username, **validated_data)
+# 		return user

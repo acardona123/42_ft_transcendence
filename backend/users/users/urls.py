@@ -1,7 +1,9 @@
 from django.urls import path
-from . import views
+from .views import register_user#, get_url_api, login_oauth
 
 
 urlpatterns = [
-	path("signup/", views.SignUp.as_view(), name="signup"),
+	path("signup/", register_user, name="register"),
+	# path("url/api42/", get_url_api, name="get_url_api"),
+	# path("login/api42/", login_oauth, name="login_api"),
 ]

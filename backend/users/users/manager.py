@@ -10,6 +10,9 @@ class CustomUserManager(BaseUserManager):
 			user = self.model(username=username, email=email, **extra_fields)
 		else:
 			user = self.model(username=username, **extra_fields)
+		# if password == None:
+		# 	user.set_unusable_password()
+		# else:
 		user.set_password(password)
 		user.save()
 		return user
