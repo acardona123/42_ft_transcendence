@@ -5,8 +5,6 @@ from .models import CustomUser
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 class AccountAdmin(BaseUserAdmin):
-    # form = UserChangeForm
-    # add_form = UserCreationForm
     model=CustomUser
 
     list_display = ('username', 'email', 'phone', 'is_staff',  'is_superuser')
