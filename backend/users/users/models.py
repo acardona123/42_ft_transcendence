@@ -9,7 +9,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(null=True, blank=True)
     phone = PhoneNumberField(null=True, blank=True)
     is_staff = models.BooleanField(default=False)
-    # oauth_id = models.IntegerField(null=True, blank=True, unique=True)
+    oauth_id = models.IntegerField(null=True, blank=True, unique=True)
     # picture = models.ImageField(blank=True, null=True)
 	# profile_picture = models.ImageField(
 	#     "profile picture",

@@ -14,6 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 		if data['password'] != data['password2']:
 			raise serializers.ValidationError({"Error": "Password fields didn't match."})
 		password = data.pop('password2', None)
+		if password == None:
+			raise serializers.ValidationError({"Error": "Password fields empty."})
 		user = CustomUser(**data)
 		validators.validate_password(password=password, user=user)
 		return data
@@ -24,20 +26,20 @@ class UserSerializer(serializers.ModelSerializer):
 		user = CustomUser.objects.create_user(username, password, **validated_data)
 		return user
 
-# class OauthUserSerializer(serializers.ModelSerializer):
-# 	login = serializers.CharField(source='username')
-# 	id = serializers.IntegerField(source='oauth_id')
-# 	class Meta:
-# 		model = CustomUser
-# 		fields = ['id', 'email', 'phone', 'login']
-# 		extra_kwargs = {'password': {'write_only': True}}
+class OauthUserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = CustomUser
+		fields = ['id', 'email', 'phone', 'username', 'oauth_id']
+		extra_kwargs = {'password': {'write_only': True}}
 
-# 	def to_internal_value(self, data):
-# 		if data.get('phone') == 'hidden':
-# 			data.pop('phone')
-# 		return super(OauthUserSerializer, self).to_internal_value(data)
+	def to_internal_value(self, data):
+		if data.get('phone') == 'hidden':
+			data.pop('phone')
+		data['username'] = data.get('login', None)
+		data['oauth_id'] = data.get('id', None)
+		return super(OauthUserSerializer, self).to_internal_value(data)
 
-# 	def create(self, validated_data):
-# 		username = validated_data.pop('username', None)
-# 		user = CustomUser.objects.create_user(username, **validated_data)
-# 		return user
+	def create(self, validated_data):
+		username = validated_data.pop('username', None)
+		user = CustomUser.objects.create_user(username, **validated_data)
+		return user

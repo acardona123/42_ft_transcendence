@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/usr/src/app/django
     ports:
-      - "8002:8002"
+      - "8003:8003"
     networks:
       - website-network
       - friends-network
