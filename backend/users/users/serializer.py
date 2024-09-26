@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import CustomUser
-from phonenumber_field.phonenumber import PhoneNumber
 import django.contrib.auth.password_validation as validators
 
 class UserSerializer(serializers.ModelSerializer):

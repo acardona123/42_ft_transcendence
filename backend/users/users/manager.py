@@ -3,7 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class CustomUserManager(BaseUserManager):
 	use_in_migrations = True
 
-	def _create_user(self, username, password, **extra_fields):
+	def _create_user(self, username, password=None, **extra_fields):
 		if extra_fields.get('email'):
 			email = extra_fields.pop('email', None)
 			email = self.normalize_email(email)

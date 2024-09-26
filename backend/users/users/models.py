@@ -6,8 +6,8 @@ from .manager import CustomUserManager
 # there is hidden an id 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
-    phone = PhoneNumberField(unique=True, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone = PhoneNumberField(null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     # oauth_id = models.IntegerField(null=True, blank=True, unique=True)
     # picture = models.ImageField(blank=True, null=True)
