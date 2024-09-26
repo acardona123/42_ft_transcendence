@@ -25,6 +25,15 @@ function password_collapse()
 	password_is_visible = !password_is_visible;
 }
 
+function clear_input_errors(elements_ids)
+{
+	for (elem of elements_ids)
+	{
+		elem = document.getElementById(elem);
+		if (elem.children.length != 0)
+			elem.children[0].remove();
+	}
+}
 
 function create_input_error(input_element_id, error_message)
 {
@@ -42,6 +51,7 @@ function create_input_error(input_element_id, error_message)
 function pre_verification_front_user(body)
 {
 	let cancel_submit = false;
+	clear_input_errors(["text-username","text-pin"]);
 
 	if (body.username.length == 0)
 	{
