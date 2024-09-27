@@ -76,3 +76,16 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
 		instance.set_password(validated_data['password'])
 		instance.save()
 		return instance
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = CustomUser
+		fields = ['username', 'email', 'phone']
+
+class TestSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = CustomUser
+		fields = '__all__'
+

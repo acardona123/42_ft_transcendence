@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import UserSerializer, UpdatePasswordSerializer
+from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, login_user_oauth
 from .models import CustomUser
 import json
@@ -89,13 +89,23 @@ def update_password(request):
 	}
 	return Response(data, status=400)
 
-from rest_framework.views import APIView
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_user_info(request):
+	serializer = UpdateUserSerializer(request.user, data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+		return Response({"message": "User info updated",
+						"data": serializer.data}, status=200)
+	data = {
+		"message" : "Error occured while updating user info",
+		"data" : serializer.errors
+	}
+	return Response(data, status=400)
 
-class users(APIView):
-	def get(self, request):
-		users = CustomUser.objects.all().values()
-		return Response(list(users))
+from rest_framework import generics
+from .serializer import TestSerializer
 
-	def delete(self, request):
-		users = CustomUser.objects.all().delete()
-		return Response("done")
+class UserListView(generics.ListAPIView):
+	queryset = CustomUser.objects.all()
+	serializer_class = TestSerializer

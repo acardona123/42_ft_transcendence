@@ -1,3 +1,5 @@
+
+### sign up + get token
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
@@ -13,12 +15,8 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "coucou"
+	"username" : "kfuhgkj"
 }
-
-### create token login api 42
-GET https://localhost:8443/api/users/login/api42/ HTTP/1.1
-content-type: application/json
 
 ### get url api42
 GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
@@ -29,7 +27,7 @@ GET https://localhost:8443/api/users/ HTTP/1.1
 ### remove users
 DELETE https://localhost:8443/api/users/ HTTP/1.1
 
-### change password
+### update password
 PUT https://localhost:8443/api/users/update_password/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDUxMDAxLCJpYXQiOjE3Mjc0NTA3MDEsImp0aSI6IjU5MmQzZjM0OGE0NDRmMzY5NDkwNmE3MjY1YTc2NTY0IiwidXNlcl9pZCI6NX0.QoXtZdV4rc2mO5uKbX4geb_FBfF_8lfJgcOJSCP09uo
 content-type: application/json
@@ -38,5 +36,15 @@ content-type: application/json
 	"old_password": "123asd456",
 	"password": "d",
 	"password2": "d"
+}
 
+### update info
+PUT https://localhost:8443/api/users/update_user/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDU0NjQzLCJpYXQiOjE3Mjc0NTQzNDMsImp0aSI6IjA0NTExNTUyMDRjOTQyYmRhNzIwYjEzYTMxMjgzZWQ0IiwidXNlcl9pZCI6MX0.avsx1EOiFU2FwesBbakC06NLXj6ySXjhgcpAZPw0GFU
+content-type: application/json
+
+{
+	"username": "kfuhgkj",
+	"email": "fghf@fdg.lp",
+	"phone": "0326597845"
 }
