@@ -35,8 +35,8 @@ class OauthUserSerializer(serializers.ModelSerializer):
 	def to_internal_value(self, data):
 		if data.get('phone') == 'hidden':
 			data.pop('phone')
-		data['username'] = data.get('login', None)
 		data['oauth_id'] = data.get('id', None)
+		data['username'] = data.get('login', None)
 		return super(OauthUserSerializer, self).to_internal_value(data)
 
 	def create(self, validated_data):

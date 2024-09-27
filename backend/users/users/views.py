@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import UserSerializer, OauthUserSerializer
-from .utils import get_token_oauth, get_user_oauth
+from .serializer import UserSerializer
+from .utils import get_token_oauth, get_user_oauth, create_user_oauth
 from .models import CustomUser
 import json
 import os
@@ -67,18 +67,10 @@ def login_oauth(request):
 	response = get_user_oauth(token)
 	if response.status_code != 200:
 		return Response("error", status=400)
-	id = response.json().get('id')
+	data = response.json()
+	id = data.get('id')
 	if not CustomUser.objects.filter(oauth_id=id).exists():
-		serializer = OauthUserSerializer(data=response.json())
-		#todo change username if not unique
-		if serializer.is_valid():
-			serializer.save()
-			#todo send jwt in the header
-			return Response({'message': 'new user created with 42 API',
-						'data': serializer.data}, status=201)
-		else:
-			return Response({'message': 'invalid data to create new user with 42 API',
-						'data': serializer.errors}, status=400)
+		return create_user_oauth(data)
 	else:
 		pass#login
 	return Response("coucou", status=400)
