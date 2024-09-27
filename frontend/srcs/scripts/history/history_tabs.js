@@ -25,7 +25,7 @@ function unload_elements()
 
 function load_elements(elem)
 {
-	update_history_list({type : elem.textContent});
+	update_history_list(elem.textContent);
 }
 
 function on_click_tab_history(elem)
@@ -50,5 +50,3 @@ function on_click_tab_history(elem)
 	set_border_hider(elem);
 }
 
-// set click on first tab by default
-on_click_tab_history(document.getElementsByClassName("tab-text")[0]);

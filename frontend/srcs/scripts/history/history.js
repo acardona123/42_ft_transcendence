@@ -1,47 +1,33 @@
-const DB_history =
-[
-	{"game" : "Pong", "victory" : "victory", "score_left" : 10,
-		"score_right" : 14, "game_duration" : 350,
-		"user_against" : "alex", "date" : 1725732245789},
+let date_now;
 
-	{"game" : "Pong", "victory" : "defeat", "score_left" : 10,
-		"score_right" : 14, "game_duration" : 350,
-		"user_against" : "alex", "date" : 1725732245789},
-
-	{"game" : "Flappy fish", "victory" : "victory", "score_left" : 6,
-		"score_right" : 1, "game_duration" : 31,
-		"user_against" : "alex", "date" : 1725700000000},
-
-	{"game" : "Pong", "victory" : "tie", "score_left" : 1,
-		"score_right" : 11, "game_duration" : 184,
-		"user_against" : "alex", "date" : Date.now()},
-
-	{"game" : "Flappy fish", "victory" : "defeat", "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
-
-	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
-
-	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276},
-
-	{"game" : "Flappy fish", "victory" : "tie", "score_left" : 14,
-		"score_right" : 9, "game_duration" : 5,
-		"user_against" : "alex", "date" : 1725732932276}
-];
-
-function get_history_from_DB()
+function convert_dates(matches)
 {
-	let history_list = [...DB_history];
-	history_list.sort((a, b) => {
-		if (a.date < b.date)
-			return -1;
-		return 1;
+	matches.forEach(match => {
+		match.date =  Date.parse(match.date);
 	});
-	return history_list;
+}
+
+async function get_history_from_DB()
+{
+	const url = "https://localhost:8443/api/matches/";
+
+	try
+	{
+		let data_fetched = await fetch(url);
+		if (!data_fetched.ok)
+			throw new Error(`${fetched_data.status}`);
+		let data = await data_fetched.json();
+		convert_dates(data.matches);
+		return data.matches;
+	}
+	catch (error)
+	{
+		create_popup("Retrieving history failed.",
+			2000, 4000,
+			hex_color="#FF000080", t_hover_color="#FF0000C0");
+	}
+	return undefined;
+
 }
 
 function get_victory(victory)
@@ -193,33 +179,42 @@ function get_date_time(elem_date, game_duration)
 	return text_date_time;
 }
 
+function get_victory_state(main_player_score, opponent_score)
+{
+	if (main_player_score > opponent_score)
+		return "victory";
+	else if (main_player_score == opponent_score)
+		return "tie";
+	return "defeat";
+}
 
 function get_history_elem_div(history_elem)
 {
 	const history_elem_div = document.createElement("div");
+	let victory_state = get_victory_state(history_elem.main_player_score, history_elem.opponent_score);
 
 	history_elem_div.className = "history-elem-div";
-	if (history_elem.game == "Pong")
+	if (history_elem.game == "PG")
 	{
-		if (history_elem.victory == "victory")
+		if (victory_state == "victory")
 			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_win.png)";
-		else if (history_elem.victory == "defeat")
+		else if (victory_state == "defeat")
 			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_loose.png)";
 		else
 			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_tie.png)";
 	}
-	else if (history_elem.game == "Flappy fish")
+	else if (history_elem.game == "FB")
 	{
-		if (history_elem.victory == "victory")
+		if (victory_state == "victory")
 			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_win.png)";
-		else if (history_elem.victory == "defeat")
+		else if (victory_state == "defeat")
 			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_loose.png)";
 		else
 			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_tie.png)";
 	}
-	const text_victory = get_victory(history_elem.victory);
-	const text_score = get_score(history_elem.score_left, history_elem.score_right, history_elem.user_against);
-	const text_date_time = get_date_time(history_elem.date, history_elem.game_duration);
+	const text_victory = get_victory(victory_state);
+	const text_score = get_score(history_elem.main_player_score, history_elem.opponent_score, history_elem.opponent_username);
+	const text_date_time = get_date_time(history_elem.date, history_elem.duration);
 	
 	history_elem_div.appendChild(text_victory);
 	history_elem_div.appendChild(text_score);
@@ -235,25 +230,27 @@ function add_element_to_history(history_elem, id)
 	_history_list.appendChild(history_elem_div);
 }
 
-
-let date_now;
-const history_list = get_history_from_DB(DB_history);
-
-function update_history_list(tab)
+function update_history_list(tab_name)
 {
-	date_now = Date.now();
-	for (let i = 0; i < history_list.length; i++)
+	if (history_list != undefined)
 	{
-		if (tab.type == history_list[i].game)
-			add_element_to_history(history_list[i], i);
+		date_now = Date.now();
+		for (let i = 0; i < history_list.length; i++)
+		{
+			if (tab_name == "Pong" && history_list[i].game == "PG")
+				add_element_to_history(history_list[i], i);
+			else if (tab_name == "Flappy fish" && history_list[i].game == "FB")
+				add_element_to_history(history_list[i], i);
+		}
 	}
-
+			
 	const _history_list = document.getElementById("history_list");
-	if (_history_list.childNodes.length == 0) // display message if the history is empty
+	if (_history_list.childNodes.length == 0 || history_list == undefined) // display message if the history is empty
 	{
 		const no_history_message = document.createElement('p');
 		no_history_message.textContent = "There is no history to display yet."
 		no_history_message.style.textAlign = "center";
+		no_history_message.style.marginTop = "10px";
 		_history_list.appendChild(no_history_message);
 	}
 	else // remove last element margin bottom
@@ -261,3 +258,12 @@ function update_history_list(tab)
 		_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
 	}
 }
+
+let history_list;
+
+(async () => 
+{
+	history_list = await get_history_from_DB();
+	// set click on first tab by default
+	on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
+})()
