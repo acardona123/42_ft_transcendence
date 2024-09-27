@@ -1,0 +1,98 @@
+#main-div
+{
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#main-content-div
+{
+	border: thin solid black;
+	display: grid;
+	padding: 50px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	grid-template-columns: 1fr;
+	grid-template-rows: 0.5fr 1fr 0.25fr 0.4fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+#title-text
+{
+	margin: auto;
+	margin-top: 0;
+	font-size: 2em;
+}
+
+#register-inputs-form
+{
+	display: flex;
+	flex-direction: column;
+	height: fit-content;
+}
+
+#register-42-api-div
+{
+	margin: auto;
+}
+
+.inputs-register
+{
+	border: thin solid black;
+	border-radius: 3px;
+	margin-bottom: 5px;
+}
+
+#register-button
+{
+	margin-top: 10px;
+}
+
+#line-separator-register-div
+{
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.line-sep
+{
+	margin: auto;
+	height: 1px;
+	width: 100%;
+	background-color: aliceblue;
+}
+
+#line-sep-left
+{
+	margin-left: 0;
+	margin-right: 10px;
+}
+
+#line-sep-right
+{
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+#secondary-content-div
+{
+	margin-top: 10px;
+	width: 100%;
+}
+
+#no-account-text
+{
+	border: thin solid black;
+	margin: auto;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
