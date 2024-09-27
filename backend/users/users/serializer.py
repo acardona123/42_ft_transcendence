@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser
-import django.contrib.auth.password_validation as validators
+from django.contrib.auth.password_validation import validate_password
 
 class UserSerializer(serializers.ModelSerializer):
 	password2 = serializers.CharField(write_only=True, required=True)
@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 		if password == None:
 			raise serializers.ValidationError({"Error": "Password fields empty."})
 		user = CustomUser(**data)
-		validators.validate_password(password=password, user=user)
+		validate_password(password=password, user=user)
 		return data
 
 	def create(self, validated_data):
@@ -43,3 +43,36 @@ class OauthUserSerializer(serializers.ModelSerializer):
 		username = validated_data.pop('username', None)
 		user = CustomUser.objects.create_user(username, **validated_data)
 		return user
+	
+class UpdatePasswordSerializer(serializers.ModelSerializer):
+	password = serializers.CharField(write_only=True, required=True)
+	password2 = serializers.CharField(write_only=True, required=True)
+	old_password = serializers.CharField(write_only=True, required=True)
+
+	class Meta:
+		model = CustomUser
+		fields = ['old_password', 'password', 'password2']
+	
+	def validate(self, data):
+		if data.get('password') != data.get('password2'):
+			raise serializers.ValidationError({"Error": "Password fields didn't match."})
+		if data.get('old_password') == data.get('password'):
+			raise serializers.ValidationError({"Error": "New Password is the current password"})
+		user = self.context.get('user', None)
+		validate_password(password=data.get('password'), user=user)
+		return data
+
+	def validate_old_password(self, old_password):
+		user = self.context.get('user', None)
+		if user is None:
+			raise serializers.ValidationError({"Error": "Invalid user"})
+		if not user.has_usable_password():
+			raise serializers.ValidationError({"Error": "User don't have any password"})
+		if not user.check_password(old_password):
+			raise serializers.ValidationError({"Error": "Old password is not correct"})
+		return old_password
+
+	def update(self, instance, validated_data):
+		instance.set_password(validated_data['password'])
+		instance.save()
+		return instance

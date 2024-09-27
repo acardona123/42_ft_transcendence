@@ -1,7 +1,8 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .serializer import UserSerializer
+from .serializer import UserSerializer, UpdatePasswordSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, login_user_oauth
 from .models import CustomUser
 import json
@@ -72,6 +73,21 @@ def login_oauth(request):
 	if not CustomUser.objects.filter(oauth_id=id).exists():
 		return create_user_oauth(data)
 	return login_user_oauth(id)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_password(request):
+	if request.user.oauth_id is not None:
+		return Response({"message" : "Impossible to update password with 42 API"}, status=400)
+	serializer = UpdatePasswordSerializer(request.user, data=request.data, context={'user': request.user})
+	if serializer.is_valid():
+		serializer.save()
+		return Response({"message" : "Password updated"}, status=200)
+	data = {
+		"message" : "Error occured while updating password",
+		"data" : serializer.errors
+	}
+	return Response(data, status=400)
 
 from rest_framework.views import APIView
 

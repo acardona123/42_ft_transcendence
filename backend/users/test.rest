@@ -4,33 +4,21 @@ content-type: application/json
 {
 	"password" : "123asd456",
 	"password2" : "123asd456",
-	"username" : "jvign"
+	"username" : "coucou"
 }
 
-### create toekn login
+### create token login
 POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "dffd"
+	"username" : "coucou"
 }
 
-### check token validity
-POST https://localhost:8443/api/users/token/verify/ HTTP/1.1
+### create token login api 42
+GET https://localhost:8443/api/users/login/api42/ HTTP/1.1
 content-type: application/json
-
-{
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI3OTc3MiwiaWF0IjoxNzI3MTkzMzcyLCJqdGkiOiJlZTZiNWY5ZWExNjY0NThkYWQ1YTUxMDc2MjYzZDgxOSIsInVzZXJfaWQiOjJ9.t4zXH7dl3zqyAJba3lmpCdgyRduMUK7fMpaWwb32NTI"
-}
-
-### create new token
-POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
-content-type: application/json
-
-{
-	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI3OTQ2NCwiaWF0IjoxNzI3MTkzMDY0LCJqdGkiOiIyMDgyYmNjNjAzZDk0MjUxOTk2ZmI4NTE5YzUyNDRiOCIsInVzZXJfaWQiOjF9.N7Y84H5Wu6IRs_rc2svaBHxziNrrVNN5dptrAeA01BM"
-}
 
 ### get url api42
 GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
@@ -40,3 +28,15 @@ GET https://localhost:8443/api/users/ HTTP/1.1
 
 ### remove users
 DELETE https://localhost:8443/api/users/ HTTP/1.1
+
+### change password
+PUT https://localhost:8443/api/users/update_password/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDUxMDAxLCJpYXQiOjE3Mjc0NTA3MDEsImp0aSI6IjU5MmQzZjM0OGE0NDRmMzY5NDkwNmE3MjY1YTc2NTY0IiwidXNlcl9pZCI6NX0.QoXtZdV4rc2mO5uKbX4geb_FBfF_8lfJgcOJSCP09uo
+content-type: application/json
+
+{
+	"old_password": "123asd456",
+	"password": "d",
+	"password2": "d"
+
+}
