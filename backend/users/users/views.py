@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import UserSerializer
-from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user
+from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, login_user_oauth
 from .models import CustomUser
 import json
 import os
@@ -61,7 +61,9 @@ def get_url_api(request):
 def login_oauth(request):
 	if request.GET.get('state') != os.getenv('STATE'):
 		return Response(status=status.HTTP_400_BAD_REQUEST)
-	token = get_token_oauth(request.GET.get('code'))
+	error, token = get_token_oauth(request.GET.get('code'))
+	if error:
+		return Response({'message' : 'Unauthorized to login with API 42'}, status=401)
 	response = get_user_oauth(token)
 	if response.status_code != 200:
 		return Response("error", status=400)
@@ -69,9 +71,7 @@ def login_oauth(request):
 	id = data.get('id')
 	if not CustomUser.objects.filter(oauth_id=id).exists():
 		return create_user_oauth(data)
-	else:
-		pass#login
-	return Response("coucou", status=400)
+	return login_user_oauth(id)
 
 from rest_framework.views import APIView
 

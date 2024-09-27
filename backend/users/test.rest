@@ -8,7 +8,7 @@ content-type: application/json
 }
 
 ### create toekn login
-POST https://localhost:8443/api/users/token/ HTTP/1.1
+POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {

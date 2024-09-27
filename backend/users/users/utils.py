@@ -18,8 +18,8 @@ def get_token_oauth(code):
 	}
 	response = requests.post('https://api.intra.42.fr/oauth/token', data=data, verify=certifi.where())
 	if response.status_code != 200:
-		raise BadRequest
-	return response.json()['access_token']
+		return True, None
+	return False, response.json()['access_token']
 
 def get_user_oauth(token):
 	header = {'Authorization' : f'Bearer {token}'}
@@ -33,8 +33,6 @@ def create_user_oauth(data):
 	serializer = OauthUserSerializer(data=data)
 	if serializer.is_valid():
 		user = serializer.save()
-		print(user)
-		print(type(user))
 		tokens = get_tokens_for_user(user)
 		if change_username:
 			return Response({'message': 'new user created with 42 API',
@@ -45,6 +43,12 @@ def create_user_oauth(data):
 						'data': {'user': serializer.data, 'tokens': tokens}}, status=201)
 	return Response({'message': 'invalid data to create new user with 42 API',
 				'data': serializer.errors}, status=400)
+
+def login_user_oauth(id):
+	user = CustomUser.objects.filter(oauth_id=id).first()
+	tokens = get_tokens_for_user(user)
+	return Response({'message': 'user login with 42 API',
+						'data': {'tokens': tokens}}, status=200)
 
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
