@@ -8,6 +8,7 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from .serializer import UserSerializer
+from rest_framework import status
 
 
 class SignUp(APIView):
@@ -25,12 +26,12 @@ class SignUp(APIView):
 		if serializer.is_valid():
 			serializer.save()
 			print('serializer has been saved')
-			return JsonResponse(serializer.data, status=201)
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		print('coucou')
 		# print(serializer.data)
 		# print(serializer.validated_data)
 		print(serializer.errors)
-		return JsonResponse(serializer.data, status=400)
+		return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 		# print(data.data)
 		# email = request.POST.get('email')
 		# pseudo = request.POST.get('pseudo')

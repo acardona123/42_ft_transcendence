@@ -15,9 +15,9 @@ class CustomUser(AbstractBaseUser):
         upload_to='profile_pictures/',
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
     )
+    pin = models.CharField(max_length=6, default="0000", null=False)
+
     #is_connected
-    #code match
-    #
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
