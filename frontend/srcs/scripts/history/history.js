@@ -10,12 +10,12 @@ function convert_dates(matches)
 async function get_history_from_DB()
 {
 	const url = "https://localhost:8443/api/matches/";
-
+	
 	try
 	{
 		let data_fetched = await fetch(url);
 		if (!data_fetched.ok)
-			throw new Error(`${fetched_data.status}`);
+			throw new Error(`${data_fetched.status}`);
 		let data = await data_fetched.json();
 		convert_dates(data.matches);
 		return data.matches;
