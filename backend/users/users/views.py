@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import UserSerializer
-from .utils import get_token_oauth, get_user_oauth, create_user_oauth
+from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user
 from .models import CustomUser
 import json
 import os
@@ -35,18 +35,17 @@ def get_usernames(request):
 def register_user(request):
 	serializer = UserSerializer(data=request.data)
 	if serializer.is_valid():
-		serializer.save()
+		user = serializer.save()
+		tokens = get_tokens_for_user(user)
 		data = {
 			"message" : "User created",
-			"data" : serializer.data
+			"data" : {'user': serializer.data, 'tokens': tokens}
 		}
-		print(data)
 		return Response(data, status=201)
 	data = {
 		"message" : "Error occured while creating user",
 		"data" : serializer.errors
 	}
-	print(data)
 	return Response(data, status=404)
 
 @api_view(['GET'])
@@ -54,7 +53,6 @@ def get_url_api(request):
 	client_id = os.getenv('CLIENT_ID')
 	state = os.getenv('STATE')
 	redirect = os.getenv('REDIRECT_URL')
-	print(redirect)
 	url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect}&response_type=code&scope=public&state={state}"
 	return Response({'message' : 'send url to oauth2.0 with 42 API',
 					'data' : url})
