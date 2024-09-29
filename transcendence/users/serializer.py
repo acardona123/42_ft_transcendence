@@ -33,3 +33,9 @@ class UserSerializer(serializers.ModelSerializer):
 			if instance.profile_picture:
 				representation['profile_picture'] = instance.profile_picture.url
 			return representation
+
+
+class UserPublicSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = CustomUser
+		fields = ('id', 'username')
