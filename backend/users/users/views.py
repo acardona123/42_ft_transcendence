@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, login_user_oauth
 from .models import CustomUser
@@ -32,7 +33,7 @@ def get_usernames(request):
 		i+=1
 	return Response(dic)
 
-@api_view(['POST'])#todo : need to give jwt token
+@api_view(['POST'])
 def register_user(request):
 	serializer = UserSerializer(data=request.data)
 	if serializer.is_valid():
@@ -48,6 +49,8 @@ def register_user(request):
 		"data" : serializer.errors
 	}
 	return Response(data, status=404)
+
+# --------------- Oauth --------------------
 
 @api_view(['GET'])
 def get_url_api(request):
@@ -73,6 +76,8 @@ def login_oauth(request):
 	if not CustomUser.objects.filter(oauth_id=id).exists():
 		return create_user_oauth(data)
 	return login_user_oauth(id)
+
+# --------------- Update profile --------------------
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -102,6 +107,8 @@ def update_user_info(request):
 		"data" : serializer.errors
 	}
 	return Response(data, status=400)
+
+# --------------- Debug --------------------
 
 from rest_framework import generics
 from .serializer import TestSerializer

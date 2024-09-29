@@ -7,6 +7,8 @@ import certifi
 import requests
 import os
 
+# --------------- Oauth --------------------
+
 def get_token_oauth(code):
 	data = {
 		'grant_type' : 'authorization_code',
@@ -49,6 +51,8 @@ def login_user_oauth(id):
 	tokens = get_tokens_for_user(user)
 	return Response({'message': 'user login with 42 API',
 						'data': {'tokens': tokens}}, status=200)
+
+# --------------- JWT --------------------
 
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)

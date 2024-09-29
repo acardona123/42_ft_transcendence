@@ -1,4 +1,3 @@
-
 ### sign up + get token
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
@@ -15,7 +14,24 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "kfuhgkj"
+	"username" : "kfuhgkjd"
+}
+
+### logout
+POST https://localhost:8443/api/users/logout/ HTTP/1.1
+content-type: application/json
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzcwMjkzMywiaWF0IjoxNzI3NjE2NTMzLCJqdGkiOiJhNjBjYzI0NmNhNTg0OWNhYmZiNTE3MzRlZThhMDg2MyIsInVzZXJfaWQiOjF9.A5gr7kGB7Mvi18C-0cCJwUj-Jhxn4jgQCr5J2g2ToJo"
+}
+
+### refresh token
+
+POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
+content-type: application/json
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzcwMjc3MCwiaWF0IjoxNzI3NjE2MzcwLCJqdGkiOiJhZWE0MGIzODkzNzY0MDUzYTVjY2MzMzY4NjY4NWU4MSIsInVzZXJfaWQiOjJ9.07_GAHvbmU3SRRf0xEN3xCFlTN2i2i_6OnXq-0JYq2s"
 }
 
 ### get url api42
@@ -23,9 +39,6 @@ GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
 
 ### list users
 GET https://localhost:8443/api/users/ HTTP/1.1
-
-### remove users
-DELETE https://localhost:8443/api/users/ HTTP/1.1
 
 ### update password
 PUT https://localhost:8443/api/users/update_password/ HTTP/1.1
@@ -40,11 +53,11 @@ content-type: application/json
 
 ### update info
 PUT https://localhost:8443/api/users/update_user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDU0NjQzLCJpYXQiOjE3Mjc0NTQzNDMsImp0aSI6IjA0NTExNTUyMDRjOTQyYmRhNzIwYjEzYTMxMjgzZWQ0IiwidXNlcl9pZCI6MX0.avsx1EOiFU2FwesBbakC06NLXj6ySXjhgcpAZPw0GFU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NjE2ODMzLCJpYXQiOjE3Mjc2MTY1MzMsImp0aSI6IjU3OTkzYTc4YzNlOTQ0ZTdiZGZkNjU5NDNhYTFmYmIyIiwidXNlcl9pZCI6MX0.oA36vMDk7OJTIpspN8bosx4xO2vqyijVe12z-bPmKh8
 content-type: application/json
 
 {
-	"username": "kfuhgkj",
-	"email": "fghf@fdg.lp",
+	"username": "kfuhgkjd",
+	"email": "fghf@fdg.lpd",
 	"phone": "0326597845"
 }
