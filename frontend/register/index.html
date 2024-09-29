@@ -12,11 +12,26 @@
 		<div id="main-content-div">
 			<h1 id="title-text">Transcendence</h1>
 			<form id="register-inputs-form">
-				<input class="inputs-register" placeholder="Username">
-				<input class="inputs-register" placeholder="Email">
-				<input class="inputs-register" placeholder="Phone number">
-				<input class="inputs-register" placeholder="Password">
-				<input class="inputs-register" placeholder="Confirm password">
+				<div class="text-input-div">
+					<span class="text-span">Username *</span>
+					<input id="input-register-username" class="inputs-register" name="username" required>
+				</div>
+				<div class="text-input-div">
+					<span class="text-span">Email</span>
+					<input id="input-register-email" class="inputs-register" name="email">
+				</div>
+				<div class="text-input-div">
+					<span class="text-span">Phone number</span>
+					<input id="input-register-phone" class="inputs-register" name="phone">
+				</div>
+				<div class="text-input-div">
+					<span class="text-span">Password *</span>
+					<input id="input-register-password" class="inputs-register" name="password" required>
+				</div>
+				<div class="text-input-div">
+					<span class="text-span">Confirm Password *</span>
+					<input id="input-register-confirm_pass" class="inputs-register" name="confirm_pass" required>
+				</div>
 				<button id="register-button" class="btn btn-primary">Register</button>
 			</form>
 			<div id="line-separator-register-div">
@@ -33,4 +48,5 @@
 				Aleary have an account? <a href="">Log in</a></p>
 		</div>
 	</div>
+	<script src="./srcs/scripts/inputs.js"></script>
 </body>
