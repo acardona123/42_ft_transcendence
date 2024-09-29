@@ -12,8 +12,14 @@
 		<div id="main-content-div">
 			<h1 id="title-text">Transcendence</h1>
 			<form id="login-inputs-form">
-				<input class="inputs-login" placeholder="Username">
-				<input class="inputs-login" placeholder="Password">
+				<div class="text-input-div">
+					<span class="text-span">Username *</span>
+					<input id="input-login-username" class="inputs-login" name="username" required>
+				</div>
+				<div class="text-input-div">
+					<span class="text-span">Password *</span>
+					<input id="input-pass-username" class="inputs-login" name="password" type="password" required>
+				</div>
 				<button id="login-button" class="btn btn-primary">Login</button>
 			</form>
 			<div id="line-separator-login-div">
@@ -30,4 +36,6 @@
 				Don't have an account? <a href="">Sign up</a></p>
 		</div>
 	</div>
+	<script src="./srcs/scripts/inputs.js"></script>
+	<script src="./srcs/scripts/login.js"></script>
 </body>
