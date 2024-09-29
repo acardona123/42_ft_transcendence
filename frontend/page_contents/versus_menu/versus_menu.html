@@ -1,0 +1,55 @@
+<div class="modal" id="modal1v1MatchCreation" tabindex="-1">
+	<div id="modal-1v1-match-creation-dialog" class="modal-dialog modal-dialog-centered custom-match-creation-dialog">
+		<div class="modal-content custom-match-creation-content main-container purple-bg">
+			<div class="header debug-m">
+				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="returnToModalPlay('1v1MatchCreation')">
+					<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
+				</button>
+				<h1 class="header-text bold">MATCH CREATION</h1>
+			</div>
+			<form id="1v1MatchForm" class="form-container debug-y">
+				<!-- Time Slider -->
+				<div class="slider-container debug-c">
+					<label class="slider-label debug-r" for="1v1TimeSlider">Time:</label>
+					<input id="1v1TimeSlider" type="range" class="slider time debug-g" min="10" max="310" step="10" value="45">
+					<div id="1v1TimeValue" class="slider-value debug-o"></div>
+				</div>
+				<!-- Points Slider -->
+				<div class="slider-container debug-m">
+					<label class="slider-label debug-r" for="1v1PointsSlider">Points:</label>
+					<input id="1v1PointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
+					<div id="1v1PointsValue" class="slider-value debug-o"></div>
+				</div>
+				<!-- BoxsContainer -->
+				<div id="BoxsContainer" class="debug-r">
+					<!-- Submit User VS Guest-->
+					<div id="BoxVSGuest" class="box">
+						<h1 class="user-name"></h1><h1> VS GUEST</h1>
+						<div id="ErrorBoxConnectionVSGuest" class="error">An error occured. Please try again.</div>
+						<button id="VSGuestPlayButton" class="btn btn-primary">PLAY</button>
+					</div>
+					<!-- Submit User VS Player-->
+					<div id="BoxVSPlayer" class="box">
+						<h1 class="user-name"></h1><h1>VS PLAYER</h1>
+						<div id="AddPlayerContainer" class="debug-y">
+							<div id="AddPlayerInputs">
+								<div class="input-container debug-r">
+									<input id="player2Pseudo" class="input" type="text" placeholder="" maxlength="20">
+									<label for="player2Pseudo">Pseudo</label>
+									<span class="focus-border"></span>
+								</div>
+								<div id="InputPinContainer" class="input-container debug-b">
+									<input id="player2Pin" class="input" type="password" placeholder="" maxlength="4" pattern="[0-9]*" inputmode="numeric">
+									<label for="player2Pin">Pin</label>
+									<span class="focus-border"></span>
+								</div>
+							</div>
+								<div id="ErrorBoxConnectionVSPlayer" class="error">An error occured. Please try again.</div>
+						</div>
+						<button id="VSPlayerPlayButton" class="btn btn-primary">PLAY</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

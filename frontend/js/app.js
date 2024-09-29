@@ -119,36 +119,45 @@ function updateCircle(ratio, victories, defeats) {
 
 // FETCH MODALS
 
-document.addEventListener("DOMContentLoaded", function() {
-    updateUI();
+// Will load all the html modal files
+async function get_modals_html()
+{
+	try
+	{
+		let [play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		await Promise.all([
+			fetch('page_contents/play_menu/play_menu.html'),
+			fetch('page_contents/login_menu/login_menu.html'),
+			fetch('page_contents/register_menu/register_menu.html'),
+			fetch('page_contents/solo_ai_menu/solo_ai_menu.html'),
+			fetch('page_contents/versus_menu/versus_menu.html')
+		]);
+		
+		[play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		await Promise.all([
+			play_menu.text(),
+			login_menu.text(),
+			register_menu.text(),
+			solo_ai_menu.text(),
+			versus_menu.text()
+		]);
+		return play_menu + login_menu + register_menu + solo_ai_menu + versus_menu;
+	}
+	catch (error)
+	{
+		console.log("Error retrieving static modal code.");
+		// TODO: popup ?
+		return "";
+	}
+}
 
-    // fetch('html-modalContent/modals.html')
-    //     .then(response => response.text())
-    //     .then(data => {
-    //         document.body.insertAdjacentHTML('beforeend', data);
-    //     })
-    //     .catch(error => console.error('Error loading modal.html:', error));
-	
+document.addEventListener("DOMContentLoaded", function()
+{
+	updateUI();
 
-	fetch('modals_srcs/modals.html')
-	.then(function (data) {
-	  return data.text();
-	})
-	.then(function (html) {
-	document.getElementById('modals').innerHTML = html;
-	})
-	.then(() => {
-		// getFormDataIaMatch();
-		// getFormData1v1Match();
+	get_modals_html().then((html) => {
+		document.getElementById('modals').innerHTML = html;
 	});
-
-
-	  // .then(() => {
-		/* Now you can use the script */
-		// })
-	// fetch("js/modals.js")
-	// .then((response) => response.text())
-	// .then((text) => eval(text))
 });
 
 // ======================================
