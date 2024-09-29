@@ -3,7 +3,7 @@
 
 function updateUI() {
     // Determine which HTML content to load
-    const menuHtml = isConnected ? 'html-menuContent/menuConnected.html' : 'html-menuContent/menuDisconnected.html';
+    const menuHtml = isConnected ? 'page_contents/profile_menu_login/menuConnected.html' : 'page_contents/profile_menu_logout/menuDisconnected.html';
     
     // Load the menu HTML content
     fetch(menuHtml)
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //     .catch(error => console.error('Error loading modal.html:', error));
 	
 
-	fetch('html-modalContent/modals.html')
+	fetch('modals_srcs/modals.html')
 	.then(function (data) {
 	  return data.text();
 	})

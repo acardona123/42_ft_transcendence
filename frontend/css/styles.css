@@ -112,7 +112,7 @@ body, html {
 .btn-triangle:hover, .btn-triangle:focus {
 	background-color: #ffcc00 !important;
 
-	transform: scale(1.05) rotate(180deg);
+	/* transform: scale(1.05) rotate(180deg); */
 	transition: all 0.5s;
 }
 
