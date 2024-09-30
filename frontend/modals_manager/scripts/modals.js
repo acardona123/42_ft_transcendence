@@ -184,22 +184,45 @@ function closeModalParameters() {
 	modalParameters.hideModal();
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-	// setTimeout(function() {
-	// 	/* EVENT PART */
-	// 	document.getElementById("modalPlay").addEventListener('hidden.bs.modal', function () {
-	// 		console.log('modalPlay hidden');
-	// 		if (button) {
-	// 			button.disabled = false;
-	// 			button.focus();
-	// 		}
-	// 	})
-	// }, 1000);
-	/* ============== */
-	// setInterval(function() {
-	// 	console.log(document.activeElement);
-	// }
-	// , 1000);
-});
 
-// console.log(document.activeElement);
+// FETCH MODALS
+// Will load all the html modal files
+async function get_modals_html()
+{
+	try
+	{
+		let [play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		await Promise.all([
+			fetch('modal_contents/play_menu/play_menu.html'),
+			fetch('modal_contents/login_menu/login_menu.html'),
+			fetch('modal_contents/register_menu/register_menu.html'),
+			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
+			fetch('modal_contents/versus_menu/versus_menu.html')
+		]);
+		
+		[play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		await Promise.all([
+			play_menu.text(),
+			login_menu.text(),
+			register_menu.text(),
+			solo_ai_menu.text(),
+			versus_menu.text()
+		]);
+		return play_menu + login_menu + register_menu + solo_ai_menu + versus_menu;
+	}
+	catch (error)
+	{
+		console.log("Error retrieving static modal code.");
+		// TODO: popup ?
+		return "";
+	}
+}
+
+document.addEventListener("DOMContentLoaded", function()
+{
+	updateUI();
+
+	get_modals_html().then((html) => {
+		document.getElementById('modals').innerHTML = html;
+	});
+});

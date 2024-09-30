@@ -3,7 +3,9 @@
 
 function updateUI() {
     // Determine which HTML content to load
-    const menuHtml = isConnected ? 'modal_contents/profile_menu_login/menuConnected.html' : 'modal_contents/profile_menu_logout/menuDisconnected.html';
+	const side_login_path = 'modal_contents/side_menu/menuConnected.html';
+	const side_logout_path = 'modal_contents/side_menu/menuDisconnected.html';
+    const menuHtml = isConnected ? side_login_path : side_logout_path;
     
     // Load the menu HTML content
     fetch(menuHtml)
@@ -114,53 +116,6 @@ function updateCircle(ratio, victories, defeats) {
 		circleContainer.setAttribute('title', `Victories: ${victories}, Defeats: ${defeats}, Ratio: ${ratio}%`);
     }
 }
-
-// ======================================
-
-// FETCH MODALS
-
-// Will load all the html modal files
-async function get_modals_html()
-{
-	try
-	{
-		let [play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
-		await Promise.all([
-			fetch('modal_contents/play_menu/play_menu.html'),
-			fetch('modal_contents/login_menu/login_menu.html'),
-			fetch('modal_contents/register_menu/register_menu.html'),
-			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
-			fetch('modal_contents/versus_menu/versus_menu.html')
-		]);
-		
-		[play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
-		await Promise.all([
-			play_menu.text(),
-			login_menu.text(),
-			register_menu.text(),
-			solo_ai_menu.text(),
-			versus_menu.text()
-		]);
-		return play_menu + login_menu + register_menu + solo_ai_menu + versus_menu;
-	}
-	catch (error)
-	{
-		console.log("Error retrieving static modal code.");
-		// TODO: popup ?
-		return "";
-	}
-}
-
-document.addEventListener("DOMContentLoaded", function()
-{
-	updateUI();
-
-	get_modals_html().then((html) => {
-		document.getElementById('modals').innerHTML = html;
-	});
-});
-
-// ======================================
 
 function disableButtonPlay() {
 	const buttonPlay = document.getElementById('buttonPlay');
