@@ -1,9 +1,7 @@
 let username_is_visible = true;
 let password_is_visible = false;
-let username_collapse_obj = new bootstrap.Collapse(document.getElementById(
-	'information-edit-collapse-div'), {toggle: false});
-let password_collapse_obj = new bootstrap.Collapse(document.getElementById(
-	'password-edit-collapse-div'), {toggle: false});
+let username_collapse_obj;
+let password_collapse_obj;
 
 function username_collapse()
 {
@@ -51,17 +49,17 @@ function create_input_error(input_element_id, error_message)
 function pre_verification_front_user(body)
 {
 	let cancel_submit = false;
-	clear_input_errors(["text-username","text-pin"]);
+	clear_input_errors(["edp-text-username","edp-text-pin"]);
 
 	if (body.username.length == 0)
 	{
 		cancel_submit = true;
-		create_input_error("text-username", "Username must not be empty.");
+		create_input_error("edp-text-username", "Username must not be empty.");
 	}
 	if (body.pin.length == 0)
 	{
 		cancel_submit = true;
-		create_input_error("text-pin", "Pin code must not be empty.");
+		create_input_error("edp-text-pin", "Pin code must not be empty.");
 	}
 	return !cancel_submit;
 }
@@ -89,9 +87,18 @@ function change_form_behavior_for_SPA(form, new_function)
 	});
 }
 
-let form_user = document.getElementById("form-user");
+document.addEventListener("onModalsLoaded", function()
+{
+	username_collapse_obj = new bootstrap.Collapse(document.getElementById(
+		'edp-information-edit-collapse-div'), {toggle: false});
+	password_collapse_obj = new bootstrap.Collapse(document.getElementById(
+		'edp-password-edit-collapse-div'), {toggle: false});
 
-change_form_behavior_for_SPA(form_user, submit_user_form);
+	let form_user = document.getElementById("edp-form-user");
 
-document.getElementById("informations-edit-text").onclick = username_collapse;
-document.getElementById("password-edit-text").onclick = password_collapse;
+	change_form_behavior_for_SPA(form_user, submit_user_form);
+	
+	document.getElementById("edp-informations-edit-text").onclick = username_collapse;
+	document.getElementById("edp-password-edit-text").onclick = password_collapse;
+});
+

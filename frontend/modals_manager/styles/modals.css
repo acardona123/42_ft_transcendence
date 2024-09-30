@@ -247,3 +247,21 @@
 {
 	height: 100% !important;
 }
+
+/* ================================================ */
+
+/* === MODAL register === */
+
+#modal-edit-profile-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-edit-profile-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */

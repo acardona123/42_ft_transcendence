@@ -1,11 +1,11 @@
-#main-title
+#edp-main-title
 {
 	text-align: center;
 	margin: 0;
 	margin-bottom: 10px;
 }
 
-#main-div
+#edp-main-div
 {
 	display: flex;
 	height: 100%;
@@ -14,14 +14,14 @@
 	align-items: flex-start;
 }
 
-#input-fields-div
+#edp-input-fields-div
 {
 	display: flex;
 	flex-direction: column;
 	width: 210px;
 }
 
-#picture-img
+#edp-picture-img
 {
 	transition: filter 0.1s;
 	cursor: pointer;
@@ -31,7 +31,7 @@
 	aspect-ratio: 1/1;
 }
 
-#picture-edit-img
+#edp-picture-edit-img
 {
 	transition: filter 0.1s;
 	cursor: pointer;
@@ -44,24 +44,24 @@
 	border-radius: 50%;
 }
 
-#informations-edit-text
+#edp-informations-edit-text
 {
 	cursor: pointer;
 	width: 100%;
 	margin: 0;
 }
 
-#information-edit-collapse-div
+#edp-information-edit-collapse-div
 {
 	margin-top: 10px;
 }
 
-.input-class
+.edp-input-class
 {
 	margin-bottom: 10px;
 }
 
-#input-pin
+#edp-input-pin
 {
 	width: 20%;
 	margin-bottom: 10px;
@@ -73,7 +73,7 @@
 	flex-direction: column;
 }
 
-#password-edit-text
+#edp-password-edit-text
 {
 	cursor: pointer;
 	margin: 0;

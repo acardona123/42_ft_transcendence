@@ -149,9 +149,17 @@ function returnToModalPlay(source) {
 // 
 
 function openModalParameters() {
-	modalParameters = new ModalManager('modalMedium');
+	modalParameters = new ModalManager('modal-edit-profile');
 
+	var modaldialog = document.getElementById('modal-edit-profile-dialog');
+	modaldialog.classList.add('grow-bottom-right');
 	modalParameters.showModal();
+}
+
+function closeModalParameters() {
+	var modaldialog = document.getElementById('modal-ia-match-creation-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalParameters.hideModal();
 }
 
 function keypressModalParameters(event) {
@@ -164,10 +172,6 @@ function keypressModalParameters(event) {
 	}
 }
 
-function closeModalParameters() {
-	modalParameters.hideModal();
-}
-
 
 // FETCH MODALS
 // Will load all the html modal files
@@ -175,24 +179,26 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
 			fetch('modal_contents/register/register.html'),
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
-			fetch('modal_contents/versus_menu/versus_menu.html')
+			fetch('modal_contents/versus_menu/versus_menu.html'),
+			fetch('modal_contents/edit_profile/edit_profile.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
 			register.text(),
 			solo_ai_menu.text(),
-			versus_menu.text()
+			versus_menu.text(),
+			edit_profile.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu;
+		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile;
 	}
 	catch (error)
 	{
@@ -204,9 +210,14 @@ async function get_modals_html()
 
 document.addEventListener("DOMContentLoaded", function()
 {
+	const event = new Event("onModalsLoaded");
 	updateUI();
 
 	get_modals_html().then((html) => {
 		document.getElementById('modals').innerHTML = html;
+	})
+	.then(() =>
+	{
+		document.dispatchEvent(event);
 	});
 });

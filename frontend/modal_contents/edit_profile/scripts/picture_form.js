@@ -45,15 +45,18 @@ function process_submitted_file()
 	// send to back and wait for validation
 }
 
-const form_pic = document.getElementById("picture-div");
-form_pic.children[0].onclick = prompt_picture_file;
-form_pic.children[1].onclick = prompt_picture_file;
-form_pic.children[0].onmouseenter = on_mouse_picture_enter;
-form_pic.children[0].onmouseleave = on_mouse_picture_leave;
-form_pic.children[1].onmouseenter = on_mouse_picture_enter;
-form_pic.children[1].onmouseleave = on_mouse_picture_leave;
+let input_file_button;
 
-const input_file_button = document.getElementById("picture-file-input");
-input_file_button.onchange = process_submitted_file;
-
-// jpg, jpeg, png
+document.addEventListener("onModalsLoaded", function()
+{
+	const form_pic = document.getElementById("edp-picture-div");
+	form_pic.children[0].onclick = prompt_picture_file;
+	form_pic.children[1].onclick = prompt_picture_file;
+	form_pic.children[0].onmouseenter = on_mouse_picture_enter;
+	form_pic.children[0].onmouseleave = on_mouse_picture_leave;
+	form_pic.children[1].onmouseenter = on_mouse_picture_enter;
+	form_pic.children[1].onmouseleave = on_mouse_picture_leave;
+	
+	input_file_button = document.getElementById("edp-picture-file-input");
+	input_file_button.onchange = process_submitted_file;
+});
