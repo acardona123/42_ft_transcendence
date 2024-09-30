@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, login_user_oauth
 from .models import CustomUser
@@ -49,6 +50,17 @@ def register_user(request):
 		"data" : serializer.errors
 	}
 	return Response(data, status=404)
+
+@api_view(['POST'])
+def login_user(request):
+	username = request.data.get('username', None)
+	password = request.data.get('password', None)
+	user = authenticate(username=username, password=password)
+	if user is None:
+		return Response({"message": "No active account found with the given credentials"}, status=401)
+	token = get_tokens_for_user(user)
+	return Response({"message": "User login successfully",
+				  	"data" : token}, status=200)
 
 # --------------- Oauth --------------------
 

@@ -2,9 +2,11 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .manager import CustomUserManager
+import uuid
 
 # there is hidden an id 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    # id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(null=True)
     phone = PhoneNumberField(null=True)

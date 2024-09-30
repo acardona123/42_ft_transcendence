@@ -5,7 +5,7 @@ content-type: application/json
 {
 	"password" : "123asd456",
 	"password2" : "123asd456",
-	"username" : "coucou"
+	"username" : "cuk"
 }
 
 ### create token login
@@ -14,7 +14,7 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "kfuhgkjd"
+	"username" : "cu"
 }
 
 ### logout
