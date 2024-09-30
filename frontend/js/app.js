@@ -3,7 +3,7 @@
 
 function updateUI() {
     // Determine which HTML content to load
-    const menuHtml = isConnected ? 'page_contents/profile_menu_login/menuConnected.html' : 'page_contents/profile_menu_logout/menuDisconnected.html';
+    const menuHtml = isConnected ? 'modal_contents/profile_menu_login/menuConnected.html' : 'modal_contents/profile_menu_logout/menuDisconnected.html';
     
     // Load the menu HTML content
     fetch(menuHtml)
@@ -126,11 +126,11 @@ async function get_modals_html()
 	{
 		let [play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
 		await Promise.all([
-			fetch('page_contents/play_menu/play_menu.html'),
-			fetch('page_contents/login_menu/login_menu.html'),
-			fetch('page_contents/register_menu/register_menu.html'),
-			fetch('page_contents/solo_ai_menu/solo_ai_menu.html'),
-			fetch('page_contents/versus_menu/versus_menu.html')
+			fetch('modal_contents/play_menu/play_menu.html'),
+			fetch('modal_contents/login_menu/login_menu.html'),
+			fetch('modal_contents/register_menu/register_menu.html'),
+			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
+			fetch('modal_contents/versus_menu/versus_menu.html')
 		]);
 		
 		[play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
