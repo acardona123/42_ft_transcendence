@@ -1,3 +1,16 @@
+#modals
+{
+	position: absolute;
+	height: 100vh !important;
+	/* display: none; */
+}
+
+.modal-dialog-overwrite-size
+{
+	--bs-modal-margin: 0;
+	--bs-modal-padding: 0;
+}
+
 /* === MODAL FULLSCREEN === */
 
 .custom-fullscreen-dialog {
@@ -204,3 +217,33 @@
 }
 
 /* ================================================ */
+
+/* === MODAL LOGIN === */
+
+#modal-login-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-login-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL register === */
+
+#modal-register-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-register-content
+{
+	height: 100% !important;
+}

@@ -1,6 +1,6 @@
-#main-div
+#login-main-div
 {
-	height: 100vh;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -10,9 +10,10 @@
 	margin-right: auto;
 }
 
-#main-content-div
+#login-main-content-div
 {
 	border: thin solid black;
+	border-radius: 3px;
 	display: grid;
 	padding: 50px;
 	padding-top: 50px;
@@ -23,7 +24,7 @@
 	grid-row-gap: 0px;
 }
 
-#title-text
+#login-title-text
 {
 	margin: auto;
 	margin-top: 0;
@@ -42,7 +43,7 @@
 	margin: auto;
 }
 
-.text-input-div
+.login-text-input-div
 {
 	display: flex;
 	flex-direction: column;
@@ -51,7 +52,7 @@
 	position: relative;
 }
 
-.text-span
+.login-text-span
 {
 	transition: transform 0.2s;
 	transform-origin: top left;
@@ -87,7 +88,7 @@
 	flex-direction: row;
 }
 
-.line-sep
+.login-line-sep
 {
 	margin: auto;
 	height: 1px;
@@ -95,25 +96,25 @@
 	background-color: aliceblue;
 }
 
-#line-sep-left
+#login-line-sep-left
 {
 	margin-left: 0;
 	margin-right: 10px;
 }
 
-#line-sep-right
+#login-line-sep-right
 {
 	margin-right: 0;
 	margin-left: 10px;
 }
 
-#secondary-content-div
+#login-secondary-content-div
 {
 	margin-top: 10px;
 	width: 100%;
 }
 
-#no-account-text
+#login-no-account-text
 {
 	border: thin solid black;
 	margin: auto;

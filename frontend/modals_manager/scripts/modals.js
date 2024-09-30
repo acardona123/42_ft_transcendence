@@ -33,24 +33,16 @@ var modalParameters = undefined;
 
 function openModalLogin() {
 
-	modalLogin = new ModalManager('modalLogin');
+	modalLogin = new ModalManager('modal-login');
 
-	// fetch('html-menuContent/login.html')
-	// 	.then(function (data) {
-	// 		return data.text();
-	// 	})
-	// 	.then(function (html) {
-	// 		document.getElementById('modalLoginContent').innerHTML = html;
-	// 	});
-
-	var modaldialog = document.getElementById('modalLoginDialog');
+	var modaldialog = document.getElementById('modal-login-dialog');
 	modaldialog.classList.remove('slide-center-to-right');
 	modaldialog.classList.add('slide-right');
 	modalLogin.showModal();
 }
 
 function closeModalLogin() {
-	var modaldialog = document.getElementById('modalLoginDialog');
+	var modaldialog = document.getElementById('modal-login-dialog');
 	modaldialog.classList.remove('slide-right');
 	modaldialog.classList.add('slide-center-to-right');
 	setTimeout(function () {
@@ -61,24 +53,16 @@ function closeModalLogin() {
 
 function openModalSignUp() {
 
-	modalSignUp = new ModalManager('modalSignUp');
+	modalSignUp = new ModalManager('modal-register');
 
-	// fetch('html-menuContent/login.html')
-	// .then(function (data) {
-	// 	return data.text();
-	// })
-	// .then(function (html) {
-	// 	document.getElementById('modalSignUpContent').innerHTML = html;
-	// });
-
-	var modaldialog = document.getElementById('modalSignUpDialog');
+	var modaldialog = document.getElementById('modal-register-dialog');
 	modaldialog.classList.remove('slide-center-to-right');
 	modaldialog.classList.add('slide-right');
 	modalSignUp.showModal();
 }
 
 function closeModalSignUp() {
-	var modaldialog = document.getElementById('modalSignUpDialog');
+	var modaldialog = document.getElementById('modal-register-dialog');
 	modaldialog.classList.remove('slide-left');
 	modaldialog.classList.add('slide-center-to-right');
 	setTimeout(function () {		/* EVENT PART */
@@ -191,24 +175,24 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
-			fetch('modal_contents/login_menu/login_menu.html'),
-			fetch('modal_contents/register_menu/register_menu.html'),
+			fetch('modal_contents/login/login.html'),
+			fetch('modal_contents/register/register.html'),
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html')
 		]);
 		
-		[play_menu, login_menu, register_menu, solo_ai_menu, versus_menu] =
+		[play_menu, login, register, solo_ai_menu, versus_menu] =
 		await Promise.all([
 			play_menu.text(),
-			login_menu.text(),
-			register_menu.text(),
+			login.text(),
+			register.text(),
 			solo_ai_menu.text(),
 			versus_menu.text()
 		]);
-		return play_menu + login_menu + register_menu + solo_ai_menu + versus_menu;
+		return play_menu + login + register + solo_ai_menu + versus_menu;
 	}
 	catch (error)
 	{
