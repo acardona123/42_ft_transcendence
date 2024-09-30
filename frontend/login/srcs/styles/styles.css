@@ -1,0 +1,123 @@
+#main-div
+{
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#main-content-div
+{
+	border: thin solid black;
+	display: grid;
+	padding: 50px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+#title-text
+{
+	margin: auto;
+	margin-top: 0;
+	font-size: 2em;
+}
+
+#login-inputs-form
+{
+	display: flex;
+	flex-direction: column;
+	height: fit-content;
+}
+
+#login-42-api-div
+{
+	margin: auto;
+}
+
+.text-input-div
+{
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	height: 50%;
+	position: relative;
+}
+
+.text-span
+{
+	transition: transform 0.2s;
+	transform-origin: top left;
+	pointer-events: none;
+	position: absolute;
+	font-size: 0.8em;
+	top: 5px;
+	left: 3px;
+	text-align: start;
+	color: grey;
+}
+
+.inputs-login
+{
+	border: thin solid black;
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	margin-bottom: 5px;
+	font-size: 0.8em;
+}
+
+#login-button
+{
+	margin-top: 10px;
+}
+
+#line-separator-login-div
+{
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.line-sep
+{
+	margin: auto;
+	height: 1px;
+	width: 100%;
+	background-color: aliceblue;
+}
+
+#line-sep-left
+{
+	margin-left: 0;
+	margin-right: 10px;
+}
+
+#line-sep-right
+{
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+#secondary-content-div
+{
+	margin-top: 10px;
+	width: 100%;
+}
+
+#no-account-text
+{
+	border: thin solid black;
+	margin: auto;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
