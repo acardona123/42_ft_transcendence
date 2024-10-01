@@ -46,14 +46,16 @@ ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'users']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 	'myDatabase',
 	'vault',
+	'django_otp',
+	'django_otp.plugins.otp_totp',
 	'rest_framework',
 	'phonenumber_field',
 	'rest_framework_simplejwt',
@@ -68,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -182,12 +185,14 @@ PASSWORD_HASHERS = [
 
 REST_FRAMEWORK = {
 	'DEFAULT_AUTHENTICATION_CLASSES': (
-		'rest_framework_simplejwt.authentication.JWTAuthentication',
+		'users.authentication.CustomJWTAuthentication',
 	)
 }
 
+TEMPORARY_ACCESS_TOKEN_LIFETIME = timedelta(minutes=5)
+
 SIMPLE_JWT = {
-	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

@@ -12,3 +12,4 @@ drf-yasg
 django-phonenumber-field
 django-phonenumbers
 djangorestframework-simplejwt
+django-otp

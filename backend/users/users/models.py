@@ -12,6 +12,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone = PhoneNumberField(null=True)
     is_staff = models.BooleanField(default=False)
     oauth_id = models.IntegerField(null=True, unique=True)
+    is_2fa_enable = models.BooleanField(default=False)
     # picture = models.ImageField(blank=True, null=True)
 	# profile_picture = models.ImageField(
 	#     "profile picture",

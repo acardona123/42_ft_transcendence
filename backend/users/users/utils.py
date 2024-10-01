@@ -1,8 +1,9 @@
-from django.core.exceptions import BadRequest
 from rest_framework.response import Response
 from .models import CustomUser
 from .serializer import OauthUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
+from app.settings import TEMPORARY_ACCESS_TOKEN_LIFETIME
 import certifi
 import requests
 import os
@@ -54,12 +55,25 @@ def login_user_oauth(id):
 
 # --------------- JWT --------------------
 
+class TemporaryToken(AccessToken):
+	lifetime = TEMPORARY_ACCESS_TOKEN_LIFETIME
+
+def get_temp_tokens_for_user(user):
+	acces_token = TemporaryToken.for_user(user)
+	acces_token["scope"] = "temporary"
+	print(acces_token.payload)
+	return {
+		'access': str(acces_token),
+	}
+
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
+	refresh["scope"] = "normal"
 	print(refresh.payload)
 	print(refresh.access_token.payload)
-
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),
 	}
+
+# --------------- 2fa --------------------
