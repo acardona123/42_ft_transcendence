@@ -1,0 +1,48 @@
+services:
+  matches:
+    build: .
+    container_name: matches
+    command: bash -c "python3 ./django/app/vault/vault_init.py"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=matches_db
+      - REQUESTS_CA_BUNDLE=/usr/src/app/vault/vault.crt
+    volumes:
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
+    networks:
+      - website-network
+      - matches-network
+    depends_on:
+      matches_db:
+        condition: service_healthy
+  matches_db:
+    build: ./postgre
+    container_name: matches_db
+    restart: always
+    volumes:
+      - matches_db:/var/lib/postgresql/data/
+    networks:
+      - matches-network
+      - vault-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  matches_db:
+
+networks:
+  website-network:
+    name: website_network
+  matches-network:
+    name: matches_network
+  vault-network:
+    name: vault_network
