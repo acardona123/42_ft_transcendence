@@ -4,7 +4,7 @@ from .serializer import OauthUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
 from app.settings import TEMPORARY_ACCESS_TOKEN_LIFETIME
-from .views import MSG_USER_OAUTH_CREATED, MSG_ERROR_CREATIN_USER_OAUTH, MSG_LOGIN_OAUTH
+from .doc import MSG_USER_OAUTH_CREATED, MSG_ERROR_CREATING_USER_OAUTH, MSG_LOGIN_OAUTH
 import certifi
 import requests
 import os
@@ -45,7 +45,7 @@ def create_user_oauth(data):
 		else:
 			return Response({'message': MSG_USER_OAUTH_CREATED,
 						'data': {'user': serializer.data, 'tokens': tokens}}, status=201)
-	return Response({'message': MSG_ERROR_CREATIN_USER_OAUTH,
+	return Response({'message': MSG_ERROR_CREATING_USER_OAUTH,
 				'data': serializer.errors}, status=400)
 
 def login_user_oauth(id):

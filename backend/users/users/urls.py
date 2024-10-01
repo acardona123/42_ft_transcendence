@@ -15,5 +15,5 @@ urlpatterns = [
 	path("update/password/", update_password, name="update_password"),
 	path("update/user/", update_user_info, name="update_user"),
 	path("update/2fa/", update_2fa, name="update_2fa"),
-	path("", UserListView.as_view(), name="user"),
+	path("", UserListView.as_view(), name="user"), # todo remove only for debug
 ]

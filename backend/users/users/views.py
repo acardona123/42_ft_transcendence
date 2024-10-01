@@ -8,6 +8,7 @@ from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_token
 from .models import CustomUser
 import json
 import os
+import users.doc
 
 # @api_view(['GET'])
 # def get_id(request):
@@ -32,33 +33,6 @@ import os
 # 		dic[user] = list[i]
 # 		i+=1
 # 	return Response(dic)
-
-# --------------- DOC --------------------
-MSG_ERROR_CREATING_USER = "Error occured while creating user"
-MSG_ERROR_NO_ACCOUNT = "No active account found with the given credentials"
-MSG_ERROR_TOKEN_REQUIRED = "Token is required to authenticate with 2fa"
-MSG_ERROR_NO_TOTP_DEVICE = "Not device found for user"
-MSG_ERROR_WRONG_TOKEN = "Fail to verify the token given"
-MSG_ERROR_WRONG_2FA_STATUS = "Invalid status field for the 2fa"
-MSG_ERROR_2FA_IS_DISABLE = "User have 2fa disable"
-MSG_ERROR_OAUTH_LOGIN = "Unauthorized to login with API 42"
-MSG_ERROR_OAUTH_INFO = "Unauthorized to retreive info with API 42"
-MSG_ERROR_UPDATE_PASSWORD_OAUTH = "Impossible to update password with 42 API"
-MSG_ERROR_UPDATE_PASSWORD = "Error occured while updating password"
-MSG_ERROR_UPDATE_USER_INFO = "Error occured while updating user info"
-MSG_ERROR_CREATIN_USER_OAUTH = "Invalid data to create new user with 42 API"
-
-MSG_USER_CREATED = "User created"
-MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"
-MSG_LOGIN = "User login successfully"
-MSG_LOGIN_OAUTH = "User login successfully with 42 API"
-MSG_DISABLE_2FA = "Disable 2fa and remove previous devide"
-MSG_ENABLE_2FA = "Enable 2fa and generate qr code to connect"
-MSG_SEND_URL_OAUTH = "Send url to oauth2.0 with 42 API"
-MSG_PASSWORD_UPDATE = "Password updated"
-MSG_INFO_USER_UPDATE = "User info updated"
-MSG_USER_OAUTH_CREATED = "New user created with 42 API"
-
 
 # --------------- user managment --------------------
 

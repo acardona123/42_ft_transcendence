@@ -1,27 +1,4 @@
-# {
-# "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg4MTA4NSwiaWF0IjoxNzI3Nzk0Njg1LCJqdGkiOiI0MjlhMmQwODA2NGI0ODEyYjllNzg1MmRhMmJmNzFjYSIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.8PYkmTdAj1u3YePcvhVTeXtbGMy6HCwyJJLr28DWP9E",
-# "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1NTg1LCJpYXQiOjE3Mjc3OTQ2ODUsImp0aSI6ImVhNzVmNjY1NjkwNDRjOTc5Zjc5ZGM3ZmM0ZWIxNGEwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.H-lq8pTVbeXTgyg20PikxDN51HNnBN5FdSTj1gYtgVU"
-# }
-
-### update 2fa
-POST https://localhost:8443/api/users/update/2fa/ HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
-
-{
-	"2fa_status": "on"
-}
-
-### check 2fa
-POST https://localhost:8443/api/users/login/2fa/ HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
-
-{
-	"token" : "875419"
-}
-
-### sign up + get token
+### sign up
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
@@ -31,13 +8,33 @@ content-type: application/json
 	"username" : "quentin"
 }
 
-### create token login
+### get url api42
+GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
+
+### login
 POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {
 	"password" : "123asd456",
 	"username" : "johanne"
+}
+
+### login 2fa
+POST https://localhost:8443/api/users/login/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
+
+{
+	"token" : "875419"
+}
+
+### refresh token
+POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
+content-type: application/json
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg3MTg2NiwiaWF0IjoxNzI3Nzg1NDY2LCJqdGkiOiI0MGYyMTA0NTdiYTQ0MzVmOWM0YTIwZjYxNWQ1NTM3MyIsInVzZXJfaWQiOjEsInRlc3QiOiJjb3Vjb3UifQ.B9lTi_3R1-f9EnQp6452HVtXLW0MGxhNmxdYvzUxYqw"
 }
 
 ### logout
@@ -47,21 +44,6 @@ content-type: application/json
 {
 	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg4MTA4NSwiaWF0IjoxNzI3Nzk0Njg1LCJqdGkiOiI0MjlhMmQwODA2NGI0ODEyYjllNzg1MmRhMmJmNzFjYSIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.8PYkmTdAj1u3YePcvhVTeXtbGMy6HCwyJJLr28DWP9E"
 }
-
-### refresh token
-
-POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
-content-type: application/json
-
-{
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg3MTg2NiwiaWF0IjoxNzI3Nzg1NDY2LCJqdGkiOiI0MGYyMTA0NTdiYTQ0MzVmOWM0YTIwZjYxNWQ1NTM3MyIsInVzZXJfaWQiOjEsInRlc3QiOiJjb3Vjb3UifQ.B9lTi_3R1-f9EnQp6452HVtXLW0MGxhNmxdYvzUxYqw"
-}
-
-### get url api42
-GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
-
-### list users
-GET https://localhost:8443/api/users/ HTTP/1.1
 
 ### update password
 PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
@@ -74,7 +56,7 @@ content-type: application/json
 	"password2": "d"
 }
 
-### update info
+### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
 content-type: application/json
@@ -84,3 +66,15 @@ content-type: application/json
 	"email": "fghf@fdg.lpd",
 	"phone": "0326597845"
 }
+
+### update 2fa
+POST https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
+
+{
+	"2fa_status": "on"
+}
+
+### list users
+GET https://localhost:8443/api/users/ HTTP/1.1
