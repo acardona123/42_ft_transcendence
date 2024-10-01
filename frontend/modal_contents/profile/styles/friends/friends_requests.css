@@ -1,4 +1,4 @@
-.req-container
+.prof-req-container
 {
 	flex: 1;
 	overflow-y: overlay;
@@ -7,17 +7,17 @@
 	width: 100%;
 }
 
-.req-container::-webkit-scrollbar {
+.prof-req-container::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-.req-container::-webkit-scrollbar-thumb {
+.prof-req-container::-webkit-scrollbar-thumb {
 	background: rgba(172, 172, 172, 0.5);
 	border-radius: 8px;
 }
 
-.req-sub-container
+.prof-req-sub-container
 {
 	display: grid;
 	grid-template-columns: 2fr 1fr 1fr;
@@ -26,7 +26,7 @@
 	border-radius: 5px;
 }
 
-.req-pseudo
+.prof-req-pseudo
 {
 	height: 100%;
 	display: flex;
@@ -38,7 +38,7 @@
 	text-shadow: 2px 2px 2px #684a2b;
 }
 
-.req-accept-button
+.prof-req-accept-button
 {
 	height: 80%;
 	width: 90%;
@@ -52,7 +52,7 @@
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
-.req-accept-button:hover, .req-accept-button:focus
+.prof-req-accept-button:hover, .prof-req-accept-button:focus
 {
 	background-color: #01a001;
 	border: thin solid rgb(54, 54, 54);
@@ -60,7 +60,7 @@
 	transform: scale(1.05);
 }
 
-.req-accept-button:not(:disabled):active
+.prof-req-accept-button:not(:disabled):active
 {
 	background-color: #019f01;
 	border: thin solid rgb(54, 54, 54);
@@ -68,7 +68,7 @@
 	transform: scale(1.05);
 }
 
-.req-reject-button
+.prof-req-reject-button
 {
 	height: 80%;
 	width: 90%;
@@ -82,7 +82,7 @@
 	box-shadow: 1px 1px 1px #5c4326;
 }
 
-.req-reject-button:focus, .req-reject-button:hover
+.prof-req-reject-button:focus, .prof-req-reject-button:hover
 {
 	background-color: #b92a2c;
 	border: thin solid rgb(54, 54, 54);
@@ -90,7 +90,7 @@
 	transform: scale(1.05);
 }
 
-.req-reject-button:not(:disabled):active
+.prof-req-reject-button:not(:disabled):active
 {
 	background-color: #b02224;
 	border: thin solid rgb(54, 54, 54);

@@ -39,28 +39,28 @@ function get_victory(victory)
 		text_victory.textContent = "Defeat";
 	else
 		text_victory.textContent = "Tie";
-	text_victory.className = "text-victory";
+	text_victory.className = "prof-text-victory";
 	return text_victory;
 }
 
 function get_score(score_left, score_right, user_against)
 {
 	const score = document.createElement('div');
-	score.className = "score-div"
+	score.className = "prof-score-div"
 
 	const span_left = document.createElement('span');
-	span_left.className = "score-left";
+	span_left.className = "prof-score-left";
 	span_left.textContent = "You - " + format(score_left.toString());
 	score.appendChild(span_left);
 
 	const mid_text = document.createElement('p');
 	mid_text.textContent = " | ";
-	mid_text.className = "score-mid";
+	mid_text.className = "prof-score-mid";
 
 	score.appendChild(mid_text);
 	
 	const span_right = document.createElement('span');
-	span_right.className = "score-right";
+	span_right.className = "prof-score-right";
 	span_right.textContent = format(score_right.toString())
 							+ " - " + user_against;
 
@@ -163,17 +163,17 @@ function convert_sec_to_duration(duration_in_sec)
 function get_date_time(elem_date, game_duration)
 {
 	const text_date_time = document.createElement('div');
-	text_date_time.className = "date-duration-div";
+	text_date_time.className = "prof-date-duration-div";
 
 	const date = document.createElement('div');
 	date.textContent = get_date_since_now(elem_date);
-	date.className = "date-text";
+	date.className = "prof-date-text";
 	date.onmouseenter = hover_date_since_enter;
 	date.onmouseleave = hover_date_since_leave;
 
 	const time = document.createElement('p');
 	time.textContent = convert_sec_to_duration(game_duration);
-	time.className = "time-text";
+	time.className = "prof-time-text";
 	text_date_time.appendChild(date);
 	text_date_time.appendChild(time);
 	return text_date_time;
@@ -193,7 +193,7 @@ function get_history_elem_div(history_elem)
 	const history_elem_div = document.createElement("div");
 	let victory_state = get_victory_state(history_elem.main_player_score, history_elem.opponent_score);
 
-	history_elem_div.className = "history-elem-div";
+	history_elem_div.className = "prof-history-elem-div";
 	if (history_elem.game == "PG")
 	{
 		if (victory_state == "victory")
@@ -267,6 +267,6 @@ document.addEventListener("onModalsLoaded", function()
 	{
 		history_list = await get_history_from_DB();
 		// set click on first tab by default
-		on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
+		on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
 	})()
 });

@@ -1,4 +1,4 @@
-.history-scroll {
+.prof-history-scroll {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
@@ -11,18 +11,18 @@
 	background-color: #755632;
 }
 
-.history-scroll::-webkit-scrollbar {
+.prof-history-scroll::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-.history-scroll::-webkit-scrollbar-thumb {
+.prof-history-scroll::-webkit-scrollbar-thumb {
 	background: rgba(172, 172, 172, 0.5);
 	border-radius: 8px;
 	padding: 10px;
 }
 
-.history-elem-div {
+.prof-history-elem-div {
 	margin-bottom: 4px;
 	
 	display: flex;
@@ -38,7 +38,7 @@
 	max-width: 100%;
 }
 
-.text-victory {
+.prof-text-victory {
 	display: flex;
 	justify-content: center;
 	align-content: center;
@@ -52,7 +52,7 @@
 	overflow: hidden;
 }
 
-.score-div {
+.prof-score-div {
 	display: flex;
 
 	width: 60%;
@@ -60,7 +60,7 @@
 	overflow: hidden;
 }
 
-.score-left {
+.prof-score-left {
 	width: 45%;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -73,7 +73,7 @@
 	font-weight: bolder;
 }
 
-.score-mid {
+.prof-score-mid {
 	width: 10%;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -86,7 +86,7 @@
 	font-weight: bolder;
 }
 
-.score-right {
+.prof-score-right {
 	width: 45%;
 	color: aliceblue;
 	text-align: left;
@@ -96,7 +96,7 @@
 	font-weight: bolder;
 }
 
-.date-duration-div {
+.prof-date-duration-div {
 	display: flex;
 	flex-direction: column;
 
@@ -109,7 +109,7 @@
 	overflow: hidden;
 }
 
-.date-text {
+.prof-date-text {
 	position: relative;
 	display: inline-block;
 	text-align: center;
@@ -121,7 +121,7 @@
 	overflow: hidden;
 }
 
-.time-text {
+.prof-time-text {
 	margin: auto;
 	top: 0;
 	bottom: 0;
@@ -130,11 +130,11 @@
 	overflow: hidden;
 }
 
-.tabs-history {
+.prof-tabs-history {
 	display: flex;
 }
 
-.tab-text {
+.prof-tab-text {
 	margin-right: 2px;
 	margin-bottom: 0px;
 	border: 5px solid #684b2b;

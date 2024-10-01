@@ -1,21 +1,21 @@
-.button-add-friend {
+.prof-button-add-friend {
 	max-height: 50%;
 	margin-left: 10px;
 	transition: transform 1s;
 	cursor: pointer;
 }
 
-.button-add-friend:hover {
+.prof-button-add-friend:hover {
 	background-color: #00000003;
 	border-radius: 50%;
 	transform: rotate(90deg) scale(1.05);
 }
 
-.button-add-friend:focus {
+.prof-button-add-friend:focus {
 	transform: rotate(90deg);
 }
 
-.friend-title
+.prof-friend-title
 {
 	min-height: 50px;
 	height: 5vh;
@@ -24,7 +24,7 @@
 	align-items: center;
 }
 
-.friend-text-title
+.prof-friend-text-title
 {
 	font-family: 'Roboto', sans-serif;
 	font-size: 1.5rem;
@@ -36,7 +36,7 @@
 	text-shadow: 2px 2px 3px #5c4326;
 }
 
-.popup-add-friend
+.prof-popup-add-friend
 {
 	position: absolute;
 	width: 30vw;
@@ -49,7 +49,7 @@
 	align-items: center;
 }
 
-.add-friend-pseudo-input
+.prof-add-friend-pseudo-input
 {
 	margin-right: auto;
 	margin-left: 5%;
@@ -57,7 +57,7 @@
 	max-width: 200px;
 }
 
-.add-friend-popup-button
+.prof-add-friend-popup-button
 {
 	margin-left: auto;
 	margin-right: 5%;
@@ -67,7 +67,7 @@
 	background-color: #01b801;
 }
 
-.add-friend-popup-button:hover, .add-friend-popup-button:focus, .add-friend-popup-button:not(:disabled):active
+.prof-add-friend-popup-button:hover, .prof-add-friend-popup-button:focus, .prof-add-friend-popup-button:not(:disabled):active
 {
 	background-color: #01af01;
 	border: thin solid rgb(54, 54, 54);

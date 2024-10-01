@@ -53,6 +53,6 @@ function on_click_tab_history(elem)
 document.addEventListener("onModalsLoaded", function()
 {
 	// set click on first tab by default
-	on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
+	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
 });
 

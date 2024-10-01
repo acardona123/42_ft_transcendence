@@ -1,4 +1,4 @@
-.friends-list {
+.prof-friends-list {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
@@ -6,17 +6,17 @@
 	min-height: 50px;
 }
 
-.friends-list::-webkit-scrollbar {
+.prof-friends-list::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
 
-.friends-list::-webkit-scrollbar-thumb {
+.prof-friends-list::-webkit-scrollbar-thumb {
 	background: rgba(172, 172, 172, 0.5);
 	border-radius: 8px;
 }
 
-.friend-div {
+.prof-friend-div {
 	width: 100%;
 	margin-bottom: 5px;
 	margin-right: 5px;
@@ -24,13 +24,13 @@
 	border-radius: 10px;
 }
 
-.friend-div:hover {
+.prof-friend-div:hover {
 	border: 3px solid #634829;
 	background-color: #72533085;
 	box-shadow: inset 3px 3px 3px #725330;
 }
 
-.profil-pic {
+.prof-profil-pic {
 	align-self: center;
 	justify-self: left;
 	width: 65%;
@@ -41,7 +41,7 @@
 	margin: 5px;
 }
 
-.friend-container {
+.prof-friend-container {
 	display: grid;
 	grid-template-columns: 1fr 2fr 1fr;
 	grid-template-rows: 1fr;
@@ -49,7 +49,7 @@
 	grid-row-gap: 0px;
 }
 
-.friend-text {
+.prof-friend-text {
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -59,7 +59,7 @@
 	text-shadow: 2px 2px 2px #684a2b;
 }
 
-.online-dot-div {
+.prof-online-dot-div {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
@@ -68,7 +68,7 @@
 	justify-content: space-evenly;
 }
 
-.friend-online-dot {
+.prof-friend-online-dot {
 	cursor: pointer;
 	position: absolute;
 	top: 0;
@@ -79,11 +79,11 @@
 	width: 25%;
 }
 
-.friend-online-dot:hover {
+.prof-friend-online-dot:hover {
 	transform: scale(1.05);
 }
 
-.confirm-remove-friend {
+.prof-confirm-remove-friend {
 	cursor: pointer;
 	margin-top: auto;
 	margin-bottom: auto;
@@ -92,6 +92,6 @@
 	text-shadow: 2px 2px 2px #684a2b;
 }
 
-.confirm-remove-friend:hover {
+.prof-confirm-remove-friend:hover {
 	transform: scale(1.05)
 }

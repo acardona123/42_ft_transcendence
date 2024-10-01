@@ -188,21 +188,21 @@ function get_requests_pseudo()
 function get_req_sub_container(request_info)
 {
 	const req_sub_container = document.createElement('div');
-	req_sub_container.className = "req-sub-container";
+	req_sub_container.className = "prof-req-sub-container";
 
 	const pseudo_text = document.createElement('p');
 	pseudo_text.textContent = request_info;
-	pseudo_text.className = "req-pseudo";
+	pseudo_text.className = "prof-req-pseudo";
 
 	const button_accept = document.createElement('button');
 	button_accept.tabIndex = "0";
-	button_accept.className = "req-accept-button btn";
+	button_accept.className = "prof-req-accept-button btn";
 	button_accept.textContent = "Accept";
 	button_accept.onclick = accept_friend_req;
 
 
 	const button_reject = document.createElement('button');
-	button_reject.className = "req-reject-button btn";
+	button_reject.className = "prof-req-reject-button btn";
 	button_reject.textContent = "Reject";
 	button_reject.onclick = reject_friend_req;
 

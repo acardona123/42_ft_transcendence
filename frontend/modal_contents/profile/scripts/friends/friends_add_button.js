@@ -13,11 +13,11 @@ function position_friend_popup(popup_add_friend)
 function fill_add_popup(popup_add_friend)
 {
 	const button_add = document.createElement('button');
-	button_add.className = "add-friend-popup-button btn";
+	button_add.className = "prof-add-friend-popup-button btn";
 	button_add.textContent = "Confirm";
 	button_add.onclick = send_friend_request;
 	const input_text = document.createElement('input');
-	input_text.className = "add-friend-pseudo-input";
+	input_text.className = "prof-add-friend-pseudo-input";
 	input_text.type = "text";
 	input_text.id = "add_friend_pseudo_input";
 	input_text.placeholder = "Pseudonyme";
@@ -35,7 +35,7 @@ function show_friend_popup(event)
 		return ;
 	const popup_add_friend = document.createElement('div');
 	popup_add_friend.id = "popup_add_friend";
-	popup_add_friend.className = "popup-add-friend";
+	popup_add_friend.className = "prof-popup-add-friend";
 	popup_add_friend.style.zIndex = "1";
 	popup_add_friend.onkeydown = remove_friends_popup;
 	
