@@ -250,7 +250,7 @@
 
 /* ================================================ */
 
-/* === MODAL register === */
+/* === MODAL edit profile === */
 
 #modal-edit-profile-dialog
 {
@@ -262,6 +262,25 @@
 #modal-edit-profile-content
 {
 	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL profile === */
+
+#modal-profile-dialog
+{
+	max-width: none;
+	border: thin solid red;
+	height: 80vh;
+	width: 80vw;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-profile-content
+{
+	height: 100% !important;
+	width: 100%;
 }
 
 /* ================================================ */
