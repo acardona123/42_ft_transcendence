@@ -247,8 +247,8 @@ function update_requests_list(is_init=false)
 async function get_data_from_database()
 {
 	const url = "https://localhost:8443/api/friends/request/";
-	let fetched_data = await fetch(url);
 	try {
+		let fetched_data = await fetch(url);
 		if (!fetched_data.ok)
 		{
 			throw new Error(`${fetched_data.status}`);

@@ -234,13 +234,14 @@ function sort_by_online_alpha(data)
 async function get_friend_list()
 {
 	const url = "https://localhost:8443/api/friends/";
-	let fetched_data = await fetch(url);
 	try
 	{
+		let fetched_data = await fetch(url);
 		if (!fetched_data.ok)
 			throw new Error(`${fetched_data.status}`);
 
 		fetched_data = await fetched_data.json();
+		console.log(fetched_data);
 		let data = fetched_data.data;
 
 		// TODO: add online and picture
