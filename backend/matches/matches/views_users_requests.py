@@ -18,7 +18,7 @@ def get_authenticated_user_id(request):
 
 def get_authenticated_user_id_or_new_guest(request):
 	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/my_id"
-	# # header=??? fot authentification
+	# # header=??? fot authentication
 	# response = requests.get(url)
 	# status = response.status_code
 	# data_content = response.json()
