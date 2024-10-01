@@ -48,7 +48,7 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 		super().__init__(*args, **kwargs)
 
 		self.user_id = self.context.get('user_id')
-		if not self.user_id:
+		if self.user_id == None:
 			raise ("user_id is needed in context to use the match history serializer")
 		if hasattr(self, 'instance') and 'opponent_username' in self.fields:
 			opponents_ids = list()
