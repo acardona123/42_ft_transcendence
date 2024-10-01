@@ -64,7 +64,7 @@ GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
 GET https://localhost:8443/api/users/ HTTP/1.1
 
 ### update password
-PUT https://localhost:8443/api/users/update_password/ HTTP/1.1
+PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDUxMDAxLCJpYXQiOjE3Mjc0NTA3MDEsImp0aSI6IjU5MmQzZjM0OGE0NDRmMzY5NDkwNmE3MjY1YTc2NTY0IiwidXNlcl9pZCI6NX0.QoXtZdV4rc2mO5uKbX4geb_FBfF_8lfJgcOJSCP09uo
 content-type: application/json
 
@@ -75,7 +75,7 @@ content-type: application/json
 }
 
 ### update info
-PUT https://localhost:8443/api/users/update_user/ HTTP/1.1
+PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
 content-type: application/json
 

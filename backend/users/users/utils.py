@@ -4,6 +4,7 @@ from .serializer import OauthUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
 from app.settings import TEMPORARY_ACCESS_TOKEN_LIFETIME
+from .views import MSG_USER_OAUTH_CREATED, MSG_ERROR_CREATIN_USER_OAUTH, MSG_LOGIN_OAUTH
 import certifi
 import requests
 import os
@@ -38,19 +39,19 @@ def create_user_oauth(data):
 		user = serializer.save()
 		tokens = get_tokens_for_user(user)
 		if change_username:
-			return Response({'message': 'new user created with 42 API',
+			return Response({'message': MSG_USER_OAUTH_CREATED,
 						'warning' : 'change username because already used',
 						'data': {'user': serializer.data, 'tokens': tokens}}, status=201)
 		else:
-			return Response({'message': 'new user created with 42 API',
+			return Response({'message': MSG_USER_OAUTH_CREATED,
 						'data': {'user': serializer.data, 'tokens': tokens}}, status=201)
-	return Response({'message': 'invalid data to create new user with 42 API',
+	return Response({'message': MSG_ERROR_CREATIN_USER_OAUTH,
 				'data': serializer.errors}, status=400)
 
 def login_user_oauth(id):
 	user = CustomUser.objects.filter(oauth_id=id).first()
 	tokens = get_tokens_for_user(user)
-	return Response({'message': 'user login with 42 API',
+	return Response({'message': MSG_LOGIN_OAUTH,
 						'data': {'tokens': tokens}}, status=200)
 
 # --------------- JWT --------------------
@@ -61,7 +62,6 @@ class TemporaryToken(AccessToken):
 def get_temp_tokens_for_user(user):
 	acces_token = TemporaryToken.for_user(user)
 	acces_token["scope"] = "temporary"
-	print(acces_token.payload)
 	return {
 		'access': str(acces_token),
 	}
@@ -69,8 +69,6 @@ def get_temp_tokens_for_user(user):
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
 	refresh["scope"] = "normal"
-	print(refresh.payload)
-	print(refresh.access_token.payload)
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),

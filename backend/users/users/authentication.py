@@ -15,7 +15,6 @@ class CustomJWTAuthentication(JWTAuthentication):
 
 class IsTemporaryToken(BasePermission):
 	def has_permission(self, request, view):
-		print("check temporary")
 		if request.user == None or request.auth == None:
 			return False
 		token = request.auth
@@ -25,7 +24,6 @@ class IsTemporaryToken(BasePermission):
 
 class IsNormalToken(BasePermission):
 	def has_permission(self, request, view):
-		print("check normal")
 		if request.user == None or request.auth == None:
 			return False
 		token = request.auth
