@@ -235,10 +235,6 @@ function add_element_to_history(history_elem, id)
 	_history_list.appendChild(history_elem_div);
 }
 
-
-let date_now;
-const history_list = get_history_from_DB(DB_history);
-
 function update_history_list(tab)
 {
 	date_now = Date.now();
@@ -261,3 +257,11 @@ function update_history_list(tab)
 		_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
 	}
 }
+
+let date_now;
+let history_list;
+
+document.addEventListener("onModalsLoaded", function()
+{
+	history_list = get_history_from_DB(DB_history);
+});

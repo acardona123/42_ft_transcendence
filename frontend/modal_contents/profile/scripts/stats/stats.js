@@ -63,4 +63,7 @@ function build_all_containers()
 		build_container(containers.children[i], i, false);
 }
 
-build_all_containers();
+document.addEventListener("onModalsLoaded", function()
+{
+	build_all_containers();
+});

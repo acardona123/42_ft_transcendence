@@ -50,5 +50,9 @@ function on_click_tab_history(elem)
 	set_border_hider(elem);
 }
 
-// set click on first tab by default
-on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
+document.addEventListener("onModalsLoaded", function()
+{
+	// set click on first tab by default
+	on_click_tab_history(document.getElementsByClassName("tab-text")[0]);
+});
+

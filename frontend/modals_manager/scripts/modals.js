@@ -30,6 +30,7 @@ var modalPlay = undefined;
 var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
 var modalParameters = undefined;
+var modalProfile = undefined;
 
 function openModalLogin() {
 
@@ -172,6 +173,21 @@ function keypressModalParameters(event) {
 	}
 }
 
+function openModalProfile() {
+
+	modalProfile = new ModalManager('modal-profile');
+
+	var modaldialog = document.getElementById('modal-profile-dialog');
+	modaldialog.classList.add('grow-bottom-right');
+	modalProfile.showModal();
+}
+
+function hideModalProfile() {
+	var modaldialog = document.getElementById('modal-profile-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalProfile.hideModal();
+}
+
 
 // FETCH MODALS
 // Will load all the html modal files
@@ -179,26 +195,28 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
 			fetch('modal_contents/register/register.html'),
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
-			fetch('modal_contents/edit_profile/edit_profile.html')
+			fetch('modal_contents/edit_profile/edit_profile.html'),
+			fetch('modal_contents/profile/profile.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
 			register.text(),
 			solo_ai_menu.text(),
 			versus_menu.text(),
-			edit_profile.text()
+			edit_profile.text(),
+			profile.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile;
+		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile;
 	}
 	catch (error)
 	{

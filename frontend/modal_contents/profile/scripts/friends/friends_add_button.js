@@ -95,10 +95,12 @@ function onWindowClick(event)
 		remove_friends_popup();
 }
 
-// send_friend_request();
+document.addEventListener("onModalsLoaded", function()
+{
+	window.onresize = onWindowResize;
+	const elem = document.getElementById("add_friend_button");
+	elem.onclick = null;
+	window.addEventListener('click', onWindowClick);
+	activate_friends_button();
+});
 
-window.onresize = onWindowResize;
-const elem = document.getElementById("add_friend_button");
-elem.onclick = null;
-window.addEventListener('click', onWindowClick);
-activate_friends_button();

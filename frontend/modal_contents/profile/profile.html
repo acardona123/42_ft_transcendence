@@ -1,0 +1,61 @@
+<div class="modal" id="modal-profile" tabindex="-1">
+	<div class="modal-dialog modal-dialog-overwrite-size" id="modal-profile-dialog" >
+		<div class="modal-content custom-small-content" id="modal-profile-content" style="background-color: #795833">
+			<h1 class="font" style="text-align: center;">PROFILE</h1>
+			<div class="notif-main-div"></div>
+			<div class="container global-container">
+				<div class="sec-friends" id="sec_friend">
+					<div class="friend-title" id="friend-title">
+						<h1 class="friend-text-title">FRIENDS</h1>
+						<img class="button-add-friend" id="add_friend_button" src="./img/add_friend.png" tabindex="0">
+					</div>
+					<div class="friends-list" id="friends-list"></div>
+					<div>
+						<h1 class="font" style="text-align: center;">REQUESTS</h1>
+					</div>
+					<div class="req-container" id="req_container"></div>
+				</div>
+
+				<div class="sec-friends-line">
+					<div class="line-vertical"></div>
+				</div>
+
+				<div class="glob-right-sec-div">
+					<div class="sec-stats">
+						<h1 class="font" style="text-align: center;">STATS</h1>
+						<div class="stats-div">
+							<div class="stats-pong-div" id="stats_pong_div">
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+							</div>
+							<div class="vertical-stats-line"></div>
+							<div class="stats-flappy-div" id="stats_flappy_div">
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+								<div class="stats-container-div"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="sec-stats-line">
+						<div class="line-horizontal"></div>
+					</div>
+
+					<div class="sec-history">
+						<h1 class="font" style="text-align: center">HISTORY</h1>
+						<div class="tabs-history">
+							<p class="tab-text" onclick="on_click_tab_history(this)">Pong</p>
+							<p class="tab-text" onclick="on_click_tab_history(this)">Flappy fish</p>
+						</div>
+						<div class="history-scroll">
+							<div id="history_list"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
