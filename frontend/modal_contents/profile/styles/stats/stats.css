@@ -1,6 +1,7 @@
 .prof-stats-div {
 	display: flex;
 	height: 100%;
+	width: 100%;
 	padding: 0;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -52,16 +53,23 @@
 }
 
 .prof-stats-container-left {
+	container-type: inline-size;
 	display: flex;
 	flex-direction: column;
-	z-index: -1;
 	background-color: #dbc1ac;
 	border-radius: 10px 0 0 10px;
 	width: 40%;
 }
 
+@container (max-width: 80px)
+{
+	.prof-stats-container-name
+	{
+		display: none;
+	}
+}
+
 .prof-stats-container-right {
-	z-index: -1;
 	background-color: #ece0d1;
 	border-radius: 0 10px 10px 0;
 	width: 60%;
@@ -81,6 +89,7 @@
 }
 
 .prof-stats-container-name {
+	font-size: small;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
@@ -90,7 +99,7 @@
 
 .prof-stats-stat-text {
 	font-family: 'Courier New', monospace;
-	font-size: 25px;
+	font-size: 2vw;
 	text-align: center;
 	align-self: center;
 	margin: 0;

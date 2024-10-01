@@ -1,15 +1,15 @@
 const pong_stats_info = [
-	{image : "../../../img/pong_match_icon.png", name : "Matches played"},
-	{image : "../../../img/pong_winrate_icon.png", name : "Match win rate"},
-	{image : "../../../img/pong_tournament_icon.png", name : "Tournaments"},
-	{image : "../../../img/pong_top1_icon.png", name : "Top 1"},
+	{image : "modal_contents/profile/img/pong_match_icon.png", name : "Matches"},
+	{image : "modal_contents/profile/img/pong_winrate_icon.png", name : "Match win rate"},
+	{image : "modal_contents/profile/img/pong_tournament_icon.png", name : "Tournaments"},
+	{image : "modal_contents/profile/img/pong_top1_icon.png", name : "Top 1"},
 ]
 
 const flappy_stats_info = [
-	{image : "../../../img/flappy_match_icon.png", name : "Matches"},
-	{image : "../../../img/flappy_winrate_icon.png", name : "Match win rate"},
-	{image : "../../../img/flappy_tournament_icon.png", name : "Tournaments played"},
-	{image : "../../../img/flappy_top1_icon.png", name : "Top 1"}
+	{image : "modal_contents/profile/img/flappy_match_icon.png", name : "Matches"},
+	{image : "modal_contents/profile/img/flappy_winrate_icon.png", name : "Match win rate"},
+	{image : "modal_contents/profile/img/flappy_tournament_icon.png", name : "Tournaments"},
+	{image : "modal_contents/profile/img/flappy_top1_icon.png", name : "Top 1"}
 ]
 
 function get_picture(id, is_pong)

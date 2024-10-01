@@ -28,7 +28,7 @@ function getFriendOnline(f_is_online)
 	const online_dot_div = document.createElement('div');
 	online_dot_div.className = "prof-online-dot-div";
 	const online_dot_img = document.createElement('img');
-	online_dot_img.src = is_online ? "./img/online.png" : "./img/offline.png";
+	online_dot_img.src = is_online ? "modal_contents/profile/img/online.png" : "modal_contents/profile/img/offline.png";
 	online_dot_img.className = "prof-friend-online-dot";
 	online_dot_img.href = online_dot_img.src;
 	online_dot_img.tabIndex = "0";
@@ -50,14 +50,14 @@ function remove_friend_enter(event)
 	if (event.type == 'focusin') // on focus
 	{
 		lastReplacedElemFocus = elem;
-		elem.src = "./img/trash.png";
+		elem.src = "modal_contents/profile/img/trash.png";
 		clicked_once = false;
 	}
 	else // on mouse
 	{
 		elem = elem.childNodes[2].childNodes[0];
 		lastReplacedElemHover = elem;
-		elem.src = "./img/trash.png";
+		elem.src = "modal_contents/profile/img/trash.png";
 	}
 }
 
@@ -101,8 +101,8 @@ function set_confim_remove(target)
 	const confirm_trash = document.createElement('img');
 	const cancel_trash = document.createElement('img');
 
-	confirm_trash.src = "./img/confirm_remove_friend.png";
-	cancel_trash.src = "./img/remove_friend.png";
+	confirm_trash.src = "modal_contents/profile/img/confirm_remove_friend.png";
+	cancel_trash.src = "modal_contents/profile/img/remove_friend.png";
 	confirm_trash.className = "prof-confirm-remove-friend";
 	cancel_trash.className = "prof-confirm-remove-friend";
 	confirm_trash.onclick = remove_friend;
