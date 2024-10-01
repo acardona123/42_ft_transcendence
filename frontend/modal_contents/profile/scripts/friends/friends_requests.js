@@ -265,9 +265,10 @@ async function get_data_from_database()
 	return undefined;
 }
 
+let data_requests = undefined;
+
 document.addEventListener("onModalsLoaded", function()
 {
-	let data_requests = undefined;
 	(async () => {
 		data_requests = await get_data_from_database();
 		update_requests_list(true);

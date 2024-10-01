@@ -288,10 +288,10 @@ function update_friend_list(is_init=false)
 	}
 }
 
+let friend_list_data = undefined;
+
 document.addEventListener("onModalsLoaded", function()
 {
-	let friend_list_data = undefined;
-	
 	(async () => {
 		friend_list_data = await get_friend_list();
 		update_friend_list(true);
