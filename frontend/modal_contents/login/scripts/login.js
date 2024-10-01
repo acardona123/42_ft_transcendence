@@ -15,5 +15,8 @@ function send_form_login(form)
 	};
 }
 
-const form = document.getElementById("login-inputs-form");
-change_form_behavior_for_SPA(form, send_form_login);
+document.addEventListener("onModalsLoaded", function()
+{
+	const form = document.getElementById("login-inputs-form");
+	change_form_behavior_for_SPA(form, send_form_login);
+});

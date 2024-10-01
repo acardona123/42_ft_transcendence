@@ -16,9 +16,12 @@ function on_input_write_when_filled()
 	}
 }
 
-const list_inputs = document.getElementsByClassName("inputs-login");
-
-for (const input of list_inputs)
+document.addEventListener("onModalsLoaded", function()
 {
-	input.oninput = on_input_write_when_empty;
-}
+	const list_inputs = document.getElementsByClassName("inputs-login");
+	
+	for (const input of list_inputs)
+	{
+		input.oninput = on_input_write_when_empty;
+	}
+});

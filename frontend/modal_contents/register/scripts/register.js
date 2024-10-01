@@ -27,5 +27,13 @@ function send_form_register(form)
 	})
 }
 
-const form = document.getElementById("register-inputs-form");
-change_form_behavior_for_SPA(form, send_form_register);
+document.addEventListener("onModalsLoaded", function()
+{
+	const list_inputs = document.getElementsByClassName("inputs-register");
+	for (const input of list_inputs)
+	{
+		input.oninput = on_input_write_when_empty;
+	}
+	const form = document.getElementById("register-inputs-form");
+	change_form_behavior_for_SPA(form, send_form_register);
+});
