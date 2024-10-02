@@ -1,0 +1,70 @@
+#tfal-main-div
+{
+	width: 100%;
+}
+
+#tfal-qrcode-div
+{
+	display: flex;
+	flex-direction: column;
+}
+
+#tfal-qrcode-title-text
+{
+	margin: auto;
+}
+
+#tfal-qrcode
+{
+	margin: 10%;
+	margin-bottom: 5%;
+	width: 80%;
+	aspect-ratio: 1/1;
+}
+
+#tfal-line-sep-div
+{
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.tfal-line-sep
+{
+	margin: auto;
+	height: 2px;
+	width: 100%;
+	background-color: rgb(46, 46, 46);
+}
+
+#tfal-line-sep-left
+{
+	width: 25%;
+	margin-left: auto;
+	margin-right: 10px;
+}
+
+#tfal-line-sep-right
+{
+	width: 25%;
+	margin-right: auto;
+	margin-left: 10px;
+}
+
+#tfal-key-code-div
+{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#tfal-title-text-code
+{
+	margin: auto;
+}
+
+#tfal-key-text-code
+{
+	margin: auto;
+}

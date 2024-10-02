@@ -31,6 +31,7 @@ var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
 var modalParameters = undefined;
 var modalProfile = undefined;
+var modalTwoFALogin = undefined;
 
 function openModalLogin() {
 
@@ -173,6 +174,8 @@ function keypressModalParameters(event) {
 	}
 }
 
+//
+
 function openModalProfile() {
 
 	modalProfile = new ModalManager('modal-profile');
@@ -189,6 +192,23 @@ function hideModalProfile() {
 	modalProfile.hideModal();
 }
 
+//
+
+function openModalTwoFALogin() {
+
+	modalTwoFALogin = new ModalManager('modal-2fa-login');
+
+	var modaldialog = document.getElementById('modal-2fa-login-dialog');
+	modaldialog.classList.add('grow-bottom-right');
+	modalTwoFALogin.showModal() 
+}
+
+function hideModalTwoFALogin() {
+	var modaldialog = document.getElementById('modal-2fa-login-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalTwoFALogin.hideModal();
+}
+
 
 // FETCH MODALS
 // Will load all the html modal files
@@ -196,7 +216,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_login] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -204,10 +224,11 @@ async function get_modals_html()
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
-			fetch('modal_contents/profile/profile.html')
+			fetch('modal_contents/profile/profile.html'),
+			fetch('modal_contents/twoFA/twoFA_login.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_login] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -215,9 +236,10 @@ async function get_modals_html()
 			solo_ai_menu.text(),
 			versus_menu.text(),
 			edit_profile.text(),
-			profile.text()
+			profile.text(),
+			twoFA_login.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile;
+		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile + twoFA_login;
 	}
 	catch (error)
 	{
