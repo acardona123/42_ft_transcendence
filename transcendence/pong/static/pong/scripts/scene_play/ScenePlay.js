@@ -26,7 +26,7 @@ class ScenePlay extends Phaser.Scene{
 		this.#scene_textures = loaded_boot_textures.scenePlay;
 		for (const [key, value] of Object.entries(this.#scene_textures)){
 			value.transferToScene(this);
-		}	
+		}
 	}
 	
 	
@@ -41,7 +41,9 @@ class ScenePlay extends Phaser.Scene{
 		this.#createInteractions();
 
 		this.#newRound();
-		this.#clock.start();
+		this.time.delayedCall(10, () => {
+            this.#clock.start();
+        }, [], this);
 	}
 		
 	#createAnimations(){
