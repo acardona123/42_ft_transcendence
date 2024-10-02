@@ -5,14 +5,10 @@
 	cursor: pointer;
 }
 
-.prof-button-add-friend:hover {
+.prof-button-add-friend:hover, .prof-button-add-friend:focus {
 	background-color: #00000003;
 	border-radius: 50%;
 	transform: rotate(90deg) scale(1.05);
-}
-
-.prof-button-add-friend:focus {
-	transform: rotate(90deg);
 }
 
 .prof-friend-title

@@ -1,12 +1,12 @@
 function position_friend_popup(popup_add_friend)
 {
 	const add_friend_button = document.getElementById("add_friend_button");
-	var rect = add_friend_button.getBoundingClientRect();
+	const margin_modal = getComputedStyle(document.getElementById("modal-profile-dialog")).getPropertyValue('margin-left');
+	let rect = add_friend_button.getBoundingClientRect();
+	let offsetX = rect.right + rect.width - 20;
+	let offsetY = rect.bottom - (popup_add_friend.bottom - popup_add_friend.top);
 
-	const offsetX = rect.right + 10;
-	const offsetY = rect.bottom - (popup_add_friend.bottom - popup_add_friend.top);
-
-	popup_add_friend.style.left = offsetX.toString() + "px";
+	popup_add_friend.style.left = "calc(" + offsetX.toString() + "px - " + margin_modal + ")";
 	popup_add_friend.style.top = offsetY.toString() + "px";
 }
 
