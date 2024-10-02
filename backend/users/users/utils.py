@@ -17,7 +17,7 @@ def get_token_oauth(code):
 		'client_id' : os.getenv('CLIENT_ID'),
 		'client_secret' : os.getenv('CLIENT_SECRET'),
 		'code' : code,
-		'redirect_uri' : os.getenv('REDIRECT_URL'),
+		'redirect_uri' : os.getenv('OAUTH_REDIRECT_URL'),
 		'state' : os.getenv('STATE'),
 	}
 	response = requests.post('https://api.intra.42.fr/oauth/token', data=data, verify=certifi.where())

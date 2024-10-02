@@ -3,10 +3,11 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
+	"username" : "coucou",
 	"password" : "123asd456",
-	"email" : "a@gmai.com",
 	"password2" : "123asd456",
-	"username" : "            d     g        "
+	"email" : "a@gmai.com",
+	"phone" : "+33659482658"
 }
 
 ### get url api42
@@ -18,7 +19,7 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "johanne"
+	"username" : "coucou"
 }
 
 ### login 2fa
@@ -48,24 +49,23 @@ content-type: application/json
 
 ### update password
 PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NDUxMDAxLCJpYXQiOjE3Mjc0NTA3MDEsImp0aSI6IjU5MmQzZjM0OGE0NDRmMzY5NDkwNmE3MjY1YTc2NTY0IiwidXNlcl9pZCI6NX0.QoXtZdV4rc2mO5uKbX4geb_FBfF_8lfJgcOJSCP09uo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODk5NTYxLCJpYXQiOjE3Mjc4OTg2NjEsImp0aSI6IjhjNGRkYjhhZDE0MzRhMjQ4Y2RkNDYwMjViZDhjMTAzIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.WzXbjcVJXQHfAnvGI4Dm4INnJnElDfsXAzYxlOXYVnc
 content-type: application/json
 
 {
 	"old_password": "123asd456",
-	"password": "d",
+	"password": "dvv",
 	"password2": "d"
 }
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODk5ODgwLCJpYXQiOjE3Mjc4OTg5ODAsImp0aSI6ImViOGI4NDcxMzRlNzRhOGI5YWFmZGVkMDhiYjRlNTQxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.DTeqE0df0VVZ9DdYJFSw7jSs_DiiqO53xknEVhUUc24
 content-type: application/json
 
 {
-	"username": "johanne",
-	"email": "fghf@fdg.lpd",
-	"phone": "0326597845"
+	"email": "fghf@fdg",
+	"phone": "032659ffff7845"
 }
 
 ### update 2fa

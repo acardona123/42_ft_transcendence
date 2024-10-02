@@ -14,7 +14,15 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	MSG_ERROR_OAUTH_INFO, MSG_ERROR_UPDATE_PASSWORD_OAUTH, MSG_ERROR_UPDATE_PASSWORD,
 	MSG_ERROR_UPDATE_USER_INFO, MSG_USER_CREATED, MSG_LOGIN_NEED_2FA,
 	MSG_LOGIN, MSG_DISABLE_2FA, MSG_ENABLE_2FA, MSG_SEND_URL_OAUTH,
-	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE)
+	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE,
+	DOC_ERROR_METHOD_NOT_ALLOWED, DOC_USER_CREATED, DOC_ERROR_CREATING_USER,
+	DOC_USER_LOGIN, DOC_USER_LOGIN_2FA, DOC_ERROR_LOGIN_FAILED,
+	DOC_ERROR_UNAUTHORIZED, DOC_2FA_VALID, DOC_ERROR_INVALID_2FA,
+	JWT_TOKEN, DOC_ERROR_WRONG_2FA_STATUS, DOC_DISABLE_2FA, DOC_ENABLE_2FA,
+	DOC_URL_OAUTH42, DOC_USER_LOGIN_API42, DOC_USER_CREATED_API42_WARNING,
+	DOC_USER_CREATED_API42, DOC_ERROR_LOGIN_API42, DOC_ERROR_UPDATE_PASSWORD,
+	DOC_IMPOSSIBLE_UPDATE_PASSWORD, DOC_UPDATE_PASSWORD, DOC_ERROR_UPDATE_INFO,
+	DOC_UPDATE_INFO)
 
 # @api_view(['GET'])
 # def get_id(request):
@@ -39,9 +47,27 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 # 		dic[user] = list[i]
 # 		i+=1
 # 	return Response(dic)
-
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 # --------------- user managment --------------------
 
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['username','password', 'password2'],
+		properties={
+			'username': openapi.Schema(type=openapi.TYPE_STRING),
+			'password': openapi.Schema(type=openapi.TYPE_STRING),
+			'password2': openapi.Schema(type=openapi.TYPE_STRING),
+			'email': openapi.Schema(type=openapi.TYPE_STRING),
+			'phone': openapi.Schema(type=openapi.TYPE_STRING),
+		}
+	),
+	responses={
+		201: DOC_USER_CREATED,
+		400: DOC_ERROR_CREATING_USER,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 def register_user(request):
 	serializer = UserSerializer(data=request.data)
@@ -59,6 +85,21 @@ def register_user(request):
 	}
 	return Response(data, status=400)
 
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['username','password'],
+		properties={
+			'username': openapi.Schema(type=openapi.TYPE_STRING),
+			'password': openapi.Schema(type=openapi.TYPE_STRING),
+		}
+	),
+	responses={
+		200: DOC_USER_LOGIN,
+		"200bis": DOC_USER_LOGIN_2FA,
+		401: DOC_ERROR_LOGIN_FAILED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 def login_user(request):
 	username = request.data.get('username', None)
@@ -77,7 +118,21 @@ def login_user(request):
 				  	"data" : token}, status=200)
 
 # --------------- 2fa --------------------
-
+@swagger_auto_schema(method='post',
+	manual_parameters=[JWT_TOKEN],
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['token'],
+		properties={
+			'token': openapi.Schema(type=openapi.TYPE_STRING, description='6 digits'),
+		}
+	),
+	responses={
+		200: DOC_2FA_VALID,
+		400: DOC_ERROR_INVALID_2FA,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 @permission_classes([IsTemporaryToken])
 def check_2fa(request):
@@ -99,7 +154,23 @@ def check_2fa(request):
 						"data": token}, status=200)
 	return Response({"message": MSG_ERROR_WRONG_TOKEN}, status=400)
 
-@api_view(['POST'])
+@swagger_auto_schema(method='put',
+	manual_parameters=[JWT_TOKEN],
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['2fa_status'],
+		properties={
+			'2fa_status': openapi.Schema(type=openapi.TYPE_STRING, description="on or off"),
+		}
+	),
+	responses={
+		200: DOC_DISABLE_2FA,
+		201: DOC_ENABLE_2FA,
+		400: DOC_ERROR_WRONG_2FA_STATUS,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
+@api_view(['PUT'])
 @permission_classes([IsNormalToken])
 def update_2fa(request):
 	status_2fa = request.data.get("2fa_status", None)
@@ -126,15 +197,27 @@ def update_2fa(request):
 
 # --------------- Oauth --------------------
 
+@swagger_auto_schema(method='get',
+	responses={
+		200: DOC_URL_OAUTH42,
+	})
 @api_view(['GET'])
 def get_url_api(request):
 	client_id = os.getenv('CLIENT_ID')
 	state = os.getenv('STATE')
-	redirect = os.getenv('REDIRECT_URL')
+	redirect = os.getenv('OAUTH_REDIRECT_URL')
 	url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect}&response_type=code&scope=public&state={state}"
 	return Response({'message' : MSG_SEND_URL_OAUTH,
 					'data' : url}, status=200)
 
+@swagger_auto_schema(method='get',
+	responses={
+		'200': DOC_USER_LOGIN_API42,
+		'200bis': DOC_USER_CREATED_API42,
+		'200bisbis': DOC_USER_CREATED_API42_WARNING,
+		'400/401': DOC_ERROR_LOGIN_API42,
+		'405': DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['GET'])
 def login_oauth(request):
 	if request.GET.get('state') != os.getenv('STATE'):
@@ -153,6 +236,24 @@ def login_oauth(request):
 
 # --------------- Update profile --------------------
 
+@swagger_auto_schema(method='put',
+	manual_parameters=[JWT_TOKEN],
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['password', 'password2', 'old_password'],
+		properties={
+			'password': openapi.Schema(type=openapi.TYPE_STRING),
+			'password2': openapi.Schema(type=openapi.TYPE_STRING),
+			'old_password': openapi.Schema(type=openapi.TYPE_STRING),
+		}
+	),
+	responses={
+		200: DOC_UPDATE_PASSWORD,
+		400: DOC_IMPOSSIBLE_UPDATE_PASSWORD,
+		'400bis': DOC_ERROR_UPDATE_PASSWORD,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['PUT'])
 @permission_classes([IsNormalToken])
 def update_password(request):
@@ -168,6 +269,23 @@ def update_password(request):
 	}
 	return Response(data, status=400)
 
+@swagger_auto_schema(method='put',
+	manual_parameters=[JWT_TOKEN],
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['username', 'email', 'phone'],
+		properties={
+			'username': openapi.Schema(type=openapi.TYPE_STRING),
+			'email': openapi.Schema(type=openapi.TYPE_STRING),
+			'phone': openapi.Schema(type=openapi.TYPE_STRING),
+		}
+	),
+	responses={
+		200: DOC_UPDATE_INFO,
+		400: DOC_ERROR_UPDATE_INFO,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['PUT'])
 @permission_classes([IsNormalToken])
 def update_user_info(request):

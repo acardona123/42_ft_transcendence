@@ -28,3 +28,299 @@ MSG_SEND_URL_OAUTH = "Send url to oauth2.0 with 42 API"
 MSG_PASSWORD_UPDATE = "Password updated"
 MSG_INFO_USER_UPDATE = "User info updated"
 MSG_USER_OAUTH_CREATED = "New user created with 42 API"
+
+#--------------------DOC--------------------
+from drf_yasg import openapi
+
+DOC_ERROR_METHOD_NOT_ALLOWED = openapi.Response(
+			description="Method Not Allowed",
+			examples={
+				"application/json": {
+					"detail": "Method \"PUT\" not allowed."
+					}
+			}
+		)
+
+DOC_ERROR_UNAUTHORIZED = openapi.Response(
+			description="Unauthorized to access the page, need to have jwt",
+			examples={
+				"application/json": {
+					"detail": "Given token not valid for any token type",
+					"code": "token_not_valid",
+					"messages": [
+						{
+						"token_class": "AccessToken",
+						"token_type": "access",
+						"message": "Token is invalid or expired"
+						}
+					]
+				}
+			}
+		)
+
+DOC_USER_CREATED = openapi.Response(
+			description="return user created, token => refresh and access",
+			examples={
+				"application/json": {
+					"message": MSG_USER_CREATED,
+					"data": {
+						"user": {
+							"id": 4,
+							"email": "a@gmai.com",
+							"phone": "+33659482658",
+							"username": "coucou"
+						},
+						"tokens": {
+							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
+							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
+						}
+					}
+				}
+			}
+		)
+
+DOC_ERROR_CREATING_USER = openapi.Response(
+			description="failed to created user in database",
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_CREATING_USER,
+					"data": {
+						"username": [
+							"This field is required."
+							]
+					}
+				}
+			}
+		)
+
+DOC_ERROR_LOGIN_FAILED = openapi.Response(
+			description="failed to login with credentials",
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_NO_ACCOUNT
+				}
+			}
+		)
+
+DOC_USER_LOGIN = openapi.Response(
+			description=MSG_LOGIN,
+			examples={
+				"application/json": {
+					"message": MSG_LOGIN,
+					"data": {
+						"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTg5MiwiaWF0IjoxNzI3ODg1NDkyLCJqdGkiOiI5ODJjNzkwYjMyMDc0NWE3YmY2ZTA5YzBkY2I2N2MwNSIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.ZDb5YSXDBhUDmNaDGjwIaL0SuwgHFk6DjVWosjBY3u8",
+						"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg2MzkyLCJpYXQiOjE3Mjc4ODU0OTIsImp0aSI6ImE2ODQzYjdkYTFhMDRlZTdhZmRiM2ZmNTcwMjYwOTJiIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.hgISgwKd2HoJbCgJ6BbRLaGPjmGkk03I6Kpdd-F2mMA",
+						"2fa_status": False
+					}
+				}
+			}
+		)
+
+DOC_USER_LOGIN_2FA = openapi.Response(
+			description=MSG_LOGIN_NEED_2FA,
+			examples={
+				"application/json": {
+					"message": MSG_LOGIN_NEED_2FA,
+					"data": {
+						"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg2MzkyLCJpYXQiOjE3Mjc4ODU0OTIsImp0aSI6ImE2ODQzYjdkYTFhMDRlZTdhZmRiM2ZmNTcwMjYwOTJiIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.hgISgwKd2HoJbCgJ6BbRLaGPjmGkk03I6Kpdd-F2mMA",
+						"2fa_status": True
+					}
+				}
+			}
+		)
+
+DOC_ERROR_INVALID_2FA = openapi.Response(
+			description="Can't validate 2fa authentication, due to missing token or 2fa disable or no 2fa device find or wrong token",
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_TOKEN_REQUIRED
+				}
+			}
+		)
+
+DOC_2FA_VALID = openapi.Response(
+			description=MSG_LOGIN+", 2fa validated",
+			examples={
+				"application/json": {
+					"message": MSG_LOGIN,
+					"data": {
+						"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTg5MiwiaWF0IjoxNzI3ODg1NDkyLCJqdGkiOiI5ODJjNzkwYjMyMDc0NWE3YmY2ZTA5YzBkY2I2N2MwNSIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.ZDb5YSXDBhUDmNaDGjwIaL0SuwgHFk6DjVWosjBY3u8",
+						"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg2MzkyLCJpYXQiOjE3Mjc4ODU0OTIsImp0aSI6ImE2ODQzYjdkYTFhMDRlZTdhZmRiM2ZmNTcwMjYwOTJiIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.hgISgwKd2HoJbCgJ6BbRLaGPjmGkk03I6Kpdd-F2mMA",
+					}
+				}
+			}
+		)
+
+JWT_TOKEN = openapi.Parameter('Authentication : Bear XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
+
+DOC_ERROR_WRONG_2FA_STATUS = openapi.Response(
+			description=MSG_ERROR_WRONG_2FA_STATUS,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_WRONG_2FA_STATUS
+				}
+			}
+		)
+
+DOC_DISABLE_2FA = openapi.Response(
+			description=MSG_DISABLE_2FA,
+			examples={
+				"application/json": {
+					"message": MSG_DISABLE_2FA,
+					"data": {"2fa_status" : "off"}
+				}
+			}
+		)
+
+DOC_ENABLE_2FA = openapi.Response(
+			description=MSG_ENABLE_2FA,
+			examples={
+				"application/json": {
+					"message": MSG_ENABLE_2FA,
+					"data": {"2fa_status" : "on"}
+				}
+			}
+		)
+
+DOC_URL_OAUTH42 = openapi.Response(
+			description=MSG_SEND_URL_OAUTH,
+			examples={
+				"application/json": {
+					"message": MSG_SEND_URL_OAUTH,
+					"data": "http://coucou"
+				}
+			}
+		)
+
+DOC_ERROR_LOGIN_API42 = openapi.Response(
+			description=MSG_ERROR_OAUTH_LOGIN,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_OAUTH_LOGIN
+				}
+			}
+		)
+
+DOC_USER_CREATED_API42 = openapi.Response(
+			description=MSG_USER_OAUTH_CREATED,
+			examples={
+				"application/json": {
+					"message": MSG_USER_OAUTH_CREATED,
+					'data': {
+						"user": {
+							"id": 4,
+							"email": "a@gmai.com",
+							"phone": "+33659482658",
+							"username": "coucou"
+						},
+						"tokens": {
+							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
+							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
+						}
+					}
+				}
+			}
+		)
+
+DOC_USER_CREATED_API42_WARNING = openapi.Response(
+			description=MSG_USER_OAUTH_CREATED+', warning change username',
+			examples={
+				"application/json": {
+					"message": MSG_USER_OAUTH_CREATED,
+					'warning' : 'change username because already used',
+					'data': {
+						"user": {
+							"id": 4,
+							"email": "a@gmai.com",
+							"phone": "+33659482658",
+							"username": "coucou"
+						},
+						"tokens": {
+							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
+							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
+						}
+					}
+				}
+			}
+		)
+
+DOC_USER_LOGIN_API42 = openapi.Response(
+			description=MSG_LOGIN_OAUTH,
+			examples={
+				"application/json": {
+					"message": MSG_LOGIN_OAUTH,
+					'data': {
+						"tokens": {
+							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
+							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
+						}
+					}
+				}
+			}
+		)
+
+DOC_UPDATE_PASSWORD = openapi.Response(
+			description=MSG_PASSWORD_UPDATE,
+			examples={
+				"application/json": {
+					"message": MSG_PASSWORD_UPDATE,
+				}
+			}
+		)
+
+DOC_IMPOSSIBLE_UPDATE_PASSWORD = openapi.Response(
+			description=MSG_ERROR_UPDATE_PASSWORD_OAUTH,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATE_PASSWORD_OAUTH,
+				}
+			}
+		)
+
+DOC_ERROR_UPDATE_PASSWORD = openapi.Response(
+			description=MSG_ERROR_UPDATE_PASSWORD,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATE_PASSWORD,
+					"data": {
+						"password": [
+							"Password fields didn't match"
+						]
+					}
+				}
+			}
+		)
+
+DOC_UPDATE_INFO = openapi.Response(
+			description=MSG_INFO_USER_UPDATE,
+			examples={
+				"application/json": {
+					"message": MSG_INFO_USER_UPDATE,
+					"data": {
+						"username": "johanne",
+						"email": "fghf@fdg.lpd",
+						"phone": "+33326597845"
+					}
+				}
+			}
+		)
+
+DOC_ERROR_UPDATE_INFO = openapi.Response(
+			description=MSG_ERROR_UPDATE_USER_INFO,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATE_USER_INFO,
+					"data": {
+						"username": [
+							"This field is required."
+						],
+						"email": [
+							"Enter a valid email address."
+						],
+						"phone": [
+							"The phone number entered is not valid."
+						]
+					}
+				}
+			}
+		)
