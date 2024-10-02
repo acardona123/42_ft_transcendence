@@ -7,8 +7,16 @@ GET /api/matches/test/create_bunk  HTTP/1.1
 Host: localhost:8004
 
 ### --- test delete all matches ---
+GET /api/matches/test/finish_all  HTTP/1.1
+Host: localhost:8004
+
+### --- test delete all matches ---
 GET /api/matches/test/delete_all  HTTP/1.1
 Host: localhost:8004
+
+
+
+
 
 ### --- List matches ---
 GET /api/matches/ HTTP/1.1

@@ -59,3 +59,7 @@ def test_create_matches(request):
 def test_delete_all_matches(request):
 	Match.objects.all().delete()
 	return HttpResponse("All matches deleted")
+
+def test_finish_all_matches(request):
+	Match.objects.all().update(is_finished=True)
+	return HttpResponse("All matches finished")
