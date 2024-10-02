@@ -69,6 +69,11 @@
 	margin: 0;
 }
 
+#edp-input-confirm-password
+{
+	margin-bottom: 10px;
+}
+
 .edp-2fa-edit-collapse-class-div
 {
 	width: 100%;
