@@ -8,7 +8,13 @@ from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_token
 from .models import CustomUser
 import json
 import os
-import users.doc
+from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
+	MSG_ERROR_TOKEN_REQUIRED, MSG_ERROR_NO_TOTP_DEVICE, MSG_ERROR_WRONG_TOKEN,
+	MSG_ERROR_WRONG_2FA_STATUS, MSG_ERROR_2FA_IS_DISABLE, MSG_ERROR_OAUTH_LOGIN,
+	MSG_ERROR_OAUTH_INFO, MSG_ERROR_UPDATE_PASSWORD_OAUTH, MSG_ERROR_UPDATE_PASSWORD,
+	MSG_ERROR_UPDATE_USER_INFO, MSG_USER_CREATED, MSG_LOGIN_NEED_2FA,
+	MSG_LOGIN, MSG_DISABLE_2FA, MSG_ENABLE_2FA, MSG_SEND_URL_OAUTH,
+	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE)
 
 # @api_view(['GET'])
 # def get_id(request):
@@ -175,12 +181,3 @@ def update_user_info(request):
 		"data" : serializer.errors
 	}
 	return Response(data, status=400)
-
-# --------------- Debug --------------------
-
-from rest_framework import generics
-from .serializer import TestSerializer
-
-class UserListView(generics.ListAPIView):
-	queryset = CustomUser.objects.all()
-	serializer_class = TestSerializer

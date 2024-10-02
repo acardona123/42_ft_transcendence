@@ -4,8 +4,9 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
+	"email" : "a@gmai.com",
 	"password2" : "123asd456",
-	"username" : "quentin"
+	"username" : "            d     g        "
 }
 
 ### get url api42
