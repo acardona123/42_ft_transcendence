@@ -1,7 +1,9 @@
 let username_is_visible = true;
 let password_is_visible = false;
+let dfa_is_visible = false;
 let username_collapse_obj;
 let password_collapse_obj;
+let dfa_collapse_obj;
 
 function username_collapse()
 {
@@ -9,6 +11,11 @@ function username_collapse()
 	{
 		password_is_visible = false;
 		password_collapse_obj.hide();
+	}
+	if (dfa_is_visible)
+	{
+		dfa_is_visible = false;
+		dfa_collapse_obj.hide();
 	}
 	username_is_visible = !username_is_visible;
 }
@@ -20,7 +27,27 @@ function password_collapse()
 		username_is_visible = false;
 		username_collapse_obj.hide();
 	}
+	if (dfa_is_visible)
+	{
+		dfa_is_visible = false;
+		dfa_collapse_obj.hide();
+	}
 	password_is_visible = !password_is_visible;
+}
+
+function dfa_collapse()
+{
+	if (username_is_visible)
+	{
+		username_is_visible = false;
+		username_collapse_obj.hide();
+	}
+	if (password_is_visible)
+	{
+		password_is_visible = false;
+		password_collapse_obj.hide();
+	}
+	dfa_is_visible = !dfa_is_visible;
 }
 
 function clear_input_errors(elements_ids)
@@ -93,6 +120,8 @@ document.addEventListener("onModalsLoaded", function()
 		'edp-information-edit-collapse-div'), {toggle: false});
 	password_collapse_obj = new bootstrap.Collapse(document.getElementById(
 		'edp-password-edit-collapse-div'), {toggle: false});
+	dfa_collapse_obj = new bootstrap.Collapse(document.getElementById(
+		'edp-2fa-edit-collapse-div'), {toggle: false});
 
 	let form_user = document.getElementById("edp-form-user");
 
@@ -100,5 +129,6 @@ document.addEventListener("onModalsLoaded", function()
 	
 	document.getElementById("edp-informations-edit-text").onclick = username_collapse;
 	document.getElementById("edp-password-edit-text").onclick = password_collapse;
+	document.getElementById("edp-2fa-edit-text").onclick = dfa_collapse;
 });
 

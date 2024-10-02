@@ -18,7 +18,7 @@
 {
 	display: flex;
 	flex-direction: column;
-	width: 210px;
+	width: 250px;
 }
 
 #edp-picture-img
@@ -51,16 +51,6 @@
 	margin: 0;
 }
 
-#edp-information-edit-collapse-div
-{
-	margin-top: 10px;
-}
-
-.edp-input-class
-{
-	margin-bottom: 10px;
-}
-
 #edp-input-pin
 {
 	width: 20%;
@@ -77,4 +67,32 @@
 {
 	cursor: pointer;
 	margin: 0;
+}
+
+.edp-2fa-edit-collapse-class-div
+{
+	width: 100%;
+	display: flex;
+	justify-content: left;
+}
+
+#edp-2fa-edit-text
+{
+	cursor: pointer;
+	margin: 0;
+}
+
+#edp-2fa-button-text
+{
+	height: 38px;
+	line-height: 38px;
+	/* width: 100%; */
+	margin: 0;
+	margin-right: 10px;
+}
+
+#edp-button-2fa
+{
+	height: auto;
+	white-space: nowrap;
 }

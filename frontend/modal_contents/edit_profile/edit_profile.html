@@ -40,7 +40,7 @@
 						data-bs-target="#edp-password-edit-collapse-div" aria-expanded="false">
 						<u>Edit password</u>
 					</p>
-					<div class="collapse" style="margin-top: 10px" id="edp-password-edit-collapse-div">
+					<div class="collapse" id="edp-password-edit-collapse-div">
 						<form id="edp-form-password">
 							<div>
 								<p id="edp-text-cur-pass" style="margin: 0">Current password</p>
@@ -56,6 +56,15 @@
 							</div>
 							<button class="btn btn-primary">Save</button>
 						</form>
+					</div>
+					<hr>
+					<p id="edp-2fa-edit-text" data-bs-toggle="collapse"
+						data-bs-target="#edp-2fa-edit-collapse-div" aria-expanded="false">
+						<u>Edit two factor auth</u>
+					</p>
+					<div id="edp-2fa-edit-collapse-div" class="edp-2fa-edit-collapse-class-div collapse">
+						<p id="edp-2fa-button-text">Google authentificator</p>
+						<button id="edp-button-2fa"></button>
 					</div>
 					<hr>
 				</div>
