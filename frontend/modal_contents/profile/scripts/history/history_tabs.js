@@ -11,7 +11,7 @@ function set_border_hider(elem)
 	
 	const bounds = elem.getBoundingClientRect();
 	hider.style.height = '5px';
-	hider.style.width = (bounds.width - border_size * 2 + 1).toString() + 'px';
+	hider.style.width = (bounds.width - border_size * 2).toString() + 'px';
 	elem.appendChild(hider);
 }
 
