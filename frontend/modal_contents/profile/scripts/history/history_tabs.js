@@ -10,7 +10,6 @@ function set_border_hider(elem)
 	hider.style.zIndex = "1";
 	
 	const bounds = elem.getBoundingClientRect();
-	console.log(bounds);
 	hider.style.height = '5px';
 	hider.style.width = (bounds.width - border_size * 2 + 1).toString() + 'px';
 	elem.appendChild(hider);
@@ -51,8 +50,8 @@ function on_click_tab_history(elem)
 	set_border_hider(elem);
 }
 
-document.addEventListener("onModalsLoaded", function()
-{
-	// set click on first tab by default
-	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
-});
+// document.addEventListener("onModalsLoaded", function()
+// {
+// 	// set click on first tab by default
+// 	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
+// });

@@ -266,7 +266,5 @@ document.addEventListener("onModalsLoaded", function()
 	(async () => 
 	{
 		history_list = await get_history_from_DB();
-		// set click on first tab by default
-		on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
 	})()
 });

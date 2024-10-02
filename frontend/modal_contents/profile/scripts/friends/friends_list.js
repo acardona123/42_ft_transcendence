@@ -241,7 +241,6 @@ async function get_friend_list()
 			throw new Error(`${fetched_data.status}`);
 
 		fetched_data = await fetched_data.json();
-		console.log(fetched_data);
 		let data = fetched_data.data;
 
 		// TODO: add online and picture

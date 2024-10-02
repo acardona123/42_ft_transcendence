@@ -179,7 +179,8 @@ function openModalProfile() {
 
 	var modaldialog = document.getElementById('modal-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalProfile.showModal();
+	modalProfile.showModal() 
+	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
 }
 
 function hideModalProfile() {
