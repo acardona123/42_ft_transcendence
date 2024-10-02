@@ -40,7 +40,7 @@ body:
 	game
 	max_score,
 	max_duration,
-	clean_when_finished
+	tournament_id
 }
 return:
 {
@@ -56,7 +56,7 @@ body:
 	player2_pin,
 	max_score,
 	max_duration,
-	clean_when_finished
+	tournament_id
 }
 return:
 {
@@ -70,7 +70,7 @@ body:
 	game
 	max_score,
 	max_duration
-	clean_when_finished
+	tournament_id
 }
 return:
 {

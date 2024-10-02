@@ -23,14 +23,14 @@ def create_new_match(response_data):
 			game = response_data['game'],
 			max_score = response_data['max_score'],
 			max_duration = response_data['max_duration'],
-			clean_when_finished = response_data['clean_when_finished']
+			tournament_id = response_data['tournament_id']
 		)
 	except Exception as e:
 		return JsonResponse(status = 400, data = {'message' : f"Match creation: {e}"})
 
 	# writing the new match data in the response
 	try:
-		serializer = MatchSerializer(match, fields=['index', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'clean_when_finished'])
+		serializer = MatchSerializer(match, fields=['index', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
 		response_data = {'message':'match created', 'match_data':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
 	except:
@@ -61,8 +61,6 @@ def new_match_verified_id(request):
 		return JsonResponse(status = 400, data = {'message' : 'Match max score not provided'})
 	if not 'max_duration' in match_data:
 		return JsonResponse(status = 400, data = {'message' : 'Match max duration not provided'})
-	if not 'clean_when_finished' in match_data and match_data['clean_when_finished'] != False :
-		return JsonResponse(status = 400, data = {'message' : 'Match clean when finished indication not provided'})
 
 	# match creation
 	return create_new_match(match_data)

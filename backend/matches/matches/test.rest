@@ -19,7 +19,6 @@ Host: localhost:8004
 
 
 
-
 ### --- new match verified users id ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
 Host: localhost:8004
@@ -31,7 +30,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 
 ### --- Error: missing player1 ---
@@ -45,7 +44,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: missing player2  ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -58,7 +57,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: missing game  ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -71,7 +70,7 @@ Content-Type: application/json
 	# "game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: missing score  ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -84,7 +83,7 @@ Content-Type: application/json
 	"game": "PG",
 	# "max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: missing duration ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -97,9 +96,9 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	# "max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
-### --- Error: missing clean_when_finished  ---
+### --- Error: missing tournament_id  ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
@@ -110,7 +109,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21
-	# "clean_when_finished": true
+	# "tournament_id": -1
 }
 
 ### --- Error: wrong format player ---
@@ -124,7 +123,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: wrong format game ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -137,7 +136,7 @@ Content-Type: application/json
 	"game": 12,
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: wrong format score ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -150,7 +149,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": "",
 	"max_duration": 21,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: wrong format duration ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -163,9 +162,9 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": "21m",
-	"clean_when_finished": true
+	"tournament_id": -1
 }
-### --- Error: wrong format clean_when_finished ---
+### --- Error: wrong format tournament_id ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
@@ -176,7 +175,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": "abc"
+	"tournament_id": "abc"
 }
 ### --- Error: game acronyme ---
 POST /private_api/matches/new_match_verified_id HTTP/1.1
@@ -189,7 +188,7 @@ Content-Type: application/json
 	"game": "abc",
 	"max_score": 42,
 	"max_duration": 21,
-	"clean_when_finished": "abc"
+	"tournament_id": "abc"
 }
 
 
@@ -206,7 +205,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 10,
 	"max_duration": 60,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- Error: new match ai missing field---
 POST /api/matches/new/me-ai HTTP/1.1
@@ -217,7 +216,7 @@ Content-Type: application/json
 	"game": "PG",
 	# "max_score": 10,
 	"max_duration": 60,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 
 
@@ -234,7 +233,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 10,
 	"max_duration": 60,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 ### --- new match guest missing field---
 POST /api/matches/new/me-guest HTTP/1.1
@@ -245,7 +244,7 @@ Content-Type: application/json
 	"game": "PG",
 	"max_score": 10,
 	# "max_duration": 60,
-	"clean_when_finished": true
+	"tournament_id": -1
 }
 
 
@@ -254,12 +253,12 @@ Content-Type: application/json
 
 
 ### --- finish match ---
-POST /api/matches/finish/62/ HTTP/1.1
+POST /api/matches/finish/39/ HTTP/1.1
 Host: localhost:8004
 Content-Type: application/json
 
 {
 	"score1": 5,
 	"score2": 10,
-	"duration": 60
+	"duration": 19
 }

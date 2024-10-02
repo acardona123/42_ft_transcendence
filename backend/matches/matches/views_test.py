@@ -42,8 +42,8 @@ def test_create_matches(request):
 			score1=random.randint(0, 21),
 			score2=random.randint(0, 21),
 			duration=random.randint(100, 300),
-			is_finished=True,
-			clean_when_finished=True,
+			is_finished=False,
+			tournament_id=random.randint(-1, 2),
 			date=timezone.now() - timedelta(days=random.randint(0, 30))
 		)
 		matches.append(match)

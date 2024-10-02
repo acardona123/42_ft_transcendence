@@ -25,5 +25,5 @@ body:
 	game,
 	max_score,
 	max_duration,
-	clean_when_finished
+	tournament_id
 }

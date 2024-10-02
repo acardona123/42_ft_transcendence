@@ -1,5 +1,3 @@
-
-
 from rest_framework import serializers
 from .models import Match
 from django.core.exceptions import BadRequest
@@ -25,7 +23,7 @@ class MatchSerializer(DynamicFieldsModelSerializer):
 
 	class Meta:
 		model = Match
-		fields = ['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'date', 'score1', 'score2', 'duration', 'is_finished', 'clean_when_finished']
+		fields = ['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'date', 'score1', 'score2', 'duration', 'is_finished', 'tournament_id']
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
