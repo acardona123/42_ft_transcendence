@@ -19,7 +19,7 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "coucou"
+	"username" : "jvigny"
 }
 
 ### login 2fa

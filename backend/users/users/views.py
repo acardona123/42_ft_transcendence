@@ -1,12 +1,18 @@
 from rest_framework.decorators import api_view, permission_classes
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer
+from qrcode.image.styles.colormasks import RadialGradiantColorMask
 from .authentication import IsTemporaryToken, IsNormalToken
 from rest_framework.response import Response
+from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth
 from .models import CustomUser
-import json
+import qrcode
+import base64
+import io
 import os
 from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	MSG_ERROR_TOKEN_REQUIRED, MSG_ERROR_NO_TOTP_DEVICE, MSG_ERROR_WRONG_TOKEN,
@@ -189,11 +195,32 @@ def update_2fa(request):
 		if TOTPDevice.objects.filter(user=user).exists():
 			TOTPDevice.objects.filter(user=user).delete()
 		device = TOTPDevice.objects.create(user=user, name='default', confirmed=False)
-		print(device.config_url) #todo generate qrcode to scan it
+		secret_code = device.config_url.split("secret=")[1].split('&')[0]
+		qr_code = generate_qr_code(device.config_url)
 		return Response({"message": MSG_ENABLE_2FA,
-						"data": {"2fa_status" : "on"}}, status=201)
+						"data": {"2fa_status" : "on",
+								"code": secret_code,
+								"qrcode" :f"data:image/png;base64,{qr_code}"}}, status=201)
 	else:
 		return Response({"message": MSG_ERROR_WRONG_2FA_STATUS}, status=400)
+
+
+def generate_qr_code(data):
+	qr = qrcode.QRCode(
+		version=1,
+		error_correction=qrcode.constants.ERROR_CORRECT_H,
+		box_size=10,
+		border=4,
+	)
+	qr.add_data(data)
+	qr.make(fit=True)
+
+	img = qr.make_image(fill_color="black", back_color="white", image_factory=StyledPilImage, module_drawer=CircleModuleDrawer(), color_mask=RadialGradiantColorMask(), embeded_image_path="image.png")#todo change image for qrcode
+	buffer = io.BytesIO()
+	img.save(buffer, "PNG")
+	buffer.seek(0)
+	img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+	return img_base64
 
 # --------------- Oauth --------------------
 

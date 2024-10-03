@@ -13,3 +13,4 @@ django-phonenumber-field
 django-phonenumbers
 djangorestframework-simplejwt
 django-otp
+qrcode[pil]
