@@ -289,15 +289,15 @@
 #modal-2fa-login-dialog
 {
 	max-width: none;
-	height: 50vh;
-	width: 30vw;
-	--bs-modal-margin: 10vh 0 10vh 0;
+	height: 60vh;
+	width: fit-content;
+	--bs-modal-margin: 20vh 0 20vh 0;
 }
 
 #modal-2fa-login-content
 {
 	height: 100% !important;
-	width: 100% !important;
+	width: fit-content !important;
 }
 
 /* ================================================ */

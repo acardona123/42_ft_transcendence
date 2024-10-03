@@ -200,7 +200,7 @@ function openModalTwoFALogin() {
 
 	var modaldialog = document.getElementById('modal-2fa-login-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalTwoFALogin.showModal() 
+	modalTwoFALogin.showModal();
 }
 
 function hideModalTwoFALogin() {

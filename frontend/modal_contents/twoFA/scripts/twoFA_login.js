@@ -3,8 +3,12 @@
 
 document.addEventListener("onModalsLoaded", function()
 {
-	delay(0).then( () => 
-	{
-		openModalTwoFALogin();
+	const input_div = document.getElementById("tfal-digit-real-input");
+
+	input_div.addEventListener('select', function(event) {
+		event.preventDefault();
 	});
+
+	openModalTwoFALogin();
+
 });

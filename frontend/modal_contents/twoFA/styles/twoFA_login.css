@@ -3,68 +3,111 @@
 	width: 100%;
 }
 
+
 #tfal-qrcode-div
 {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 
-#tfal-qrcode-title-text
+#tfal-qrcode-img
 {
 	margin: auto;
+	margin-bottom: 0;
+	margin-top: 0;
+	width: 80%;
+	max-width: 300px;
+	aspect-ratio: 1/1;
+	border: 3px solid black;
+	border-radius: 5px;
+	padding: 10px;
+	/* image-rendering: pixelated; */
 }
 
-#tfal-qrcode
+#tfal-qrcode-text
 {
-	margin: 10%;
-	margin-bottom: 5%;
-	width: 80%;
-	aspect-ratio: 1/1;
+	font-size: 2em;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#tfal-qrcode-key
+{
+	border: 2px solid black;
+	border-radius: 3px;
+	padding: 3px;
+	margin: 100px;
+	margin-top: auto;
+	margin-bottom: 10px;
+	text-align: center;
 }
 
 #tfal-line-sep-div
 {
-	width: 100%;
 	margin: auto;
-	display: flex;
-	flex-direction: row;
-}
-
-.tfal-line-sep
-{
-	margin: auto;
+	margin-top: 10px;
 	height: 2px;
-	width: 100%;
+	width: 80%;
 	background-color: rgb(46, 46, 46);
 }
 
-#tfal-line-sep-left
+#tfal-code-div
 {
-	width: 25%;
-	margin-left: auto;
-	margin-right: 10px;
-}
-
-#tfal-line-sep-right
-{
-	width: 25%;
-	margin-right: auto;
-	margin-left: 10px;
-}
-
-#tfal-key-code-div
-{
-	width: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 
-#tfal-title-text-code
+#tfal-key-enter-div
 {
-	margin: auto;
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
-#tfal-key-text-code
+#tfal-code-text
 {
-	margin: auto;
+	font-size: 1.5em;
+	margin: 0;
+}
+
+#tfal-digit-real-input
+{
+	position: absolute;
+	width: 110%;
+	font-size: 50px;
+	letter-spacing: 18px;
+	font-family: 'Courier New', Courier, monospace;
+	padding-left: 8px;
+	padding-top: 5px;
+	border: none;
+	caret-color: transparent;
+}
+
+.tfal-digit-div
+{
+	padding: 8px;
+	padding-left: 4px;
+	padding-right: 4px;
+	z-index: 1;
+	pointer-events: none;
+
+}
+
+.tfal-digit
+{
+	display: block;
+	pointer-events: none;
+
+	width: 40px;
+	height: 50px;
+
+	border: 2px solid black;
+	border-radius: 3px;
+	z-index: 1;
 }
