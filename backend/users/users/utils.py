@@ -30,15 +30,11 @@ def get_user_oauth(token):
 	return requests.get('https://api.intra.42.fr/v2/me', headers=header, verify=certifi.where())
 
 def create_user_oauth(data):
-	change_username = False
-	if data.get('login', None) is not None and CustomUser.objects.filter(username=data['login']).exists():
-		data['login'] = data['login']+'😂' #todo choose random username valid
-		change_username = True
 	serializer = OauthUserSerializer(data=data)
 	if serializer.is_valid():
 		user = serializer.save()
 		tokens = get_tokens_for_user(user)
-		if change_username:
+		if '#' in serializer.data['username']:
 			return Response({'message': MSG_USER_OAUTH_CREATED,
 						'warning' : 'change username because already used',
 						'data': {'user': serializer.data, 'tokens': tokens}}, status=201)

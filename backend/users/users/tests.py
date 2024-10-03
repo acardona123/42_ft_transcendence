@@ -4,7 +4,17 @@ from django.urls import reverse
 from rest_framework.exceptions import ErrorDetail
 import json
 from .models import CustomUser
-from .utils import create_user_oauth
+from .utils import create_user_oauth, unique_random_username
+
+class TestRandomName(TestCase):
+	def test_unique_name(self):
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
+		print(unique_random_username('test'))
 
 class UserManagment(TestCase):
 	def setUp(self):

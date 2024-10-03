@@ -1,13 +1,21 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core.exceptions import ValidationError
 from .manager import CustomUserManager
 import uuid
+import re
 
-# there is hidden an id 
+def test_username(username):
+    if re.match("^[A-Za-z0-9_#-]*$", username):
+        return username
+    else:
+        raise ValidationError("Username must contains only letters, digits, _ or -")
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150, unique=True,
+                            validators=[test_username])
     email = models.EmailField(null=True)
     phone = PhoneNumberField(null=True)
     is_staff = models.BooleanField(default=False)

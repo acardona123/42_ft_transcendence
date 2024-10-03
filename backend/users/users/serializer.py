@@ -4,6 +4,14 @@ from django.contrib.auth.password_validation import validate_password
 from .doc import (MSG_ERROR_SER_INVALID_PASSWORD, MSG_ERROR_SER_PASSWORD_EMPTY,
 			MSG_ERROR_SER_CURRENT_PASSWORD, MSG_ERROR_SER_NO_USER,
 			MSG_ERROR_SER_USER_WITHOUT_PASSWORD, MSG_ERROR_SER_OLD_PASSWORD)
+import re
+import random
+
+def validate_username(username):
+	if re.match("^[A-Za-z0-9_-]*$", username):
+		return username
+	else:
+		raise serializers.ValidationError("Username must contains only letters, digits, _ or -")
 
 class UserSerializer(serializers.ModelSerializer):
 	password2 = serializers.CharField(write_only=True, required=True)
@@ -13,6 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
 		fields = ['id', 'email', 'phone', 'username', 'password', 'password2']
 		extra_kwargs = {'password': {'write_only': True}}
 
+	def validate_username(self, username):
+		return validate_username(username)
 	def validate(self, data):
 		if data['password'] != data['password2']:
 			raise serializers.ValidationError({"password": MSG_ERROR_SER_INVALID_PASSWORD})
@@ -40,7 +50,27 @@ class OauthUserSerializer(serializers.ModelSerializer):
 			data.pop('phone')
 		data['oauth_id'] = data.get('id', None)
 		data['username'] = data.get('login', None)
+
+		if data['username'] is not None and CustomUser.objects.filter(username=data['username']).exists():
+			data['username'] = self.unique_random_username(data['username'])
+			self.change_username = True
+		else:
+			self.change_username = False
 		return super(OauthUserSerializer, self).to_internal_value(data)
+	
+	def unique_random_username(self, login):
+		while True:
+			number = random.randint(0,9999)
+			number = f"{number:04d}"
+			username = login + '#' + number
+			if not CustomUser.objects.filter(username=username).exists():
+				break
+		return username
+	
+	def validate_username(self, username):
+		if self.change_username == False:
+			validate_username(username)
+		return username
 
 	def create(self, validated_data):
 		username = validated_data.pop('username', None)
@@ -85,3 +115,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = CustomUser
 		fields = ['username', 'email', 'phone']
+
+	def validate_username(self, username):
+		return validate_username(username)

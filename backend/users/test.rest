@@ -3,10 +3,10 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "coucou",
+	"username" : "jvigny",
 	"password" : "123asd456",
 	"password2" : "123asd456",
-	"email" : "a@gmai.com",
+	"email" : "J@gmai.coM",
 	"phone" : "+33659482658"
 }
 
@@ -60,12 +60,13 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODk5ODgwLCJpYXQiOjE3Mjc4OTg5ODAsImp0aSI6ImViOGI4NDcxMzRlNzRhOGI5YWFmZGVkMDhiYjRlNTQxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.DTeqE0df0VVZ9DdYJFSw7jSs_DiiqO53xknEVhUUc24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3OTYwNjY1LCJpYXQiOjE3Mjc5NTk3NjUsImp0aSI6ImEwZmJiMjUzYTRmYzQ5NDE5NWI5Y2Q0NTFjNmI0YjY2IiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.A7pCStW0HgCt6drbdhfLjnzONpsR0usP0AC4ZfP8Dbw
 content-type: application/json
 
 {
-	"email": "fghf@fdg",
-	"phone": "032659ffff7845"
+	"username": "jvigny7712",
+	"email": "fghf@fdg.ds",
+	"phone": "0326597845"
 }
 
 ### update 2fa
@@ -76,6 +77,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 {
 	"2fa_status": "on"
 }
-
-### list users
-GET https://localhost:8443/api/users/ HTTP/1.1
