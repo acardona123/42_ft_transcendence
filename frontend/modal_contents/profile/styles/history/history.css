@@ -1,0 +1,146 @@
+.prof-history-scroll {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+	max-height: 100%;
+	min-height: 50px;
+	/* margin-left: 5%; */
+	max-width: 100%;
+	border: 5px solid #684b2b;
+	border-radius: 0vw 1vw 1vw 1vw;
+	background-color: #755632;
+}
+
+.prof-history-scroll::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.prof-history-scroll::-webkit-scrollbar-thumb {
+	background: rgba(172, 172, 172, 0.5);
+	border-radius: 8px;
+	padding: 10px;
+}
+
+.prof-history-elem-div {
+	margin-bottom: 4px;
+	
+	display: flex;
+	align-items: center;
+	
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	
+	border: 2px solid #684b2b;
+	border-radius: 1vw;
+	aspect-ratio: 8/1;
+	width: 100%;
+	max-width: 100%;
+}
+
+.prof-text-victory {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+
+	color: aliceblue;
+	margin: 0px;
+	text-shadow: 1px 1px 1px black;
+	font-size: 25px;
+	font-weight: bolder;
+	width: 20%;
+	overflow: hidden;
+}
+
+.prof-score-div {
+	display: flex;
+
+	width: 60%;
+	/* white-space: nowrap; */
+	overflow: hidden;
+}
+
+.prof-score-left {
+	width: 45%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	color: aliceblue;
+	text-align: right;
+
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.prof-score-mid {
+	width: 10%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	color: aliceblue;
+	text-align: center;
+
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.prof-score-right {
+	width: 45%;
+	color: aliceblue;
+	text-align: left;
+
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.prof-date-duration-div {
+	display: flex;
+	flex-direction: column;
+
+	color: aliceblue;
+	margin: 0px;
+	width: 20%;
+	text-shadow: 1px 1px 1px black;
+	font-size: 15px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.prof-date-text {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+}
+
+.prof-time-text {
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+}
+
+.prof-tabs-history {
+	display: flex;
+}
+
+.prof-tab-text {
+	white-space: nowrap;
+	margin-right: 2px;
+	margin-bottom: 0px;
+	border: 5px solid #684b2b;
+	border-bottom: none;
+	border-radius: 10px 10px 0 0;
+	border-collapse: collapse;
+	cursor: pointer;
+}

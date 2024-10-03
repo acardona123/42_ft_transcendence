@@ -1,0 +1,164 @@
+
+/* MENU */
+
+.container-offcanvas {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.container-offcanvas.connected {
+	justify-content: space-between;
+}
+
+.menuCanvasProfile {
+	position: relative;
+	/* margin-bottom: -2vh; */
+	margin-bottom: 6vh;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.menuUserImage {
+	position: relative;
+	width: 10vh;
+	height: 10vh;
+	min-width: 100px;
+	min-height: 100px;
+	border-radius: 50%;
+}
+
+.large-rounded-button {
+    display: inline-block;
+	cursor: pointer;
+	border-radius: 25% !important;
+	background-color: #eaaf00 !important;
+	border: black 0.1vh solid !important;
+
+	transition: transform 0.5s !important;
+    /* clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%); */
+}
+
+.large-rounded-button:hover, .large-rounded-button:focus{
+	background-color: #ffcc00 !important;
+	/* transform: scale(1.05) rotate(180deg); */
+	transition: all 0.5s;
+}
+
+.large-rounded-button.bg-purple {
+	background-color: rgb(187, 81, 187) !important;
+}
+
+.large-rounded-button.bg-purple:hover, .large-rounded-button.bg-purple:focus {
+	background-color: rgb(222, 105, 222) !important;
+}
+
+/* DISCONNECTED MENU */
+
+#disconnectedGroupButtons {
+	position: relative;
+	margin-top: 3vh;
+
+	display: flex;
+	justify-self: center;
+	align-items: center;
+}
+
+#loginButton {
+	position: relative;
+	width: 85%;
+}
+
+#signUpButton {
+	position: relative;
+	width: 85%;
+}
+
+/* ------------------------------------ */
+
+/* CONNECTED MENU */
+
+#connection-badge {
+	position: absolute;
+	bottom: 0%;
+	right: 20%;
+	padding: 10px 10px;
+	border-radius: 50%;
+}
+
+#menuColumn {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	/* margin-top: 6vh; */
+	/* justify-content: center; */
+	height: 70%;
+	min-height: fit-content;
+}
+
+.stats,
+.friends-list,
+.play-history {
+	border: 1px solid #ccc;
+	/* height: 30%; */
+	height: fit-content;
+    margin-bottom: 2%;
+}
+
+.win-loss-circle {
+	position: relative;
+    width: 5vh;
+    height: 5vh;
+	min-width: 50px;
+	min-height: 50px;
+	border-radius: 50%;
+	margin-bottom: 1%;
+	background: conic-gradient(rgb(23, 186, 23) var(--ratio), rgb(217, 54, 54) 0);
+}
+
+#menuColumnButton {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 15%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#profileButton {
+	position: relative;
+	width: 85%;
+}
+
+#logoutButton {
+	position: relative;
+	width: 85%;
+}
+
+#parameterButton {
+	position: relative;
+
+	width: 15%;
+
+	display: flex;
+	justify-content: center;
+	align-self: flex-end;
+	padding: 0;
+
+	transition: transform 0.5s;
+}
+
+#parameterButton:hover, #parameterButton:focus {
+	/* transform: scale(1.05) rotate(180deg); */
+	transition: all 0.5s;
+}
+
+#parameterButtonIcon {
+	position: relative;
+	width: 100%;
+}
+
+/* ============================================== */

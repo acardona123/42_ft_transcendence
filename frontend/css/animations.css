@@ -1,0 +1,139 @@
+
+/* === ANIMATION === */
+
+@keyframes growFromTopLeftQuarter {
+    from {
+        opacity: 0;
+        transform: scale(0);
+		transform-origin: 25% 25%;
+        /* transform-origin: center; */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-dialog.grow-top-left {
+	animation: growFromTopLeftQuarter 0.5s ease-in-out; /* Adjust duration and easing as needed */
+}
+
+@keyframes growFromTopRightQuarter {
+	from {
+		opacity: 0;
+		transform: scale(0);
+		transform-origin: 75% 25%;
+		/* transform-origin: center; */
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.modal-dialog.grow-top-right {
+	animation: growFromTopRightQuarter 0.5s ease-in-out; /* Adjust duration and easing as needed */
+}
+
+@keyframes decreaseFromCenter {
+    from {
+        opacity: 0;
+        transform: scale(10);
+        transform-origin: center;
+    }
+    to {
+		opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-dialog.decrease {
+	animation: decreaseFromCenter 0.5s;
+}
+
+@keyframes slideFromRight {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.slide-right {
+	animation: slideFromRight 0.5s ease-in-out;
+}
+
+@keyframes slideCenterToRight {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}
+
+.slide-center-to-right {
+	animation: slideCenterToRight 0.5s;
+}
+
+
+@keyframes changeColor {
+	/* from {
+		border: 2px solid #000000;
+	}
+	to {
+		border: 2px solid #000000;
+	} */
+	0% { border: 2px solid #ff0000; }
+	10% { border: 2px solid #ffa600; }
+	20% { border: 2px solid #fffb00; }
+	30% { border: 2px solid #b3ff00; }
+	40% { border: 2px solid #11ff00; }
+	50% { border: 2px solid #00ff88; }
+	60% { border: 2px solid #00b7ff; }
+	70% { border: 2px solid #0022ff; }
+	80% { border: 2px solid #ae00ff; }
+	90% { border: 2px solid #ff00d0; }
+	100% { border: 2px solid #ff0000; }
+}
+
+.change-color {
+	animation: changeColor 30s infinite;
+}
+
+@keyframes sliderFromAbove {
+	from {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.player2-section.appear {
+	animation: sliderFromAbove 0.5s ease-in-out;
+}
+
+@keyframes reverseSliderFromAbove {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+}
+
+.player2-section.disappear {
+	animation: reverseSliderFromAbove 0.5s ease-in-out;
+}
+
+/* ================================================ */

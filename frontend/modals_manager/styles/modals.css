@@ -1,0 +1,285 @@
+#modals
+{
+	position: absolute;
+	height: 100vh !important;
+	/* display: none; */
+}
+
+.modal-dialog-overwrite-size
+{
+	--bs-modal-margin: 0;
+	--bs-modal-padding: 0;
+}
+
+/* === MODAL FULLSCREEN === */
+
+.custom-fullscreen-dialog {
+	display: flex;
+	align-items: flex-end;
+    justify-content: center;
+
+	padding: 0;
+	margin: 10px;
+	margin-bottom: 10px;
+
+	height: 80vh !important;
+	width: 85vw !important;
+
+	min-width: fit-content !important;
+
+	max-width: none !important;
+	max-height: none !important;
+}
+
+.custom-fullscreen-content {
+	height: 100%;
+    width: 100%;
+    padding: 12px;
+	border-radius: 20px !important;
+    /* box-sizing: border-box; */
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+
+/* ================================================ */
+
+/* === MODAL MEDIUM === */
+
+.custom-medium-dialog {
+	display: flex;
+	align-items: flex-end;
+    justify-content: center;
+	
+	padding: 0px;
+	margin: 20px;
+	margin-bottom: 20px;
+	border-radius: 20px !important;
+	
+	height: 60vh !important;
+	width: 80vw !important;
+
+	min-width: fit-content !important;
+
+	max-width: none !important;
+	max-height: none !important;
+}
+
+.custom-medium-content {
+	height: 100%;
+    width: 100%;
+    padding: 10px;
+	border-radius: 20px !important;
+    /* box-sizing: border-box; */
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+
+/* ================================================ */
+
+/* === MODAL SMALL === */
+
+.custom-small-dialog {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+
+	padding: 8px;
+	/* margin: 20px; */
+	/* margin-bottom: 20px; */
+	border-radius: 20px !important;
+
+	height: 40vh !important;
+	width: 50vw !important;
+
+	min-width: fit-content !important;
+
+	max-width: none !important;
+	max-height: none !important;
+
+}
+
+.custom-small-content {
+	height: 100%;
+	width: 100%;
+	padding: 10px;
+	border-radius: 10px !important;
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+
+/* ================================================ */
+
+/* === MODAL PLAY === */
+
+.custom-play-dialog {
+	display: flex;
+	align-items: flex-end;
+    justify-content: center;
+
+	padding: 8px;
+	/* margin: 20px; */
+	/* margin-bottom: 20px; */
+	border-radius: 20px !important;
+	
+	height: 40vh !important;
+	width: 50vw !important;
+
+	min-width: fit-content !important;
+
+	max-width: none !important;
+	max-height: none !important;
+	background-color: black !important;
+}
+
+.custom-play-content {
+	height: 100%;
+    width: 100%;
+
+	min-width: fit-content !important;
+
+    padding: 10px;
+	border-radius: 10px !important;
+	background-color: pink !important;
+
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+
+
+/* ================================================ */
+
+/* === MODAL ADD FRIEND === */
+
+.custom-modal-add-friend-dialog {
+	/* display: flex; */
+	/* align-items: flex-end; */
+    /* justify-content: center; */
+
+	padding: 8px;
+	border-radius: 20px !important;
+
+	height: 10vh !important;
+	width: 10vw !important;
+
+	min-width: fit-content !important;
+
+	max-width: none !important;
+	max-height: none !important;
+	/* background-color: black !important; */
+
+}
+
+.custom-modal-add-friend-content {
+	/* height: 100%; */
+    /* width: 100%; */
+    padding: 10px;
+	border-radius: 10px !important;
+	/* background-color: pink !important; */
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+/* ================================================ */
+
+/* === MODAL CREATION === */
+
+.custom-match-creation-dialog {
+	display: flex;
+	align-items: flex-end;
+    justify-content: center;
+
+	padding: 8px;
+	/* margin: 10px; */
+	/* margin-bottom: 10px; */
+	border-radius: 20px !important;
+	
+	height: 90vh !important;
+	width: 50vw !important;
+
+	min-width: fit-content !important;
+	
+	max-width: none !important;
+	max-height: none !important;
+	background-color: black !important;
+}
+
+.custom-match-creation-content {
+	height: 100%;
+    width: 100%;
+
+	min-height: fit-content !important;
+	min-width: fit-content !important;
+
+    padding: 10px;
+	border-radius: 10px !important;
+
+	overflow-clip-margin: scroll;
+	overflow-x: hidden;
+}
+
+/* ================================================ */
+
+/* === MODAL LOGIN === */
+
+#modal-login-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-login-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL register === */
+
+#modal-register-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-register-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL edit profile === */
+
+#modal-edit-profile-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-edit-profile-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL profile === */
+
+#modal-profile-dialog
+{
+	max-width: none;
+	height: 80vh;
+	width: 60vw;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-profile-content
+{
+	height: 100% !important;
+	width: 100% !important;
+}
+
+/* ================================================ */

@@ -1,0 +1,28 @@
+<div id="modalIAMatchCreation" class="modal" tabindex="-1">
+	<div id="modal-ia-match-creation-dialog" class="modal-dialog modal-dialog-centered custom-match-creation-dialog">
+		<div class="modal-content custom-match-creation-content main-container purple-bg">
+			<div class="header debug-m">
+				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="returnToModalPlay('IAMatchCreation')">
+					<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
+				</button>
+				<h1 class="header-text bold">IA MATCH CREATION</h1>
+			</div>
+			<form id="IAMatchForm" class="form-container debug-r">
+					<!-- Time Slider -->
+					<div class="slider-container debug-b">
+						<label class="slider-label debug-r" for="IATimeSlider">Time:</label>
+						<input id="IATimeSlider" type="range" class="slider time debug-g" min="10" max="310" step="10" value="45">
+						<div id="IATimeValue" class="slider-value debug-o"></div>
+					</div>
+					<!-- Points Slider -->
+					<div class="slider-container">
+						<label class="slider-label debug-r" for="IAPointsSlider">Points:</label>
+						<input id="IAPointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
+						<div id="IAPointsValue" class="slider-value debug-o"></div>
+				</div>
+				<!-- Submit Button -->
+				<button id="IAsubmitButton" type="submit" class="btn btn-form submit-btn-form">Create Match</button>
+			</form>
+		</div>
+	</div>
+</div>

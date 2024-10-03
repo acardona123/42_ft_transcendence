@@ -1,0 +1,103 @@
+#edp-main-title
+{
+	text-align: center;
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+#edp-main-div
+{
+	display: flex;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+#edp-input-fields-div
+{
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+}
+
+#edp-picture-img
+{
+	transition: filter 0.1s;
+	cursor: pointer;
+	width: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+}
+
+#edp-picture-edit-img
+{
+	transition: filter 0.1s;
+	cursor: pointer;
+	z-index: 1;
+	position: relative;
+	top: 35px;
+	right: 33px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+#edp-informations-edit-text
+{
+	cursor: pointer;
+	width: 100%;
+	margin: 0;
+}
+
+#edp-input-pin
+{
+	width: 20%;
+	margin-bottom: 10px;
+}
+
+#password-edit-div
+{
+	display: flex;
+	flex-direction: column;
+}
+
+#edp-password-edit-text
+{
+	cursor: pointer;
+	margin: 0;
+}
+
+#edp-input-confirm-password
+{
+	margin-bottom: 10px;
+}
+
+.edp-2fa-edit-collapse-class-div
+{
+	width: 100%;
+	display: flex;
+	justify-content: left;
+}
+
+#edp-2fa-edit-text
+{
+	cursor: pointer;
+	margin: 0;
+}
+
+#edp-2fa-button-text
+{
+	height: 38px;
+	line-height: 38px;
+	/* width: 100%; */
+	margin: 0;
+	margin-right: 10px;
+}
+
+#edp-button-2fa
+{
+	height: auto;
+	white-space: nowrap;
+}
