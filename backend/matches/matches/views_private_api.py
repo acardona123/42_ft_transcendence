@@ -30,7 +30,7 @@ def create_new_match(response_data):
 
 	# writing the new match data in the response
 	try:
-		serializer = MatchSerializer(match, fields=['index', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
+		serializer = MatchSerializer(match, fields=['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
 		response_data = {'message':'match created', 'match_data':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
 	except:
