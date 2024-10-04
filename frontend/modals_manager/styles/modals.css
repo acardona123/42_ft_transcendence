@@ -289,9 +289,9 @@
 #modal-2fa-login-dialog
 {
 	max-width: none;
-	height: 65vh;
+	height: 60vh;
 	width: fit-content;
-	--bs-modal-margin: 17.5vh 0 17.5vh 0;
+	--bs-modal-margin: 20vh 0 20vh 0;
 }
 
 #modal-2fa-login-content

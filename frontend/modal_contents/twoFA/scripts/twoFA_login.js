@@ -1,6 +1,24 @@
 const nb_digit_inputs = 6;
 let digit_inputs = [];
 
+async function send_code_to_validation()
+{
+	// simulate fetch time
+	await delay(1000);
+
+	for (input of digit_inputs)
+	{
+		input.disabled = false;
+		input.value = '';
+	}
+	// on error, retry
+	if (true)
+		on_click_div_event();
+	// else process to login
+	else
+		;
+}
+
 function focus_on_digit_inputs(input_id)
 {
 	if (input_id < 0 || input_id > nb_digit_inputs - 1)
@@ -44,6 +62,13 @@ function on_input_digit_event()
 	}
 	if (this.value.length == 1)
 	{
+		if (cur_input_id == nb_digit_inputs - 1)
+		{
+			for (input of digit_inputs)
+				input.disabled = true;
+			send_code_to_validation();
+			return ;
+		}
 		focus_on_digit_inputs(cur_input_id + 1);
 	}
 }
