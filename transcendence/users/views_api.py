@@ -6,6 +6,7 @@ from .serializer import UserSerializer, UserPublicSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.http import FileResponse
+import os
 
 # -----------------------SWAGGER(DOC)---------------------------
 MSG_ERROR_NO_USER_ID = 'User ID not provided'
@@ -56,7 +57,13 @@ def get_user_profile_picture(request, id):
 		return Response({'message': MSG_ERROR_USER_DOES_NOT_EXIST},
 			status=status.HTTP_404_NOT_FOUND)
 	if user.profile_picture:
-		print(user.profile_picture)
-		return FileResponse(open(user.profile_picture.url, 'rb'))
+		file_path = user.profile_picture.path
+		try:
+			f = open(file_path, 'rb')
+			return FileResponse(f)
+		except PermissionError:
+			return Response({'message': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
+		except FileNotFoundError:
+			return Response({'message': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
 	else:
 		return Response({'message': MSG_ERROR_NO_PROFILE_PICTURE}, status=status.HTTP_204_NO_CONTENT)
