@@ -3,7 +3,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "jvigny",
+	"username" : "new",
 	"password" : "123asd456",
 	"password2" : "123asd456",
 	"email" : "J@gmai.coM",
@@ -19,7 +19,7 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "jvigny"
+	"username" : "jevigtwpooy"
 }
 
 ### login 2fa
@@ -36,15 +36,16 @@ POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
 content-type: application/json
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg3MTg2NiwiaWF0IjoxNzI3Nzg1NDY2LCJqdGkiOiI0MGYyMTA0NTdiYTQ0MzVmOWM0YTIwZjYxNWQ1NTM3MyIsInVzZXJfaWQiOjEsInRlc3QiOiJjb3Vjb3UifQ.B9lTi_3R1-f9EnQp6452HVtXLW0MGxhNmxdYvzUxYqw"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE0NDkzNiwiaWF0IjoxNzI4MDU4NTM2LCJqdGkiOiIyZmU0ZjUwOWFmNTU0MDhjOTVkMTM3ZTA3ZTMzZWRhZCIsInVzZXJfaWQiOjgsInNjb3BlIjoibm9ybWFsIn0.sIzjl7zOIiyEVusVIlzFvx32KsG-J1MP6Vx793oX_bA"
 }
 
 ### logout
 POST https://localhost:8443/api/users/logout/ HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDYxMjE1LCJpYXQiOjE3MjgwNjAzMTUsImp0aSI6IjA4N2RmMTMyMWM3MTRiNDBiNTQwNzE2ZWQ1MzliOWZkIiwidXNlcl9pZCI6Nywic2NvcGUiOiJub3JtYWwifQ.9gPKaSjE2uMfsROpZsCzUIn_iGoQnUdhXdlLkjKz99k
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzg4MTA4NSwiaWF0IjoxNzI3Nzk0Njg1LCJqdGkiOiI0MjlhMmQwODA2NGI0ODEyYjllNzg1MmRhMmJmNzFjYSIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.8PYkmTdAj1u3YePcvhVTeXtbGMy6HCwyJJLr28DWP9E"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE0NjcxNSwiaWF0IjoxNzI4MDYwMzE1LCJqdGkiOiJiODRhZTcwNWRjYmI0ZTIzYmE0YmIxMzY2YzNlMDJiZCIsInVzZXJfaWQiOjcsInNjb3BlIjoibm9ybWFsIn0.iF7uYqHrkce6M-pUoXIHYs80wEoA2z_v8pf8Fp2Wklo"
 }
 
 ### update password
@@ -60,7 +61,7 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3OTYwNjY1LCJpYXQiOjE3Mjc5NTk3NjUsImp0aSI6ImEwZmJiMjUzYTRmYzQ5NDE5NWI5Y2Q0NTFjNmI0YjY2IiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.A7pCStW0HgCt6drbdhfLjnzONpsR0usP0AC4ZfP8Dbw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDU5MTMxLCJpYXQiOjE3MjgwNTgyMzEsImp0aSI6Ijc0MTcwMTAwM2U2ODQ3MDNhMGQ2MjJmNDc3MzUyZmIxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.F5xItDmktjogw97A_sBW7MFFS8WdACEAv1WKmc3l4CU
 content-type: application/json
 
 {
@@ -70,9 +71,9 @@ content-type: application/json
 }
 
 ### update 2fa
-POST https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3Nzk1MzQ1LCJpYXQiOjE3Mjc3OTUwNDUsImp0aSI6ImM1NDc2OThkZWYzZTRiOTViYWNiMGI5ODk2MDkwMmVhIiwidXNlcl9pZCI6MSwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.tzraF-cR0j5zPtQRQ4U5jv78WCRfRIw21UPXg5OQfSY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDYwNzM0LCJpYXQiOjE3MjgwNTk4MzQsImp0aSI6IjU4OGYxMmNkODZlZTQ2NjliYjQzNzI0YWY1MTA5OWQyIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.cgn5PVnAf69s7k-HOjfEN4n0b4jalgPOIc1XhQKNNpU
 
 {
 	"2fa_status": "on"

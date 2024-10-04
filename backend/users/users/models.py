@@ -21,6 +21,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     oauth_id = models.IntegerField(null=True, unique=True)
     is_2fa_enable = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
+    # last_activity = models.DateTimeField(null=True)
     # picture = models.ImageField(blank=True, null=True)
 	# profile_picture = models.ImageField(
 	#     "profile picture",

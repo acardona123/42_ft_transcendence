@@ -36,10 +36,12 @@ class UserSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		password = validated_data.pop('password', None)
 		username = validated_data.pop('username', None)
+		validated_data['is_online'] = True
 		user = CustomUser.objects.create_user(username, password, **validated_data)
 		return user
 
 class OauthUserSerializer(serializers.ModelSerializer):
+
 	class Meta:
 		model = CustomUser
 		fields = ['id', 'email', 'phone', 'username', 'oauth_id']
@@ -74,6 +76,7 @@ class OauthUserSerializer(serializers.ModelSerializer):
 
 	def create(self, validated_data):
 		username = validated_data.pop('username', None)
+		validated_data['is_online'] = True
 		user = CustomUser.objects.create_user(username, **validated_data)
 		return user
 	
