@@ -1,0 +1,7 @@
+background sky:
+	https://wallpaperaccess.com/black-void
+
+profile icon:
+	https://www.freeiconspng.com/img/39421
+bot icon:
+	https://creazilla.com/nodes/3232091-bot-icon
