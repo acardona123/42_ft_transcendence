@@ -76,6 +76,17 @@
 	margin-left: 20px;
 	margin-right: 20px;
 	z-index: 1;
+	animation: on_error_anim 0.5s ease-in infinite;
+	animation-play-state: paused;
+}
+
+@keyframes on_error_anim
+{
+	0% { transform: translate(0); }
+	25% { transform: translate(20px); }
+	50% { transform: translate(-20px); }
+	75% { transform: translate(20px); }
+	100% { transform: translate(0); }
 }
 
 #tfal-code-text

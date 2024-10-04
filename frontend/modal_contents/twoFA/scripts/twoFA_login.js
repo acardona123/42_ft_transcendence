@@ -2,24 +2,47 @@ const nb_digit_inputs = 6;
 let digit_inputs = [];
 const regex_digit = /^[0-9]/;
 
+function animate_on_error()
+{
+	const input_div = document.getElementById("tfal-key-enter-div");
+	input_div.style.animationPlayState = "running";
+	for (input of digit_inputs)
+	{
+		input.style.border = "2px solid red";
+		input.style.color = "red";
+	}
+}
+
+function on_animation_input_error_end()
+{
+	const input_div = document.getElementById("tfal-key-enter-div");
+	input_div.style.animationPlayState = "paused";
+	
+	for (input of digit_inputs)
+	{
+		input.style.border = "";
+		input.style.color = "";
+		input.value = '';
+		input.disabled = false;
+	}
+	on_click_div_event();
+}
+
 async function send_code_to_validation()
 {
 	// simulate fetch time
 	await delay(1000);
 
-	for (input of digit_inputs)
-	{
-		input.disabled = false;
-		input.value = '';
-	}
 	// on error, retry
 	if (true)
-		on_click_div_event();
+	{
+		animate_on_error();
+	}
 	// else process to login
 	else
 		;
-}
 
+}
 function focus_on_digit_inputs(input_id)
 {
 	if (input_id < 0 || input_id > nb_digit_inputs - 1)
@@ -99,5 +122,6 @@ document.addEventListener("onModalsLoaded", function()
 		digit_inputs[i].onkeydown = on_key_down_digit_event;
 	}
 	input_div.onclick = on_click_div_event;
+	input_div.onanimationiteration = on_animation_input_error_end;
 	openModalTwoFALogin();
 });
