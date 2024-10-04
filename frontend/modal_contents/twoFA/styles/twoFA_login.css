@@ -3,7 +3,6 @@
 	width: 100%;
 }
 
-
 #tfal-qrcode-div
 {
 	display: flex;
@@ -22,15 +21,15 @@
 	border: 3px solid black;
 	border-radius: 5px;
 	padding: 10px;
-	/* image-rendering: pixelated; */
+	
 }
 
 #tfal-qrcode-text
 {
-	font-size: 2em;
 	margin: auto;
 	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+	font-size: 2em;
 }
 
 #tfal-qrcode-key
@@ -68,6 +67,7 @@
 	margin: 0;
 	margin-left: 20px;
 	margin-right: 20px;
+	z-index: 1;
 }
 
 #tfal-code-text
@@ -76,38 +76,35 @@
 	margin: 0;
 }
 
-#tfal-digit-real-input
-{
-	position: absolute;
-	width: 110%;
-	font-size: 50px;
-	letter-spacing: 18px;
-	font-family: 'Courier New', Courier, monospace;
-	padding-left: 8px;
-	padding-top: 5px;
-	border: none;
-	caret-color: transparent;
-}
-
-.tfal-digit-div
+.tfal-input-digit-div
 {
 	padding: 8px;
 	padding-left: 4px;
 	padding-right: 4px;
-	z-index: 1;
 	pointer-events: none;
-
 }
 
-.tfal-digit
+.tfal-input-digit
 {
-	display: block;
 	pointer-events: none;
+	font-family: 'Courier New', Courier, monospace;
+	letter-spacing: 0px;
+	caret-color: transparent;
 
-	width: 40px;
+	width: calc(1ch + 10px);
+	font-size: 5ch;
 	height: 50px;
+
+	margin: auto;
+	padding-top: 10px;
+	padding-left: 3px;
 
 	border: 2px solid black;
 	border-radius: 3px;
 	z-index: 1;
+}
+
+.tfal-input-digit:focus
+{
+	border: 3px solid black;
 }
