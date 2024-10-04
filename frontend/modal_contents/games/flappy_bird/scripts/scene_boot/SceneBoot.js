@@ -9,28 +9,28 @@ class fb_SceneBoot extends Phaser.Scene{
 	}
 		#constructScenePlayTextures(){
 			this.#scene_play_textures = {
-				pipe_core:		new SceneTexture(this,	"pipe_core",		fb_gameTextures.pipe.core),
-				pipe_head:		new SceneTexture(this,	"pipe_head",		fb_gameTextures.pipe.head),
-				pipe_spacer:	new SceneTexture(this,	"pipe_spacer",		fb_gameTextures.pipe_spacer),
-				player1:		new SceneTexture(this,	"player1",			fb_gameTextures.player1),
-				player2:		new SceneTexture(this,	"player2",			fb_gameTextures.player2),
-				ceiling:		new SceneTexture(this,	"ceiling",			fb_gameTextures.ceiling),
-				ground:			new SceneTexture(this,	"ground",			fb_gameTextures.ground),
-				background:		new SceneTexture(this,	"background",		fb_gameTextures.background),
-				death:			new SceneTexture(this,	"death",			fb_gameTextures.death),
-				explosion:		new SceneTexture(this,	"explosion",		fb_gameTextures.explosion),
-				textboard:		new SceneTexture(this,	"textboard",		fb_gameTextures.textboard),
-				starting_line:	new SceneTexture(this,	"starting_line",	fb_gameTextures.starting_line)
+				pipe_core:		new SceneTexture(this,	"play_pipe_core",		fb_gameTextures.pipe.core),
+				pipe_head:		new SceneTexture(this,	"play_pipe_head",		fb_gameTextures.pipe.head),
+				pipe_spacer:	new SceneTexture(this,	"play_pipe_spacer",		fb_gameTextures.pipe_spacer),
+				player1:		new SceneTexture(this,	"play_player1",			fb_gameTextures.player1),
+				player2:		new SceneTexture(this,	"play_player2",			fb_gameTextures.player2),
+				ceiling:		new SceneTexture(this,	"play_ceiling",			fb_gameTextures.ceiling),
+				ground:			new SceneTexture(this,	"play_ground",			fb_gameTextures.ground),
+				background:		new SceneTexture(this,	"play_background",		fb_gameTextures.background),
+				death:			new SceneTexture(this,	"play_death",			fb_gameTextures.death),
+				explosion:		new SceneTexture(this,	"play_explosion",		fb_gameTextures.explosion),
+				textboard:		new SceneTexture(this,	"play_textboard",		fb_gameTextures.textboard),
+				starting_line:	new SceneTexture(this,	"play_starting_line",	fb_gameTextures.starting_line)
 			}
 		}
 		#constructSceneGameOverTextures(){
 			this.#scene_menu_and_game_over_textures = {
-				player1_icon:	new SceneTexture(this,	"player1",		fb_MenuAndGameOverTextures.player1_icon),
-				player2_icon:	new SceneTexture(this,	"player2",		fb_MenuAndGameOverTextures.player2_icon),
-				ceiling:		new SceneTexture(this,	"ceiling",			fb_gameTextures.ceiling),
-				ground:			new SceneTexture(this,	"ground",			fb_gameTextures.ground),
-				background:		new SceneTexture(this,	"background",		fb_gameTextures.background),
-				confetti:		new SceneTexture(this,	"confetti",		fb_MenuAndGameOverTextures.confetti),
+				player1_icon:	new SceneTexture(this,	"menus_player1",		fb_MenuAndGameOverTextures.player1_icon),
+				player2_icon:	new SceneTexture(this,	"menus_player2",		fb_MenuAndGameOverTextures.player2_icon),
+				ceiling:		new SceneTexture(this,	"menus_ceiling",		fb_MenuAndGameOverTextures.ceiling),
+				ground:			new SceneTexture(this,	"menus_ground",		fb_MenuAndGameOverTextures.ground),
+				background:		new SceneTexture(this,	"menus_background",	fb_MenuAndGameOverTextures.background),
+				confetti:		new SceneTexture(this,	"menus_confetti",		fb_MenuAndGameOverTextures.confetti),
 			}
 		}
 	

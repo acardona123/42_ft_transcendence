@@ -17,7 +17,6 @@ class fb_PlayGround extends AbstractVerticallyScaledTileSprite{
 	}
 
 	update(velocity, delay){
-		const position_step =  velocity * delay / 1000 * fb_gameConfig.scenePlay.ground.speed_factor;
-		this.object.tilePositionX += position_step;
+		this.object.tilePositionX += velocity * delay / 1000 * fb_gameConfig.scenePlay.ground.speed_factor;
 	}
 }

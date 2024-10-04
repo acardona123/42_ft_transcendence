@@ -154,20 +154,20 @@ class fb_PlayerRecapPanel extends Phaser.GameObjects.Container{
 				targets: this.#icon,
 				tweens: [
 					{
-						y: initial_icon_y - fb_gameConfig.scene_game_finished.panel.cellebration.jump_height,
-						angle: fb_gameConfig.scene_game_finished.panel.cellebration.jump_angle * (this.#flip_icon ? 1 : -1),
-						duration: fb_gameConfig.scene_game_finished.panel.cellebration.jump_duration,
+						y: initial_icon_y - fb_gameConfig.scene_game_finished.panel.celebration.jump_height,
+						angle: fb_gameConfig.scene_game_finished.panel.celebration.jump_angle * (this.#flip_icon ? 1 : -1),
+						duration: fb_gameConfig.scene_game_finished.panel.celebration.jump_duration,
 						ease: 'quad.out'
 					},
 					{
 						y: initial_icon_y,
 						angle: 0,
-						duration: fb_gameConfig.scene_game_finished.panel.cellebration.bounce_duration,
+						duration: fb_gameConfig.scene_game_finished.panel.celebration.bounce_duration,
 						ease: 'bounce.out'
 					},
 				],
 				loop: -1,
-				loopDelay: fb_gameConfig.scene_game_finished.panel.cellebration.loop_delay,
+				loopDelay: fb_gameConfig.scene_game_finished.panel.celebration.loop_delay,
 			});
 		}
 		#playCelebrationConfetti(){

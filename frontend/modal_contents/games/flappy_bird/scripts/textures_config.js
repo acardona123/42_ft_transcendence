@@ -22,6 +22,6 @@ const fb_MenuAndGameOverTextures = {
 	player2_icon:		new Texture(fb_assets_path + "images/bird1.png", "image", 816, 576),
 	ceiling:			new Texture(fb_assets_path + "images/ceiling.png", "image", 336, 112),
 	ground:				new Texture(fb_assets_path + "images/ground.png", "image", 336, 112),
-	background:			new Texture(fb_assets_path + "images/background.png", "image", 1781, 1785),
+	background:			new Texture(fb_assets_path + "images/background_menus.png", "image", 1781, 1785),
 	confetti:			new Texture(fb_assets_path + "sprites/confetti.png", "sprite", 150, 84, 25, -1),
 }

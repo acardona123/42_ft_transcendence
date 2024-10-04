@@ -80,9 +80,11 @@ class SceneTexture{
 	}
 
 	createTileSpriteScaledVertically(x, y, width, height){
+		const scale = height / this.texture.height
 		const unscaled_height = this.texture.height;
-		let object = this.createTileSprite(x, y, width, unscaled_height, this.#texture_name);
-		object.setScale(1, height / this.texture.height);
+		const prescaled_width = width / scale
+		let object = this.createTileSprite(x, y, prescaled_width, unscaled_height, this.#texture_name);
+		object.setScale(scale, scale);
 		return (object);
 	}
 
