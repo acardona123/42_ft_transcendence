@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
-from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth, generate_qr_code
+from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth, generate_qr_code, get_refresh_token
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
 import os
@@ -113,8 +113,7 @@ def login_user(request):
 		token['2fa_status'] = user.is_2fa_enable
 		return Response({"message": MSG_LOGIN_NEED_2FA,
 					"data" : token}, status=200)
-	user.is_online = True
-	user.save()
+	user.set_status_online()
 	token = get_tokens_for_user(user)
 	token["2fa_status"] = user.is_2fa_enable
 	return Response({"message": MSG_LOGIN,
@@ -135,7 +134,21 @@ def logout(request):
 	request.user.save()
 	return Response({"message": "Logout successful"}, 200)
 
+@api_view(['POST'])
+@permission_classes([IsNormalToken])
+def refresh_token(request):
+	refresh = request.data.get('refresh', None)
+	if refresh is None:
+		return Response({"message": "Refresh field is required"}, 400)
+	try:
+		token = get_refresh_token(refresh)
+		return Response({"message": "Token refresh successfully",
+						"data" : token}, 200)
+	except:
+		return Response({"message": "Invalid refresh token"}, 401)
+
 # --------------- 2fa --------------------
+
 @swagger_auto_schema(method='post',
 	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
@@ -167,8 +180,7 @@ def check_2fa(request):
 		if not device.confirmed:
 			device.confirmed = True
 			device.save()
-		user.is_online = True
-		user.save()
+		user.set_status_online()
 		token = get_tokens_for_user(user)
 		return Response({"message": MSG_LOGIN,
 						"data": token}, status=200)

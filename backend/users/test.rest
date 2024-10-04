@@ -1,9 +1,14 @@
+# {
+#     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1ODY0MiwiaWF0IjoxNzI4MDcyMjQyLCJqdGkiOiJkOTk5N2FhMjkyOGM0OTdjYmQ0MDMxYzBmNDhlOTIzMCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIn0.VokBSvcHsAl98BZ4QOSHOMtpU2itehcUM9HgXCoVNCs",
+#     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDczMTQyLCJpYXQiOjE3MjgwNzIyNDIsImp0aSI6ImViNGRkNjZmYWE2MzQ3NWFhMDE1Nzg1YWI0ZTJjNTNjIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwifQ.CvGQD4uuLkfoEX4mr_MJzA0a3il_LTRRBxZuY2rGztM",
+#     "2fa_status": false
+#   }
 ### sign up
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "new",
+	"username" : "newf",
 	"password" : "123asd456",
 	"password2" : "123asd456",
 	"email" : "J@gmai.coM",
@@ -19,7 +24,7 @@ content-type: application/json
 
 {
 	"password" : "123asd456",
-	"username" : "jevigtwpooy"
+	"username" : "newf"
 }
 
 ### login 2fa
@@ -34,18 +39,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### refresh token
 POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDczMTQyLCJpYXQiOjE3MjgwNzIyNDIsImp0aSI6ImViNGRkNjZmYWE2MzQ3NWFhMDE1Nzg1YWI0ZTJjNTNjIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwifQ.CvGQD4uuLkfoEX4mr_MJzA0a3il_LTRRBxZuY2rGztM
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE0NDkzNiwiaWF0IjoxNzI4MDU4NTM2LCJqdGkiOiIyZmU0ZjUwOWFmNTU0MDhjOTVkMTM3ZTA3ZTMzZWRhZCIsInVzZXJfaWQiOjgsInNjb3BlIjoibm9ybWFsIn0.sIzjl7zOIiyEVusVIlzFvx32KsG-J1MP6Vx793oX_bA"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1ODY0MiwiaWF0IjoxNzI4MDcyMjQyLCJqdGkiOiJkOTk5N2FhMjkyOGM0OTdjYmQ0MDMxYzBmNDhlOTIzMCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIn0.VokBSvcHsAl98BZ4QOSHOMtpU2itehcUM9HgXCoVNCs"
 }
+
 
 ### logout
 POST https://localhost:8443/api/users/logout/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDYxMjE1LCJpYXQiOjE3MjgwNjAzMTUsImp0aSI6IjA4N2RmMTMyMWM3MTRiNDBiNTQwNzE2ZWQ1MzliOWZkIiwidXNlcl9pZCI6Nywic2NvcGUiOiJub3JtYWwifQ.9gPKaSjE2uMfsROpZsCzUIn_iGoQnUdhXdlLkjKz99k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDcxODYzLCJpYXQiOjE3MjgwNzA5NjMsImp0aSI6ImRjOWQ4N2FmYmM0MTRlNzhhMzAxMDM5ZTJiODk3MjFhIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.8lIxGL1ZLYdlq1Zbqw4K0XcGdwlnoNsAUTgd0DczkNQ
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE0NjcxNSwiaWF0IjoxNzI4MDYwMzE1LCJqdGkiOiJiODRhZTcwNWRjYmI0ZTIzYmE0YmIxMzY2YzNlMDJiZCIsInVzZXJfaWQiOjcsInNjb3BlIjoibm9ybWFsIn0.iF7uYqHrkce6M-pUoXIHYs80wEoA2z_v8pf8Fp2Wklo"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1NzM2MywiaWF0IjoxNzI4MDcwOTYzLCJqdGkiOiI4OThmMmFkMDY2Y2E0OTUxOWY1YzlkMTJiOTdkODcwOSIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.Kq2fhQPXDsNWjwuzKN8TlDnAfYUvkLQy7Y6sG-oZdUY"
 }
 
 ### update password
@@ -61,11 +68,11 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDU5MTMxLCJpYXQiOjE3MjgwNTgyMzEsImp0aSI6Ijc0MTcwMTAwM2U2ODQ3MDNhMGQ2MjJmNDc3MzUyZmIxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.F5xItDmktjogw97A_sBW7MFFS8WdACEAv1WKmc3l4CU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDczMjIxLCJpYXQiOjE3MjgwNzIyNDIsImp0aSI6IjUyYjEzZTliY2EzMjRiNDhhMDI4ZjU1ZGYyN2NmNTRhIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwifQ.Y0uTuGUYlxQj1E2VklN8F0c3iAXQCfAceCvpdJ-2N2E
 content-type: application/json
 
 {
-	"username": "jvigny7712",
+	"username": "jvidgny7712",
 	"email": "fghf@fdg.ds",
 	"phone": "0326597845"
 }
@@ -73,7 +80,7 @@ content-type: application/json
 ### update 2fa
 PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDYwNzM0LCJpYXQiOjE3MjgwNTk4MzQsImp0aSI6IjU4OGYxMmNkODZlZTQ2NjliYjQzNzI0YWY1MTA5OWQyIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.cgn5PVnAf69s7k-HOjfEN4n0b4jalgPOIc1XhQKNNpU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDY5ODgzLCJpYXQiOjE3MjgwNjg5ODMsImp0aSI6ImVhYTQyYmY0NWY1NjRjNzVhNTZkYTA4NzNkZGU3OGU5IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.vD3YRVDS_zNKiu1T4NjfXCHueGJvCKQVpIw8ad-qe_g
 
 {
 	"2fa_status": "on"

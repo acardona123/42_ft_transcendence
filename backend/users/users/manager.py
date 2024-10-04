@@ -14,7 +14,7 @@ class CustomUserManager(BaseUserManager):
 			user.set_unusable_password()
 		else:
 			user.set_password(password)
-		user.save()
+		user.set_status_online()
 		return user
 
 	def create_user(self, username, password=None, **extra_fields):

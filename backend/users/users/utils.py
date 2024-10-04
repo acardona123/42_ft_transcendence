@@ -52,8 +52,7 @@ def create_user_oauth(data):
 
 def login_user_oauth(id):
 	user = CustomUser.objects.filter(oauth_id=id).first()
-	user.is_online = True
-	user.save()
+	user.set_status_online()
 	tokens = get_tokens_for_user(user)
 	return Response({'message': MSG_LOGIN_OAUTH,
 						'data': {'tokens': tokens}}, status=200)
@@ -73,6 +72,13 @@ def get_temp_tokens_for_user(user):
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
 	refresh["scope"] = "normal"
+	return {
+		'refresh': str(refresh),
+		'access': str(refresh.access_token),
+	}
+
+def get_refresh_token(token):
+	refresh = RefreshToken(token)
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),

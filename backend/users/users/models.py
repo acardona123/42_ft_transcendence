@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from .manager import CustomUserManager
 import uuid
 import re
+from django.utils import timezone
 
 def test_username(username):
     if re.match("^[A-Za-z0-9_#-]*$", username):
@@ -22,7 +23,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     oauth_id = models.IntegerField(null=True, unique=True)
     is_2fa_enable = models.BooleanField(default=False)
     is_online = models.BooleanField(default=False)
-    # last_activity = models.DateTimeField(null=True)
+    last_activity = models.DateTimeField()
     # picture = models.ImageField(blank=True, null=True)
 	# profile_picture = models.ImageField(
 	#     "profile picture",
@@ -40,3 +41,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    def set_status_online(self):
+        self.is_online = True
+        self.last_activity = timezone.now()
+        self.save()

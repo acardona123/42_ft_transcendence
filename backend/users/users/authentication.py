@@ -11,6 +11,7 @@ class CustomJWTAuthentication(JWTAuthentication):
 		scope = token.get('scope', None)
 		if not scope:
 			raise AuthenticationFailed('Token has no scope')
+		user.set_status_online()
 		return user, token
 
 class IsTemporaryToken(BasePermission):
