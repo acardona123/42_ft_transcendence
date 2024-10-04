@@ -1,5 +1,6 @@
 const nb_digit_inputs = 6;
 let digit_inputs = [];
+const regex_digit = /^[0-9]/;
 
 async function send_code_to_validation()
 {
@@ -29,6 +30,8 @@ function focus_on_digit_inputs(input_id)
 function on_key_down_digit_event(event)
 {
 	let cur_input_id = 0;
+	if (!regex_digit.test(event.key) && event.key != "Backspace")
+		event.preventDefault();
 	for (let i = 0; i < nb_digit_inputs; i++)
 	{
 		if (digit_inputs[i] === this)
