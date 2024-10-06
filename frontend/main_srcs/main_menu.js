@@ -46,7 +46,7 @@ function updateUI() {
 
 const USER = {name: "John Doe", type: "player", id: 1421};
 
-let isConnected = true;
+let isConnected = false;
 let userName = 'John Doe';
 // let userImage = 'imgliargame-pp.png';
 let userImage = 'img/GP_poster.jpeg';
