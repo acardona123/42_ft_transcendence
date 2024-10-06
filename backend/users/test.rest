@@ -1,0 +1,92 @@
+
+### sign up
+POST https://localhost:8443/api/users/signup/ HTTP/1.1
+content-type: application/json
+
+{
+	"username" : "new",
+	"password" : "123asd456",
+	"password2" : "123asd456",
+	"email" : "J@gmai.coM",
+	"phone" : "+33659482658"
+}
+
+### get url api42
+GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
+
+### login
+POST https://localhost:8443/api/users/login/ HTTP/1.1
+content-type: application/json
+
+{
+	"password" : "123asd456",
+	"username" : "new"
+}
+
+### login 2fa
+POST https://localhost:8443/api/users/login/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE5ODQ1LCJpYXQiOjE3MjgyMTk1NDUsImp0aSI6IjVjZWJiMmMzYTQ2NDRlMGY4ZmJkOGQ5NWJkODViODUxIiwidXNlcl9pZCI6Miwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.cAbXWrRd1VdvnTrYPnaC9StTxJbZdxA1Az4NEUg90ew
+
+{
+	"token" : "536118"
+}
+
+### refresh token
+POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE3MDY0LCJpYXQiOjE3MjgyMTYxNjQsImp0aSI6ImVkNDZkNDI3MmFlYTQ0M2RhZGNlMTY0MjY5ZjI4ZmFmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.xO07Yc3-KDVnBYr8klRvl_gPzYrN24mnAMJ48YMQ03c
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1ODY0MiwiaWF0IjoxNzI4MDcyMjQyLCJqdGkiOiJkOTk5N2FhMjkyOGM0OTdjYmQ0MDMxYzBmNDhlOTIzMCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIn0.VokBSvcHsAl98BZ4QOSHOMtpU2itehcUM9HgXCoVNCs"
+}
+
+
+### logout
+POST https://localhost:8443/api/users/logout/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDcxODYzLCJpYXQiOjE3MjgwNzA5NjMsImp0aSI6ImRjOWQ4N2FmYmM0MTRlNzhhMzAxMDM5ZTJiODk3MjFhIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.8lIxGL1ZLYdlq1Zbqw4K0XcGdwlnoNsAUTgd0DczkNQ
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1NzM2MywiaWF0IjoxNzI4MDcwOTYzLCJqdGkiOiI4OThmMmFkMDY2Y2E0OTUxOWY1YzlkMTJiOTdkODcwOSIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.Kq2fhQPXDsNWjwuzKN8TlDnAfYUvkLQy7Y6sG-oZdUY"
+}
+
+### update password
+PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODk5NTYxLCJpYXQiOjE3Mjc4OTg2NjEsImp0aSI6IjhjNGRkYjhhZDE0MzRhMjQ4Y2RkNDYwMjViZDhjMTAzIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.WzXbjcVJXQHfAnvGI4Dm4INnJnElDfsXAzYxlOXYVnc
+content-type: application/json
+
+{
+	"old_password": "123asd456",
+	"password": "dvv",
+	"password2": "d"
+}
+
+### update user
+PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDczMjIxLCJpYXQiOjE3MjgwNzIyNDIsImp0aSI6IjUyYjEzZTliY2EzMjRiNDhhMDI4ZjU1ZGYyN2NmNTRhIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwifQ.Y0uTuGUYlxQj1E2VklN8F0c3iAXQCfAceCvpdJ-2N2E
+content-type: application/json
+
+{
+	"username": "jvidgny7712",
+	"email": "fghf@fdg.ds",
+	"phone": "0326597845"
+}
+
+### update 2fa
+PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjIwMTg0LCJpYXQiOjE3MjgyMTkyODQsImp0aSI6IjgwYzc0OGU4NTFlYjQwZmRhOTdhMjE3NTlkYzRhYzk3IiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.AnbeDGumv2BEfOvC55GfH7zZ-guoX7VUyVK7HdHfI7o
+
+{
+	"2fa_status": "on"
+}
+
+### validate 2fa
+PUT https://localhost:8443/api/users/update/2fa/validation/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE5ODQ1LCJpYXQiOjE3MjgyMTk1NDUsImp0aSI6IjVjZWJiMmMzYTQ2NDRlMGY4ZmJkOGQ5NWJkODViODUxIiwidXNlcl9pZCI6Miwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.cAbXWrRd1VdvnTrYPnaC9StTxJbZdxA1Az4NEUg90ew
+
+{
+	"token" : "712380"
+}

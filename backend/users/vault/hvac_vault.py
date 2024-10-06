@@ -80,7 +80,7 @@ def create_role(client, name):
 			name=name+'-role',
 			db_name=name,
 			creation_statements=creation_statements,
-			default_ttl='15m',
+			default_ttl='1m',
 			max_ttl='1h'
 		)
 
@@ -90,7 +90,6 @@ def rotate_cred(client, name):
 	)
 
 def create_cred(client, name):
-	print('create cred database')
 	credentials = client.secrets.database.generate_credentials(
 		name=name+'-role'
 	)

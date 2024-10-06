@@ -2,7 +2,7 @@ services:
   friends:
     build: .
     container_name: friends
-    command: bash -c "python3 ./django/app/vault/vault_init.py"
+    command: bash -c "python3 ./django/vault/vault_init.py"
     restart: always
     environment:
       - VAULT_DATABASE_NAME=friends_db
