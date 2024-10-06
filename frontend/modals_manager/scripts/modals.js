@@ -32,6 +32,7 @@ var modal1v1MatchCreation = undefined;
 var modalParameters = undefined;
 var modalProfile = undefined;
 var modalTwoFASetup = undefined;
+var modalTwoFAValid = undefined;
 
 function openModalLogin() {
 
@@ -202,7 +203,24 @@ function openModalTwoFASetup() {
 	modaldialog.classList.add('grow-bottom-right');
 	modalTwoFASetup.showModal();
 	// set focus on code enter
-	on_click_div_event();
+	on_click_div_event(document.getElementById("tfas-key-enter-div"));
+}
+
+function hideModalTwoFASetup() {
+	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalTwoFASetup.hideModal();
+}
+
+function openModalTwoFAValid() {
+
+	modalTwoFAValid = new ModalManager('modal-2fa-valid');
+
+	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
+	modaldialog.classList.add('grow-bottom-right');
+	modalTwoFAValid.showModal();
+	// set focus on code enter
+	on_click_div_event(document.getElementById("tfav-key-enter-div"));
 }
 
 function hideModalTwoFASetup() {
@@ -218,7 +236,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -227,10 +245,11 @@ async function get_modals_html()
 			fetch('modal_contents/versus_menu/versus_menu.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
 			fetch('modal_contents/profile/profile.html'),
-			fetch('modal_contents/twoFA/twoFA_setup.html')
+			fetch('modal_contents/twoFA/twoFA_setup.html'),
+			fetch('modal_contents/twoFA/twoFA_valid.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -239,9 +258,10 @@ async function get_modals_html()
 			versus_menu.text(),
 			edit_profile.text(),
 			profile.text(),
-			twoFA_setup.text()
+			twoFA_setup.text(),
+			twoFA_valid.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile + twoFA_setup;
+		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile + twoFA_setup + twoFA_valid;
 	}
 	catch (error)
 	{

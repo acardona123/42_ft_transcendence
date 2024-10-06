@@ -1,10 +1,23 @@
 const nb_digit_inputs = 6;
-let digit_inputs = [];
+let digit_inputs_setup = [];
+let digit_inputs_valid = [];
 const regex_digit = /^[0-9]/;
 
-function animate_on_error()
+function get_inputs(id)
 {
-	const input_div = document.getElementById("tfas-key-enter-div");
+	switch (id) {
+		case "tfas-key-enter-div":
+			return digit_inputs_setup;
+		case "tfav-key-enter-div":
+			return digit_inputs_valid;
+		default:
+			return undefined;
+	}
+}
+
+function animate_on_error(digit_inputs)
+{
+	const input_div = digit_inputs[0].parentNode.parentNode;
 	input_div.style.animationPlayState = "running";
 	for (input of digit_inputs)
 	{
@@ -15,8 +28,8 @@ function animate_on_error()
 
 function on_animation_input_error_end()
 {
-	const input_div = document.getElementById("tfas-key-enter-div");
-	input_div.style.animationPlayState = "paused";
+	let digit_inputs = get_inputs(this.id);
+	this.style.animationPlayState = "paused";
 	
 	for (input of digit_inputs)
 	{
@@ -25,10 +38,10 @@ function on_animation_input_error_end()
 		input.value = '';
 		input.disabled = false;
 	}
-	on_click_div_event();
+	on_click_div_event(this);
 }
 
-async function send_code_to_validation()
+async function send_code_to_validation(digit_inputs)
 {
 	// simulate fetch time
 	await delay(1000);
@@ -36,14 +49,14 @@ async function send_code_to_validation()
 	// on error, retry
 	if (true)
 	{
-		animate_on_error();
+		animate_on_error(digit_inputs);
 	}
 	// else process to login
 	else
 		;
 
 }
-function focus_on_digit_inputs(input_id)
+function focus_on_digit_inputs(digit_inputs, input_id)
 {
 	if (input_id < 0 || input_id > nb_digit_inputs - 1)
 		return ;
@@ -52,6 +65,7 @@ function focus_on_digit_inputs(input_id)
 
 function on_key_down_digit_event(event)
 {
+	let digit_inputs = get_inputs(this.parentNode.parentNode.id);
 	let cur_input_id = 0;
 	if (!regex_digit.test(event.key) && event.key != "Backspace")
 		event.preventDefault();
@@ -70,13 +84,14 @@ function on_key_down_digit_event(event)
 			this.value = '';
 			return ;
 		}
-		focus_on_digit_inputs(cur_input_id - 1);
+		focus_on_digit_inputs(digit_inputs, cur_input_id - 1);
 		return ;
 	}
 }
 
 function on_input_digit_event()
 {
+	let digit_inputs = get_inputs(this.parentNode.parentNode.id);
 	let cur_input_id = 0;
 	for (let i = 0; i < nb_digit_inputs; i++)
 	{
@@ -92,15 +107,16 @@ function on_input_digit_event()
 		{
 			for (input of digit_inputs)
 				input.disabled = true;
-			send_code_to_validation();
+			send_code_to_validation(digit_inputs);
 			return ;
 		}
-		focus_on_digit_inputs(cur_input_id + 1);
+		focus_on_digit_inputs(digit_inputs, cur_input_id + 1);
 	}
 }
 
-function on_click_div_event()
+function on_click_div_event(elem_clicked = undefined)
 {
+	let digit_inputs = get_inputs(elem_clicked.nodeType ? elem_clicked.id : this.id);
 	for (input of digit_inputs)
 	{
 		if (input.value.length == 0)
@@ -117,11 +133,10 @@ document.addEventListener("onModalsLoaded", function()
 	const input_div = document.getElementById("tfas-key-enter-div");
 	for (let i = 0; i < nb_digit_inputs; i++)
 	{
-		digit_inputs.push(input_div.children[i].children[0]);
-		digit_inputs[i].oninput = on_input_digit_event;
-		digit_inputs[i].onkeydown = on_key_down_digit_event;
+		digit_inputs_setup.push(input_div.children[i].children[0]);
+		digit_inputs_setup[i].oninput = on_input_digit_event;
+		digit_inputs_setup[i].onkeydown = on_key_down_digit_event;
 	}
-	input_div.onclick = on_click_div_event;
+	input_div.onclick = on_click_div_event; // done
 	input_div.onanimationiteration = on_animation_input_error_end;
-	openModalTwoFASetup();
 });
