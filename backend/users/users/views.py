@@ -133,7 +133,6 @@ def logout(request):
 	return Response({"message": MSG_LOGOUT}, 200)
 
 @swagger_auto_schema(method='post',
-	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		required=['refresh'],
@@ -148,8 +147,7 @@ def logout(request):
 		'401bis': DOC_ERROR_INVALID_TOKEN,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
-@api_view(['POST'])
-@permission_classes([IsNormalToken])
+@api_view(['POST']) #todoooooo
 def refresh_token(request):
 	refresh = request.data.get('refresh', None)
 	if refresh is None:
