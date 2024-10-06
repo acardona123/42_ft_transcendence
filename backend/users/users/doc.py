@@ -1,6 +1,7 @@
 MSG_ERROR_CREATING_USER = "Error occured while creating user"
 MSG_ERROR_NO_ACCOUNT = "No active account found with the given credentials"
 MSG_ERROR_TOKEN_REQUIRED = "Token is required to authenticate with 2fa"
+MSG_ERROR_REFRESH_REQUIRED = "Refresh field is required"
 MSG_ERROR_NO_TOTP_DEVICE = "Not device found for user"
 MSG_ERROR_WRONG_TOKEN = "Fail to verify the token given"
 MSG_ERROR_WRONG_2FA_STATUS = "Invalid status field for the 2fa"
@@ -17,10 +18,13 @@ MSG_ERROR_SER_CURRENT_PASSWORD = "New Password is the current password"
 MSG_ERROR_SER_NO_USER = "Invalid user"
 MSG_ERROR_SER_USER_WITHOUT_PASSWORD = "User don't have any password"
 MSG_ERROR_SER_OLD_PASSWORD = "Old password is not correct"
+MSG_ERROR_INVALID_REFRESH_TOKEN = "Invalid refresh token"
 
 MSG_USER_CREATED = "User created"
 MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"
 MSG_LOGIN = "User login successfully"
+MSG_LOGOUT = "User logout successfully"
+MSG_TOKEN_REFRESH = "Token refresh successfully"
 MSG_LOGIN_OAUTH = "User login successfully with 42 API"
 MSG_DISABLE_2FA = "Disable 2fa and remove previous devide"
 MSG_ENABLE_2FA = "Enable 2fa and generate qr code to connect"
@@ -323,6 +327,42 @@ DOC_ERROR_UPDATE_INFO = openapi.Response(
 							"The phone number entered is not valid."
 						]
 					}
+				}
+			}
+		)
+
+DOC_ERROR_INVALID_TOKEN = openapi.Response(
+			description=MSG_ERROR_INVALID_REFRESH_TOKEN,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_INVALID_REFRESH_TOKEN,
+				}
+			}
+		)
+
+DOC_ERROR_NEED_REFRESH_TOKEN = openapi.Response(
+			description=MSG_ERROR_REFRESH_REQUIRED,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_REFRESH_REQUIRED,
+				}
+			}
+		)
+
+DOC_LOGOUT = openapi.Response(
+			description=MSG_LOGOUT,
+			examples={
+				"application/json": {
+					"message": MSG_LOGOUT,
+				}
+			}
+		)
+
+DOC_TOKEN_REFRESH = openapi.Response(
+			description=MSG_TOKEN_REFRESH,
+			examples={
+				"application/json": {
+					"message": MSG_TOKEN_REFRESH,
 				}
 			}
 		)

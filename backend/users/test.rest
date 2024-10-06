@@ -1,8 +1,4 @@
-# {
-#     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1ODY0MiwiaWF0IjoxNzI4MDcyMjQyLCJqdGkiOiJkOTk5N2FhMjkyOGM0OTdjYmQ0MDMxYzBmNDhlOTIzMCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIn0.VokBSvcHsAl98BZ4QOSHOMtpU2itehcUM9HgXCoVNCs",
-#     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDczMTQyLCJpYXQiOjE3MjgwNzIyNDIsImp0aSI6ImViNGRkNjZmYWE2MzQ3NWFhMDE1Nzg1YWI0ZTJjNTNjIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwifQ.CvGQD4uuLkfoEX4mr_MJzA0a3il_LTRRBxZuY2rGztM",
-#     "2fa_status": false
-#   }
+
 ### sign up
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json

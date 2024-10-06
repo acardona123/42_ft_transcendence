@@ -15,7 +15,8 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	MSG_ERROR_OAUTH_INFO, MSG_ERROR_UPDATE_PASSWORD_OAUTH, MSG_ERROR_UPDATE_PASSWORD,
 	MSG_ERROR_UPDATE_USER_INFO, MSG_USER_CREATED, MSG_LOGIN_NEED_2FA,
 	MSG_LOGIN, MSG_DISABLE_2FA, MSG_ENABLE_2FA, MSG_SEND_URL_OAUTH,
-	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE,
+	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE, MSG_ERROR_REFRESH_REQUIRED,
+	MSG_ERROR_INVALID_REFRESH_TOKEN, MSG_LOGOUT, MSG_TOKEN_REFRESH,
 	DOC_ERROR_METHOD_NOT_ALLOWED, DOC_USER_CREATED, DOC_ERROR_CREATING_USER,
 	DOC_USER_LOGIN, DOC_USER_LOGIN_2FA, DOC_ERROR_LOGIN_FAILED,
 	DOC_ERROR_UNAUTHORIZED, DOC_2FA_VALID, DOC_ERROR_INVALID_2FA,
@@ -23,31 +24,9 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	DOC_URL_OAUTH42, DOC_USER_LOGIN_API42, DOC_USER_CREATED_API42_WARNING,
 	DOC_USER_CREATED_API42, DOC_ERROR_LOGIN_API42, DOC_ERROR_UPDATE_PASSWORD,
 	DOC_IMPOSSIBLE_UPDATE_PASSWORD, DOC_UPDATE_PASSWORD, DOC_ERROR_UPDATE_INFO,
-	DOC_UPDATE_INFO)
+	DOC_UPDATE_INFO, DOC_LOGOUT, DOC_ERROR_NEED_REFRESH_TOKEN,
+	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH)
 
-# @api_view(['GET'])
-# def get_id(request):
-# 	body = request.body
-# 	# json.loads(body).get('name')
-# 	# check name in database
-# 	dic = {"id" : "7"}
-# 	return Response(dic)
-# 	# return HttpResponse(status=status.HTTP_408_REQUEST_TIMEOUT)
-
-# @api_view(['POST'])
-# def get_usernames(request):
-# 	body = request.body
-# 	print(body)
-# 	users = json.loads(body).get('users')
-# 	print(users)
-# 	#get username in the database
-# 	list = ['johanne', 'quentin', 'arthur', 'alex', 'alexandre', 'jeanne', 'ulysse', 'user1', 'user2']
-# 	dic = dict()
-# 	i = 0
-# 	for user in users:
-# 		dic[user] = list[i]
-# 		i+=1
-# 	return Response(dic)
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 # --------------- user managment --------------------
@@ -119,33 +98,63 @@ def login_user(request):
 	return Response({"message": MSG_LOGIN,
 				  	"data" : token}, status=200)
 
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['refresh'],
+		properties={
+			'refresh': openapi.Schema(type=openapi.TYPE_STRING)
+		}
+	),
+	responses={
+		200: DOC_LOGOUT,
+		400: DOC_ERROR_NEED_REFRESH_TOKEN,
+		401: DOC_ERROR_UNAUTHORIZED,
+		'401bis': DOC_ERROR_INVALID_TOKEN,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 @permission_classes([IsNormalToken])
 def logout(request):
 	refresh = request.data.get('refresh', None)
 	if refresh is None:
-		return Response({"message": "Refresh field is required"}, 400)
+		return Response({"message": MSG_ERROR_REFRESH_REQUIRED}, 400)
 	try:
 		token = RefreshToken(refresh)
 		token.blacklist()
 	except:
-		return Response({"message": "Invalid refresh token"}, 401)
+		return Response({"message":MSG_ERROR_INVALID_REFRESH_TOKEN}, 401)
 	request.user.is_online = False
 	request.user.save()
-	return Response({"message": "Logout successful"}, 200)
+	return Response({"message": MSG_LOGOUT}, 200)
 
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['refresh'],
+		properties={
+			'refresh': openapi.Schema(type=openapi.TYPE_STRING)
+		}
+	),
+	responses={
+		200: DOC_TOKEN_REFRESH,
+		400: DOC_ERROR_NEED_REFRESH_TOKEN,
+		401: DOC_ERROR_UNAUTHORIZED,
+		'401bis': DOC_ERROR_INVALID_TOKEN,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 @permission_classes([IsNormalToken])
 def refresh_token(request):
 	refresh = request.data.get('refresh', None)
 	if refresh is None:
-		return Response({"message": "Refresh field is required"}, 400)
+		return Response({"message": MSG_ERROR_REFRESH_REQUIRED}, 400)
 	try:
 		token = get_refresh_token(refresh)
-		return Response({"message": "Token refresh successfully",
+		return Response({"message": MSG_TOKEN_REFRESH,
 						"data" : token}, 200)
 	except:
-		return Response({"message": "Invalid refresh token"}, 401)
+		return Response({"message": MSG_ERROR_INVALID_REFRESH_TOKEN}, 401)
 
 # --------------- 2fa --------------------
 
