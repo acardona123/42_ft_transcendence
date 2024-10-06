@@ -19,6 +19,7 @@ MSG_ERROR_SER_NO_USER = "Invalid user"
 MSG_ERROR_SER_USER_WITHOUT_PASSWORD = "User don't have any password"
 MSG_ERROR_SER_OLD_PASSWORD = "Old password is not correct"
 MSG_ERROR_INVALID_REFRESH_TOKEN = "Invalid refresh token"
+MSG_ERROR_DEVICE_NOT_CONFIRMED = "Device 2fa is not confirmed"
 
 MSG_USER_CREATED = "User created"
 MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"
@@ -32,6 +33,8 @@ MSG_SEND_URL_OAUTH = "Send url to oauth2.0 with 42 API"
 MSG_PASSWORD_UPDATE = "Password updated"
 MSG_INFO_USER_UPDATE = "User info updated"
 MSG_USER_OAUTH_CREATED = "New user created with 42 API"
+MSG_DEVICE_ALREADY_CONFIRMED = "Device 2fa is already confirmed"
+MSG_DEVICE_VALIDATED = "Validation 2fa device"
 
 #--------------------DOC--------------------
 from drf_yasg import openapi
@@ -114,7 +117,7 @@ DOC_USER_LOGIN = openapi.Response(
 					"data": {
 						"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTg5MiwiaWF0IjoxNzI3ODg1NDkyLCJqdGkiOiI5ODJjNzkwYjMyMDc0NWE3YmY2ZTA5YzBkY2I2N2MwNSIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.ZDb5YSXDBhUDmNaDGjwIaL0SuwgHFk6DjVWosjBY3u8",
 						"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg2MzkyLCJpYXQiOjE3Mjc4ODU0OTIsImp0aSI6ImE2ODQzYjdkYTFhMDRlZTdhZmRiM2ZmNTcwMjYwOTJiIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.hgISgwKd2HoJbCgJ6BbRLaGPjmGkk03I6Kpdd-F2mMA",
-						"2fa_status": False
+						"2fa_status": "off"
 					}
 				}
 			}
@@ -127,7 +130,7 @@ DOC_USER_LOGIN_2FA = openapi.Response(
 					"message": MSG_LOGIN_NEED_2FA,
 					"data": {
 						"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg2MzkyLCJpYXQiOjE3Mjc4ODU0OTIsImp0aSI6ImE2ODQzYjdkYTFhMDRlZTdhZmRiM2ZmNTcwMjYwOTJiIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.hgISgwKd2HoJbCgJ6BbRLaGPjmGkk03I6Kpdd-F2mMA",
-						"2fa_status": True
+						"2fa_status": "on"
 					}
 				}
 			}
@@ -142,8 +145,29 @@ DOC_ERROR_INVALID_2FA = openapi.Response(
 			}
 		)
 
+DOC_2FA_DEVIDE_VALID = openapi.Response(
+			description=MSG_DEVICE_VALIDATED,
+			examples={
+				"application/json": {
+					"message": MSG_DEVICE_VALIDATED,
+					"data": {
+						"2fa_status": "on"
+					}
+				}
+			}
+		)
+
+DOC_2FA_DEVIDE_ALREADY_VALID = openapi.Response(
+			description=MSG_DEVICE_ALREADY_CONFIRMED,
+			examples={
+				"application/json": {
+					"message": MSG_DEVICE_ALREADY_CONFIRMED
+				}
+			}
+		)
+
 DOC_2FA_VALID = openapi.Response(
-			description=MSG_LOGIN+", 2fa validated",
+			description=MSG_LOGIN,
 			examples={
 				"application/json": {
 					"message": MSG_LOGIN,
@@ -181,7 +205,7 @@ DOC_ENABLE_2FA = openapi.Response(
 			examples={
 				"application/json": {
 					"message": MSG_ENABLE_2FA,
-					"data": {"2fa_status" : "on",
+					"data": {"2fa_status" : "waiting",
 							"code": "DFSG5DFGH4F6G5H4FG6H4F6G4H",
 							"qrcode": "data:image/png;base64,fghfghfghfghfhf"}
 				}

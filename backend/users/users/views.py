@@ -17,6 +17,8 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	MSG_LOGIN, MSG_DISABLE_2FA, MSG_ENABLE_2FA, MSG_SEND_URL_OAUTH,
 	MSG_PASSWORD_UPDATE, MSG_INFO_USER_UPDATE, MSG_ERROR_REFRESH_REQUIRED,
 	MSG_ERROR_INVALID_REFRESH_TOKEN, MSG_LOGOUT, MSG_TOKEN_REFRESH,
+	MSG_ERROR_DEVICE_NOT_CONFIRMED, MSG_DEVICE_ALREADY_CONFIRMED,
+	MSG_DEVICE_VALIDATED,
 	DOC_ERROR_METHOD_NOT_ALLOWED, DOC_USER_CREATED, DOC_ERROR_CREATING_USER,
 	DOC_USER_LOGIN, DOC_USER_LOGIN_2FA, DOC_ERROR_LOGIN_FAILED,
 	DOC_ERROR_UNAUTHORIZED, DOC_2FA_VALID, DOC_ERROR_INVALID_2FA,
@@ -25,7 +27,8 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	DOC_USER_CREATED_API42, DOC_ERROR_LOGIN_API42, DOC_ERROR_UPDATE_PASSWORD,
 	DOC_IMPOSSIBLE_UPDATE_PASSWORD, DOC_UPDATE_PASSWORD, DOC_ERROR_UPDATE_INFO,
 	DOC_UPDATE_INFO, DOC_LOGOUT, DOC_ERROR_NEED_REFRESH_TOKEN,
-	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH)
+	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH, DOC_2FA_DEVIDE_ALREADY_VALID,
+	DOC_2FA_DEVIDE_VALID)
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -87,14 +90,14 @@ def login_user(request):
 	user = authenticate(username=username, password=password)
 	if user is None:
 		return Response({"message": MSG_ERROR_NO_ACCOUNT}, status=401)
-	if user.is_2fa_enable:
+	if user.is_2fa_enable and TOTPDevice.objects.filter(user=user).first().confirmed:
 		token = get_temp_tokens_for_user(user)
-		token['2fa_status'] = user.is_2fa_enable
+		token['2fa_status'] = "on"
 		return Response({"message": MSG_LOGIN_NEED_2FA,
 					"data" : token}, status=200)
 	user.set_status_online()
 	token = get_tokens_for_user(user)
-	token["2fa_status"] = user.is_2fa_enable
+	token["2fa_status"] = "off"
 	return Response({"message": MSG_LOGIN,
 				  	"data" : token}, status=200)
 
@@ -175,7 +178,7 @@ def refresh_token(request):
 	})
 @api_view(['POST'])
 @permission_classes([IsTemporaryToken])
-def check_2fa(request):
+def login_2fa(request):
 	token_2fa = request.data.get("token", None)
 	if token_2fa is None:
 		return Response({"message": MSG_ERROR_TOKEN_REQUIRED}, status=400)
@@ -185,10 +188,9 @@ def check_2fa(request):
 	device = TOTPDevice.objects.filter(user=user).first()
 	if device == None:
 		return Response({"message": MSG_ERROR_NO_TOTP_DEVICE}, status=400)
+	if not device.confirmed:
+		return Response({"message": MSG_ERROR_DEVICE_NOT_CONFIRMED}, status=400)
 	if device.verify_token(token_2fa):
-		if not device.confirmed:
-			device.confirmed = True
-			device.save()
 		user.set_status_online()
 		token = get_tokens_for_user(user)
 		return Response({"message": MSG_LOGIN,
@@ -233,11 +235,48 @@ def update_2fa(request):
 		secret_code = device.config_url.split("secret=")[1].split('&')[0]
 		qr_code = generate_qr_code(device.config_url)
 		return Response({"message": MSG_ENABLE_2FA,
-						"data": {"2fa_status" : "on",
+						"data": {"2fa_status" : "waiting",
 								"code": secret_code,
 								"qrcode" :f"data:image/png;base64,{qr_code}"}}, status=201)
 	else:
 		return Response({"message": MSG_ERROR_WRONG_2FA_STATUS}, status=400)
+
+@swagger_auto_schema(method='put',
+	manual_parameters=[JWT_TOKEN],
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['token'],
+		properties={
+			'token': openapi.Schema(type=openapi.TYPE_STRING, description='6 digits'),
+		}
+	),
+	responses={
+		200: DOC_2FA_DEVIDE_VALID,
+		'200bis': DOC_2FA_DEVIDE_ALREADY_VALID,
+		400: DOC_ERROR_INVALID_2FA,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
+@api_view(['PUT'])
+@permission_classes([IsNormalToken])
+def validate_2fa_enable(request):
+	token_2fa = request.data.get("token", None)
+	if token_2fa is None:
+		return Response({"message": MSG_ERROR_TOKEN_REQUIRED}, status=400)
+	user = request.user
+	if not user.is_2fa_enable:
+		return Response({"message": MSG_ERROR_2FA_IS_DISABLE}, status=400)
+	device = TOTPDevice.objects.filter(user=user).first()
+	if device == None:
+		return Response({"message": MSG_ERROR_NO_TOTP_DEVICE}, status=400)
+	if device.verify_token(token_2fa):
+		if device.confirmed:
+			return Response({"message": MSG_DEVICE_ALREADY_CONFIRMED}, status=200)
+		device.confirmed = True
+		device.save()
+		return Response({"message": MSG_DEVICE_VALIDATED,
+						"data": {"2fa_status" : "on"}}, status=200)
+	return Response({"message": MSG_ERROR_WRONG_TOKEN}, status=400)
 
 # --------------- Oauth --------------------
 
