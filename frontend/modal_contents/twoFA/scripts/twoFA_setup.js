@@ -4,7 +4,7 @@ const regex_digit = /^[0-9]/;
 
 function animate_on_error()
 {
-	const input_div = document.getElementById("tfal-key-enter-div");
+	const input_div = document.getElementById("tfas-key-enter-div");
 	input_div.style.animationPlayState = "running";
 	for (input of digit_inputs)
 	{
@@ -15,7 +15,7 @@ function animate_on_error()
 
 function on_animation_input_error_end()
 {
-	const input_div = document.getElementById("tfal-key-enter-div");
+	const input_div = document.getElementById("tfas-key-enter-div");
 	input_div.style.animationPlayState = "paused";
 	
 	for (input of digit_inputs)
@@ -114,7 +114,7 @@ function on_click_div_event()
 
 document.addEventListener("onModalsLoaded", function()
 {
-	const input_div = document.getElementById("tfal-key-enter-div");
+	const input_div = document.getElementById("tfas-key-enter-div");
 	for (let i = 0; i < nb_digit_inputs; i++)
 	{
 		digit_inputs.push(input_div.children[i].children[0]);
@@ -123,5 +123,5 @@ document.addEventListener("onModalsLoaded", function()
 	}
 	input_div.onclick = on_click_div_event;
 	input_div.onanimationiteration = on_animation_input_error_end;
-	openModalTwoFALogin();
+	openModalTwoFASetup();
 });

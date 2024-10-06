@@ -284,9 +284,9 @@
 
 /* ================================================ */
 
-/* === MODAL 2fa login === */
+/* === MODAL 2fa setup === */
 
-#modal-2fa-login-dialog
+#modal-2fa-setup-dialog
 {
 	max-width: none;
 	height: 60vh;
@@ -294,7 +294,7 @@
 	--bs-modal-margin: 20vh 0 20vh 0;
 }
 
-#modal-2fa-login-content
+#modal-2fa-setup-content
 {
 	height: 100% !important;
 	width: fit-content !important;
