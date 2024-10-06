@@ -46,3 +46,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         self.is_online = True
         self.last_activity = timezone.now()
         self.save()
+    
+    def set_last_acticity(self):
+        self.last_activity = timezone.now()
+        self.save()
