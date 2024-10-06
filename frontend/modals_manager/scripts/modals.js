@@ -64,16 +64,7 @@ function closeModalSignUp() {
 	var modaldialog = document.getElementById('modal-register-dialog');
 	modaldialog.classList.remove('slide-left');
 	modaldialog.classList.add('slide-center-to-right');
-	setTimeout(function () {		/* EVENT PART */
-		document.getElementById("modalPlay").addEventListener('hidden.bs.modal', function () {
-			if (button) {
-				button.disabled = false;
-				button.focus();
-			}
-		})
-		/* ============== */
-		modalSignUp.hideModal();
-	}, 500);
+	modalSignUp.hideModal();
 }
 
 
