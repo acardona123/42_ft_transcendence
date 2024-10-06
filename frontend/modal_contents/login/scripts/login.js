@@ -46,7 +46,7 @@ async function send_form_login(form)
 			throw new Error("Error while login in.");
 		let data = await fetched_data.json();
 		data = data.data;
-		if (data['2fa_status'] == "offf")
+		if (data['2fa_status'] == "off")
 		{
 			login_user(data.refresh, data.access);
 			closeModalLogin();
