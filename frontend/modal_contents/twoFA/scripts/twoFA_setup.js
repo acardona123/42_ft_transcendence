@@ -41,19 +41,64 @@ function on_animation_input_error_end()
 	on_click_div_event(this);
 }
 
+async function validate_code(user_code)
+{
+	const url = "https://localhost:8443/api/users/login/2fa/";
+	const body = JSON.stringify({
+		token : user_code
+	});
+	try
+	{
+		let fetched_data = await fetch(url, {
+			method: 'POST',
+			headers: new Headers({'content-type': 'application/json'}),
+			body: body
+		});
+		if (fetched_data.status == 400)
+			return "invalid";
+		else if (fetched_data.status == 401)
+		{
+			console.log("401 ici");
+			return "expired";
+		}
+		else if (!fetched_data.ok)
+			throw new Error("Error validating the code.");
+		let data = await fetched_data.json();
+		data = data.data;
+		login_user(data.refresh, data.access);
+	}
+	catch (error)
+	{
+		// TODO: handle errors properly
+		console.log(error);
+		return "invalid";
+	}
+}
+
 async function send_code_to_validation(digit_inputs)
 {
-	// simulate fetch time
-	await delay(1000);
+	const code = digit_inputs[0].value
+		+ digit_inputs[1].value + digit_inputs[2].value
+		+ digit_inputs[3].value + digit_inputs[4].value
+		+ digit_inputs[5].value;
+	let validation_res = await validate_code(code)
 
-	// on error, retry
-	if (true)
+	if (validation_res == "valid")
+	{
+		login_user();
+		hideModalTwoFAValid();
+	}
+	else if (validation_res == "invalid")
 	{
 		animate_on_error(digit_inputs);
 	}
-	// else process to login
-	else
-		;
+	else if (validation_res == "expired")
+	{
+		console.log("object");
+		hideModalTwoFAValid();
+		openModalLogin();
+		// TODO: go to login page with message
+	}
 
 }
 function focus_on_digit_inputs(digit_inputs, input_id)

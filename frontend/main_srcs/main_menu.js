@@ -72,14 +72,6 @@ function updateUserName() {
 
 // ======================================
 
-// LOGIN & LOGOUT
-
-function login() {
-    // Simulate successful login
-    isConnected = true;
-    updateUI();
-}
-
 function logout() {
     // Simulate successful logout
     isConnected = false;

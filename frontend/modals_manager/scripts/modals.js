@@ -39,7 +39,6 @@ function openModalLogin() {
 	modalLogin = new ModalManager('modal-login');
 
 	var modaldialog = document.getElementById('modal-login-dialog');
-	modaldialog.classList.remove('slide-center-to-right');
 	modaldialog.classList.add('slide-right');
 	modalLogin.showModal();
 }
@@ -47,10 +46,7 @@ function openModalLogin() {
 function closeModalLogin() {
 	var modaldialog = document.getElementById('modal-login-dialog');
 	modaldialog.classList.remove('slide-right');
-	modaldialog.classList.add('slide-center-to-right');
-	setTimeout(function () {
-		modalLogin.hideModal();
-	}, 500);
+	modalLogin.hideModal();
 }
 // 
 
@@ -223,10 +219,10 @@ function openModalTwoFAValid() {
 	on_click_div_event(document.getElementById("tfav-key-enter-div"));
 }
 
-function hideModalTwoFASetup() {
-	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
+function hideModalTwoFAValid() {
+	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
 	modaldialog.classList.remove('grow-bottom-right');
-	modalTwoFASetup.hideModal();
+	modalTwoFAValid.hideModal();
 }
 
 
