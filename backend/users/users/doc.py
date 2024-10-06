@@ -387,6 +387,12 @@ DOC_TOKEN_REFRESH = openapi.Response(
 			examples={
 				"application/json": {
 					"message": MSG_TOKEN_REFRESH,
+					"data": {
+						"tokens": {
+							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
+							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
+						}
+					}
 				}
 			}
 		)
