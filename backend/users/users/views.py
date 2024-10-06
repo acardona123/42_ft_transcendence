@@ -102,6 +102,7 @@ def login_user(request):
 				  	"data" : token}, status=200)
 
 @swagger_auto_schema(method='post',
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		required=['refresh'],
@@ -132,6 +133,7 @@ def logout(request):
 	return Response({"message": MSG_LOGOUT}, 200)
 
 @swagger_auto_schema(method='post',
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		required=['refresh'],
