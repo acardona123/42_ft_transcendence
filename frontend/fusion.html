@@ -73,6 +73,7 @@
 			min-width: 40px;
 			padding: 2px;
 			/* margin: 10px; */
+			transition: all 0.5s;
 		}
 
 
@@ -522,7 +523,7 @@
 			white-space: pre-wrap;
 			overflow-x: auto;
 
-			/* display: none; */
+			display: none;
 		}
 
 		/* ================================= */
@@ -539,22 +540,22 @@
 		<div class="header debug-m">
 			<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal"
 				onclick="returnToModalPlay('1v1MatchCreation')">
-				<img class="btn-return-icon" src="../../site-v1/img/fleche-gauche.png" alt="Return">
+				<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
 			</button>
 			<h1 class="header-text bold">MATCH CREATION</h1>
 		</div>
-		<form id="1v1MatchForm" class="form-container debug-y">
+		<form id="tournamentForm" class="form-container debug-y">
 			<!-- Time Slider -->
 			<div class="slider-container debug-c">
-				<label class="slider-label debug-r" for="1v1TimeSlider">Time:</label>
-				<input id="1v1TimeSlider" type="range" class="slider time debug-g" min="10" max="310" step="10"
+				<label class="slider-label debug-r" for="tournamentTimeSlider">Time:</label>
+				<input id="tournamentTimeSlider" type="range" class="slider time debug-g" min="10" max="310" step="10"
 					value="45">
 				<div id="1v1TimeValue" class="slider-value debug-o"></div>
 			</div>
 			<!-- Points Slider -->
 			<div class="slider-container debug-m">
-				<label class="slider-label debug-r" for="1v1PointsSlider">Points:</label>
-				<input id="1v1PointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
+				<label class="slider-label debug-r" for="tournamentPointsSlider">Points:</label>
+				<input id="tournamentPointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
 				<div id="1v1PointsValue" class="slider-value debug-o"></div>
 			</div>
 			<!-- Button to Show Player 2 Section -->
@@ -599,23 +600,21 @@
 				</div>
 
 				<div class="add-buttons-container">
-					<button id="toggleGuestPlayerContainer" class="btn btn-form" type="button">Add Invited
-						Player</button>
-					<div id="addGuestPlayerContainer" class="add-player-container debug-y">
-						<div class="add-player-content">
-							<div class="input-container debug-r">
-								<input id="guestPlayerPseudo" class="input" type="text" placeholder="" maxlength="20">
-								<label for="guestPlayerPseudo">Pseudo</label>
-								<span class="focus-border"></span>
-							</div>
-							<button id="buttonAddGuestPlayer" class="btn btn-form debug-m" type="button">Add
-								Guest</button>
-						</div>
-						<div id="errorAddGuestPlayer" class="error">Invalid connection. Please try again.</div>
-					</div>
+					<!-- <button id="toggleGuestPlayerContainer" class="btn btn-form" type="button">Add Invited -->
+						<!-- Player</button> -->
+					<!-- <div id="addGuestPlayerContainer" class="add-player-container debug-y"> -->
+						<!-- <div class="add-player-content"> -->
+							<!-- <div class="input-container debug-r"> -->
+								<!-- <input id="guestPlayerPseudo" class="input" type="text" placeholder="" maxlength="20"> -->
+								<!-- <label for="guestPlayerPseudo">Pseudo</label> -->
+								<!-- <span class="focus-border"></span> -->
+							<!-- </div> -->
+							<button id="buttonAddGuestPlayer" class="btn btn-form" type="button">Add Guest</button>
+						<!-- </div> -->
+						<!-- <div id="errorAddGuestPlayer" class="error">Invalid connection. Please try again.</div> -->
+					<!-- </div> -->
 
-					<button id="toggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player
-						2</button>
+					<button id="toggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player 2</button>
 					<div id="addConnectedPlayerContainer" class="add-player-container debug-y">
 						<div class="add-player-content">
 							<div id="connectedPlayerInputContainer" class="input-container debug-r">
@@ -630,12 +629,11 @@
 								<label for="playerConnectedPin">Pin</label>
 								<span class="focus-border"></span>
 							</div>
-							<button id="buttonAddConnectedPlayer" class="btn btn-form debug-m" type="button">Validate
-								Connection</button>
+							<button id="buttonAddConnectedPlayer" class="btn btn-form debug-m" type="button">Validate Connection</button>
 						</div>
 						<div id="errorAddConnectedPlayer" class="error">Invalid connection. Please try again.</div>
 					</div>
-					<button class="ia-button" id="iaButton">Add IA</button>
+					<button id="iaButton" class="btn btn-form" >Add IA</button>
 				</div>
 			</div>
 
@@ -821,7 +819,9 @@
 
 					/* Clear input */
 					addConnectedPlayerContainer.getElementsByTagName('input')[0].value = '';
+					addConnectedPlayerContainer.getElementsByTagName('input')[0].classList.remove('has-content');
 					addConnectedPlayerContainer.getElementsByTagName('input')[1].value = '';
+					addConnectedPlayerContainer.getElementsByTagName('input')[1].classList.remove('has-content');
 				}, { once: true });
 			}
 		}
@@ -880,7 +880,7 @@
 						.then(data => {
 							if (data.success) {
 								// alert('Player 2 connected successfully!');
-								const error = CheckAddCard(pseudo, 'player');
+								const error = CheckAddCard(pseudo, 'PLAYER');
 								if (error)
 								{
 									errorAddConnectedPlayer.textContent = error;
@@ -888,7 +888,7 @@
 								}
 								else
 								{
-									AddCard(pseudo, 'player');
+									AddCard(pseudo, 'PLAYER');
 									errorAddConnectedPlayer.textContent = '';
 									errorAddConnectedPlayer.style.display = 'none';
 								}
@@ -904,157 +904,6 @@
 				}
 			});
 		}
-
-		// -----------------------------------------------------------------------------------------------
-		// -----------------------------------------------------------------------------------------------
-
-		function OnClickToggleContainerGuestPlayer() {
-			const btn = document.getElementById('toggleGuestPlayerContainer');
-
-			if (!btn)
-				return;
-
-			btn.addEventListener('click', ToggleContainerGuestPlayer);
-		}
-
-		function EscapeContainerGuestPlayer(event) {
-			if (event.key === 'Escape') {
-				ToggleContainerGuestPlayer();
-			}
-		}
-
-		function LoseFocusContainerGuestPlayer(event) {
-			if(event.target !== document.getElementById('toggleGuestPlayerContainer') && event.target !== document.getElementById('addGuestPlayerContainer'))
-			{
-				children = document.getElementById('addGuestPlayerContainer').children;
-				for (i = 0; i < children.length; i++) {
-					if (children[i].contains(event.target)) {
-						return;
-					}
-				}
-				ToggleContainerGuestPlayer();
-			}
-		}
-
-		function ToggleContainerGuestPlayer() {
-			const addGuestPlayerContainer = document.getElementById('addGuestPlayerContainer');
-
-			if (!addGuestPlayerContainer)
-				return;
-
-			if (addGuestPlayerContainer.style.display === 'none' || addGuestPlayerContainer.style.display === '') {
-				addGuestPlayerContainer.style.display = 'flex';
-
-				/* Position */
-				addGuestPlayerContainer.style.top = document.getElementById('toggleGuestPlayerContainer').offsetTop + document.getElementById('toggleGuestPlayerContainer').offsetHeight + 'px';
-				// addGuestPlayerContainer.style.left = document.getElementById('toggleGuestPlayerContainer').offsetLeft + 'px';
-				
-				/* Animation */
-				addGuestPlayerContainer.style.zIndex = '2';
-				addGuestPlayerContainer.classList.remove('disappear');
-				addGuestPlayerContainer.classList.add('appear');
-				
-				/* Set escape event */
-				// document.removeEventListener('keydown', escape);
-				document.addEventListener('keydown', EscapeContainerGuestPlayer);
-				document.addEventListener('click', LoseFocusContainerGuestPlayer);
-
-				addGuestPlayerContainer.addEventListener('animationend', function () {
-
-					/* Focus on the input */
-					document.getElementById('guestPlayerPseudo').focus();
-				}, { once: true });
-				}
-			else {
-				/* Animation */
-				addGuestPlayerContainer.style.zIndex = '0';
-				addGuestPlayerContainer.classList.remove('appear');
-				addGuestPlayerContainer.classList.add('disappear');
-
-				/* Remove escape event */
-				// document.addEventListener('keydown', escape);
-				document.removeEventListener('keydown', EscapeContainerGuestPlayer);
-				document.removeEventListener('click', LoseFocusContainerGuestPlayer);
-
-				/* Focus on the button */
-				document.getElementById('toggleGuestPlayerContainer').focus();
-
-				addGuestPlayerContainer.addEventListener('animationend', function () {
-					addGuestPlayerContainer.style.display = 'none';
-
-					/* Clear input */
-					addGuestPlayerContainer.getElementsByTagName('input')[0].value = '';
-				}, { once: true });
-			}
-		}
-
-		function OnEnterInputGuestPlayer() {
-			const input = document.getElementById('guestPlayerPseudo');
-
-			if (!input)
-				return;
-
-			input.addEventListener('keydown', function (event) {
-				if (event.key === 'Enter') {
-					event.preventDefault();
-					btn = document.getElementById('buttonAddGuestPlayer');
-					btn.click();
-				}
-			});
-		}
-
-		function OnClickAddGuestPlayer() {
-			btn = document.getElementById('buttonAddGuestPlayer');
-
-			if (!btn)
-				return;
-
-			
-			btn.addEventListener('click', () => {
-				const pseudo = document.getElementById('guestPlayerPseudo').value;
-
-				console.log(pseudo);
-
-				const error = CheckAddCard(pseudo, 'player');
-				if (error)
-				{
-					errorAddGuestPlayer.textContent = error;
-					errorAddGuestPlayer.style.display = 'block';
-				}
-				else
-				{
-					AddCard(pseudo, 'player');
-					errorAddGuestPlayer.textContent = '';
-					errorAddGuestPlayer.style.display = 'none';
-				}
-			});
-		}
-
-		// =================================================================================================
-		// =================================================================================================
-
-		// document.addEventListener('keydown', function (event) {
-		// 	if (event.key === 'Escape') {
-		// 		const addGuestPlayerContainer = document.getElementById('addGuestPlayerContainer');
-		// 		const addConnectedPlayerContainer = document.getElementById('addConnectedPlayerContainer');
-
-		// 		if (addGuestPlayerContainer.style.display === 'flex') {
-		// 			ToggleContainerGuestPlayer();
-		// 		}
-		// 		if (addConnectedPlayerContainer.style.display === 'flex') {
-		// 			fctToggleConnectedPlayerContainer();
-		// 		}
-		// 	}
-		// 	if (event.key == 'Enter')
-		// 	{
-		// 		console.log('focus: ', document.activeElement);
-		// 	}
-		// });
-
-
-		// =================================================================================================
-		// =================================================================================================
-
 
 		function clearInputFields() {
 			var inputs = document.querySelectorAll('.input-container input');
@@ -1085,33 +934,29 @@
 			});
 		}
 
-		function handle1v1FormSubmission() {
-			document.getElementById('1v1MatchForm').addEventListener('submit', (event) => {
+		function handleTounamentFormSubmission() {
+			document.getElementById('tournamentForm').addEventListener('submit', (event) => {
 				event.preventDefault();
 
-				timeSliderValue = document.getElementById('1v1TimeSlider').value;
-				pointsSliderValue = document.getElementById('1v1PointsSlider').value;
+				timeSliderValue = document.getElementById('tournamentTimeSlider').value;
+				pointsSliderValue = document.getElementById('tournamentPointsSlider').value;
 
 				const time = timeSliderValue === '310' ? '∞' : timeSliderValue;
 				const points = pointsSliderValue === '12' ? '∞' : pointsSliderValue;
-				// const connectedPlayerPseudo = document.getElementById('connectedPlayerPseudo').value || null;
-				// const playerConnectedPin = document.getElementById('playerConnectedPin').value || null;
-				const connectedPlayerPseudo = null;
-				const playerConnectedPin = null;
 
-				const matchData = {
+				const tournamentData = {
 					time,
 					points,
-					player2: connectedPlayerPseudo ? { pseudo: connectedPlayerPseudo, pin: playerConnectedPin } : null
+					names,
 				};
 
-				console.log(matchData);
+				console.log(tournamentData);
 
 				// Send match data to the backend
-				fetch('/create-match', {
+				fetch('/create-tournament', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(matchData),
+					body: JSON.stringify(tournamentData),
 				})
 					.then(response => response.json())
 					.then(data => {
@@ -1127,14 +972,9 @@
 			});
 		}
 
-		function initMatch1v1Creation() {
+		function initTournamentCreation() {
 			/* Slider */
-			updateSlider("1v1MatchForm");
-
-			/* Guest Player */
-			OnClickToggleContainerGuestPlayer();
-			OnEnterInputGuestPlayer();
-			OnClickAddGuestPlayer();
+			updateSlider("tournamentForm");
 
 			/* Connected Player */
 			pincodeOnlyDigits();
@@ -1147,7 +987,7 @@
 			addFocusOutListener();
 
 			/* Form Submission */
-			handle1v1FormSubmission();
+			handleTounamentFormSubmission();
 			
 			// addEventListener('keydown', escape);
 			// disableFormSubmitOnEnter('connectedPlayerPseudo');
@@ -1158,7 +998,7 @@
 		// 	console.log('focused: ', document.activeElement)
 		// }, true);
 
-		initMatch1v1Creation();
+		initTournamentCreation();
 
 
 		// =================================================================================================
@@ -1176,6 +1016,7 @@
 
 		let cardsShowNumber = 0;
 		let iaCardsShowNumber = 0;
+		let guestCardsShowNumber = 0;
 		let playerCardsShowNumber = 0;
 		const names = []; // Array to store names and types
 		const maxCards = 16; // Total number of cards
@@ -1192,6 +1033,8 @@
 				card.classList.add('show');
 				if (names[i].type === 'IA') {
 					card.style.backgroundColor = '#28a745';
+				} else if (names[i].type === 'GUEST') {
+					card.style.backgroundColor = '#ffc107';
 				} else {
 					card.style.backgroundColor = '#007bff';
 				}
@@ -1216,37 +1059,37 @@
 			}
 		}
 
-		function updateIAButtonPosition() {
-			if (cardsShowNumber < maxCards) {
-				let column = cardsShowNumber % numCols;
-				let row = Math.floor(cardsShowNumber / numCols);
-				let startIdx = column * numRows;
-				let playerIndex = startIdx + row;
+		// function updateIAButtonPosition() {
+		// 	if (cardsShowNumber < maxCards) {
+		// 		let column = cardsShowNumber % numCols;
+		// 		let row = Math.floor(cardsShowNumber / numCols);
+		// 		let startIdx = column * numRows;
+		// 		let playerIndex = startIdx + row;
 
-				const nextCard = playerCards[playerIndex];
-				const cardRect = nextCard.getBoundingClientRect();
+		// 		const nextCard = playerCards[playerIndex];
+		// 		const cardRect = nextCard.getBoundingClientRect();
 
-				iaButton.style.top = `${cardRect.top + window.scrollY + (cardRect.height / 2 - iaButton.offsetHeight / 2)}px`;
-				iaButton.style.left = `${cardRect.left + window.scrollX + (cardRect.width / 2 - iaButton.offsetWidth / 2)}px`;
-			}
-		}
+		// 		iaButton.style.top = `${cardRect.top + window.scrollY + (cardRect.height / 2 - iaButton.offsetHeight / 2)}px`;
+		// 		iaButton.style.left = `${cardRect.left + window.scrollX + (cardRect.width / 2 - iaButton.offsetWidth / 2)}px`;
+		// 	}
+		// }
 
 		function updateIAButtonVisibility() {
 			if (cardsShowNumber >= maxCards) {
 				iaButton.style.display = 'none';
 			} else {
 				iaButton.style.display = 'block';
-				updateIAButtonPosition();
+				// updateIAButtonPosition();
 			}
 		}
 
-		window.addEventListener('resize', updateIAButtonPosition);
+		// window.addEventListener('resize', updateIAButtonPosition);
 
 		function CheckAddCard(name, type)
 		{
 			if (cardsShowNumber < maxCards)
 			{
-				if (type === 'player')
+				if (type === 'PLAYER')
 				{
 					if (name.length === 0) {
 						return "Name is required!";
@@ -1267,7 +1110,7 @@
 		function AddCard(name, type) {
 			// if (cardsShowNumber < maxCards) {
 
-				if (type === 'player') {
+				if (type === 'PLAYER') {
 					// if (name.length === 0) {
 					// 	return "Name is required!";
 					// }
@@ -1276,13 +1119,25 @@
 					// }
 					// else {
 						++playerCardsShowNumber;
-						const lastPlayerIndex = names.findIndex(item => item.type === 'IA');
+						const lastPlayerIndex = names.findLastIndex(item => item.type === 'PLAYER');
 						if (lastPlayerIndex === -1) {
 							names.push({ name, type });
 						} else {
-							names.splice(lastPlayerIndex, 0, { name, type });
+							names.splice(lastPlayerIndex + 1, 0, { name, type });
 						}
 					// }
+				}
+				else if (type === 'GUEST') {
+					++guestCardsShowNumber;
+					const lastGuestIndex = names.findLastIndex(item => item.type === 'GUEST');
+					const lastPlayerIndex = names.findLastIndex(item => item.type === 'PLAYER');
+					if (lastGuestIndex === -1 && lastPlayerIndex === -1) {
+						names.push({ name, type });
+					} else if (lastGuestIndex === -1) {
+						names.splice(lastPlayerIndex + 1, 0, { name, type });
+					} else {
+						names.splice(lastGuestIndex + 1, 0, { name, type });
+					}
 				}
 				else {
 					names.push({ name, type }); // Add the name and type to the array
@@ -1308,12 +1163,22 @@
 		function deleteCard(cardElement) {
 			const cardIndex = arrayCardPosToNumber[playerCards.indexOf(cardElement)];
 			if (cardIndex !== -1) {
+				--cardsShowNumber;
 				if (names[cardIndex].type === 'IA') {
 					--iaCardsShowNumber;
-					--cardsShowNumber;
 					names.pop();
+				} else if (names[cardIndex].type === 'GUEST') {
+					--guestCardsShowNumber;
+					const lastGuestIndex = names.findLastIndex(item => item.type === 'GUEST');
+					if (lastGuestIndex === -1) {
+						// shiftCards(cardIndex);
+						names.pop();
+					} else {
+						shiftCards(lastGuestIndex);
+						names.pop();
+					}
+
 				} else {
-					--cardsShowNumber;
 					--playerCardsShowNumber;
 					shiftCards(cardIndex);
 					names.pop();
@@ -1357,12 +1222,18 @@
 				firstCard.classList.add('show');
 				cardsShowNumber = 1;
 				playerCardsShowNumber = 1;
-				names.push({ name: predefinedName, type: 'player' });
+				names.push({ name: predefinedName, type: 'PLAYER' });
 				updateDebugOutput(); // Initial debug output
 				updateGrid();
 				updateIAButtonVisibility();
 			}
 		};
+
+		btnAddGuestPlayer.addEventListener('click', () => {
+			event.preventDefault();
+			const guestName = `Guest ${guestCardsShowNumber + 1}`;
+			AddCard(guestName, 'GUEST');
+		});
 
 		iaButton.addEventListener('click', () => {
 			event.preventDefault();
