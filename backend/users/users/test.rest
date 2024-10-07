@@ -7,7 +7,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "coucou",
+	"username" : "9",
 	"password" : "123asd456",
 	"password2" : "123asd456",
 	"email" : "J@gmai.coM",
