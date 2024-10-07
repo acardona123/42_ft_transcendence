@@ -355,11 +355,12 @@ def update_password(request):
 	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
-		required=['username', 'email', 'phone'],
+		required=['username', 'email', 'phone', 'pin'],
 		properties={
 			'username': openapi.Schema(type=openapi.TYPE_STRING),
 			'email': openapi.Schema(type=openapi.TYPE_STRING),
 			'phone': openapi.Schema(type=openapi.TYPE_STRING),
+			'pin': openapi.Schema(type=openapi.TYPE_STRING),
 		}
 	),
 	responses={

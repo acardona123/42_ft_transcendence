@@ -327,9 +327,10 @@ DOC_UPDATE_INFO = openapi.Response(
 				"application/json": {
 					"message": MSG_INFO_USER_UPDATE,
 					"data": {
-						"username": "johanne",
-						"email": "fghf@fdg.lpd",
-						"phone": "+33326597845"
+						"username": "coucou",
+						"email": "fghf@fdg.ds",
+						"phone": "+33326597845",
+						"pin": "0004"
 					}
 				}
 			}
