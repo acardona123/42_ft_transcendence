@@ -49,7 +49,6 @@ async function enable_2fa(should_enable)
 	const body = JSON.stringify({
 		"2fa_status" : (should_enable ? "on" : "off")
 	});
-
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -78,18 +77,22 @@ function send_dfa_change()
 {
 	if (is_btn_on_enable)
 	{
+		stop_click_on_all_page = true;
 		enable_2fa(true).then(() =>
 		{
-			is_btn_on_enable = false;;
+			is_btn_on_enable = false;
+			stop_click_on_all_page = false;
 		});
 		button_dfa.disabled = true;
 	}
 	else
 	{
+		stop_click_on_all_page = true;
 		enable_2fa(false).then(() =>
 		{
 			is_btn_on_enable = true;
 			set_to_enable_2fa_button();
+			stop_click_on_all_page = false;
 		});
 		button_dfa.disabled = false;
 	}

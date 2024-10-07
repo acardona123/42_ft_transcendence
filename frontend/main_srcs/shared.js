@@ -34,3 +34,14 @@ async function fetch_with_token(url, request_infos)
 	fetched_data = await fetch(url, request_infos);
 	return fetched_data;
 }
+
+let stop_click_on_all_page = false;
+
+document.addEventListener("click", event =>
+{
+	if (stop_click_on_all_page)
+	{
+		event.stopPropagation();
+		event.preventDefault();
+	}
+}, true);
