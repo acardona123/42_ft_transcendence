@@ -558,25 +558,6 @@
 				<input id="tournamentPointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
 				<div id="1v1PointsValue" class="slider-value debug-o"></div>
 			</div>
-			<!-- Button to Show Player 2 Section -->
-			<!-- <button id="toggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player 2</button> -->
-			<!-- Player 2 Section -->
-			<!-- <div id="addConnectedPlayerContainer" class="add-player-container debug-y">
-		<div class="add-player-content">
-			<div class="input-container debug-r">
-				<input id="connectedPlayerPseudo" class="input" type="text" placeholder="" maxlength="20">
-				<label for="connectedPlayerPseudo">Player 2 Pseudo</label>
-				<span class="focus-border"></span>
-			</div>
-			<div class="input-container debug-b">
-				<input id="playerConnectedPin" class="input" type="password" placeholder="" maxlength="4" pattern="[0-9]*" inputmode="numeric">
-				<label for="playerConnectedPin">Player 2 Pin</label>
-				<span class="focus-border"></span>
-			</div>
-			<button type="button" class="btn btn-form debug-m" id="buttonAddConnectedPlayer">Validate Connection</button>
-		</div>
-			<div id="errorAddConnectedPlayer" class="error">Invalid connection. Please try again.</div>
-	</div> -->
 			<div class="player-list-container">
 				<!-- Grid Player List -->
 				<div class="player-grid" id="playerGrid">
@@ -600,20 +581,7 @@
 				</div>
 
 				<div class="add-buttons-container">
-					<!-- <button id="toggleGuestPlayerContainer" class="btn btn-form" type="button">Add Invited -->
-						<!-- Player</button> -->
-					<!-- <div id="addGuestPlayerContainer" class="add-player-container debug-y"> -->
-						<!-- <div class="add-player-content"> -->
-							<!-- <div class="input-container debug-r"> -->
-								<!-- <input id="guestPlayerPseudo" class="input" type="text" placeholder="" maxlength="20"> -->
-								<!-- <label for="guestPlayerPseudo">Pseudo</label> -->
-								<!-- <span class="focus-border"></span> -->
-							<!-- </div> -->
-							<button id="buttonAddGuestPlayer" class="btn btn-form" type="button">Add Guest</button>
-						<!-- </div> -->
-						<!-- <div id="errorAddGuestPlayer" class="error">Invalid connection. Please try again.</div> -->
-					<!-- </div> -->
-
+					<button id="buttonAddGuestPlayer" class="btn btn-form" type="button">Add Guest</button>
 					<button id="toggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player 2</button>
 					<div id="addConnectedPlayerContainer" class="add-player-container debug-y">
 						<div class="add-player-content">
@@ -633,7 +601,7 @@
 						</div>
 						<div id="errorAddConnectedPlayer" class="error">Invalid connection. Please try again.</div>
 					</div>
-					<button id="iaButton" class="btn btn-form" >Add IA</button>
+					<button id="buttonAddIA" class="btn btn-form" >Add IA</button>
 				</div>
 			</div>
 
@@ -844,6 +812,24 @@
 			}
 		}
 
+		function CheckAddConnectedPlayer(pseudo, pin) {
+			let errorMessage = '';
+
+			if (pseudo.length === 0) {
+				errorMessage = 'Pseudo is required.';
+			}
+			else if (pin.length === 0) {
+				errorMessage = 'Pin code is required.';
+			}
+			else if (pin.length !== 4 || !isdigit(pin)) {
+				errorMessage = 'Pin code must be 4 digits.';
+			}
+			else {
+				errorMessage = CheckAddCard(pseudo, 'PLAYER');
+			}
+			return errorMessage;
+		}
+
 		function OnClickAddConnectedPlayer() {
 			btn = document.getElementById('buttonAddConnectedPlayer');
 
@@ -857,21 +843,18 @@
 				console.log(pseudo);
 				console.log(pin);
 
-				if (pseudo.length === 0) {
-					errorAddConnectedPlayer.textContent = 'Pseudo is required.';
-					errorAddConnectedPlayer.style.display = 'block';
-				}
-				else if (pin.length === 0) {
-					errorAddConnectedPlayer.textContent = 'Pin code is required.';
-					errorAddConnectedPlayer.style.display = 'block';
-				}
-				else if (pin.length !== 4 || !isdigit(pin)) {
-					errorAddConnectedPlayer.textContent = 'Pin code must be 4 digits.';
-					errorAddConnectedPlayer.style.display = 'block';
+				const errorMessage = CheckAddConnectedPlayer(pseudo, pin);
+
+				if (errorMessage) {
+					document.getElementById('errorAddConnectedPlayer').textContent = errorMessage;
+					document.getElementById('errorAddConnectedPlayer').style.display = 'block';
+
+					/* Clear input */
+					document.getElementById('playerConnectedPin').value = '';
+					document.getElementById('playerConnectedPin').classList.remove('has-content');
 				}
 				else {
-					// Simulate backend request for player 2 validation
-					fetch('/validate-player2', {
+					fetch('/add-connected-player-in-tournament', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({ pseudo, pin })
@@ -879,28 +862,36 @@
 						.then(response => response.json())
 						.then(data => {
 							if (data.success) {
-								// alert('Player 2 connected successfully!');
-								const error = CheckAddCard(pseudo, 'PLAYER');
-								if (error)
-								{
-									errorAddConnectedPlayer.textContent = error;
-									errorAddConnectedPlayer.style.display = 'block';
-								}
-								else
-								{
-									AddCard(pseudo, 'PLAYER');
-									errorAddConnectedPlayer.textContent = '';
-									errorAddConnectedPlayer.style.display = 'none';
-								}
-							} else {
-								errorAddConnectedPlayer.textContent = 'Invalid connection. Please try again.';
-								errorAddConnectedPlayer.style.display = 'block';
+								AddCard(pseudo, 'PLAYER');
+								document.getElementById('errorAddConnectedPlayer').textContent = '';
+								document.getElementById('errorAddConnectedPlayer').style.display = 'none';
+
+								/* Clear input */
+								document.getElementById('connectedPlayerPseudo').value = '';
+								document.getElementById('connectedPlayerPseudo').classList.remove('has-content');
+								document.getElementById('playerConnectedPin').value = '';
+								document.getElementById('playerConnectedPin').classList.remove('has-content');
+							}
+							else {
+								document.getElementById('errorAddConnectedPlayer').textContent = 'Invalid connection. Please try again.';
+								document.getElementById('errorAddConnectedPlayer').style.display = 'block';
+								
+								/* Clear input */
+								document.getElementById('playerConnectedPin').value = '';
+								document.getElementById('playerConnectedPin').classList.remove('has-content');
 							}
 						})
 						.catch(() => {
-							errorAddConnectedPlayer.textContent = 'Error connecting to server.';
-							errorAddConnectedPlayer.style.display = 'block';
+							document.getElementById('errorAddConnectedPlayer').textContent = 'Error connecting to server.';
+							document.getElementById('errorAddConnectedPlayer').style.display = 'block';
+
+							/* Clear input */
+							document.getElementById('connectedPlayerPseudo').value = '';
+							document.getElementById('connectedPlayerPseudo').classList.remove('has-content');
+							document.getElementById('playerConnectedPin').value = '';
+							document.getElementById('playerConnectedPin').classList.remove('has-content');
 						});
+					AddCard(pseudo, 'PLAYER');
 				}
 			});
 		}
@@ -1009,7 +1000,8 @@
 		const playerCards = Array.from(playerGrid.getElementsByClassName('player-card'));
 		const btnAddGuestPlayer = document.getElementById('buttonAddGuestPlayer');
 		const btnAddConnectedPlayer = document.getElementById('buttonAddConnectedPlayer');
-		const iaButton = document.getElementById('iaButton');
+		const toggleConnectedPlayerContainer = document.getElementById('toggleConnectedPlayerContainer');
+		const buttonAddIA = document.getElementById('buttonAddIA');
 		const debugOutput = document.getElementById('debugOutput');
 		const numRows = 4;
 		const numCols = 4;
@@ -1059,73 +1051,47 @@
 			}
 		}
 
-		// function updateIAButtonPosition() {
-		// 	if (cardsShowNumber < maxCards) {
-		// 		let column = cardsShowNumber % numCols;
-		// 		let row = Math.floor(cardsShowNumber / numCols);
-		// 		let startIdx = column * numRows;
-		// 		let playerIndex = startIdx + row;
-
-		// 		const nextCard = playerCards[playerIndex];
-		// 		const cardRect = nextCard.getBoundingClientRect();
-
-		// 		iaButton.style.top = `${cardRect.top + window.scrollY + (cardRect.height / 2 - iaButton.offsetHeight / 2)}px`;
-		// 		iaButton.style.left = `${cardRect.left + window.scrollX + (cardRect.width / 2 - iaButton.offsetWidth / 2)}px`;
-		// 	}
-		// }
-
-		function updateIAButtonVisibility() {
+		function disableButtons() {
 			if (cardsShowNumber >= maxCards) {
-				iaButton.style.display = 'none';
+				toggleConnectedPlayerContainer.disabled = true;
+				btnAddConnectedPlayer.disabled = true;
+				btnAddGuestPlayer.disabled = true;
+				buttonAddIA.disabled = true;
 			} else {
-				iaButton.style.display = 'block';
-				// updateIAButtonPosition();
+				toggleConnectedPlayerContainer.disabled = false;
+				btnAddConnectedPlayer.disabled = false;
+				btnAddGuestPlayer.disabled = false;
+				buttonAddIA.disabled = false;
 			}
 		}
-
-		// window.addEventListener('resize', updateIAButtonPosition);
 
 		function CheckAddCard(name, type)
 		{
 			if (cardsShowNumber < maxCards)
 			{
-				if (type === 'PLAYER')
-				{
-					if (name.length === 0) {
-						return "Name is required!";
-					}
-					else if (names.find(item => item.name === name)) {
-						return "Player already exists!";
-					}
-					else
-						return "";
+				if (type === 'PLAYER' && names.find(item => item.name === name)) {
+						return "Player already exists.";
 				}
+				else
+					return "";
 			}
 			else
 			{
-				return "No more empty spots in the grid!";
+				return "No more slots available.";
 			}
 		}
 
 		function AddCard(name, type) {
-			// if (cardsShowNumber < maxCards) {
+			if (cardsShowNumber < maxCards) {
 
 				if (type === 'PLAYER') {
-					// if (name.length === 0) {
-					// 	return "Name is required!";
-					// }
-					// else if (names.find(item => item.name === name)) {
-					// 	return "Player already exists!";
-					// }
-					// else {
-						++playerCardsShowNumber;
-						const lastPlayerIndex = names.findLastIndex(item => item.type === 'PLAYER');
-						if (lastPlayerIndex === -1) {
-							names.push({ name, type });
-						} else {
-							names.splice(lastPlayerIndex + 1, 0, { name, type });
-						}
-					// }
+					++playerCardsShowNumber;
+					const lastPlayerIndex = names.findLastIndex(item => item.type === 'PLAYER');
+					if (lastPlayerIndex === -1) {
+						names.push({ name, type });
+					} else {
+						names.splice(lastPlayerIndex + 1, 0, { name, type });
+					}
 				}
 				else if (type === 'GUEST') {
 					++guestCardsShowNumber;
@@ -1144,48 +1110,67 @@
 					++iaCardsShowNumber;
 				}
 
-
-				// IA (type)
-				// player (type, username, pin)
-				// guest (type, name)
-
 				++cardsShowNumber;
 
 				updateDebugOutput(); // Update the debug output
 				updateGrid(); // Update the grid
-				updateIAButtonVisibility();
-			// }
-			// else {
-			// 	return "No more empty spots in the grid!";
-			// }
+				disableButtons();
+			}
 		}
 
-		function deleteCard(cardElement) {
+		async function deleteCard(cardElement) {
 			const cardIndex = arrayCardPosToNumber[playerCards.indexOf(cardElement)];
-			if (cardIndex !== -1) {
+			if (cardIndex !== -1)
+			{
 				--cardsShowNumber;
-				if (names[cardIndex].type === 'IA') {
-					--iaCardsShowNumber;
-					names.pop();
-				} else if (names[cardIndex].type === 'GUEST') {
-					--guestCardsShowNumber;
-					const lastGuestIndex = names.findLastIndex(item => item.type === 'GUEST');
-					if (lastGuestIndex === -1) {
-						// shiftCards(cardIndex);
-						names.pop();
-					} else {
-						shiftCards(lastGuestIndex);
-						names.pop();
-					}
+				switch (names[cardIndex].type)
+				{
+					case 'PLAYER':
+						await fetch('/delete-connected-player-in-tournament', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ name: names[cardIndex].name })
+						})
+							.then(response => response.json())
+							.then(data => {
+								if (data.success) {
+									--playerCardsShowNumber;
+									shiftCards(cardIndex);
+									names.pop();
+								} else {
+									++cardsShowNumber;
+								}
+							})
+							.catch(() => {
+								--playerCardsShowNumber;
+								shiftCards(cardIndex);
+								names.pop();
+							});
+						break;
 
-				} else {
-					--playerCardsShowNumber;
-					shiftCards(cardIndex);
-					names.pop();
+					case 'GUEST':
+						--guestCardsShowNumber;
+						const lastGuestIndex = names.findLastIndex(item => item.type === 'GUEST');
+						if (lastGuestIndex === -1) {
+							names.pop();
+						} else {
+							shiftCards(lastGuestIndex);
+							names.pop();
+						}
+						break;
+
+					case 'IA':
+						--iaCardsShowNumber;
+						names.pop();
+						break;
+
+					default:
+						break;
 				}
+
 				updateDebugOutput();
 				updateGrid();
-				updateIAButtonVisibility();
+				disableButtons();
 			}
 		}
 
@@ -1209,6 +1194,7 @@
 
 		playerGrid.addEventListener('click', (event) => {
 			if (event.target.classList.contains('delete-button')) {
+				event.preventDefault();
 				const card = event.target.parentElement;
 				deleteCard(card);
 			}
@@ -1225,7 +1211,6 @@
 				names.push({ name: predefinedName, type: 'PLAYER' });
 				updateDebugOutput(); // Initial debug output
 				updateGrid();
-				updateIAButtonVisibility();
 			}
 		};
 
@@ -1235,7 +1220,7 @@
 			AddCard(guestName, 'GUEST');
 		});
 
-		iaButton.addEventListener('click', () => {
+		buttonAddIA.addEventListener('click', () => {
 			event.preventDefault();
 			const iaName = `IA ${iaCardsShowNumber + 1}`;
 			AddCard(iaName, 'IA');
