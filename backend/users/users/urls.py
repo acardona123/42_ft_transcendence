@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (register_user, get_url_api, login_oauth, login_user, logout, refresh_token)
-from .view_update import update_password, update_user_info
-from .view_2fa import update_2fa, login_2fa, validate_2fa_enable
+from .view_update import update_password, UpdateUserInfo
+from .view_2fa import Update2fa, login_2fa, validate_2fa_enable
 
 urlpatterns = [
 	path("signup/", register_user, name="signup"),
@@ -13,7 +13,7 @@ urlpatterns = [
 	path("token/refresh/",refresh_token, name='token_refresh'),
 	path("logout/", logout, name='logout'),
 	path("update/password/", update_password, name="update_password"),
-	path("update/user/", update_user_info, name="update_user"),
-	path("update/2fa/", update_2fa, name="update_2fa"),
+	path("update/user/", UpdateUserInfo.as_view(), name="update_user"),
+	path("update/2fa/", Update2fa.as_view(), name="update_2fa"),
 	path("update/2fa/validation/", validate_2fa_enable, name="validate_2fa_enable"),
 ]

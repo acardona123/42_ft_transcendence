@@ -66,7 +66,7 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzAzMjc4LCJpYXQiOjE3MjgzMDI5NzgsImp0aSI6ImExMDZiNjU5YzA2NTRlNWM5NDdjNmFhNzFlNzVlMjVhIiwidXNlcl9pZCI6MjIsInNjb3BlIjoibm9ybWFsIn0.sBlzgo7NKFOjSugN5DYztFx3eRtqMdsdvIOaKtPnguc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA1MTU4LCJpYXQiOjE3MjgzMDQ4NTgsImp0aSI6ImMxMGQ0Zjk5NTAzMTQ4ZmZhZmY3ODA2Y2UyNDg4YWY4IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.J2shhvh09iFDrQE8Pwgxvy_BkHOCX3TketTH0a46-I0
 content-type: application/json
 
 {
@@ -76,20 +76,29 @@ content-type: application/json
 	"pin": "4"
 }
 
+###
+GET https://localhost:8443/api/users/update/user/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA2MjQ2LCJpYXQiOjE3MjgzMDU5NDYsImp0aSI6ImZiMzU4ZWFiMzlmZDQwMTk4MjcwOTZlYThmMzM0NzliIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.G2Jd6G4Vwf27OFxhZG7G4PCkdy31cJdG4izN0HDQSAs
+
 ### update 2fa
 PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjM1MzI1LCJpYXQiOjE3MjgyMzUwMDQsImp0aSI6ImJjZjFlZDEzM2IzNjRhODBiODc3YzQyZjVmMGU0MDE1IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.cU6GDTekE-dutHgQYss6VXQBUKqDvHdJqIS9UqZVHwU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA4MDYzLCJpYXQiOjE3MjgzMDc3NjMsImp0aSI6IjNiNTc3NWY2M2NkNTRmYzliOGJmOTgyOWNmMzk3NzgwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.CDsHko1qNUdZNDAaxT0v7usBQHPeblENOz-q8q9ck5g
 
 {
 	"2fa_status": "on"
 }
 
+### 
+GET https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA4MDYzLCJpYXQiOjE3MjgzMDc3NjMsImp0aSI6IjNiNTc3NWY2M2NkNTRmYzliOGJmOTgyOWNmMzk3NzgwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.CDsHko1qNUdZNDAaxT0v7usBQHPeblENOz-q8q9ck5g
+
+
 ### validate 2fa
 PUT https://localhost:8443/api/users/update/2fa/validation/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE5ODQ1LCJpYXQiOjE3MjgyMTk1NDUsImp0aSI6IjVjZWJiMmMzYTQ2NDRlMGY4ZmJkOGQ5NWJkODViODUxIiwidXNlcl9pZCI6Miwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.cAbXWrRd1VdvnTrYPnaC9StTxJbZdxA1Az4NEUg90ew
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA4MDYzLCJpYXQiOjE3MjgzMDc3NjMsImp0aSI6IjNiNTc3NWY2M2NkNTRmYzliOGJmOTgyOWNmMzk3NzgwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.CDsHko1qNUdZNDAaxT0v7usBQHPeblENOz-q8q9ck5g
 
 {
-	"token" : "712380"
+	"token" : "804775"
 }
