@@ -4,17 +4,14 @@ from django.urls import reverse
 from rest_framework.exceptions import ErrorDetail
 import json
 from .models import CustomUser
-from .utils import create_user_oauth, unique_random_username
+from .utils import create_user_oauth
 
 class TestRandomName(TestCase):
-	def test_unique_name(self):
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
-		print(unique_random_username('test'))
+	def create_user(self, username, email=None, phone=None):
+		data = dict()
+		data['email'] = email
+		data['phone'] = phone
+		return CustomUser.objects.create_user(username, **data)
 
 class UserManagment(TestCase):
 	def setUp(self):
@@ -290,7 +287,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('login_user'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 200)
-		self.assertEqual(response.data["data"]["2fa_status"], False)
+		self.assertEqual(response.data["data"]["2fa_status"], "off")
 
 		username, email, phone, id_oauth = ("hello", None, None, 1235)
 		self.create_user_oauth(username, email, phone, id_oauth)

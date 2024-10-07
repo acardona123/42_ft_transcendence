@@ -14,6 +14,7 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 import base64
 import io
 import os
+from django.utils import timezone
 
 # --------------- Oauth --------------------
 
@@ -79,6 +80,8 @@ def get_tokens_for_user(user):
 
 def get_refresh_token(token):
 	refresh = RefreshToken(token)
+	user = CustomUser.objects.filter(id=refresh.get('user_id')).first()
+	user.set_last_acticity()
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),
@@ -102,3 +105,14 @@ def generate_qr_code(data):
 	buffer.seek(0)
 	img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
 	return img_base64
+
+from datetime import timedelta
+from app.settings import TIME_TIMEOUT
+
+def get_online_status(user):
+	if not user.is_online:
+		return "offline"
+	elif (timezone.now() - user.last_activity) > TIME_TIMEOUT:
+		return "inactif"
+	else:
+		return "online"

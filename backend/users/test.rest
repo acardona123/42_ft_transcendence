@@ -1,10 +1,13 @@
-
+# {
+# 	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMxMzMyMSwiaWF0IjoxNzI4MjI2OTIxLCJqdGkiOiJjM2UwNzFhNGM5MGU0YzFjYTI3N2UxNzliZDJmOTA3ZiIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.ohHypccmxyg-t641nJdAoHeAOs8g-8kObFrFjkxJvfw",
+# 	"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjI3ODIxLCJpYXQiOjE3MjgyMjY5MjEsImp0aSI6ImJiMTc4MmNmNWYwMjRhMjViZDQwZjRjMzNlM2M4NjI4IiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.uTL6qXuPc9Sjet-2_FZyS0b_-azBKyueivp4cuO3ejE"
+# }
 ### sign up
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "new",
+	"username" : "ne",
 	"password" : "123asd456",
 	"password2" : "123asd456",
 	"email" : "J@gmai.coM",
@@ -35,10 +38,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### refresh token
 POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE3MDY0LCJpYXQiOjE3MjgyMTYxNjQsImp0aSI6ImVkNDZkNDI3MmFlYTQ0M2RhZGNlMTY0MjY5ZjI4ZmFmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.xO07Yc3-KDVnBYr8klRvl_gPzYrN24mnAMJ48YMQ03c
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1ODY0MiwiaWF0IjoxNzI4MDcyMjQyLCJqdGkiOiJkOTk5N2FhMjkyOGM0OTdjYmQ0MDMxYzBmNDhlOTIzMCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIn0.VokBSvcHsAl98BZ4QOSHOMtpU2itehcUM9HgXCoVNCs"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMyMTQwNCwiaWF0IjoxNzI4MjM1MDA0LCJqdGkiOiJjYTZkYmQ4MWQ3Y2U0MDg5OGRlZWQ2MWQ2OWQ0YmViNiIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.bFtVWHzJqIF9E92dVZCzKgPORNoj6G5STZE4aFcS6N4"
 }
 
 
@@ -76,7 +78,7 @@ content-type: application/json
 ### update 2fa
 PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjIwMTg0LCJpYXQiOjE3MjgyMTkyODQsImp0aSI6IjgwYzc0OGU4NTFlYjQwZmRhOTdhMjE3NTlkYzRhYzk3IiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.AnbeDGumv2BEfOvC55GfH7zZ-guoX7VUyVK7HdHfI7o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjM1MzI1LCJpYXQiOjE3MjgyMzUwMDQsImp0aSI6ImJjZjFlZDEzM2IzNjRhODBiODc3YzQyZjVmMGU0MDE1IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.cU6GDTekE-dutHgQYss6VXQBUKqDvHdJqIS9UqZVHwU
 
 {
 	"2fa_status": "on"
