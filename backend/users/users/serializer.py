@@ -99,11 +99,11 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
 	def validate_old_password(self, old_password):
 		user = self.context.get('user', None)
 		if user is None:
-			raise serializers.ValidationError({"old_password": MSG_ERROR_SER_NO_USER})
+			raise serializers.ValidationError(MSG_ERROR_SER_NO_USER)
 		if not user.has_usable_password():
-			raise serializers.ValidationError({"old_password": MSG_ERROR_SER_USER_WITHOUT_PASSWORD})
+			raise serializers.ValidationError(MSG_ERROR_SER_USER_WITHOUT_PASSWORD)
 		if not user.check_password(old_password):
-			raise serializers.ValidationError({"old_password": MSG_ERROR_SER_OLD_PASSWORD})
+			raise serializers.ValidationError(MSG_ERROR_SER_OLD_PASSWORD)
 		return old_password
 
 	def update(self, instance, validated_data):
