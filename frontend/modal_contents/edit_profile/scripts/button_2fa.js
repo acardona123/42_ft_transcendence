@@ -15,17 +15,9 @@ function set_to_enable_2fa_button()
 function toggle_2fa_button()
 {
 	if (button_dfa.textContent == "Enable")
-	{
-		button_dfa.textContent = "Disable";
-		button_dfa.className = "btn btn-danger";
-		button_dfa.disabled = false;
-	}
+		set_to_disable_2fa_button();
 	else
-	{
-		button_dfa.textContent = "Enable";
-		button_dfa.className = "btn btn-success";
-		button_dfa.disabled = false;
-	}
+		set_to_enable_2fa_button()
 }
 
 function set_waiting_initial_fetch()
