@@ -32,3 +32,36 @@ def check_pin_code(request):
 		return Response({"message": "User login with pin to play game"}, status=200)
 	except:
 		return Response({"message": "Incorrect username or pin"}, status=400)
+
+import random
+
+def get_random_guest_username(): # todo username random
+	return "Guest#"+random.randint(0000,9999)
+
+@api_view(['POST'])
+def create_guest(request):
+	username = get_random_guest_username()
+	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.GST)
+	return Response({"message": "Guest user created",
+					"data": {"id" : user.id,
+							"username": user.username}}, status=200)
+
+def get_random_ai_username(): # todo username random
+	return "AI#"+random.randint(0000,9999)
+
+@api_view(['POST'])
+def create_ai(request):
+	username = get_random_ai_username()
+	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.BOT)
+	return Response({"message": "AI created",
+					"data": {"id" : user.id,
+							"username": user.username}}, status=200)
+
+@api_view(['GET'])
+def get_type_user(request, user_id):
+	try:
+		user = CustomUser.objects.get(id=id)
+		return Response({"message": "Get type of user",
+						"data": {"type": user.type}}, status=200)
+	except:
+		return Response({"message": "Error user not found"}, status=400)

@@ -16,6 +16,12 @@ def test_username(username):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    class UserType(models.TextChoices):
+        GST = "Guest"
+        BOT = "Bot"
+        USR = "User"
+
+    type = models.CharField(max_length=5, choices=UserType.choices, default=UserType.USR)
     username = models.CharField(max_length=150, unique=True,
                             validators=[test_username])
     email = models.EmailField(null=True)
