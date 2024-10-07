@@ -61,7 +61,7 @@ def generate_request_data_with_players(request, player_id1, player_id2):
 	return {'status': 200, 'data': request_body}
 
 def send_request_for_new_match(request_data):
-	url = f"{settings.MATCHES_MICROSERVICE_URL}/private_api/matches/new_match_verified_id"
+	url = f"{settings.MATCHES_MICROSERVICE_URL}/private_api/matches/new_match_verified_id/"
 	data = request_data
 	response = requests.post(url, data=json.dumps(data))
 	response_status = response.status_code

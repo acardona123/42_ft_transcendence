@@ -31,10 +31,11 @@ def create_new_match(response_data):
 	# writing the new match data in the response
 	try:
 		serializer = MatchSerializer(match, fields=['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
-		response_data = {'message':'match created', 'match_data':serializer.data}
+		response_data = {'message':'match created', 'data':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
 	except:
-		return JsonResponse(status = 200, data = {'message': 'match created but failed to be displayed.', 'id': match.id})
+		match.delete()
+		return JsonResponse(status = 500, data = {'message': 'match created but failed to be displayed. Match canceled'})
 
 
 @api_view(['POST'])
@@ -51,15 +52,16 @@ def new_match_verified_id(request):
 	match_data['max_score'] = json_data.get('max_score')
 	match_data['max_duration'] = json_data.get('max_duration')
 	match_data['tournament_id'] = json_data.get('tournament_id')
-	if not 'user1' in match_data: 
+
+	if not match_data.get('user1') and match_data.get('user1') != 0: 
 		return JsonResponse(status = 400, data = {'message' : 'First player\'s id not provided'})
-	if not 'user2' in match_data: 
+	if not match_data.get('user2') and match_data.get('user2') != 0: 
 		return JsonResponse(status = 400, data = {'message' : 'Second player\'s id id not provided'})
 	if not 'game' in match_data or (match_data['game'] != 'FB' and match_data['game'] != 'PG'):
 		return JsonResponse(status = 400, data = {'message' : 'Wrong/missing game identifier'})
-	if not 'max_score' in match_data: 
+	if not match_data.get('max_score') and match_data.get('max_score') != 0: 
 		return JsonResponse(status = 400, data = {'message' : 'Match max score not provided'})
-	if not 'max_duration' in match_data:
+	if not match_data.get('max_duration')  and match_data.get('max_duration') != 0:
 		return JsonResponse(status = 400, data = {'message' : 'Match max duration not provided'})
 
 	# match creation
