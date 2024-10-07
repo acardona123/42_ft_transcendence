@@ -9,7 +9,6 @@ function change_form_behavior_for_SPA(form, new_function)
 
 function send_user_to_2fa()
 {
-	// show 2fa google
 	closeModalLogin();
 	openModalTwoFAValid();
 }

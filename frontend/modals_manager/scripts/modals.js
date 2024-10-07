@@ -40,6 +40,7 @@ function openModalLogin() {
 
 	var modaldialog = document.getElementById('modal-login-dialog');
 	modaldialog.classList.add('slide-right');
+	clear_login_inputs();
 	modalLogin.showModal();
 }
 
@@ -57,6 +58,7 @@ function openModalSignUp() {
 	var modaldialog = document.getElementById('modal-register-dialog');
 	modaldialog.classList.remove('slide-center-to-right');
 	modaldialog.classList.add('slide-right');
+	clear_register_inputs();
 	modalSignUp.showModal();
 }
 
