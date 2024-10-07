@@ -64,8 +64,10 @@ async function validate_code_setup(user_code)
 			return "expired";
 		else if (!fetched_data.ok)
 			throw new Error("Error validating the code.");
+		toggle_2fa_button();
 		hideModalTwoFASetup();
 		openModalParameters();
+		return "valid";
 	}
 	catch (error)
 	{
@@ -101,6 +103,7 @@ async function validate_code_valid(user_code)
 		data = data.data;
 		apply_login_user(data.refresh, data.access);
 		hideModalTwoFAValid();
+		return "valid";
 	}
 	catch (error)
 	{
@@ -126,16 +129,7 @@ async function send_code_to_validation(digit_inputs, is_setup)
 		+ digit_inputs[5].value;
 	let validation_res;
 	validation_res = await validate_code(code, is_setup)
-	if (validation_res == "valid")
-	{
-		console.log("valid");
-		apply_login_user();
-		if (is_setup)
-			hideModalTwoFASetup();
-		else
-			hideModalTwoFAValid();
-	}
-	else if (validation_res == "invalid")
+	if (validation_res == "invalid")
 	{
 		console.log("invalid");
 		animate_on_error(digit_inputs);
@@ -150,7 +144,6 @@ async function send_code_to_validation(digit_inputs, is_setup)
 		openModalLogin();
 		// TODO: go to login page with message
 	}
-
 }
 function focus_on_digit_inputs(digit_inputs, input_id)
 {
