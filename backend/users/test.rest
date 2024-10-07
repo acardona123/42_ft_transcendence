@@ -55,13 +55,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ### update password
 PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODk5NTYxLCJpYXQiOjE3Mjc4OTg2NjEsImp0aSI6IjhjNGRkYjhhZDE0MzRhMjQ4Y2RkNDYwMjViZDhjMTAzIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.WzXbjcVJXQHfAnvGI4Dm4INnJnElDfsXAzYxlOXYVnc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzAzNDE0LCJpYXQiOjE3MjgzMDMxMTQsImp0aSI6IjJhOGQ2NWZhMjU4NzRiMTA4MDdjOTQzNTk5NGFhZmUwIiwidXNlcl9pZCI6MjIsInNjb3BlIjoibm9ybWFsIn0.a0e96STtlPjVtiiMIfiFGOhPiQcgrYvRM-RE2JveV9c
 content-type: application/json
 
 {
 	"old_password": "123asd456",
-	"password": "dvv",
-	"password2": "d"
+	"password": "123asd456",
+	"password2": "123asd456"
 }
 
 ### update user

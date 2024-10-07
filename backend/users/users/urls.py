@@ -1,10 +1,7 @@
 from django.urls import path
-from .views import (register_user, get_url_api, login_oauth, update_password,
-	update_user_info, login_user, update_2fa, login_2fa, logout, refresh_token,
-	validate_2fa_enable)
-
-
-
+from .views import (register_user, get_url_api, login_oauth, login_user, logout, refresh_token)
+from .view_update import update_password, update_user_info
+from .view_2fa import update_2fa, login_2fa, validate_2fa_enable
 
 urlpatterns = [
 	path("signup/", register_user, name="signup"),
