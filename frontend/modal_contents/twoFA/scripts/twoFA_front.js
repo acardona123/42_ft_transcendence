@@ -3,6 +3,24 @@ let digit_inputs_setup = [];
 let digit_inputs_valid = [];
 const regex_digit = /^[0-9]/;
 
+function clear_code_inputs_setup()
+{
+	for (input of digit_inputs_setup)
+	{
+		input.value = '';
+		input.disabled = false;
+	}
+}
+
+function clear_code_inputs_login()
+{
+	for (input of digit_inputs_login)
+	{
+		input.value = '';
+		input.disabled = false;
+	}
+}
+
 function get_inputs(id)
 {
 	switch (id) {

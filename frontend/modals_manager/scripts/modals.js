@@ -190,9 +190,11 @@ function openModalTwoFASetup() {
 
 	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalTwoFASetup.showModal();
+
 	// set focus on code enter
+	clear_code_inputs_setup();
 	on_click_div_event(document.getElementById("tfas-key-enter-div"));
+	modalTwoFASetup.showModal();
 }
 
 function hideModalTwoFASetup() {
@@ -207,9 +209,11 @@ function openModalTwoFAValid() {
 
 	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalTwoFAValid.showModal();
+	
 	// set focus on code enter
+	clear_code_inputs_setup();
 	on_click_div_event(document.getElementById("tfav-key-enter-div"));
+	modalTwoFAValid.showModal();
 }
 
 function hideModalTwoFAValid() {

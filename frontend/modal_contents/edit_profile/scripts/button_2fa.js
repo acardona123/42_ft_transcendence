@@ -74,6 +74,7 @@ function send_dfa_change()
 		{
 			is_btn_on_enable = false;
 			stop_click_on_all_page = false;
+			button_dfa.disabled = false;
 		});
 		button_dfa.disabled = true;
 	}
@@ -85,8 +86,9 @@ function send_dfa_change()
 			is_btn_on_enable = true;
 			set_to_enable_2fa_button();
 			stop_click_on_all_page = false;
+			button_dfa.disabled = false;
 		});
-		button_dfa.disabled = false;
+		button_dfa.disabled = true;
 	}
 }
 
