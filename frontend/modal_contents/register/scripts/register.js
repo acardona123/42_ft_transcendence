@@ -43,7 +43,7 @@ async function send_form_register(form)
 			// TODO: handle the error in front
 			return ;
 		}
-		login_user(data.refresh, data.access);
+		apply_login_user(data.refresh, data.access);
 		closeModalSignUp();
 	}
 	catch (error)

@@ -41,11 +41,9 @@ async function enable_2fa()
 			headers: {'content-type': 'application/json'},
 			body: body
 		});
-		console.log(fetched_data);
 		if (!fetched_data.ok)
 			throw new Error("Error while enabling 2fa.");
 		let data = await fetched_data.json();
-		console.log(data);
 		data = data.data;
 		open_2fa_setup_page(data);
 	}

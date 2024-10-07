@@ -41,39 +41,31 @@ function on_animation_input_error_end()
 	on_click_div_event(this);
 }
 
-async function validate_code(user_code)
+async function validate_code_setup(user_code)
 {
-	const url = "https://localhost:8443/api/users/login/2fa/";
-	const body = JSON.stringify({
+	const url = "https://localhost:8443/api/users/update/2fa/validation/";
+	const body = JSON.stringify ({
 		token : user_code
 	});
 	try
 	{
-		console.log("access token : ");
-		console.log(sessionStorage.getItem("access_token"));
-		let fetched_data = await fetch(url, {
-			method: 'POST',
+		let fetched_data = await fetch_with_token(url, {
+			method: 'PUT',
 			headers: {
 				'content-type': 'application/json',
 				'Authorization' : "Bearer " + sessionStorage.getItem("access_token")
 			},
 			body: body
 		});
-		console.log("login/2fa");
-		console.log(fetched_data);
 		console.log(await fetched_data.json());
 		if (fetched_data.status == 400)
 			return "invalid";
 		else if (fetched_data.status == 401)
-		{
-			console.log("401 ici");
 			return "expired";
-		}
 		else if (!fetched_data.ok)
 			throw new Error("Error validating the code.");
-		let data = await fetched_data.json();
-		data = data.data;
-		login_user(data.refresh, data.access);
+		hideModalTwoFASetup();
+		openModalParameters();
 	}
 	catch (error)
 	{
@@ -83,18 +75,61 @@ async function validate_code(user_code)
 	}
 }
 
+async function validate_code_valid(user_code)
+{
+	const url = "https://localhost:8443/api/users/login/2fa/";
+	const body = JSON.stringify ({
+		token : user_code
+	});
+	try
+	{
+		let fetched_data = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization' : "Bearer " + sessionStorage.getItem("access_token")
+			},
+			body: body
+		});
+		let data = await fetched_data.json();
+		if (fetched_data.status == 400)
+			return "invalid";
+		else if (fetched_data.status == 401)
+			return "expired";
+		else if (!fetched_data.ok)
+			throw new Error("Error validating the code.");
+		data = data.data;
+		apply_login_user(data.refresh, data.access);
+		hideModalTwoFAValid();
+	}
+	catch (error)
+	{
+		// TODO: handle errors properly
+		console.log(error);
+		return "invalid";
+	}
+}
+
+async function validate_code(user_code, is_setup)
+{
+	if (is_setup)
+		return validate_code_setup(user_code);
+	else
+		return validate_code_valid(user_code);
+}
+
 async function send_code_to_validation(digit_inputs, is_setup)
 {
 	const code = digit_inputs[0].value
 		+ digit_inputs[1].value + digit_inputs[2].value
 		+ digit_inputs[3].value + digit_inputs[4].value
 		+ digit_inputs[5].value;
-	let validation_res = await validate_code(code)
-
+	let validation_res;
+	validation_res = await validate_code(code, is_setup)
 	if (validation_res == "valid")
 	{
 		console.log("valid");
-		login_user();
+		apply_login_user();
 		if (is_setup)
 			hideModalTwoFASetup();
 		else
@@ -153,6 +188,7 @@ function on_key_down_digit_event(event)
 function on_input_digit_event()
 {
 	let digit_inputs = get_inputs(this.parentNode.parentNode.id);
+	const is_setup = digit_inputs == digit_inputs_setup ? true : false;
 	let cur_input_id = 0;
 	for (let i = 0; i < nb_digit_inputs; i++)
 	{
@@ -168,7 +204,7 @@ function on_input_digit_event()
 		{
 			for (input of digit_inputs)
 				input.disabled = true;
-			send_code_to_validation(digit_inputs);
+			send_code_to_validation(digit_inputs, is_setup);
 			return ;
 		}
 		focus_on_digit_inputs(digit_inputs, cur_input_id + 1);

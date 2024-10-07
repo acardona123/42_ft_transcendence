@@ -72,14 +72,6 @@ function updateUserName() {
 
 // ======================================
 
-function logout() {
-    // Simulate successful logout
-    isConnected = false;
-    updateUI();
-}
-
-// ======================================
-
 // CONNECTION BADGE
 
 function toggleConnectionBadge() {

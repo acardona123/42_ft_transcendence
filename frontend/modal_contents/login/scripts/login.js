@@ -14,13 +14,40 @@ function send_user_to_2fa()
 	openModalTwoFAValid();
 }
 
-function login_user(refresh, access)
+function apply_login_user(refresh, access)
 {
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 	isConnected = true;
 	updateUI();
-	//send to main page
+}
+
+async function logout_user()
+{
+	const url = "https://localhost:8443/api/users/logout/";
+	const body = JSON.stringify({
+		refresh : sessionStorage.getItem("refresh_token")
+	});
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {'content-type': 'application/json'},
+			body: body
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error while disconnecting.");
+		sessionStorage.removeItem("refresh_token");
+		sessionStorage.removeItem("access_token");
+		isConnected = false;
+		updateUI();
+	}
+	catch (error)
+	{
+		// TODO: handle errors properly
+		console.log(error);
+		return ;
+	}
 }
 
 async function send_form_login(form)
@@ -48,11 +75,14 @@ async function send_form_login(form)
 		data = data.data;
 		if (data['2fa_status'] == "off")
 		{
-			login_user(data.refresh, data.access);
+			apply_login_user(data.refresh, data.access);
 			closeModalLogin();
 		}
 		else
+		{
+			sessionStorage.setItem("access_token", data.access);
 			send_user_to_2fa(data.access);
+		}
 	}
 	catch (error)
 	{
