@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view, permission_classes
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from .authentication import IsTemporaryToken, IsNormalToken
 from rest_framework.response import Response
-from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from .serializer import UserSerializer, UpdatePasswordSerializer, UpdateUserSerializer
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth, generate_qr_code, get_refresh_token
