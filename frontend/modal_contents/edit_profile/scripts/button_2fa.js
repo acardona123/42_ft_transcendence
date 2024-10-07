@@ -23,7 +23,7 @@ function open_2fa_setup_page(data)
 {
 	document.getElementById("tfas-qrcode-img").src = data.qrcode;
 	document.getElementById("tfas-qrcode-key").textContent = data.code;
-	hideModalTwoFASetup();
+	closeModalParameters();
 	openModalTwoFASetup();
 }
 
@@ -41,9 +41,11 @@ async function enable_2fa()
 			headers: {'content-type': 'application/json'},
 			body: body
 		});
-		if (!fetched_data.status.ok)
+		console.log(fetched_data);
+		if (!fetched_data.ok)
 			throw new Error("Error while enabling 2fa.");
 		let data = await fetched_data.json();
+		console.log(data);
 		data = data.data;
 		open_2fa_setup_page(data);
 	}

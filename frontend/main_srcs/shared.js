@@ -25,7 +25,10 @@ async function fetch_with_token(url, request_infos)
 	request_infos.headers["Authorization"] = "Bearer " + sessionStorage.getItem("access_token");
 	let fetched_data = await fetch(url, request_infos);
 	if (fetched_data.status != 401)
+	{
+		console.log(fetched_data);
 		return fetched_data;
+	}
 	await refresh_token();
 	request_infos.headers["Authorization"] = "Bearer " + sessionStorage.getItem("access_token");
 	fetched_data = await fetch(url, request_infos);

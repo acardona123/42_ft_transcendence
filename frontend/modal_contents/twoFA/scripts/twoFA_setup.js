@@ -49,11 +49,19 @@ async function validate_code(user_code)
 	});
 	try
 	{
+		console.log("access token : ");
+		console.log(sessionStorage.getItem("access_token"));
 		let fetched_data = await fetch(url, {
 			method: 'POST',
-			headers: new Headers({'content-type': 'application/json'}),
+			headers: {
+				'content-type': 'application/json',
+				'Authorization' : "Bearer " + sessionStorage.getItem("access_token")
+			},
 			body: body
 		});
+		console.log("login/2fa");
+		console.log(fetched_data);
+		console.log(await fetched_data.json());
 		if (fetched_data.status == 400)
 			return "invalid";
 		else if (fetched_data.status == 401)
@@ -75,7 +83,7 @@ async function validate_code(user_code)
 	}
 }
 
-async function send_code_to_validation(digit_inputs)
+async function send_code_to_validation(digit_inputs, is_setup)
 {
 	const code = digit_inputs[0].value
 		+ digit_inputs[1].value + digit_inputs[2].value
@@ -85,17 +93,25 @@ async function send_code_to_validation(digit_inputs)
 
 	if (validation_res == "valid")
 	{
+		console.log("valid");
 		login_user();
-		hideModalTwoFAValid();
+		if (is_setup)
+			hideModalTwoFASetup();
+		else
+			hideModalTwoFAValid();
 	}
 	else if (validation_res == "invalid")
 	{
+		console.log("invalid");
 		animate_on_error(digit_inputs);
 	}
 	else if (validation_res == "expired")
 	{
-		console.log("object");
-		hideModalTwoFAValid();
+		console.log("expired");
+		if (is_setup)
+			hideModalTwoFASetup();
+		else
+			hideModalTwoFAValid();
 		openModalLogin();
 		// TODO: go to login page with message
 	}
@@ -182,6 +198,6 @@ document.addEventListener("onModalsLoaded", function()
 		digit_inputs_setup[i].oninput = on_input_digit_event;
 		digit_inputs_setup[i].onkeydown = on_key_down_digit_event;
 	}
-	input_div.onclick = on_click_div_event; // done
+	input_div.onclick = on_click_div_event;
 	input_div.onanimationiteration = on_animation_input_error_end;
 });
