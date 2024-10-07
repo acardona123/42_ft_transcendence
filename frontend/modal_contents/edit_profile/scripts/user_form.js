@@ -60,35 +60,12 @@ function clear_input_errors(elements_ids)
 	}
 }
 
-function create_input_error(input_element_id, error_message)
+function format_empty_values(body)
 {
-	const elem_parent = document.getElementById(input_element_id);
-	const new_text_elem = document.createElement('p');
-
-	new_text_elem.textContent = error_message;
-	new_text_elem.style.color = "red";
-	new_text_elem.style.margin = "0px";
-	new_text_elem.style.fontSize = "13px";
-
-	elem_parent.appendChild(new_text_elem);
-}
-
-function pre_verification_front_user(body)
-{
-	let cancel_submit = false;
-	clear_input_errors(["edp-text-username","edp-text-pin"]);
-
-	if (body.username.length == 0)
-	{
-		cancel_submit = true;
-		create_input_error("edp-text-username", "Username must not be empty.");
-	}
-	if (body.pin.length == 0)
-	{
-		cancel_submit = true;
-		create_input_error("edp-text-pin", "Pin code must not be empty.");
-	}
-	return !cancel_submit;
+	if (!body.email)
+		body.email = null;
+	if (!body.phone)
+		body.phone = null;
 }
 
 function submit_user_form(form)
@@ -100,9 +77,7 @@ function submit_user_form(form)
 		phone : form["phone"].value,
 		pin : form["pin"].value
 	}
-
-	if (!pre_verification_front_user(body))
-		return;
+	format_empty_values(body);
 }
 
 function change_form_behavior_for_SPA(form, new_function)

@@ -283,3 +283,39 @@
 }
 
 /* ================================================ */
+
+/* === MODAL 2fa setup === */
+
+#modal-2fa-setup-dialog
+{
+	max-width: none;
+	height: 60vh;
+	width: fit-content;
+	--bs-modal-margin: 20vh 0 20vh 0;
+}
+
+#modal-2fa-setup-content
+{
+	height: 100% !important;
+	width: fit-content !important;
+}
+
+/* ================================================ */
+
+/* === MODAL 2fa valid === */
+
+#modal-2fa-valid-dialog
+{
+	max-width: none;
+	height: 20vh;
+	width: fit-content;
+	--bs-modal-margin: 40vh 0 40vh 0;
+}
+
+#modal-2fa-valid-content
+{
+	height: 100% !important;
+	width: fit-content !important;
+}
+
+/* ================================================ */

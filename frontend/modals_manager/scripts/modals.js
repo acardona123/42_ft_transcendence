@@ -31,13 +31,14 @@ var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
 var modalParameters = undefined;
 var modalProfile = undefined;
+var modalTwoFASetup = undefined;
+var modalTwoFAValid = undefined;
 
 function openModalLogin() {
 
 	modalLogin = new ModalManager('modal-login');
 
 	var modaldialog = document.getElementById('modal-login-dialog');
-	modaldialog.classList.remove('slide-center-to-right');
 	modaldialog.classList.add('slide-right');
 	modalLogin.showModal();
 }
@@ -45,10 +46,7 @@ function openModalLogin() {
 function closeModalLogin() {
 	var modaldialog = document.getElementById('modal-login-dialog');
 	modaldialog.classList.remove('slide-right');
-	modaldialog.classList.add('slide-center-to-right');
-	setTimeout(function () {
-		modalLogin.hideModal();
-	}, 500);
+	modalLogin.hideModal();
 }
 // 
 
@@ -66,16 +64,7 @@ function closeModalSignUp() {
 	var modaldialog = document.getElementById('modal-register-dialog');
 	modaldialog.classList.remove('slide-left');
 	modaldialog.classList.add('slide-center-to-right');
-	setTimeout(function () {		/* EVENT PART */
-		document.getElementById("modalPlay").addEventListener('hidden.bs.modal', function () {
-			if (button) {
-				button.disabled = false;
-				button.focus();
-			}
-		})
-		/* ============== */
-		modalSignUp.hideModal();
-	}, 500);
+	modalSignUp.hideModal();
 }
 
 
@@ -173,6 +162,8 @@ function keypressModalParameters(event) {
 	}
 }
 
+//
+
 function openModalProfile() {
 
 	modalProfile = new ModalManager('modal-profile');
@@ -189,6 +180,42 @@ function hideModalProfile() {
 	modalProfile.hideModal();
 }
 
+//
+
+function openModalTwoFASetup() {
+
+	modalTwoFASetup = new ModalManager('modal-2fa-setup');
+
+	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
+	modaldialog.classList.add('grow-bottom-right');
+	modalTwoFASetup.showModal();
+	// set focus on code enter
+	on_click_div_event(document.getElementById("tfas-key-enter-div"));
+}
+
+function hideModalTwoFASetup() {
+	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalTwoFASetup.hideModal();
+}
+
+function openModalTwoFAValid() {
+
+	modalTwoFAValid = new ModalManager('modal-2fa-valid');
+
+	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
+	modaldialog.classList.add('grow-bottom-right');
+	modalTwoFAValid.showModal();
+	// set focus on code enter
+	on_click_div_event(document.getElementById("tfav-key-enter-div"));
+}
+
+function hideModalTwoFAValid() {
+	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
+	modaldialog.classList.remove('grow-bottom-right');
+	modalTwoFAValid.hideModal();
+}
+
 
 // FETCH MODALS
 // Will load all the html modal files
@@ -196,7 +223,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -204,10 +231,12 @@ async function get_modals_html()
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
-			fetch('modal_contents/profile/profile.html')
+			fetch('modal_contents/profile/profile.html'),
+			fetch('modal_contents/twoFA/twoFA_setup.html'),
+			fetch('modal_contents/twoFA/twoFA_valid.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -215,9 +244,11 @@ async function get_modals_html()
 			solo_ai_menu.text(),
 			versus_menu.text(),
 			edit_profile.text(),
-			profile.text()
+			profile.text(),
+			twoFA_setup.text(),
+			twoFA_valid.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile;
+		return play_menu + login + register + solo_ai_menu + versus_menu + edit_profile + profile + twoFA_setup + twoFA_valid;
 	}
 	catch (error)
 	{

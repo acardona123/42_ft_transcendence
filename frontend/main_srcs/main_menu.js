@@ -46,7 +46,7 @@ function updateUI() {
 
 const USER = {name: "John Doe", type: "player", id: 1421};
 
-let isConnected = true;
+let isConnected = false;
 let userName = 'John Doe';
 // let userImage = 'imgliargame-pp.png';
 let userImage = 'img/GP_poster.jpeg';
@@ -68,22 +68,6 @@ function updateUserName() {
 			console.error('Element with class "userName" not found.');
 		}
 	});
-}
-
-// ======================================
-
-// LOGIN & LOGOUT
-
-function login() {
-    // Simulate successful login
-    isConnected = true;
-    updateUI();
-}
-
-function logout() {
-    // Simulate successful logout
-    isConnected = false;
-    updateUI();
 }
 
 // ======================================
