@@ -16,8 +16,8 @@ from django.core.exceptions import BadRequest
 import requests
 import json
 
-from matches.views_private_api import new_match_verified_id
 from matches.views_users_requests import get_authenticated_user_id, get_authenticated_user_id_or_new_guest, get_new_ai_request, get_new_guest_request, check_player_pin_ok
+from matches.views_tournaments_requests import is_host_of_tournament
 
 
 # === Historic display ===
@@ -55,7 +55,7 @@ def generate_request_data_with_players(request, player_id1, player_id2):
 	request_body['game'] = json_data.get('game')
 	request_body['max_score'] = json_data.get('max_score')
 	request_body['max_duration'] = json_data.get('max_duration')
-	request_body['clean_when_finished'] = json_data.get('clean_when_finished')
+	request_body['tournament_id'] = json_data.get('tournament_id')
 	request_body['player1'] = player_id1
 	request_body['player2'] = player_id2
 	return {'status': 200, 'data': request_body}
@@ -132,9 +132,39 @@ def new_match_against_player(request):
 	return JsonResponse(status = response_data['status'], data = response_data['data'])
 
 
+def can_update_match(request, match_instance):
+	request_emitter_id = 7 #here the request emitter id will be deduced based on the jwt token
+	if match_instance.tournament_id >= 0:
+		host_check = is_host_of_tournament(match_instance.tournament_id, request_emitter_id)
+		if host_check['status'] != 200:
+			return host_check
+		updatable = host_check['data']['is_host']
+	else:
+		updatable = request_emitter_id == match_instance.user1 or request_emitter_id == match_instance.user2
+	return {'status': 200, 'data': {'is_updatable': updatable}}
+
+def is_match_finishable(request, match_instance):
+	match_updatability = can_update_match(request, match_instance)
+	if match_updatability['status'] != 200:
+		return match_updatability
+	if match_updatability['data']['is_updatable'] == False:
+		return {'status':403, 'data': {'message' : f"a match can be declared as finished only by its players or the tournament creator"}}
+	print(f"finished: {match_instance.is_finished}")
+	if match_instance.is_finished:
+		return {'status': 403, 'data': {'message' : f"the match was already finished"}}
+	return {'status': 200}
 
 @api_view(['POST'])
 def finish_match(request, match_id):
+	try:
+		match_instance = Match.objects.get(id = match_id)
+	except:
+		return JsonResponse(status = 400, data = {'message' : f"there is no match identified by the id {match_id} to be ended"})
+
+	match_finishable = is_match_finishable(request, match_instance)
+	if match_finishable['status'] != 200:
+		return JsonResponse(status = match_finishable['status'], data = match_finishable['data'])
+
 	# check the existence of the required fields (not their )
 	data = request.data
 	if not 'score1' in data or not 'score2' in data or not 'duration' in data :
@@ -145,13 +175,6 @@ def finish_match(request, match_id):
 	# print(f"request_score1 = {request_score1}")
 	# print(f"request_score2 = {request_score2}")
 	# print(f"request_duration = {request_duration}"
-	try:
-		match_instance = Match.objects.get(id = match_id)
-	except:
-		return JsonResponse(status = 400, data = {'message' : f"there is no match identified by the id ${match_id} to be ended"})
-	if match_instance.is_finished:
-		return JsonResponse(status = 200, data = {'message' : f"the {match_id} was already finished"})
-
 
 	try:
 		match_instance.score1 = request_score1
@@ -162,6 +185,6 @@ def finish_match(request, match_id):
 	except Exception as e:
 		return JsonResponse(status = 400, data = {'message' : f"match finish: {e}"})
 
-	# if match_instance.clean_when_finished:
-		# TODO: send the request to the users microservice to clean the ai/guest user of this match if needed. returns the player1 and player2 updated id
-	return JsonResponse(status = 200, data = {'message': f'{match_instance} successfully ended'})
+	# if match_instance.tournament_id:
+		# TODO: send the request to the users microservice to clean the ai/guest user of this match if needed. returns the player1 and player2 updated id. They would be updated in the match data
+	return JsonResponse(status = 200, data = {'message': f"{match_instance} successfully ended"})

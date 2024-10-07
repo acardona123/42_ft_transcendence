@@ -23,14 +23,14 @@ def create_new_match(response_data):
 			game = response_data['game'],
 			max_score = response_data['max_score'],
 			max_duration = response_data['max_duration'],
-			clean_when_finished = response_data['clean_when_finished']
+			tournament_id = response_data['tournament_id']
 		)
 	except Exception as e:
 		return JsonResponse(status = 400, data = {'message' : f"Match creation: {e}"})
 
 	# writing the new match data in the response
 	try:
-		serializer = MatchSerializer(match, fields=['index', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'clean_when_finished'])
+		serializer = MatchSerializer(match, fields=['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
 		response_data = {'message':'match created', 'match_data':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
 	except:
@@ -50,19 +50,17 @@ def new_match_verified_id(request):
 	match_data['game'] = json_data.get('game')
 	match_data['max_score'] = json_data.get('max_score')
 	match_data['max_duration'] = json_data.get('max_duration')
-	match_data['clean_when_finished'] = json_data.get('clean_when_finished')
-	if not match_data['user1']: 
+	match_data['tournament_id'] = json_data.get('tournament_id')
+	if not 'user1' in match_data: 
 		return JsonResponse(status = 400, data = {'message' : 'First player\'s id not provided'})
-	if not match_data['user2']: 
+	if not 'user2' in match_data: 
 		return JsonResponse(status = 400, data = {'message' : 'Second player\'s id id not provided'})
-	if not match_data['game'] or (match_data['game'] != 'FB' and match_data['game'] != 'PG'):
+	if not 'game' in match_data or (match_data['game'] != 'FB' and match_data['game'] != 'PG'):
 		return JsonResponse(status = 400, data = {'message' : 'Wrong/missing game identifier'})
-	if not match_data['max_score']: 
+	if not 'max_score' in match_data: 
 		return JsonResponse(status = 400, data = {'message' : 'Match max score not provided'})
-	if not match_data['max_duration']:
+	if not 'max_duration' in match_data:
 		return JsonResponse(status = 400, data = {'message' : 'Match max duration not provided'})
-	if not match_data['clean_when_finished'] and match_data['clean_when_finished'] != False :
-		return JsonResponse(status = 400, data = {'message' : 'Match clean when finished indication not provided'})
 
 	# match creation
 	return create_new_match(match_data)
