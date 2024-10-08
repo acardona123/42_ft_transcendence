@@ -202,6 +202,20 @@ Content-Type: application/json
 
 
 
+### --- new match player ---
+POST /api/matches/new/me-player/ HTTP/1.1
+Host: localhost:8443
+Content-Type: application/json
+
+{
+	"game": "PG",
+	"player2_id": 9,
+	"player2_pin": "1234",
+	"max_score": 10,
+	"max_duration": 60,
+	"tournament_id": -1
+}
+
 
 
 ### --- new match ai ---

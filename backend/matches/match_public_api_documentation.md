@@ -60,7 +60,7 @@ return:
 `POST /api/matches/new/me-player`
 body:
 {
-	game
+	game,
 	player2_id,
 	player2_pin,
 	max_score,

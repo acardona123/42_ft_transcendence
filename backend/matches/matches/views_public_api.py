@@ -113,10 +113,17 @@ def new_match_against_player(request):
 	authentication = get_authenticated_user_id_or_new_guest(request)
 	if authentication['status'] != 200:
 		return JsonResponse(status = authentication['status'], data = authentication['data'], safe=False)
-	user_id = authentication.get('user_id')
+	user_id = authentication['data'].get('user_id')
 
-	player2_id = request.POST.get('player2_id')
-	player2_pin = request.POST.get('player2_pin')
+	try:
+		json_data = json.loads(request.body)
+	except:
+		return JsonResponse(400, data = {'message': 'Expecting a json body for creating a new match'}, safe=False)
+	
+	player2_id = json_data.get('player2_id')
+	player2_pin = json_data.get('player2_pin')
+	print(f"player2_id: {player2_id}")
+	print(f"player2_pin: {player2_pin}")
 	if player2_id == None or player2_pin == None:
 		return JsonResponse(status = 400, data = {'message' : 'match creation impossible: missing id or pin for the second player'})
 	check_second_player = check_player_pin_ok(player2_id, player2_pin)
