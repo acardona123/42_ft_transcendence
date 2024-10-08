@@ -46,6 +46,15 @@ return:
 {
 	status,
 	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
 }
 ### me against identified player
 `POST /api/matches/new/me-player`
@@ -62,6 +71,15 @@ return:
 {
 	status,
 	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
 }
 ### me against guest
 `POST /api/matches/new/me-guest`
@@ -74,6 +92,14 @@ body:
 }
 return:
 {
-	status,
 	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
 }

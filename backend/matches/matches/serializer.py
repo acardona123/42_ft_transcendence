@@ -29,7 +29,7 @@ class MatchSerializer(DynamicFieldsModelSerializer):
 		super().__init__(*args, **kwargs)
 
 
-class MatchHistorySerializer(DynamicFieldsModelSerializer):
+class MatchDisplaySerializer(DynamicFieldsModelSerializer):
 	main_player_id = serializers.SerializerMethodField()
 	opponent_id = serializers.SerializerMethodField()
 	main_player_username = serializers.SerializerMethodField()
@@ -39,7 +39,7 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 
 	class Meta:
 		model = Match
-		fields = ['id', 'game', 'max_score', 'max_duration', 'date', 'duration', 'main_player_id', 'opponent_id', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score']
+		fields = ['id', 'game', 'max_score', 'max_duration', 'date', 'duration', 'main_player_id', 'opponent_id', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score', 'tournament_id']
 
 
 	def __init__(self, *args, **kwargs):

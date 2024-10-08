@@ -7,9 +7,10 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import api_view, permission_classes
 
 from matches.models import Match
-from matches.serializer import MatchSerializer
+from matches.serializer import MatchDisplaySerializer
 
 from django.conf import settings
+from django.db.models import Q
 from django.core.exceptions import BadRequest
 import requests
 
@@ -30,12 +31,13 @@ def create_new_match(response_data):
 
 	# writing the new match data in the response
 	try:
-		serializer = MatchSerializer(match, fields=['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'tournament_id'])
+		match_list = Match.objects.filter(Q(id=match.id))
+		serializer = MatchDisplaySerializer(match_list, many=True, context={'user_id': response_data.get('user1')}, fields=['id', 'game','main_player_username', 'opponent_username','max_score', 'max_duration', 'tournament_id'])
 		response_data = {'message':'match created', 'data':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
-	except:
+	except Exception as e:
 		match.delete()
-		return JsonResponse(status = 500, data = {'message': 'match created but failed to be displayed. Match canceled'})
+		return JsonResponse(status = 500, data = {'message': f"match created but failed to be displayed. Match canceled.\n[{e}]"})
 
 
 @api_view(['POST'])

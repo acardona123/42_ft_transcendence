@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from matches.models import Match
-from matches.serializer import MatchSerializer, MatchHistorySerializer
+from matches.serializer import MatchSerializer, MatchDisplaySerializer
 
 from django.db.models import Q
 from django.conf import settings
@@ -35,7 +35,7 @@ def match_history(request):
 	user_id = response_data.get('user_id')
 	matches = Match.objects.filter((Q(user1=user_id) | Q(user2=user_id)) & Q(is_finished=True))
 	try:
-		serializer= MatchHistorySerializer(matches, many=True, context={'user_id': user_id}, fields=['game', 'date', 'duration', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score'])
+		serializer= MatchDisplaySerializer(matches, many=True, context={'user_id': user_id}, fields=['game', 'date', 'duration', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score'])
 		response_data = {'message':'matches history', 'matches':serializer.data}
 		return JsonResponse(status = 200, data = response_data, safe=False)
 	except:
