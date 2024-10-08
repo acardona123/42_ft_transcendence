@@ -41,9 +41,10 @@ async function send_form_register(form)
 		if (fetched_data.status == 400)
 		{
 			// TODO: handle the error in front
+			console.log("error register");
 			return ;
 		}
-		apply_login_user(data.refresh, data.access);
+		apply_login_user(data.tokens.refresh, data.tokens.access);
 		closeModalSignUp();
 	}
 	catch (error)

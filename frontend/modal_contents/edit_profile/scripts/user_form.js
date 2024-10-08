@@ -56,18 +56,54 @@ function format_empty_values(body)
 		body.email = null;
 	if (!body.phone)
 		body.phone = null;
+	return body;
 }
 
-function submit_user_form(form)
+function error_update_user_from_back(data)
 {
-	const body =
+	// TODO: errors on front
+	for (field in data)
 	{
+		for (msg of data[field])
+			console.log(field + ": " + msg);
+	}
+}
+
+async function submit_user_form(form)
+{
+	let body = JSON.stringify(format_empty_values({
 		username : form["username"].value,
 		email : form["email"].value,
 		phone : form["phone"].value,
 		pin : form["pin"].value
+	}));
+	const url = "https://localhost:8443/api/users/update/user/";
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'PUT',
+			headers: {'content-type': 'application/json'},
+			body: body
+		});
+		if (!fetched_data.ok && fetched_data.status != 400)
+			throw new Error("Error while updating password.");
+		let data = await fetched_data.json();
+		data = data.data;
+		if (fetched_data.status == 400)
+		{
+			error_update_user_from_back(data);
+			return ;
+		}
+		console.log("Informations updated.");
+		// TODO: popup
+		return ;
 	}
-	format_empty_values(body);
+	catch (error)
+	{
+		// TODO: handle errors properly
+		console.log(error);
+		return ;
+	}
 }
 
 function change_form_behavior_for_SPA(form, new_function)

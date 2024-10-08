@@ -1,4 +1,4 @@
-function error_password_from_back(data)
+function error_update_password_from_back(data)
 {
 	// TODO: errors on front
 	if (!data.data) // api 42 changed password, not allowed
@@ -33,7 +33,6 @@ async function submit_pass_form(form)
 		if (!fetched_data.ok && fetched_data.status != 400)
 			throw new Error("Error while updating password.");
 		let data = await fetched_data.json();
-		console.log(data);
 		if (fetched_data.status == 400)
 		{
 			error_password_from_back(data);

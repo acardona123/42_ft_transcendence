@@ -12,7 +12,7 @@ async function refresh_token()
 	});
 	if (!fetched_data.ok)
 	{
-		logout();
+		logout_user();
 		throw new Error("You have been disconnected.");
 	}
 	let data = await fetched_data.json();
