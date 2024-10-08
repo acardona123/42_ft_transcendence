@@ -8,6 +8,8 @@ class CustomJWTAuthentication(JWTAuthentication):
 		if validated_data is None:
 			return None
 		user, token = validated_data
+		if user != None and user.type != user.UserType.USR:
+			raise AuthenticationFailed('User unable to authenticate')
 		scope = token.get('scope', None)
 		if not scope:
 			raise AuthenticationFailed('Token has no scope')
