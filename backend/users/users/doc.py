@@ -35,6 +35,8 @@ MSG_INFO_USER_UPDATE = "User info updated"
 MSG_USER_OAUTH_CREATED = "New user created with 42 API"
 MSG_DEVICE_ALREADY_CONFIRMED = "Device 2fa is already confirmed"
 MSG_DEVICE_VALIDATED = "Validation 2fa device"
+MSG_USER_INFO = "User info that can be updated"
+MSG_2FA_STATUS =  "Get 2fa status"
 
 #--------------------DOC--------------------
 from drf_yasg import openapi
@@ -327,9 +329,10 @@ DOC_UPDATE_INFO = openapi.Response(
 				"application/json": {
 					"message": MSG_INFO_USER_UPDATE,
 					"data": {
-						"username": "johanne",
-						"email": "fghf@fdg.lpd",
-						"phone": "+33326597845"
+						"username": "coucou",
+						"email": "fghf@fdg.ds",
+						"phone": "+33326597845",
+						"pin": "0004"
 					}
 				}
 			}
@@ -392,6 +395,18 @@ DOC_TOKEN_REFRESH = openapi.Response(
 							"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzk3MTIxNSwiaWF0IjoxNzI3ODg0ODE1LCJqdGkiOiJkYzQwNjJjYzM5YTY0YWFhOTg1MDNkYjRkMTJiYmNiYiIsInVzZXJfaWQiOjQsInNjb3BlIjoibm9ybWFsIn0.yvWIU2TLw681zjQje7UZ1bPEqnhFmgoJODzlbhTHwVg",
 							"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3ODg1NzE1LCJpYXQiOjE3Mjc4ODQ4MTUsImp0aSI6ImYwN2M3YWJjNWRiYTRiYjVhODg1MzBmOTFjNTBmZDllIiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwifQ.Y1wRnScW2D1-rd2PtM2Wjt_EWDNFRg6SXglgneoN_QY"
 						}
+					}
+				}
+			}
+		)
+
+DOC_2FA_STATUS = openapi.Response(
+			description=MSG_2FA_STATUS + ", the status can be 'on' or 'off",
+			examples={
+				"application/json": {
+					"message": MSG_2FA_STATUS,
+					"data": {
+						"2fa_status": "on",
 					}
 				}
 			}

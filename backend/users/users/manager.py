@@ -14,6 +14,10 @@ class CustomUserManager(BaseUserManager):
 			user.set_unusable_password()
 		else:
 			user.set_password(password)
+		if user.type == user.UserType.USR:
+			user.random_pin()
+		else:
+			user.pin = None
 		user.set_status_online()
 		return user
 

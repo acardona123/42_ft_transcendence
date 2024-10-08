@@ -99,11 +99,11 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
 	def validate_old_password(self, old_password):
 		user = self.context.get('user', None)
 		if user is None:
-			raise serializers.ValidationError({"Error": MSG_ERROR_SER_NO_USER})
+			raise serializers.ValidationError(MSG_ERROR_SER_NO_USER)
 		if not user.has_usable_password():
-			raise serializers.ValidationError({"Error": MSG_ERROR_SER_USER_WITHOUT_PASSWORD})
+			raise serializers.ValidationError(MSG_ERROR_SER_USER_WITHOUT_PASSWORD)
 		if not user.check_password(old_password):
-			raise serializers.ValidationError({"Error": MSG_ERROR_SER_OLD_PASSWORD})
+			raise serializers.ValidationError(MSG_ERROR_SER_OLD_PASSWORD)
 		return old_password
 
 	def update(self, instance, validated_data):
@@ -115,7 +115,16 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = CustomUser
-		fields = ['username', 'email', 'phone']
+		fields = ['username', 'email', 'phone', 'pin']
 
 	def validate_username(self, username):
 		return validate_username(username)
+	
+	def validate_pin(self, pin):
+		if len(pin) > 4:
+			raise serializers.ValidationError("Pin must contain only digits")
+		for letter in pin:
+			if letter not in {'0','1','2','3','4','5','6','7','8','9'}:
+				raise serializers.ValidationError("Pin must contain only digits")
+		pin = pin.zfill(4)
+		return pin
