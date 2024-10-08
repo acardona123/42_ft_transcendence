@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.12-slim
 
 #python ouput is send directly to the terminal and not buffer
 ENV PYTHONUNBUFFERED 1
