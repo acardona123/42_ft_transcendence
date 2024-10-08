@@ -50,16 +50,6 @@ function dfa_collapse()
 	dfa_is_visible = !dfa_is_visible;
 }
 
-function clear_input_errors(elements_ids)
-{
-	for (elem of elements_ids)
-	{
-		elem = document.getElementById(elem);
-		if (elem.children.length != 0)
-			elem.children[0].remove();
-	}
-}
-
 function format_empty_values(body)
 {
 	if (!body.email)
