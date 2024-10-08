@@ -1,3 +1,10 @@
+function clear_edp_pass_inputs()
+{
+	document.getElementById("edp-input-cur-password").value = "";
+	document.getElementById("edp-input-new-password").value = "";
+	document.getElementById("edp-input-confirm-password").value = "";
+}
+
 function error_update_password_from_back(data)
 {
 	// TODO: errors on front
