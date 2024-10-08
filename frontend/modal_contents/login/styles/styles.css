@@ -5,7 +5,7 @@
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	width: fit-content;
+	width: 300px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -29,6 +29,30 @@
 	margin: auto;
 	margin-top: 0;
 	font-size: 2em;
+}
+
+#login-title-div
+{
+	display: flex;
+	flex-direction: column;
+}
+
+#login-on-error-input-div
+{
+	display: none;
+	border: 2px solid red;
+	width: 100%;
+	height: fit-content;
+	border-radius: 3px;
+	margin-bottom: 5px;
+}
+
+#login-on-error-input-text
+{
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
 }
 
 #login-inputs-form
