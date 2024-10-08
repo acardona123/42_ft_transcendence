@@ -16,6 +16,7 @@ class CustomUserManager(BaseUserManager):
 			user.set_password(password)
 		if user.type == user.UserType.USR:
 			user.random_pin()
+			user.create_profil_picture(url=extra_fields.get('picture_url',None)) #todo get right name variable
 		else:
 			user.pin = None
 		user.set_status_online()

@@ -8,6 +8,8 @@ import random
 import re
 from django.utils import timezone
 
+from django.core.validators import FileExtensionValidator
+
 def test_username(username):
     if re.match("^[A-Za-z0-9_#-]*$", username):
         return username
@@ -32,13 +34,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_online = models.BooleanField(default=False)
     last_activity = models.DateTimeField()
     pin = models.CharField(max_length=4, null=True)
-    # picture = models.ImageField(blank=True, null=True)
-	# profile_picture = models.ImageField(
-	#     "profile picture",
-	#     default='default_profile_picture.jpg',
-	#     upload_to='profile_pictures/',
-	#     validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
-	# )
 
     objects = CustomUserManager()
 
@@ -59,3 +54,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def random_pin(self):
         self.pin = f"{random.randint(0000, 9999):04d}"
+    
+    def create_profil_picture(self, url=None):
+        ProfilePicture.objects.create(user=self, oauth_profile_picture=url)
+
+def upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    return f"profile_pictures/{instance.user.id}_{uuid.uuid4().hex}.{ext}"
+
+class ProfilePicture(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(
+        "profile picture",
+        null=True,
+        default='default_profile_picture.jpg',
+        upload_to=upload_path,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
+    )
+    oauth_profile_picture = models.URLField(null=True)

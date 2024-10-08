@@ -1,5 +1,6 @@
 from .authentication import IsNormalToken
 from .serializer import UpdatePasswordSerializer, UpdateUserSerializer
+# from .models import ProfilePicture
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -90,3 +91,58 @@ class UpdateUserInfo(APIView):
 		serializer = UpdateUserSerializer(request.user)
 		return Response({"message": MSG_USER_INFO,
 						"data": serializer.data})
+
+class UpdateProfilePicture(APIView):
+	permission_classes = [IsNormalToken]
+
+	# @swagger_auto_schema(
+	# 	manual_parameters=[JWT_TOKEN],
+	# 	request_body=openapi.Schema(
+	# 		type=openapi.TYPE_OBJECT,
+	# 		required=['username', 'email', 'phone', 'pin'],
+	# 		properties={
+	# 			'username': openapi.Schema(type=openapi.TYPE_STRING),
+	# 			'email': openapi.Schema(type=openapi.TYPE_STRING),
+	# 			'phone': openapi.Schema(type=openapi.TYPE_STRING),
+	# 			'pin': openapi.Schema(type=openapi.TYPE_STRING),
+	# 		}
+	# 	),
+	# 	responses={
+	# 		200: DOC_UPDATE_INFO,
+	# 		400: DOC_ERROR_UPDATE_INFO,
+	# 		401: DOC_ERROR_UNAUTHORIZED,
+	# 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	# 	})
+	def put(self, request):
+		serializer = UpdateUserSerializer(request.user, data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response({"message": MSG_INFO_USER_UPDATE,
+							"data": serializer.data}, status=200)
+		data = {
+			"message" : MSG_ERROR_UPDATE_USER_INFO,
+			"data" : serializer.errors
+		}
+		return Response(data, status=400)
+	
+	# @swagger_auto_schema(
+	# 	manual_parameters=[JWT_TOKEN],
+	# 	responses={
+	# 		200: DOC_UPDATE_INFO,
+	# 		401: DOC_ERROR_UNAUTHORIZED,
+	# 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	# 	})
+	def get(self, request):
+		user = request.user
+		if not (hasattr(user, 'profilepicture') and user.profilepicture):
+			return Response({'message': "No image save for this user"}, status=404)
+		picture = user.profilepicture
+		if picture.profil_picture:
+			return Response({"message": "Get url of the profil picture",
+							"data": f"https://localhost:8443/{picture.profile_picture.url}"}, status=200)
+		elif picture.oauth_profile_picture:
+			return Response({"message": "Get url of the profil picture",
+							"data": picture.oauth_profile_picture}, status=200)
+		else:
+			return Response({"message": "No image save for this user"}, status=404)
+			#or return default url image

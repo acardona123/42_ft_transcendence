@@ -7,7 +7,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "9",
+	"username" : "coucou",
 	"password" : "123asd456",
 	"password2" : "123asd456",
 	"email" : "J@gmai.coM",
@@ -22,8 +22,8 @@ POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {
-	"password" : "123asd456",
-	"username" : "coucou"
+	"password" : "123",
+	"username" : "root"
 }
 
 ### login 2fa
@@ -55,13 +55,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ### update password
 PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzAzNDE0LCJpYXQiOjE3MjgzMDMxMTQsImp0aSI6IjJhOGQ2NWZhMjU4NzRiMTA4MDdjOTQzNTk5NGFhZmUwIiwidXNlcl9pZCI6MjIsInNjb3BlIjoibm9ybWFsIn0.a0e96STtlPjVtiiMIfiFGOhPiQcgrYvRM-RE2JveV9c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4Mzk0ODc1LCJpYXQiOjE3MjgzOTQ1NzUsImp0aSI6ImYxNDljZjNlODNmYzQ2ODZhNTg2Mzc1OWM2MGY2ZjYyIiwidXNlcl9pZCI6MTEsInNjb3BlIjoibm9ybWFsIn0.Jkd1xR3IV_dRsU5G3Zh0O5yxy7752B6ismrTPGnRomw
 content-type: application/json
 
 {
-	"old_password": "123asd456",
-	"password": "123asd456",
-	"password2": "123asd456"
+	"old_password": "123asd456f",
+	"password": "123a",
+	"password2": "123a"
 }
 
 ### update user
@@ -102,3 +102,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 {
 	"token" : "804775"
 }
+
+### get picture profile
+GET https://localhost:8443/api/users/update/picture/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4NDAwNTkzLCJpYXQiOjE3Mjg0MDAyOTMsImp0aSI6IjZjMzA5NmJjNDc5MTQ3ZmI4ZDc3NzJlMWNlYzllNGM2IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.MLAdZDXY5BzNN-qu5ple1kzqm3npG_ybsE5MD6SGc0A
