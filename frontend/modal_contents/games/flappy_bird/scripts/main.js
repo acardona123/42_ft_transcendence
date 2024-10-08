@@ -6,33 +6,50 @@ function calculateFlyableZoneCenterY(){
 }
 
 let flyable_zone_center_y = 0;
-
-
-
 flyable_zone_center_y = calculateFlyableZoneCenterY();
 
-
-
-
-
-
-function start_fb_guest(){
-	url = "https://localhost:8443/api/matches/new-guest"
-	// data: //extract and format from the front form
-	data = {
-		game: "pg",
-		max_score,
-		max_duration
-		clean_when_finished
+async function start_fb_guest(){
+	url = "https://localhost:8443/api/matches/new/me-guest/"
+	payload = {
+		game: "FB",
+		tournament_id: -1
 	}
-	# response = requests.get(url)
-	# status = response.status_code
-	# data_content = response.json()
+	//extract and format data from the front form
+	payload["max_score"] = 10;
+	payload["max_duration"] = 5;
+
+	try {
+		response = await fetch(url, {
+			method: "POST",
+			body: JSON.stringify(payload),
+			headers: {
+			"Content-type": "application/json; charset=UTF-8"
+			},
+			// add the authentication credentials here
+		});
+
+		if (!response.ok) {
+			console.log(`fetch error: ${response.status}`)
+			// throw ...
+			return ;
+		}
+		response_json = await response.json();
+		match_game_mode = response_json['data'][0];
+		fb_gameMode.maxTime = match_game_mode["max_duration"];
+		fb_gameMode.maxDeath = match_game_mode["max_score"];
+		fb_gameMode.username_player1 = match_game_mode["main_player_username"];
+		fb_gameMode.username_player2 = match_game_mode["opponent_username"];
+		console.log("gamemode:")//
+		console.log(fb_gameMode)//
+		var game= new Phaser.Game(fb_gameConfig);
+	} catch {
+		console.log("error in start_fb_guest")
+		// display the error popup here
+	}
 }
 
-function start_fb_player(){
+start_fb_guest();
 
-}
+// function start_fb_player(){
 
-
-var game= new Phaser.Game(fb_gameConfig);
+// }
