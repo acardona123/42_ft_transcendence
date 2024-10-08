@@ -1,15 +1,28 @@
+### get username from ids
 POST http://localhost:8002/api/private/users/retrieve/usernames/
 content-type: application/json
 
 {
-	"users_id": [1,2]
+	"users_id": [-25]
 }
+
+### create new AI
+POST http://localhost:8002/api/private/users/new/player/ai/
+content-type: application/json
+
+
+### create new guest
+POST http://localhost:8002/api/private/users/new/player/guest/
+content-type: application/json
+
+### get type of user
+GET http://localhost:8002/api/private/users/0/type/
 
 ###
 POST http://localhost:8002/api/private/users/login/pin/
 content-type: application/json
 
 {
-	"username": "couhhhhhcou",
-	"pin": "0004"
+	"username": "Guest#6664",
+	"pin": ""
 }

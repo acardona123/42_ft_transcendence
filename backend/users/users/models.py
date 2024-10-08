@@ -31,7 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_2fa_enable = models.BooleanField(default=False)
     is_online = models.BooleanField(default=False)
     last_activity = models.DateTimeField()
-    pin = models.CharField(max_length=4, default="0000")
+    pin = models.CharField(max_length=4, null=True)
     # picture = models.ImageField(blank=True, null=True)
 	# profile_picture = models.ImageField(
 	#     "profile picture",
