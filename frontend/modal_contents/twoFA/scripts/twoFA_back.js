@@ -23,7 +23,7 @@ async function validate_code_setup(user_code)
 			throw new Error("Error validating the code.");
 		toggle_2fa_button();
 		hideModalTwoFASetup();
-		openModalParameters();
+		openModalEditProfile();
 		return "valid";
 	}
 	catch (error)

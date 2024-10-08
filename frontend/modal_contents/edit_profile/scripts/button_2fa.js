@@ -31,7 +31,7 @@ function open_2fa_setup_page(data)
 {
 	document.getElementById("tfas-qrcode-img").src = data.qrcode;
 	document.getElementById("tfas-qrcode-key").textContent = data.code;
-	closeModalParameters();
+	closeModalEditProfile();
 	openModalTwoFASetup();
 }
 

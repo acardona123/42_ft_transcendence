@@ -29,7 +29,7 @@ var modalSignUp = undefined;
 var modalPlay = undefined;
 var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
-var modalParameters = undefined;
+var modalEditProfile = undefined;
 var modalProfile = undefined;
 var modalTwoFASetup = undefined;
 var modalTwoFAValid = undefined;
@@ -142,27 +142,28 @@ function returnToModalPlay(source) {
 
 // 
 
-function openModalParameters() {
-	modalParameters = new ModalManager('modal-edit-profile');
+function openModalEditProfile() {
+	modalEditProfile = new ModalManager('modal-edit-profile');
 
 	var modaldialog = document.getElementById('modal-edit-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalParameters.showModal();
+	clear_edp_user_inputs();
+	modalEditProfile.showModal();
 }
 
-function closeModalParameters() {
+function closeModalEditProfile() {
 	var modaldialog = document.getElementById('modal-ia-match-creation-dialog');
 	modaldialog.classList.remove('grow-bottom-right');
-	modalParameters.hideModal();
+	modalEditProfile.hideModal();
 }
 
-function keypressModalParameters(event) {
+function keypressModalEditProfile(event) {
 	if (event.key === 'Enter') {
 		// const offcanvas = new bootstrap.Offcanvas(document.getElementById('menuProfile'));
 		// offcanvas.toggle();
 		// offcanvas.hide();
 		// console.log(offcanvas);
-		openModalParameters();
+		openModalEditProfile();
 	}
 }
 

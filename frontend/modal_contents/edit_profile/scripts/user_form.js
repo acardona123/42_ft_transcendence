@@ -50,6 +50,14 @@ function dfa_collapse()
 	dfa_is_visible = !dfa_is_visible;
 }
 
+function clear_edp_user_inputs()
+{
+	document.getElementById("edp-input-username").value = "";
+	document.getElementById("edp-input-email").value = "";
+	document.getElementById("edp-input-phone").value = "";
+	document.getElementById("edp-input-pin").value = "";
+}
+
 function format_empty_values(body)
 {
 	if (!body.email)
