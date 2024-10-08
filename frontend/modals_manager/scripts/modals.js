@@ -42,6 +42,7 @@ function openModalLogin() {
 	modaldialog.classList.add('slide-right');
 	clear_login_inputs();
 	modalLogin.showModal();
+	document.getElementById("input-login-username").focus();
 }
 
 function closeModalLogin() {
@@ -60,6 +61,7 @@ function openModalSignUp() {
 	modaldialog.classList.add('slide-right');
 	clear_register_inputs();
 	modalSignUp.showModal();
+	document.getElementById("input-register-username").focus();
 }
 
 function closeModalSignUp() {
