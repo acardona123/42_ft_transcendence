@@ -25,7 +25,7 @@ class pg_Paddle extends Phaser.GameObjects.Graphics {
 
 		this.body.setCollideWorldBounds(true);
 		this.body.immovable = true;
-		this.body.setBounce(1);
+		this.body.setBounce(0);
 	}
 
 	getMiddleX(){
