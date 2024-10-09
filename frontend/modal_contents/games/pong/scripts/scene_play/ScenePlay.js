@@ -151,57 +151,108 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#createBallBounceBorderCollision();
 		this.#createPlayersControls();
 	}
-
+	
 	
 	#createBallPaddleCollision(){
-		this.physics.add.collider(this.#balls, this.#paddles, (ball, paddle) => {
-			//bounce angle
-			let bounce_angle;
-			if (paddle.orientation === "left"){
-				if (ball.x < paddle.getMiddleX()){
-					ball.velocityY *= -1;
-					return;
-				}
-				const normal_angle = 0;
-				// const contact_point = ball.body.touching.paddle.y;
-				const contact_point = ball.y;
-				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
-				bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
-			} else if (paddle.orientation === "right"){
-				if (ball.x > paddle.getMiddleX()){
-					ball.velocityY *= -1;
-					return;
-				}
-				const normal_angle = 180;
-				const contact_point = ball.y;
-				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
-				bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
-			} else if (paddle.orientation === "top"){
-				if (ball.y < paddle.getMiddleY()){
-					ball.velocityX *= -1;
-					return;
-				}
-				const normal_angle = 270;
-				const contact_point = ball.x;
-				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
-				bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
-			}
-			else{ //paddle.orientation === "bottom"
-				if (ball.y > paddle.getMiddleY()){
-					ball.velocityX *= -1;
-					return;
-				}
-				const normal_angle = 90;
-				const contact_point = ball.x;
-				const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
-				bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
-			}
-			
-			const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
-			this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
+		this.#setTwoPaddlesBounceAngleFunction();
+		this.#setPaddleBotCalculousFunction();
 
-		});
+		this.physics.add.collider(this.#balls, this.#paddles, (ball, paddle) => {
+			paddle.BounceBall(ball, paddle);
+			paddle.botCalculous();
+		})
 	}
+		#setTwoPaddlesBounceAngleFunction(){
+			this.#setPaddleToBallBounceReaction(this.#player_left);
+			this.#setPaddleToBallBounceReaction(this.#player_right);
+		}
+			#setPaddleToBallBounceReaction(paddle){
+				if (paddle.orientation === "left"){
+					paddle.BounceBall = (ball, paddle) => {
+						if (ball.x < paddle.getMiddleX()){
+							ball.velocityY *= -1;
+							return;
+						}
+						const normal_angle = 0;
+						// const contact_point = ball.body.touching.paddle.y;
+						const contact_point = ball.y;
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
+						const bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
+						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
+						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
+					}
+				} else if (paddle.orientation === "right"){
+					paddle.BounceBall = (ball, paddle) => {
+						if (ball.x > paddle.getMiddleX()){
+							ball.velocityY *= -1;
+							return;
+						}
+						const normal_angle = 180;
+						const contact_point = ball.y;
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
+						const bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
+						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
+						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
+					}
+
+				} else if (paddle.orientation === "top"){
+					paddle.BounceBall = (ball, paddle) => {
+						if (ball.y < paddle.getMiddleY()){
+							ball.velocityX *= -1;
+							return;
+						}
+						const normal_angle = 270;
+						const contact_point = ball.x;
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
+						const bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
+						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
+						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
+						
+					}
+				} else{ //paddle.orientation === "bottom"
+					paddle.BounceBall = (ball, paddle) => {
+						if (ball.y > paddle.getMiddleY()){
+							ball.velocityX *= -1;
+							return;
+						}
+						const normal_angle = 90;
+						const contact_point = ball.x;
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
+						const bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
+						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
+						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
+					}
+				}
+			}
+		#setPaddleBotCalculousFunction(){
+			if (pg_gameMode.bot_level < 0){
+				this.#player_left.botCalculous = ()=>{ return;};
+				this.#player_right.botCalculous = ()=>{ return;};
+			} else if (pg_gameMode.bot_level == 0){
+				this.#player_right.botCalculous = ()=>{ return;};
+				this.#player_left.botCalculous = () => { this.#player_right.targeted_y = this.#calculousBotPositionWithAI() };
+			} else {
+				this.#player_right.botCalculous = ()=>{ this.#player_right.targeted_y = this.#calculousRecenterBot() };
+				this.#player_left.botCalculous = () => { this.#player_right.targeted_y = this.#calculousBotPositionWithAI() };
+			}
+		}
+	
+			#calculousRecenterBot(){
+				const target_y = pg_gameConfig.height / 2
+				return target_y;
+			}
+			#calculousGetImpactPoint(){
+				//TODO
+			}
+			#calculousBotPositionWithAI(){
+				let targeted_y;
+				const impact_point = this.#calculousGetImpactPoint();
+				//TODO ia model here, here random
+				targeted_y = impact_point - pg_gameConfig.scene_play.player.paddle_length / 2 + Math.random(pg_gameConfig.scene_play.player.paddle_length + 1);
+				return targeted_y;
+			}
+
+
 
 	#createPlayerBordersCollisions()
 	{
@@ -237,13 +288,39 @@ class pg_ScenePlay extends Phaser.Scene{
 	}
 
 	#createPlayersControls(){
-		this.#setPlayerControls(this.#player_left, pg_gameConfig.scene_play.player.controls.left.up.key_code, pg_gameConfig.scene_play.player.controls.left.down.key_code);
-		this.#setPlayerControls(this.#player_right, pg_gameConfig.scene_play.player.controls.right.up.key_code, pg_gameConfig.scene_play.player.controls.right.down.key_code);
+		this.#setPlayerControlsKeys(this.#player_left, pg_gameConfig.scene_play.player.controls.left.up.key_code, pg_gameConfig.scene_play.player.controls.left.down.key_code);
+		if (pg_gameMode.bot_level < 0){
+			this.#setPlayerControlsKeys(this.#player_right, pg_gameConfig.scene_play.player.controls.right.up.key_code, pg_gameConfig.scene_play.player.controls.right.down.key_code);
+		} else {
+			this.#setBotControls(this.#player_right)
+		}
 	}
-	#setPlayerControls(player, key_code_up, key_code_down){
-		player.key_up = this.input.keyboard.addKey(key_code_up);
-		player.key_down = this.input.keyboard.addKey(key_code_down);
-	}
+		#setPlayerControlsKeys(player, key_code_up, key_code_down){
+			player.key_up = this.input.keyboard.addKey(key_code_up);
+			player.key_down = this.input.keyboard.addKey(key_code_down);
+			player.get_direction = this.#getPlayerDirection;
+		}
+		#getPlayerDirection(player){
+			const key_up_pressed = player.key_up.isDown;
+			const key_down_pressed = player.key_down.isDown;
+			const player_vertical_direction = key_down_pressed - key_up_pressed;
+			return player_vertical_direction;
+		}
+		#setBotControls(player){
+			player.targeted_y = pg_gameConfig.height / 2;
+			player.get_direction = this.#getBotDirection;
+		}
+		#getBotDirection(player){
+			const direction = player.targeted_y - player.y;
+			if (Math.abs(direction) <= pg_gameConfig.scene_play.bot.position_epsilon){
+				player.y = player.targeted_y;
+				return 0;
+			} else if (direction > 0) {
+				return 1;
+			} else {
+				return -1
+			}
+		}
 	
 	#newRound(){
 		this.#ball = this.createBall();
@@ -263,9 +340,7 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#setPlayerVelocity(this.#player_right);
 	}
 	#setPlayerVelocity(player){
-		const key_up_pressed = player.key_up.isDown;
-		const key_down_pressed = player.key_down.isDown;
-		const player_vertical_direction = key_down_pressed - key_up_pressed;
+		const player_vertical_direction = player.get_direction(player);
 		player.body.setVelocityY(pg_gameConfig.scene_play.player.max_speed * player_vertical_direction);
 	}
 

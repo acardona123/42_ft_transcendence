@@ -82,6 +82,9 @@ const pg_gameConfig = {
 				},
 			},
 		},
+		bot: {
+			position_epsilon: 2
+		},
 		ball: {
 			default_radius: pg_resize(50),
 			default_color: 0xFFFFFF,
