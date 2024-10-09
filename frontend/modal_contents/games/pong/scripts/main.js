@@ -1,1 +1,0 @@
-var game= new Phaser.Game(pg_gameConfig);
