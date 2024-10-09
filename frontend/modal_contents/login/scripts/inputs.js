@@ -6,6 +6,7 @@ function clear_login_inputs()
 		input.value = '';
 		on_input_write_when_filled(true, input);
 	}
+	document.getElementById("login-on-error-input-div").style.display = "none";
 }
 
 function clear_register_inputs()

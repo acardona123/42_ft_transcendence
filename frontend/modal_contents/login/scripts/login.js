@@ -49,8 +49,18 @@ async function logout_user()
 	}
 }
 
+function on_error_form_login(message)
+{
+	if (message == "No active account found with the given credentials")
+		message = "Incorrect username or password";
+	const div = document.getElementById("login-on-error-input-div");
+	div.children[0].textContent = message;
+	div.style.display = "initial";
+}
+
 async function send_form_login(form)
 {
+	form.children[2].disabled = true;
 	const url = "https://localhost:8443/api/users/login/";
 	const body = JSON.stringify({
 		username: form["username"].value,
@@ -63,14 +73,15 @@ async function send_form_login(form)
 			headers: new Headers({'content-type': 'application/json'}),
 			body: body
 		});
-		if (fetched_data.status == 401)
-		{
-			// error on credential wrong password
-			return ;
-		}
-		else if (!fetched_data.ok)
+		form.children[2].disabled = false;
+		if (!fetched_data.ok && fetched_data.status != 401)
 			throw new Error("Error while login in.");
 		let data = await fetched_data.json();
+		if (fetched_data.status == 401)
+		{
+			on_error_form_login(data.message);
+			return ;
+		}
 		data = data.data;
 		if (data['2fa_status'] == "off")
 		{
