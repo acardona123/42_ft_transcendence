@@ -17,11 +17,12 @@
 	display: grid;
 	padding: 50px;
 	padding-top: 50px;
-	padding-bottom: 50px;
+	padding-bottom: 25px;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
+	width: 100%;
 }
 
 #login-title-text
