@@ -1,14 +1,8 @@
-#main-div
+#register-main-div
 {
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
-	width: fit-content;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
 	width: 300px;
+	border: thin solid red;
 }
 
 #register-main-content-div
