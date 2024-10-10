@@ -10,10 +10,11 @@
 .prof-global-container {
 	display: grid;
 	grid-template-columns: 100fr 1fr 200fr;
-	grid-template-rows: 1fr 0fr 1fr;
+	grid-template-rows: 1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
 	max-height: 90%;
+	height: 90%;
 }
 
 .prof-sec-friends {
@@ -33,19 +34,19 @@
 .prof-glob-right-sec-div {
 	width: auto;
 	max-width: 100%;
-	height: 90%;
+	height: 100%;
 	max-height: 100%;
 	margin-left: 5%;
 }
 
 .prof-sec-stats-line {
+	margin-top: 5px;
 	grid-area: 2 / 2 / 3 / 4;
 }
 
 .prof-sec-stats {
 	grid-area: 1 / 3 / 2 / 3;
 	width: 100%;
-	height: 50%;
 	max-height: 50%;
 	display: flex;
 	flex-direction: column;
