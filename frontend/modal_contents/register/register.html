@@ -2,29 +2,34 @@
 	<div class="modal-dialog modal-dialog-overwrite-size" id="modal-register-dialog" >
 		<div class="modal-content custom-small-content" id="modal-register-content">
 			<div id="main-div">
-				<div id="main-content-div">
-					<h1 id="title-text">Transcendence</h1>
+				<div id="register-main-content-div">
+					<h1 id="register-title-text">Transcendence</h1>
 					<form id="register-inputs-form">
 						<div class="text-input-div">
-							<span class="text-span">Username *</span>
+							<span class="register-text-span">Username *</span>
 							<input id="input-register-username" class="inputs-register" name="username" required>
 						</div>
+						<span class="register-on-error-span" id="register-on-error-username"></span>
 						<div class="text-input-div">
-							<span class="text-span">Email</span>
+							<span class="register-text-span">Email</span>
 							<input id="input-register-email" class="inputs-register" name="email">
 						</div>
+						<span class="register-on-error-span" id="register-on-error-email"></span>
 						<div class="text-input-div">
-							<span class="text-span">Phone number</span>
+							<span class="register-text-span">Phone number</span>
 							<input id="input-register-phone" class="inputs-register" name="phone">
 						</div>
+						<span class="register-on-error-span" id="register-on-error-phone"></span>
 						<div class="text-input-div">
-							<span class="text-span">Password *</span>
+							<span class="register-text-span">Password *</span>
 							<input id="input-register-password" class="inputs-register" name="password" type="password" required>
 						</div>
+						<span class="register-on-error-span" id="register-on-error-password"></span>
 						<div class="text-input-div">
-							<span class="text-span">Confirm Password *</span>
+							<span class="register-text-span">Confirm Password *</span>
 							<input id="input-register-confirm_pass" class="inputs-register" name="confirm_pass" type="password" required>
 						</div>
+						<span class="register-on-error-span" id="register-on-error-confirm_pass"></span>
 						<button id="register-button" class="btn btn-primary">Register</button>
 					</form>
 					<div id="line-separator-register-div">
@@ -38,7 +43,7 @@
 				</div>
 				<div id="secondary-content-div">
 					<p id="no-account-text">
-						Aleary have an account? <a href="">Log in</a></p>
+						Already have an account? <a href="">Log in</a></p>
 				</div>
 			</div>
 		</div>

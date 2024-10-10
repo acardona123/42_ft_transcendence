@@ -16,6 +16,35 @@ function format_value_for_back(body)
 	return body;
 }
 
+function clear_register_error_fields(placeholders)
+{
+	for (field in placeholders)
+	{
+		placeholders[field].previousElementSibling.children[1].style.border = "thin solid black";
+		placeholders[field].textContent = "";
+	}
+}
+
+function on_error_form_register(data)
+{
+	const placeholders = 
+	{
+		username: document.getElementById("register-on-error-username"),
+		email: document.getElementById("register-on-error-email"),
+		phone: document.getElementById("register-on-error-phone"),
+		password: document.getElementById("register-on-error-password"),
+		password2: document.getElementById("register-on-error-confirm_pass"),
+		non_field_errors: document.getElementById("register-on-error-password")
+	}
+	clear_register_error_fields(placeholders);
+	for (field in data)
+	{
+		placeholders[field].previousElementSibling.children[1].style.border = "thin solid red";
+		for (message of data[field])
+			placeholders[field].innerHTML += message + "<br />";
+	}
+}
+
 async function send_form_register(form)
 {
 	const body = JSON.stringify(format_value_for_back({
@@ -41,7 +70,7 @@ async function send_form_register(form)
 		if (fetched_data.status == 400)
 		{
 			// TODO: handle the error in front
-			console.log("error register");
+			on_error_form_register(data);
 			return ;
 		}
 		apply_login_user(data.tokens.refresh, data.tokens.access);
