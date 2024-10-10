@@ -83,8 +83,8 @@ async function start_guest(tournament_id, game_symbol){
 }
 
 async function start_ai(tournament_id, game_symbol){
-	if (game_symbol != "PG" && game_symbol != "FB"){
-		throw new Error("The games must be identified as \"PG\" for pong or \"FB\" for Flappy Bird")
+	if (game_symbol != "PG"){
+		throw new Error("The games must be identified as \"PG\" for pong")
 	}
 	url_end = "me-ai/"
 	payload = {
@@ -93,12 +93,12 @@ async function start_ai(tournament_id, game_symbol){
 		bot_level: 1
 	}
 	//extract and format data from the front form
-	payload["max_score"] = 10;
-	payload["max_duration"] = 5;
+	payload["max_score"] = -1;
+	payload["max_duration"] = -1;
 
 	await start_with_payload(url_end, payload);
 }
 
 
 // start_guest(-1, "FB");
-start_guest(-1, "PG");
+start_ai(-1, "PG");

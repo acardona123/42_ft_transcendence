@@ -86,4 +86,13 @@ class pg_Paddle extends Phaser.GameObjects.Graphics {
 	setCenterPositionY(y){
 		this.y  = y - this.middle_offset_y;
 	}
+
+	
+	getCenterPositionX(){
+		return this.x + this.middle_offset_x;
+	}
+
+	getCenterPositionY(){
+		return this.y + this.middle_offset_y;
+	}
 }

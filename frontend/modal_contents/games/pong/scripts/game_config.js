@@ -83,7 +83,7 @@ const pg_gameConfig = {
 			},
 		},
 		bot: {
-			position_epsilon: 2
+			position_epsilon: 20
 		},
 		ball: {
 			default_radius: pg_resize(50),
@@ -187,7 +187,7 @@ const pg_gameConfig = {
 	pixelArt: true,
 	autoFocus: true,
 
-	disableContextMenu: false,//set to true to disable right click menu
+	disableContextMenu: true,
 	
 	physics: {
 		default: "arcade",

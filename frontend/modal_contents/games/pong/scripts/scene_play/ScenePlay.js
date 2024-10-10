@@ -31,6 +31,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	
 	
 	create(){
+		
 		this.#createAnimations();
 		this.#createGroups();
 		this.#createBackground();
@@ -39,7 +40,7 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#createClock();
 		this.#createPlayers();
 		this.#createInteractions();
-
+		
 		this.#newRound();
 		this.time.delayedCall(10, () => {
 			this.#clock.start();
@@ -116,7 +117,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#launchBallRandomly(ball){
 		let old_alpha = ball.alpha;
 		ball.alpha *= 0.5;
-		var tween = this.tweens.add({ //smooth transition of a targeted variable
+		var tween = this.tweens.add({
 			targets: ball,
 			ease: 'Power1',
 			alpha: old_alpha,
@@ -125,9 +126,12 @@ class pg_ScenePlay extends Phaser.Scene{
 			onComplete: function(){
 				const random_trajectory_angle = Phaser.Math.Between(90 - pg_gameConfig.scene_play.ball.max_bounce_angle, -90 + pg_gameConfig.scene_play.ball.max_bounce_angle) + (Math.random() < 0.5 ? 180: 0);
 				this.physics.velocityFromAngle(random_trajectory_angle, pg_gameConfig.scene_play.ball.init_velocity, ball.body.velocity);
-				},
-				callbackScope: this
-			})
+				if (pg_gameMode.bot_level >= 0 && ball.body.velocity.x >= 0) {
+					this.#player_left.botCalculous();
+				}
+			},
+			callbackScope: this
+		})
 	}
 
 	#createPlayers(){
@@ -144,7 +148,6 @@ class pg_ScenePlay extends Phaser.Scene{
 
 
 	#createInteractions(){
-		// this.physics.add.collider(this.balls, this.balls);
 		this.#createBallPaddleCollision();
 		this.#createPlayerBordersCollisions();
 		this.#createBallDeathBorderCollision();
@@ -174,7 +177,6 @@ class pg_ScenePlay extends Phaser.Scene{
 							return;
 						}
 						const normal_angle = 0;
-						// const contact_point = ball.body.touching.paddle.y;
 						const contact_point = ball.y;
 						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
 						const bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
@@ -242,13 +244,35 @@ class pg_ScenePlay extends Phaser.Scene{
 				return target_y;
 			}
 			#calculousGetImpactPoint(){
-				//TODO
+				const impact_point_x = pg_gameConfig.width - pg_gameConfig.scene_play.player.distance_to_border - this.#ball.radius;
+				let rectilinear_projection_y;
+				rectilinear_projection_y = this.#ball.y + (impact_point_x - this.#ball.x) * this.#ball.body.velocity.y / this.#ball.body.velocity.x;
+
+				let impact_point_y;
+				const limit_border_thickness = pg_gameConfig.scene_play.border.thickness + this.#ball.radius;
+				const gameboard_height = pg_gameConfig.height - 2 * limit_border_thickness;; 
+				const onboard_y = rectilinear_projection_y - limit_border_thickness;
+					let bounces_counts;
+				let remainder;
+				if (onboard_y >= 0){
+					bounces_counts = Math.floor(onboard_y / gameboard_height);
+					remainder = onboard_y - gameboard_height * bounces_counts;
+				} else {
+					const reference_y = - onboard_y
+					bounces_counts = Math.floor(reference_y / gameboard_height);
+					remainder = reference_y - gameboard_height * bounces_counts;
+				}
+				if (bounces_counts % 2){
+					impact_point_y = pg_gameConfig.height - limit_border_thickness - remainder;
+				} else {
+					impact_point_y = limit_border_thickness + remainder;
+				}
+				return (impact_point_y)
 			}
 			#calculousBotPositionWithAI(){
 				let targeted_y;
-				const impact_point = this.#calculousGetImpactPoint();
-				//TODO ia model here, here random
-				targeted_y = impact_point - pg_gameConfig.scene_play.player.paddle_length / 2 + Math.random(pg_gameConfig.scene_play.player.paddle_length + 1);
+				const impact_point_y = this.#calculousGetImpactPoint();
+				targeted_y = impact_point_y - pg_gameConfig.scene_play.player.paddle_length / 2 + Math.random() * (pg_gameConfig.scene_play.player.paddle_length);
 				return targeted_y;
 			}
 
@@ -256,7 +280,7 @@ class pg_ScenePlay extends Phaser.Scene{
 
 	#createPlayerBordersCollisions()
 	{
-		this.physics.add.collider(this.#paddles, this.#bounce_borders, );
+		// this.physics.add.collider(this.#paddles, this.#bounce_borders);
 	}
 
 	#createBallDeathBorderCollision(){
@@ -311,9 +335,9 @@ class pg_ScenePlay extends Phaser.Scene{
 			player.get_direction = this.#getBotDirection;
 		}
 		#getBotDirection(player){
-			const direction = player.targeted_y - player.y;
+			const direction = player.targeted_y - player.getCenterPositionY();
 			if (Math.abs(direction) <= pg_gameConfig.scene_play.bot.position_epsilon){
-				player.y = player.targeted_y;
+				player.setCenterPositionY(player.targeted_y);
 				return 0;
 			} else if (direction > 0) {
 				return 1;
