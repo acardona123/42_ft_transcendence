@@ -6,6 +6,7 @@ from .manager import CustomUserManager
 import uuid
 import random
 import re
+import os
 from django.utils import timezone
 
 from django.core.validators import FileExtensionValidator
@@ -67,8 +68,19 @@ class ProfilePicture(models.Model):
     profile_picture = models.ImageField(
         "profile picture",
         null=True,
-        default='default_profile_picture.jpg',
+        default='profile_pictures/default_profile_picture.jpg',
         upload_to=upload_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
     )
     oauth_profile_picture = models.URLField(null=True)
+
+    def update_picture(self, filename):
+        if self.profile_picture != None:
+            self.remove_old_picture()
+        self.profile_picture = filename
+        self.save()
+
+    def remove_old_picture(self):
+        image_path = self.profile_picture.path
+        if os.path.exists(image_path):
+            os.remove(image_path)

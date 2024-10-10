@@ -40,10 +40,11 @@ class UserSerializer(serializers.ModelSerializer):
 		return user
 
 class OauthUserSerializer(serializers.ModelSerializer):
+	image_url = serializers.ImageField(max_length=100, allow_empty_file=False)
 
 	class Meta:
 		model = CustomUser
-		fields = ['id', 'email', 'phone', 'username', 'oauth_id']
+		fields = ['id', 'email', 'phone', 'username', 'oauth_id', 'image_url']
 		# extra_kwargs = {'password': {'write_only': True}}
 
 	def to_internal_value(self, data):
@@ -51,7 +52,8 @@ class OauthUserSerializer(serializers.ModelSerializer):
 			data.pop('phone')
 		data['oauth_id'] = data.get('id', None)
 		data['username'] = data.get('login', None)
-
+		image = data['image']['versions']['small']
+		data['image_url'] = image
 		if data['username'] is not None and CustomUser.objects.filter(username=data['username']).exists():
 			data['username'] = self.unique_random_username(data['username'])
 			self.change_username = True
