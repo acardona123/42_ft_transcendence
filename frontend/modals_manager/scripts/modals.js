@@ -29,6 +29,7 @@ var modalSignUp = undefined;
 var modalPlay = undefined;
 var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
+var modalTournamentMatchCreation = undefined;
 var modalEditProfile = undefined;
 var modalProfile = undefined;
 var modalTwoFASetup = undefined;
@@ -110,6 +111,25 @@ function hideModal1v1MatchCreation() {
 
 // 
 
+function openModalTournamentMatchCreation() {
+	modalPlay.hideModal();
+
+	modalTournamentMatchCreation = new ModalManager('modalTournamentMatchCreation');
+
+	var modaldialog = document.getElementById('modalTournamentCreationDialog');
+	modaldialog.classList.add('grow-top-down');
+	initTournamentCreation();
+	modalTournamentMatchCreation.showModal();
+}
+
+function hideModalTournamentMatchCreation() {
+	var modaldialog = document.getElementById('modalTournamentCreationDialog');
+	modaldialog.classList.remove('grow-top-down');
+	modalTournamentMatchCreation.hideModal();
+}
+
+// 
+
 function openModalPlay() {
 
 	if (modalPlay === undefined) {
@@ -131,11 +151,13 @@ function returnToModalPlay(source) {
 	}
 	else if (source === '1v1MatchCreation') {
 		clearInputFields();
-		console.log('ADDFOCUSOUTLISTENER');
 		addFocusOutListener();
 		// hidePlayer2ConnectionSection();
 		// initBoxs();
 		hideModal1v1MatchCreation();
+	}
+	else if (source === 'TournamentMatchCreation') {
+		hideModalTournamentMatchCreation();
 	}
 	modalPlay.showModal();
 }
@@ -240,6 +262,7 @@ async function get_modals_html()
 			fetch('modal_contents/register/register.html'),
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
+			fetch('modal_contents/tournament_menu/tournament_menu.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
 			fetch('modal_contents/profile/profile.html'),
 			fetch('modal_contents/twoFA/twoFA_setup.html'),
