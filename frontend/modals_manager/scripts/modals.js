@@ -130,11 +130,6 @@ function returnToModalPlay(source) {
 		hideModalIAMatchCreation();
 	}
 	else if (source === '1v1MatchCreation') {
-		clearInputFields();
-		console.log('ADDFOCUSOUTLISTENER');
-		addFocusOutListener();
-		// hidePlayer2ConnectionSection();
-		// initBoxs();
 		hideModal1v1MatchCreation();
 	}
 	modalPlay.showModal();
@@ -279,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function()
 	.then(() =>
 	{
 		document.dispatchEvent(event);
-		openModalProfile();
+		addFocusOutListener();
+		// openModalProfile();
 	});
 });
