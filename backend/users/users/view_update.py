@@ -112,13 +112,11 @@ class UpdateProfilePicture(APIView):
 		if not (hasattr(user, 'profilepicture') and user.profilepicture):
 			return Response({'message': "No image save for this user"}, status=404)
 		picture = user.profilepicture
-		print(picture)
-		print(type(picture))
 		if picture.oauth_profile_picture:
-			return Response({"message": "Get url of the profil picture",
+			return Response({"message": "Get url of the profile picture",
 							"data": picture.oauth_profile_picture}, status=200)
 		elif picture.profile_picture:
-			return Response({"message": "Get url of the profil picture",
+			return Response({"message": "Get url of the profile picture",
 							"data": f"https://localhost:8443{picture.profile_picture.url}"}, status=200)
 		else:
 			return Response({"message": "No image save for this user"}, status=404)

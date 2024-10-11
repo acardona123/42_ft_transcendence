@@ -4,7 +4,7 @@ class CustomUserManager(BaseUserManager):
 	use_in_migrations = True
 
 	def _create_user(self, username, password=None, **extra_fields):
-		image_url = extra_fields.get('image_url', None)
+		image_url = extra_fields.pop('profilepicture', None)
 		if extra_fields.get('email'):
 			email = extra_fields.pop('email', None)
 			email = self.normalize_email(email)
@@ -18,7 +18,7 @@ class CustomUserManager(BaseUserManager):
 			user.set_password(password)
 		if user.type == user.UserType.USR:
 			user.random_pin()
-			user.create_profil_picture(url=image_url)
+			user.create_profil_picture(url=image_url['oauth_profile_picture'])
 		else:
 			user.pin = None
 		user.save()
