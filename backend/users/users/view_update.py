@@ -1,5 +1,5 @@
 from .authentication import IsNormalToken
-from .serializer import UpdatePasswordSerializer, UpdateUserSerializer
+from .serializer import UpdatePasswordSerializer, UpdateUserSerializer, UpdateProfilPictureSerializer
 # from .models import ProfilePicture
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
@@ -92,25 +92,29 @@ class UpdateUserInfo(APIView):
 		return Response({"message": MSG_USER_INFO,
 						"data": serializer.data})
 
+from rest_framework.parsers import MultiPartParser, FormParser
+
 class UpdateProfilePicture(APIView):
 	permission_classes = [IsNormalToken]
+	parser_classes = [MultiPartParser, FormParser]
 
 	def put(self, request):
-		serializer = UpdateUserSerializer(request.user, data=request.data)
+		user = request.user
+		if not (hasattr(user, 'profilepicture') and user.profilepicture):
+			return Response({'message': "No image saved for this user"}, status=404)
+		serializer = UpdateProfilPictureSerializer(user.profilepicture, data=request.data)
 		if serializer.is_valid():
 			serializer.save()
-			return Response({"message": MSG_INFO_USER_UPDATE,
+			return Response({"message": "Update profile picture successfully",
 							"data": serializer.data}, status=200)
-		data = {
-			"message" : MSG_ERROR_UPDATE_USER_INFO,
-			"data" : serializer.errors
-		}
-		return Response(data, status=400)
+		else:
+			return Response({"message": "Error while updating image",
+							"data": serializer.errors}, status=400)
 
 	def get(self, request):
 		user = request.user
 		if not (hasattr(user, 'profilepicture') and user.profilepicture):
-			return Response({'message': "No image save for this user"}, status=404)
+			return Response({'message': "No image saved for this user"}, status=404)
 		picture = user.profilepicture
 		if picture.oauth_profile_picture:
 			return Response({"message": "Get url of the profile picture",
@@ -119,4 +123,4 @@ class UpdateProfilePicture(APIView):
 			return Response({"message": "Get url of the profile picture",
 							"data": f"https://localhost:8443{picture.profile_picture.url}"}, status=200)
 		else:
-			return Response({"message": "No image save for this user"}, status=404)
+			return Response({"message": "No image saved for this user"}, status=404)

@@ -8,8 +8,8 @@ content-type: application/json
 
 {
 	"username" : "coucou",
-	"password" : "123asd456",
-	"password2" : "123asd456",
+	"password" : "123",
+	"password2" : "123",
 	"email" : "J@gmai.coM",
 	"phone" : "+33659482658"
 }
@@ -105,4 +105,8 @@ Authorization: Bearer jZXNzIiwiZXhwIjoxNzI4NTc4MTMyLCJpYXQiOjE3Mjg1Nzc4MzIsImp0a
 
 ### get picture profile
 GET https://localhost:8443/api/users/update/picture/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4NjUyODc5LCJpYXQiOjE3Mjg2NTI1NzksImp0aSI6ImU4ZmZiZjIwOWU5NTQzZGY4NDYzOWM4MWM4MzY1Njc1IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.mQUUbnmwMBIGyLEaYdzKApgxoUO6YRipWAtmJIUokm8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4NjY4NDY4LCJpYXQiOjE3Mjg2NjgxNjgsImp0aSI6Ijk4N2UyMGRkYzA0NDQxOWI5MWFiOGNhNjA1OWZhODI2IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.2It75LxSuUPCxfx9wI4AHVVIY7ILtK96miVG9HT0i9I
+
+### update picture profile
+PUT https://localhost:8443/api/users/update/picture/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4NjYzMzk4LCJpYXQiOjE3Mjg2NjMwOTgsImp0aSI6ImViMDFjN2JlMmUwYzQyODc4NDlhZGFjN2Y5MmRiNTViIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.8wm0UAYDJj_AOXbYnX-ZRDlzdhPT8RxF4sf6HBB_MDs

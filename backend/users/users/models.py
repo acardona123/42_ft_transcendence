@@ -59,6 +59,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def create_profil_picture(self, url=None):
         ProfilePicture.objects.create(user=self, oauth_profile_picture=url)
 
+DEFAULT_IMAGE = 'profile_pictures/default.jpg'
+
 def upload_path(instance, filename):
     ext = filename.split('.')[-1]
     return f"profile_pictures/{instance.user.id}_{uuid.uuid4().hex}.{ext}"
@@ -67,19 +69,19 @@ class ProfilePicture(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     profile_picture = models.ImageField(
         "profile picture",
-        default='profile_pictures/default.jpg',
+        default=DEFAULT_IMAGE,
         upload_to=upload_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
     )
-    oauth_profile_picture = models.URLField(null=True)
+    oauth_profile_picture = models.URLField(null=True, blank=True)
 
-    # def update_picture(self, filename):
-    #     if self.profile_picture != None:
-    #         self.remove_old_picture()
-    #     self.profile_picture = filename
-    #     self.save()
-
-    # def remove_old_picture(self):
-    #     image_path = self.profile_picture.path
-    #     if os.path.exists(image_path):
-    #         os.remove(image_path)
+    def remove_old_picture(self):
+        image_path = self.profile_picture.path
+        if self.profile_picture.name == DEFAULT_IMAGE:
+            return True
+        try:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+            return True
+        except:
+            return False

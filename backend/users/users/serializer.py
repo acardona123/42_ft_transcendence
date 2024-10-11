@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, ProfilePicture
 from django.contrib.auth.password_validation import validate_password
 from .doc import (MSG_ERROR_SER_INVALID_PASSWORD, MSG_ERROR_SER_PASSWORD_EMPTY,
 			MSG_ERROR_SER_CURRENT_PASSWORD, MSG_ERROR_SER_NO_USER,
@@ -132,3 +132,18 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 				raise serializers.ValidationError("Pin must contain only digits")
 		pin = pin.zfill(4)
 		return pin
+
+class UpdateProfilPictureSerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = ProfilePicture
+		fields = ["profile_picture"]
+		extra_kwargs = {'profile_picture': {'required': True}}
+	
+	def update(self, instance, validated_data):
+		instance.remove_old_picture()
+		instance.profile_picture = validated_data['profile_picture']
+		instance.full_clean()
+		instance.save()
+		return instance
+
