@@ -83,7 +83,8 @@ const pg_gameConfig = {
 			},
 		},
 		bot: {
-			position_epsilon: 20
+			position_epsilon: 20,
+			calculous_period_min: 1000
 		},
 		ball: {
 			default_radius: pg_resize(50),

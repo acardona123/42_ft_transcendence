@@ -3,6 +3,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#boot_textures;
 	#scene_textures;
 
+	//objects
 	#background;
 	#borders;
 	#scores;
@@ -16,6 +17,10 @@ class pg_ScenePlay extends Phaser.Scene{
 	#paddles;
 	#bounce_borders;
 	#death_borders;
+
+	//bot_calculous
+	#t_last_bot_action;
+	#do_recenter;
 
 	constructor(){
 		super("PlayGame");
@@ -31,7 +36,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	
 	
 	create(){
-		
 		this.#createAnimations();
 		this.#createGroups();
 		this.#createBackground();
@@ -226,19 +230,45 @@ class pg_ScenePlay extends Phaser.Scene{
 					}
 				}
 			}
-		#setPaddleBotCalculousFunction(){
-			if (pg_gameMode.bot_level < 0){
-				this.#player_left.botCalculous = ()=>{ return;};
-				this.#player_right.botCalculous = ()=>{ return;};
-			} else if (pg_gameMode.bot_level == 0){
-				this.#player_right.botCalculous = ()=>{ return;};
-				this.#player_left.botCalculous = () => { this.#player_right.targeted_y = this.#calculousBotPositionWithAI() };
-			} else {
-				this.#player_right.botCalculous = ()=>{ this.#player_right.targeted_y = this.#calculousRecenterBot() };
-				this.#player_left.botCalculous = () => { this.#player_right.targeted_y = this.#calculousBotPositionWithAI() };
+			#setPaddleBotCalculousFunction(){
+				if (pg_gameMode.bot_level < 0){
+					this.#player_left.botCalculous = ()=>{ return;};
+					this.#player_right.botCalculous = ()=>{ return;};
+					return;
+				}
+				this.#resetBotCalculousData();
+				this.#player_right.botCalculous = ()=>{
+					if (!this.#do_recenter){
+						return;
+					}
+					const t_now = this.time.now;
+					console.log(`${t_now} - ${this.#t_last_bot_action} = ${t_now - this.#t_last_bot_action}`)
+					if (t_now - this.#t_last_bot_action >= pg_gameConfig.scene_play.bot.calculous_period_min * 1.1){
+						this.#t_last_bot_action = t_now;
+						this.#player_right.targeted_y = this.#calculousRecenterBot()
+					} else {
+						this.#do_recenter = false;
+					}
+				};
+				this.#player_left.botCalculous = () => {
+					const t_now = this.time.now;
+					console.log(`${t_now} - ${this.#t_last_bot_action} = ${t_now - this.#t_last_bot_action}`)
+					if (t_now - this.#t_last_bot_action >= pg_gameConfig.scene_play.bot.calculous_period_min){
+						this.#player_left.t_last_bot_action = t_now;
+						this.#player_right.targeted_y = this.#calculousBotPositionWithAI();
+					} else {
+						this.#do_recenter = false;
+					}
+				};
 			}
-		}
-	
+			#resetBotCalculousData(){
+				this.#t_last_bot_action = this.time.now - 2000;
+				if (pg_gameMode.bot_level == 0){
+					this.#do_recenter = false;
+				} else {
+					this.#do_recenter = true;
+				}
+			}
 			#calculousRecenterBot(){
 				const target_y = pg_gameConfig.height / 2
 				return target_y;
@@ -349,6 +379,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#newRound(){
 		this.#ball = this.createBall();
 		this.resetBall(this.#ball);
+		this.#resetBotCalculousData();
 	}
 
 	update(){
