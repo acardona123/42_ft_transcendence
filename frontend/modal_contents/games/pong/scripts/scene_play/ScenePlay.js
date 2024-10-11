@@ -19,8 +19,8 @@ class pg_ScenePlay extends Phaser.Scene{
 	#death_borders;
 
 	//bot_calculous
-	#t_last_bot_action;
-	#do_recenter;
+
+	#bot;
 
 	constructor(){
 		super("PlayGame");
@@ -141,6 +141,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#createPlayers(){
 		this.#createPlayerLeft();
 		this.#createPlayerRight();
+		this.#initiateBot();
 	}
 	#createPlayerLeft(){
 		this.#player_left = new pg_Paddle(this, "left", pg_gameConfig.scene_play.player.distance_to_border, pg_gameConfig.height / 2, pg_gameConfig.scene_play.player.paddle_length, pg_gameConfig.scene_play.player.paddle_width, pg_gameConfig.scene_play.player.color.left, pg_gameConfig.scene_play.player.alpha.left);
@@ -148,6 +149,21 @@ class pg_ScenePlay extends Phaser.Scene{
 	}
 	#createPlayerRight(){
 		this.#player_right = new pg_Paddle(this, "right", pg_gameConfig.width - pg_gameConfig.scene_play.player.distance_to_border, pg_gameConfig.height / 2, pg_gameConfig.scene_play.player.paddle_length, pg_gameConfig.scene_play.player.paddle_width, pg_gameConfig.scene_play.player.color.right, pg_gameConfig.scene_play.player.alpha.right);
+	}
+	#initiateBot(){
+		if (pg_gameMode.bot_level < 0){
+			this.#bot = {
+				is_active: false
+			};
+		} else {
+			this.#bot = {
+				is_active: true,
+				do_recenter: (pg_gameMode.bot_level > 0),
+				t_last_action: 0,
+				t_next_calculous: 0,
+				pending: false,
+			};
+		}
 	}
 
 
@@ -231,42 +247,49 @@ class pg_ScenePlay extends Phaser.Scene{
 				}
 			}
 			#setPaddleBotCalculousFunction(){
-				if (pg_gameMode.bot_level < 0){
+				if (! this.#bot.is_active){
 					this.#player_left.botCalculous = ()=>{ return;};
 					this.#player_right.botCalculous = ()=>{ return;};
 					return;
 				}
 				this.#resetBotCalculousData();
 				this.#player_right.botCalculous = ()=>{
-					if (!this.#do_recenter){
+					if (!this.#bot.is_active){
+						return;
+					}
+					this.#bot.pending = false;
+					if (!this.#bot.do_recenter){
 						return;
 					}
 					const t_now = this.time.now;
-					console.log(`${t_now} - ${this.#t_last_bot_action} = ${t_now - this.#t_last_bot_action}`)
-					if (t_now - this.#t_last_bot_action >= pg_gameConfig.scene_play.bot.calculous_period_min * 1.1){
-						this.#t_last_bot_action = t_now;
+					if (t_now - this.#bot.t_last_action >= pg_gameConfig.scene_play.bot.calculous_period_min * 1.1){
+						this.#bot.t_last_action = t_now;
 						this.#player_right.targeted_y = this.#calculousRecenterBot()
 					} else {
-						this.#do_recenter = false;
+						this.#bot.do_recenter = false;
 					}
 				};
 				this.#player_left.botCalculous = () => {
 					const t_now = this.time.now;
-					console.log(`${t_now} - ${this.#t_last_bot_action} = ${t_now - this.#t_last_bot_action}`)
-					if (t_now - this.#t_last_bot_action >= pg_gameConfig.scene_play.bot.calculous_period_min){
-						this.#player_left.t_last_bot_action = t_now;
+					if (t_now - this.#bot.t_last_action >= pg_gameConfig.scene_play.bot.calculous_period_min){
+
+						this.#bot.t_last_action = t_now;
+						this.#bot.pending = false;
 						this.#player_right.targeted_y = this.#calculousBotPositionWithAI();
 					} else {
-						this.#do_recenter = false;
+						this.#bot.do_recenter = false;
+						this.#bot.pending = true;
+						this.#bot.t_next_calculous = this.#bot.t_last_action + pg_gameConfig.scene_play.bot.calculous_period_min;
 					}
 				};
 			}
 			#resetBotCalculousData(){
-				this.#t_last_bot_action = this.time.now - 2000;
+				this.#bot.t_last_action = this.time.now - 2000;
+				this.#bot.pending = false;
 				if (pg_gameMode.bot_level == 0){
-					this.#do_recenter = false;
+					this.#bot.do_recenter = false;
 				} else {
-					this.#do_recenter = true;
+					this.#bot.do_recenter = true;
 				}
 			}
 			#calculousRecenterBot(){
@@ -302,6 +325,7 @@ class pg_ScenePlay extends Phaser.Scene{
 			#calculousBotPositionWithAI(){
 				let targeted_y;
 				const impact_point_y = this.#calculousGetImpactPoint();
+				// TODO: random position for now
 				targeted_y = impact_point_y - pg_gameConfig.scene_play.player.paddle_length / 2 + Math.random() * (pg_gameConfig.scene_play.player.paddle_length);
 				return targeted_y;
 			}
@@ -383,13 +407,22 @@ class pg_ScenePlay extends Phaser.Scene{
 	}
 
 	update(){
+		this.#timeConditionedBotCalculous();
 		this.#movePlayersManager();
 		this.#clock.update();
 		if (this.#isPartyFinished()){
 			this.scene.start("pg_GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
 		}
 	}
-
+	#timeConditionedBotCalculous(){
+		if (!this.#bot.is_active) {
+			return;
+		}
+		if (!this.#bot.pending || this.scene.now < this.#bot.t_next_calculous){
+			return;
+		}
+		this.#player_left.botCalculous();
+	}
 	#movePlayersManager(){
 		this.#setPlayerVelocity(this.#player_left);
 		this.#setPlayerVelocity(this.#player_right);
