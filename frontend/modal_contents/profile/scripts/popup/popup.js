@@ -27,6 +27,18 @@ function on_click_popup_close()
 	update_all_popups_pos();
 }
 
+function add_popup_to_document_modal(popup_main)
+{
+	// modal_on_screen is not defined because i'm waiting for another branch to merge
+
+	// let modal_on_screen = document.getElementById("modal-profile"); // test
+
+	// if (!modal_on_screen)
+		// document.appendChild(popup_main);
+	// else
+		// modal_on_screen.appendChild(popup_main);
+}
+
 /**
  * Create a popup on the top left corner of the viewport.
  * All times are in ms.
@@ -77,7 +89,7 @@ function create_popup(text, t_before_decay=2000,
 		hover_color : hover_hex_color
 	});
 	popup_handler(popup_list[popup_id], t_before_decay, t_after_hover);
-	document.body.appendChild(popup_main);
+	add_popup_to_document_modal(popup_main);
 	update_all_popups_pos();
 }
 
