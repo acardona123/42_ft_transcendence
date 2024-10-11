@@ -113,8 +113,6 @@ function clearErrorFields() {
 function addFocusOutListener() {
 	var inputs = document.querySelectorAll('.input-container input');
 
-	console.log(inputs);
-
 	inputs.forEach(function(input) {
 			input.addEventListener('focusout', function() {
 				if (input.value !== "") {

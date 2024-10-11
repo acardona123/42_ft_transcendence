@@ -46,7 +46,7 @@ function updateUI() {
 
 const USER = {name: "John Doe", type: "player", id: 1421};
 
-let isConnected = false;
+let isConnected = true;
 let userName = 'John Doe';
 // let userImage = 'imgliargame-pp.png';
 let userImage = 'img/GP_poster.jpeg';
@@ -102,9 +102,10 @@ function updateCircle(ratio, victories, defeats) {
 }
 
 function disableButtonPlay() {
-	const buttonPlay = document.getElementById('buttonPlay');
-	if (buttonPlay) {
-		buttonPlay.disabled = true;
+	const button = document.getElementById('buttonPlay');
+	if (button) {
+		button.disabled = true;
+		button.removeAttribute('autofocus');
 	}
 
 	document.getElementById("menuProfile").addEventListener('hide.bs.offcanvas', function () {

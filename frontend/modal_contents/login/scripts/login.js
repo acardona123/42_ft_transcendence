@@ -9,8 +9,8 @@ function change_form_behavior_for_SPA(form, new_function)
 
 function send_user_to_2fa()
 {
-	closeModalLogin();
-	openModalTwoFAValid();
+	close_modal("modal-login");
+	open_modal("modal-2fa-valid", init_modal_2fa_valid, undefined);
 }
 
 function apply_login_user(refresh, access)
@@ -86,7 +86,7 @@ async function send_form_login(form)
 		if (data['2fa_status'] == "off")
 		{
 			apply_login_user(data.refresh, data.access);
-			closeModalLogin();
+			close_modal("modal-login");
 		}
 		else
 		{

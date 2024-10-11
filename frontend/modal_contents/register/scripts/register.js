@@ -74,7 +74,7 @@ async function send_form_register(form)
 			return ;
 		}
 		apply_login_user(data.tokens.refresh, data.tokens.access);
-		closeModalSignUp();
+		close_modal("modal-register");
 	}
 	catch (error)
 	{

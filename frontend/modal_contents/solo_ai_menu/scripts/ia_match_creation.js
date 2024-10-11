@@ -45,6 +45,8 @@ async function sumbitIAForm(event) {
 }
 
 function initMatchIACreation() {
+	modal_play.hide();
+
 	const sliderTime = document.getElementById('IATimeSlider');
 	const sliderPoints = document.getElementById('IAPointsSlider');
 
@@ -60,7 +62,7 @@ document.addEventListener("onModalsLoaded", () => {
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key === "Escape") {
-			returnToModalPlay("IAMatchCreation");
+			close_modal('modal-ia-match-creation', return_to_modal_play);
 		}
 	});
 
