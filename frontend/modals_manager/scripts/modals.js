@@ -275,6 +275,5 @@ document.addEventListener("DOMContentLoaded", function()
 	{
 		document.dispatchEvent(event);
 		addFocusOutListener();
-		// openModalProfile();
 	});
 });
