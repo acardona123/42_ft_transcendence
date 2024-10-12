@@ -1,8 +1,35 @@
+function checkSlidersMax() {
+	const sliders = document.getElementById('1v1MatchForm').querySelectorAll('.slider');
 
-function escapeKeyPress1v1Match(event) {
-	if (event.key === "Escape") {
-		returnToModalPlay("1v1MatchCreation");
-		removeEventListener('keydown', escapeKeyPress1v1Match);
+	sliders.forEach((slider) => {
+		slider.addEventListener('input', () => {
+			handleButtonsSubmit();
+		});
+	});
+}
+
+function handleButtonsSubmit() {
+	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
+	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
+
+	const BoxVSGuest = document.getElementById('BoxVSGuest');
+	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
+
+	const sliders = Array.from(document.getElementById('1v1MatchForm').querySelectorAll('.slider'));
+
+	const countMaxValues = sliders.filter(slider => slider.value === slider.max).length;
+
+	if (countMaxValues > 1)
+	{
+		VSGuestPlayButton.disabled = true;
+		VSPlayerPlayButton.disabled = true;
+	}
+	else
+	{
+		if (BoxVSGuest.classList.contains('centered', 'side'))
+			VSGuestPlayButton.disabled = false;
+		else if (BoxVSPlayer.classList.contains('centered', 'side'))
+			VSPlayerPlayButton.disabled = false;
 	}
 }
 
@@ -13,7 +40,6 @@ function initBoxs() {
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
 	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
 	const VSPlayerInputs = document.getElementById('AddPlayerInputs').querySelectorAll('input');
-
 
 	// Handle focus on Box VSGuest
 	BoxVSGuest.addEventListener('click', () => {
@@ -28,6 +54,7 @@ function initBoxs() {
 			input.classList.add('cursor-default');
 		});
 		clearErrorFields();
+		handleButtonsSubmit();
 	});
 
 	// Handle focus on Box VSPlayer
@@ -43,11 +70,14 @@ function initBoxs() {
 		BoxVSGuest.classList.remove('centered');
 		VSGuestPlayButton.disabled = true;
 		clearErrorFields();
+		handleButtonsSubmit();
 	});
 	
 	// Reset if focus is lost
 	document.addEventListener('click', (e) => {
-		if (!BoxVSGuest.contains(e.target) && !BoxVSPlayer.contains(e.target)) {
+		const sliderContainers = document.getElementById('1v1MatchForm').querySelectorAll('.slider-container');
+
+		if (!BoxVSGuest.contains(e.target) && !BoxVSPlayer.contains(e.target) && !sliderContainers[0].contains(e.target) && !sliderContainers[1].contains(e.target)){
 			BoxVSGuest.classList.remove('centered', 'side');
 			BoxVSPlayer.classList.remove('centered', 'side');
 			VSGuestPlayButton.disabled = true;
@@ -56,6 +86,7 @@ function initBoxs() {
 				input.classList.add('cursor-default');
 			});
 			clearErrorFields();
+			handleButtonsSubmit();
 		}
 	});
 	
@@ -73,7 +104,7 @@ function initBoxs() {
 	});
 }
 
-function CheckConnectionPlayer2() {
+function CheckPlayer2Data() {
 
 	const pseudo = document.getElementById('player2Pseudo').value;
 	const pin = document.getElementById('player2Pin').value;
@@ -98,46 +129,12 @@ function CheckConnectionPlayer2() {
 		errorBox.style.display = 'block';
 		return false;
 	}
-	// else
-	// {
-	// 	console.log("fetch to /validate-player2");
-	// 	console.log({ pseudo, pin });
-
-		
-	// 	// Simulate backend request for player 2 validation
-	// 	fetch('/validate-player2', {
-	// 		method: 'POST',
-	// 		headers: { 'Content-Type': 'application/json' },
-	// 		body: JSON.stringify({ pseudo, pin })
-	// 	})
-	// 	.then(response => response.json())
-	// 	.then(data => {
-	// 		if (data.success) {
-	// 			alert('Player 2 connected successfully!');
-	// 			errorBox.textContent = '';
-	// 			errorBox.style.display = 'none';
-
-	// 			player2IsConnected = true;
-	
-	// 		} else {
-	// 			errorBox.textContent = 'Invalid connection. Please try again.';
-	// 			errorBox.style.display = 'block';
-	// 		}
-	// 	})
-	// 	.catch(() => {
-
-	// 	});
-	// 	console.log("player2IsConnected = " + player2IsConnected);
-	// }
 	return true;
 }
 
 function handle1v1FormSubmission() {
 	document.getElementById('1v1MatchForm').addEventListener('submit', (event) => {
 		event.preventDefault();
-
-		const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
-		const errorBoxVSPlayer = document.getElementById('ErrorBoxConnectionVSPlayer');
 
 		const timeSliderValue = document.getElementById('1v1TimeSlider').value;
 		const pointsSliderValue = document.getElementById('1v1PointsSlider').value;
@@ -154,36 +151,12 @@ function handle1v1FormSubmission() {
 				clean_when_finished: false
 			};
 
-			console.log("fetch to /api/matches/new/me-guest");
-			console.log(matchData);
-	
-			// Send match data to the backend
-			fetch('/api/matches/new/me-guest', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(matchData),
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					errorBoxVSGuest.textContent = '';
-					errorBoxVSGuest.style.display = 'none';
-				} else {
-					errorBoxVSGuest.textContent = 'Invalid connection. Please try again.';
-					errorBoxVSGuest.style.display = 'block';
-				}
-			})
-			.catch(() => {
-				errorBoxVSGuest.textContent = 'Error connecting to server.';
-				errorBoxVSGuest.style.display = 'block';
-			});
+			sumbit1v1Guest(matchData);
 		}
 		else if (event.submitter.id === 'VSPlayerPlayButton')
 		{
-			if (CheckConnectionPlayer2() === false)
-				return;
-
-			// game player2_id, player2_pin, max_score, max_duration, clean_when_finished
+			if (CheckPlayer2Data() === false)
+				return ;
 
 			const player2_id = document.getElementById('player2Pseudo').value || null;
 			const player2_pin = document.getElementById('player2Pin').value || null;
@@ -197,48 +170,118 @@ function handle1v1FormSubmission() {
 				clean_when_finished: false
 			};
 
-			console.log("fetch to /api/matches/new/me-player");
-			console.log(matchData);
-
-			// Send match data to the backend
-			fetch('/api/matches/new/me-player', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(matchData),
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					errorBoxVSPlayer.textContent = '';
-					errorBoxVSPlayer.style.display = 'none';
-				} else {
-					errorBoxVSPlayer.textContent = 'Error creating match.';
-					errorBoxVSPlayer.style.display = 'block';
-				}
-			})
-			.catch(() => {
-				errorBoxVSPlayer.textContent = 'Error connecting to server.';
-				errorBoxVSPlayer.style.display = 'block';
-			});
+			sumbit1v1Player(matchData);
 		}
 	});
 }
 
-let player2IsConnected = false;
+async function sumbit1v1Guest(matchData) {
+	const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
+
+	const url = "/api/matches/new/me-guest";
+
+	console.log("fetch to /api/matches/new/me-guest");
+	console.log(matchData);
+
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {'content-type': 'application/json'},
+			body: JSON.stringify(matchData),
+		});
+		if (!fetched_data.ok)
+		{
+			errorBoxVSGuest.textContent = 'Error connecting to server.';
+			throw new Error("Error while creating match.");
+		}
+		let data = await fetched_data.json();
+		if (!data.success)
+		{
+			errorBoxVSGuest.textContent = 'Invalid connection. Please try again.';
+			throw new Error("Error while creating match.");
+		}
+		errorBoxVSGuest.textContent = '';
+		errorBoxVSGuest.style.display = 'none';
+		console.log("Match created.");
+	}
+	catch (error)
+	{
+		errorBoxVSGuest.style.display = 'block';
+		console.log(error);
+	}
+}
+
+async function sumbit1v1Player(matchData) {
+	const errorBoxVSPlayer = document.getElementById('ErrorBoxConnectionVSPlayer');
+
+	const url = "/api/matches/new/me-player";
+
+	console.log("fetch to /api/matches/new/me-player");
+	console.log(matchData);
+
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {'content-type': 'application/json'},
+			body: JSON.stringify(matchData),
+		});
+		if (!fetched_data.ok)
+		{
+			errorBoxVSPlayer.textContent = 'Error connecting to server.';
+			throw new Error("Error while creating match.");
+		}
+		let data = await fetched_data.json();
+		if (!data.success)
+		{
+			errorBoxVSPlayer.textContent = 'Invalid connection. Please try again.';
+			throw new Error("Error while creating match.");
+		}
+		errorBoxVSPlayer.textContent = '';
+		errorBoxVSPlayer.style.display = 'none';
+		console.log("Match created.");
+	}
+	catch (error)
+	{
+		errorBoxVSPlayer.style.display = 'block';
+		console.log(error);
+	}
+}
 
 function initMatch1v1Creation() {
+	const sliderTime = document.getElementById('1v1TimeSlider');
+	const sliderPoints = document.getElementById('1v1PointsSlider');
+
+	sliderTime.value = 45;
+	sliderPoints.value = 5;
+
+	updateSlider("1v1MatchForm");
+
+	clearErrorFields();
+	clearInputFields();
+
+}
+
+document.addEventListener("onModalsLoaded", function()
+{
 	updateSlider("1v1MatchForm");
 	updateUserName();
 
-	addEventListener('keydown', escapeKeyPress1v1Match);
+	document.addEventListener('keydown', (event) => {
+		if (event.key === "Escape") {
+			returnToModalPlay("1v1MatchCreation");
+		}
+	});
+
 	pincodeOnlyDigits();
 
 	clearErrorFields();
 	clearInputFields();
-	addFocusOutListener();
+
+	checkSlidersMax();
 
 	initBoxs();
 
 	handle1v1FormSubmission();
-
-}
+});

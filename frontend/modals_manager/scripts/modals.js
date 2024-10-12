@@ -302,6 +302,6 @@ document.addEventListener("DOMContentLoaded", function()
 	.then(() =>
 	{
 		document.dispatchEvent(event);
-		openModalProfile();
+		addFocusOutListener();
 	});
 });
