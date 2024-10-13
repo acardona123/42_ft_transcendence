@@ -36,3 +36,8 @@ urlpatterns = [
 	path("api/private/users/", include("private_api.urls")),
 	path("api/users/", include("users.urls")),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

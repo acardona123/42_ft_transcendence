@@ -51,7 +51,6 @@ def get_type_user(request, user_id):
 		return Response({"message": "Get type of user",
 						"data": {"type": user.type}}, status=200)
 	except Exception as error:
-		print(error)
 		return Response({"message": "Error user not found"}, status=400)
 
 @api_view(['POST'])

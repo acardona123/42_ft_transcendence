@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, ProfilePicture
 from django.contrib.auth.password_validation import validate_password
 from .doc import (MSG_ERROR_SER_INVALID_PASSWORD, MSG_ERROR_SER_PASSWORD_EMPTY,
 			MSG_ERROR_SER_CURRENT_PASSWORD, MSG_ERROR_SER_NO_USER,
@@ -40,18 +40,22 @@ class UserSerializer(serializers.ModelSerializer):
 		return user
 
 class OauthUserSerializer(serializers.ModelSerializer):
+	image_url = serializers.URLField(source='profilepicture.oauth_profile_picture')
 
 	class Meta:
 		model = CustomUser
-		fields = ['id', 'email', 'phone', 'username', 'oauth_id']
-		# extra_kwargs = {'password': {'write_only': True}}
+		fields = ['id', 'email', 'phone', 'username', 'oauth_id', 'image_url']
 
 	def to_internal_value(self, data):
 		if data.get('phone') == 'hidden':
 			data.pop('phone')
 		data['oauth_id'] = data.get('id', None)
 		data['username'] = data.get('login', None)
-
+		try:
+			image = data['image']['versions']['small']
+			data['image_url'] = image
+		except:
+			raise serializers.ValidationError({"image_url": "Missing image link in the info form oauth2.0"})
 		if data['username'] is not None and CustomUser.objects.filter(username=data['username']).exists():
 			data['username'] = self.unique_random_username(data['username'])
 			self.change_username = True
@@ -128,3 +132,26 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 				raise serializers.ValidationError("Pin must contain only digits")
 		pin = pin.zfill(4)
 		return pin
+
+class UpdateProfilPictureSerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = ProfilePicture
+		fields = ["profile_picture"]
+		extra_kwargs = {'profile_picture': {'required': True}}
+	
+	def update(self, instance, validated_data):
+		if instance.oauth_profile_picture != None:
+			instance.oauth_profile_picture = None
+		else:
+			instance.remove_old_picture()
+		instance.profile_picture = validated_data['profile_picture']
+		instance.full_clean()
+		instance.save()
+		return instance
+	
+	def to_representation(self, data):
+		res = super(UpdateProfilPictureSerializer, self).to_representation(data)
+		res['profile_picture'] = "https://localhost:8443" + res['profile_picture']
+		return res
+

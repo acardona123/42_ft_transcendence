@@ -4,6 +4,9 @@ class CustomUserManager(BaseUserManager):
 	use_in_migrations = True
 
 	def _create_user(self, username, password=None, **extra_fields):
+		image_url = extra_fields.pop('profilepicture', None)
+		if image_url != None:
+			image_url = image_url.get('oauth_profile_picture')
 		if extra_fields.get('email'):
 			email = extra_fields.pop('email', None)
 			email = self.normalize_email(email)
@@ -14,11 +17,16 @@ class CustomUserManager(BaseUserManager):
 			user.set_unusable_password()
 		else:
 			user.set_password(password)
-		if user.type == user.UserType.USR:
-			user.random_pin()
-		else:
-			user.pin = None
 		user.set_status_online()
+		try:
+			if user.type == user.UserType.USR:
+				user.random_pin()
+				user.create_profil_picture(url=image_url)
+			else:
+				user.pin = None
+			user.save()
+		except:
+			self.model.objects.filter(username=username).delete()
 		return user
 
 	def create_user(self, username, password=None, **extra_fields):

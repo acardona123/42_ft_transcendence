@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser
+from .models import CustomUser, ProfilePicture
 
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -28,5 +28,8 @@ class AccountAdmin(BaseUserAdmin):
     ordering = ('username',)
     filter_horizontal = ()
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["user", 'profile_picture', 'oauth_profile_picture']
 
 admin.site.register(CustomUser, AccountAdmin)
+admin.site.register(ProfilePicture, ProfileAdmin)
