@@ -25,14 +25,14 @@ function is_valid_file()
 	{
 		create_popup("Error: You must provide only one file.",
 			4000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 		return false;
 	}
 	if (!correct_formats.includes(input_file_button.files[0].type))
 	{
 		create_popup("Error: Accepted formats are [png, jpg, jpeg].",
 			4000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 		return false;
 	}
 

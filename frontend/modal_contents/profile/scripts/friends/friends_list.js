@@ -178,7 +178,7 @@ async function remove_friend(event)
 	{
 		create_popup("Removing friend failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
 
@@ -253,7 +253,7 @@ async function get_friend_list()
 	{
 		create_popup("Retrieving friend list failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
 }

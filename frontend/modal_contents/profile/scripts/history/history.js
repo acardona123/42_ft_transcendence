@@ -24,7 +24,7 @@ async function get_history_from_DB()
 	{
 		create_popup("Retrieving history failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
 

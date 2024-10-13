@@ -60,7 +60,7 @@ function add_popup_to_document_modal(popup_main)
  * Color of the popup while being hovered.
  */
 function create_popup(text, t_before_decay=2000,
-					t_after_hover=4000, hex_color="#00FF0080", hover_hex_color="#00FF00C0")
+					t_after_hover=4000, hex_color="HEX_GREEN", hover_hex_color="HEX_GREEN_HOVER")
 {
 	const popup_main = document.createElement('div');
 	popup_main.className = "popup-main-div";

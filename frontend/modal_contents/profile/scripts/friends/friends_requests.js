@@ -4,13 +4,13 @@ function send_request(data, status)
 	{
 		create_popup("Waiting for " + data.friend_request.username + " to accept.",
 			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			hex_color="HEX_GREEN", t_hover_color="HEX_GREEN_HOVER");
 	}
 	else
 	{
 		create_popup("You already sent a request to " + data.friend_request.username + ".",
 			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			hex_color="HEX_GREEN", t_hover_color="HEX_GREEN_HOVER");
 	}
 }
 
@@ -44,7 +44,7 @@ function send_request_lead_to_friendship(data, status)
 		update_friend_list(false);
 		create_popup("You're now friend with " + data.friendship.username + "!",
 			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			hex_color="HEX_GREEN", t_hover_color="HEX_GREEN_HOVER");
 	}
 }
 
@@ -83,7 +83,7 @@ async function send_friend_request()
 	{
 		create_popup("Friend request failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	remove_friends_popup();
 }
@@ -147,7 +147,7 @@ async function accept_friend_req(event)
 	{
 		create_popup("Accepting request failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
 
@@ -173,7 +173,7 @@ async function reject_friend_req(event)
 	{
 		create_popup("Rejecting request failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
 
@@ -260,7 +260,7 @@ async function get_data_from_database()
 	{
 		create_popup("Retrieving friend requests failed.",
 			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
 }
