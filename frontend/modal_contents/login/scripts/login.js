@@ -21,6 +21,14 @@ function apply_login_user(refresh, access)
 	updateUI();
 }
 
+function logout_user_no_back()
+{
+	sessionStorage.removeItem("refresh_token");
+	sessionStorage.removeItem("access_token");
+	isConnected = false;
+	updateUI();
+}
+
 async function logout_user()
 {
 	const url = "https://localhost:8443/api/users/logout/";
@@ -36,10 +44,7 @@ async function logout_user()
 		});
 		if (!fetched_data.ok)
 			throw new Error("Error while disconnecting.");
-		sessionStorage.removeItem("refresh_token");
-		sessionStorage.removeItem("access_token");
-		isConnected = false;
-		updateUI();
+		logout_user_no_back();
 	}
 	catch (error)
 	{
