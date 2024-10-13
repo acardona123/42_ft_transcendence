@@ -22,6 +22,22 @@ def get_username_by_id(request):
 	return Response({"message": "Id associated with username",
 					"data": data})
 
+@api_view(['POST'])
+def get_friend_info_by_id(request):
+	users_id = request.data.get("users_id", None)
+	if users_id is None:
+		return Response({"message": "The field 'users_id' is required"}, status=400)
+	if not all(isinstance(number, (int)) for number in users_id):
+		return Response({"message": "The field 'users_id' must contain only integer"}, status=400)
+	users = CustomUser.objects.filter(pk__in=users_id)
+	data = dict()
+	for user in users:
+		data[user.id] = {'username': user.username,
+					'picutre': user.get_picture(),
+					'status': user.get_status()}
+	return Response({"message": "Id associated with username",
+					"data": data})
+
 def get_random_ai_username(): # todo username random + check username unique
 	return "AI#"+str(random.randint(0000,9999))
 

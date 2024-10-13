@@ -22,8 +22,8 @@ POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {
-	"password" : "123asd123+",
-	"username" : "jvigny"
+	"password" : "123",
+	"username" : "root"
 }
 
 ### login 2fa
