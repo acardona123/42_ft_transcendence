@@ -43,8 +43,7 @@ async function logout_user()
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
@@ -96,8 +95,7 @@ async function send_form_login(form)
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }

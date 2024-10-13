@@ -69,7 +69,6 @@ async function send_form_register(form)
 		data = data.data;
 		if (fetched_data.status == 400)
 		{
-			// TODO: handle the error in front
 			on_error_form_register(data);
 			return ;
 		}
@@ -78,7 +77,7 @@ async function send_form_register(form)
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 

@@ -1,3 +1,6 @@
+const HEX_RED = "#FF000080";
+const HEX_RED_HOVER = "#FF0000C0";
+
 async function refresh_token()
 {
 	const url = "https://localhost:8443/api/users/token/refresh/";
