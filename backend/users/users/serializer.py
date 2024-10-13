@@ -141,9 +141,17 @@ class UpdateProfilPictureSerializer(serializers.ModelSerializer):
 		extra_kwargs = {'profile_picture': {'required': True}}
 	
 	def update(self, instance, validated_data):
-		instance.remove_old_picture()
+		if instance.oauth_profile_picture != None:
+			instance.oauth_profile_picture = None
+		else:
+			instance.remove_old_picture()
 		instance.profile_picture = validated_data['profile_picture']
 		instance.full_clean()
 		instance.save()
 		return instance
+	
+	def to_representation(self, data):
+		res = super(UpdateProfilPictureSerializer, self).to_representation(data)
+		res['profile_picture'] = "https://localhost:8443" + res['profile_picture']
+		return res
 

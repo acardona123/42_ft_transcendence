@@ -20,6 +20,8 @@ MSG_ERROR_SER_USER_WITHOUT_PASSWORD = "User don't have any password"
 MSG_ERROR_SER_OLD_PASSWORD = "Old password is not correct"
 MSG_ERROR_INVALID_REFRESH_TOKEN = "Invalid refresh token"
 MSG_ERROR_DEVICE_NOT_CONFIRMED = "Device 2fa is not confirmed"
+MSG_ERROR_NO_IMAGE = "No image saved for this user"
+MSG_ERROR_UPDATING_IMAGE = "Error while updating image"
 
 MSG_USER_CREATED = "User created"
 MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"
@@ -37,6 +39,8 @@ MSG_DEVICE_ALREADY_CONFIRMED = "Device 2fa is already confirmed"
 MSG_DEVICE_VALIDATED = "Validation 2fa device"
 MSG_USER_INFO = "User info that can be updated"
 MSG_2FA_STATUS =  "Get 2fa status"
+MSG_PICTURE_URL = "Get url of the profile picture"
+MSG_UPDATE_PICTURE = "Update profile picture successfully"
 
 #--------------------DOC--------------------
 from drf_yasg import openapi
@@ -407,6 +411,51 @@ DOC_2FA_STATUS = openapi.Response(
 					"message": MSG_2FA_STATUS,
 					"data": {
 						"2fa_status": "on",
+					}
+				}
+			}
+		)
+
+DOC_IMAGE_URL = openapi.Response(
+			description=MSG_PICTURE_URL,
+			examples={
+				"application/json": {
+					"message": MSG_PICTURE_URL,
+					"data": "https://localhost:8443/api/users/media/fffff"
+				}
+			}
+		)
+
+DOC_ERROR_NO_IMAGE = openapi.Response(
+			description=MSG_ERROR_NO_IMAGE,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_NO_IMAGE
+				}
+			}
+		)
+
+DOC_IMAGE_UPDATED = openapi.Response(
+			description=MSG_UPDATE_PICTURE,
+			examples={
+				"application/json": {
+					"message": MSG_UPDATE_PICTURE,
+					"data": {
+						"profile_picture": "https://localhost:8443/api/users/media/profile_pictures/8_412bca24fc144e4bba91078e2dd18e23.png"
+					}
+				}
+			}
+		)
+
+DOC_ERROR_UPADTE_IMAGE = openapi.Response(
+			description=MSG_ERROR_UPDATING_IMAGE,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATING_IMAGE,
+					"data": {
+						"profile_picture": [
+							"Upload a valid image. The file you uploaded was either not an image or a corrupted image."
+						]
 					}
 				}
 			}
