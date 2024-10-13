@@ -80,7 +80,7 @@ def get_tokens_for_user(user):
 
 def get_refresh_token(token):
 	refresh = RefreshToken(token)
-	user = CustomUser.objects.filter(id=refresh.get('user_id')).first()
+	user = CustomUser.objects.get(id=refresh.get('user_id'))
 	user.set_last_acticity()
 	return {
 		'refresh': str(refresh),

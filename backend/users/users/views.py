@@ -94,7 +94,6 @@ def login_user(request):
 				  	"data" : token}, status=200)
 
 @swagger_auto_schema(method='post',
-	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		required=['refresh'],
@@ -110,7 +109,6 @@ def login_user(request):
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
-@permission_classes([IsNormalToken])
 def logout(request):
 	refresh = request.data.get('refresh', None)
 	if refresh is None:
@@ -118,10 +116,12 @@ def logout(request):
 	try:
 		token = RefreshToken(refresh)
 		token.blacklist()
+		id = token.get('user_id')
+		user = CustomUser.objects.get(pk=id)
+		user.is_online = False
+		user.save()
 	except:
 		return Response({"message":MSG_ERROR_INVALID_REFRESH_TOKEN}, 401)
-	request.user.is_online = False
-	request.user.save()
 	return Response({"message": MSG_LOGOUT}, 200)
 
 @swagger_auto_schema(method='post',
