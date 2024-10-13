@@ -262,7 +262,6 @@ async function get_modals_html()
 			fetch('modal_contents/register/register.html'),
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
-			fetch('modal_contents/tournament_menu/tournament_menu.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
 			fetch('modal_contents/profile/profile.html'),
 			fetch('modal_contents/twoFA/twoFA_setup.html'),
