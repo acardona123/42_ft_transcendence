@@ -24,7 +24,7 @@ POST http://localhost:8002/api/private/users/new/player/guest/
 content-type: application/json
 
 ### get type of user
-GET http://localhost:8002/api/private/users/0/type/
+GET http://localhost:8002/api/private/users/10/type/
 
 ###
 POST http://localhost:8002/api/private/users/login/pin/
