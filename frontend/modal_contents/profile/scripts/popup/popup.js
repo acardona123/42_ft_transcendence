@@ -33,10 +33,11 @@ function add_popup_to_document_modal(popup_main)
 
 	// let modal_on_screen = document.getElementById("modal-profile"); // test
 
-	// if (!modal_on_screen)
-		// document.appendChild(popup_main);
-	// else
-		// modal_on_screen.appendChild(popup_main);
+	let modal_on_screen = undefined;
+	if (!modal_on_screen)
+		document.body.appendChild(popup_main);
+	else
+		modal_on_screen.appendChild(popup_main);
 }
 
 /**
@@ -59,7 +60,7 @@ function add_popup_to_document_modal(popup_main)
  * Color of the popup while being hovered.
  */
 function create_popup(text, t_before_decay=2000,
-					t_after_hover=4000, hex_color="#00FF0080", hover_hex_color="00FF00C0")
+					t_after_hover=4000, hex_color="#00FF0080", hover_hex_color="#00FF00C0")
 {
 	const popup_main = document.createElement('div');
 	popup_main.className = "popup-main-div";

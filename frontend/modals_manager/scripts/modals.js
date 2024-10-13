@@ -285,7 +285,6 @@ async function get_modals_html()
 	catch (error)
 	{
 		console.log("Error retrieving static modal code.");
-		// TODO: popup ?
 		return "";
 	}
 }

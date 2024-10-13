@@ -28,8 +28,7 @@ async function validate_code_setup(user_code)
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return "invalid";
 	}
 }
@@ -64,8 +63,7 @@ async function validate_code_valid(user_code)
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return "invalid";
 	}
 }

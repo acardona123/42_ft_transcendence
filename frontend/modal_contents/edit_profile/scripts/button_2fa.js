@@ -59,8 +59,7 @@ async function enable_2fa(should_enable)
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
