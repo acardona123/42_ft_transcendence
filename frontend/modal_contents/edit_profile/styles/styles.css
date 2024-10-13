@@ -69,6 +69,12 @@
 	margin: 0;
 }
 
+.edp-error-password-text
+{
+	font-size: small;
+	color: red;
+}
+
 #edp-input-confirm-password
 {
 	margin-bottom: 10px;

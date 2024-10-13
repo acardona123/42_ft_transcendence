@@ -5,19 +5,41 @@ function clear_edp_pass_inputs()
 	document.getElementById("edp-input-confirm-password").value = "";
 }
 
+function clear_edp_pass_error_fields(placeholders)
+{
+	for (field in placeholders)
+	{
+		console.log("reset --");
+		console.log(field);
+		console.log("---");
+		placeholders[field].border = "";
+		placeholders[field].value = "";
+		placeholders[field].parentNode.children[2].innerHTML = "";
+	}
+}
+
 function error_update_password_from_back(data)
 {
-	// TODO: errors on front
 	if (!data.data) // api 42 changed password, not allowed
 	{
-		console.log(data.message);
+		create_popup("42 api users can not change password.")
 		return ;
 	}
 	data = data.data;
+	const placeholders = 
+	{
+		old_password: document.getElementById("edp-input-cur-password"),
+		password: document.getElementById("edp-input-new-password"),
+		password2: document.getElementById("edp-input-confirm-password"),
+		non_field_errors: document.getElementById("edp-input-new-password")
+	}
+	clear_edp_pass_error_fields(placeholders);
 	for (field in data)
 	{
-		for (msg of data[field])
-			console.log(msg);
+		console.log(field);
+		placeholders[field].parentNode.children[1].style.border = "thin solid red";
+		for (message of data[field])
+			placeholders[field].parentNode.children[2].innerHTML += message + "<br />";
 	}
 }
 
@@ -42,11 +64,12 @@ async function submit_pass_form(form)
 		let data = await fetched_data.json();
 		if (fetched_data.status == 400)
 		{
-			error_password_from_back(data);
+			error_update_password_from_back(data);
 			return ;
 		}
 		data = data.data;
-		console.log("Password updated.");
+		create_popup("Password updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
+		clear_edp_pass_error_fields(placeholders);
 		return ;
 		
 		// TODO: popups, clear inputs
