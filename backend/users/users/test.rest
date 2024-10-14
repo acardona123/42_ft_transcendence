@@ -1,0 +1,115 @@
+# {
+# 	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMxMzMyMSwiaWF0IjoxNzI4MjI2OTIxLCJqdGkiOiJjM2UwNzFhNGM5MGU0YzFjYTI3N2UxNzliZDJmOTA3ZiIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.ohHypccmxyg-t641nJdAoHeAOs8g-8kObFrFjkxJvfw",
+# 	"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjI3ODIxLCJpYXQiOjE3MjgyMjY5MjEsImp0aSI6ImJiMTc4MmNmNWYwMjRhMjViZDQwZjRjMzNlM2M4NjI4IiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.uTL6qXuPc9Sjet-2_FZyS0b_-azBKyueivp4cuO3ejE"
+# }
+### sign up
+POST https://localhost:8443/api/users/signup/ HTTP/1.1
+content-type: application/json
+
+{
+	"username" : "hey",
+	"password" : "123asd123+",
+	"password2" : "123asd123+",
+	"email" : "J@gmai.coM",
+	"phone" : "+33659482658"
+}
+
+### get url api42
+GET https://localhost:8443/api/users/url/api42/ HTTP/1.1
+
+### login
+POST https://localhost:8443/api/users/login/ HTTP/1.1
+content-type: application/json
+
+{
+	"password" : "123asd123+",
+	"username" : "coucou"
+}
+
+### login 2fa
+POST https://localhost:8443/api/users/login/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjE5ODQ1LCJpYXQiOjE3MjgyMTk1NDUsImp0aSI6IjVjZWJiMmMzYTQ2NDRlMGY4ZmJkOGQ5NWJkODViODUxIiwidXNlcl9pZCI6Miwic2NvcGUiOiJ0ZW1wb3JhcnkifQ.cAbXWrRd1VdvnTrYPnaC9StTxJbZdxA1Az4NEUg90ew
+
+{
+	"token" : "536118"
+}
+
+### refresh token
+POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
+content-type: application/json
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODkxODQ1MSwiaWF0IjoxNzI4ODMyMDUxLCJqdGkiOiJlZTc4YzQwYTgzNzM0ZjY4OGNlM2ViNDRkNzE2MTgwNyIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.vqHvu6OaFxfgq7oSk9AgEVSsKLTxA-hRiv7Gb8IAqc0"
+}
+
+
+### logout
+POST https://localhost:8443/api/users/logout/ HTTP/1.1
+content-type: application/json
+
+{
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODkxODg4MCwiaWF0IjoxNzI4ODMyNDgwLCJqdGkiOiJlY2E0NTY0YzBjZTA0N2NjODk0YTIyNDIxMzllN2QwNSIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.CQimSQm7OCDCVPP6_Fn1ScUrpCKcbonqs_210xtaTt4"
+}
+
+### update password
+PUT https://localhost:8443/api/users/update/password/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4Mzk0ODc1LCJpYXQiOjE3MjgzOTQ1NzUsImp0aSI6ImYxNDljZjNlODNmYzQ2ODZhNTg2Mzc1OWM2MGY2ZjYyIiwidXNlcl9pZCI6MTEsInNjb3BlIjoibm9ybWFsIn0.Jkd1xR3IV_dRsU5G3Zh0O5yxy7752B6ismrTPGnRomw
+content-type: application/json
+
+{
+	"old_password": "123asd456f",
+	"password": "123a",
+	"password2": "123a"
+}
+
+### update user
+PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA1MTU4LCJpYXQiOjE3MjgzMDQ4NTgsImp0aSI6ImMxMGQ0Zjk5NTAzMTQ4ZmZhZmY3ODA2Y2UyNDg4YWY4IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.J2shhvh09iFDrQE8Pwgxvy_BkHOCX3TketTH0a46-I0
+content-type: application/json
+
+{
+	"username": "coucou",
+	"email": "fghf@fdg.ds",
+	"phone": "0326597845",
+	"pin": "4"
+}
+
+###
+GET https://localhost:8443/api/users/update/user/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA2MjQ2LCJpYXQiOjE3MjgzMDU5NDYsImp0aSI6ImZiMzU4ZWFiMzlmZDQwMTk4MjcwOTZlYThmMzM0NzliIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.G2Jd6G4Vwf27OFxhZG7G4PCkdy31cJdG4izN0HDQSAs
+
+### update 2fa
+PUT https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA4MDYzLCJpYXQiOjE3MjgzMDc3NjMsImp0aSI6IjNiNTc3NWY2M2NkNTRmYzliOGJmOTgyOWNmMzk3NzgwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.CDsHko1qNUdZNDAaxT0v7usBQHPeblENOz-q8q9ck5g
+
+{
+	"2fa_status": "on"
+}
+
+### 
+GET https://localhost:8443/api/users/update/2fa/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA4MDYzLCJpYXQiOjE3MjgzMDc3NjMsImp0aSI6IjNiNTc3NWY2M2NkNTRmYzliOGJmOTgyOWNmMzk3NzgwIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.CDsHko1qNUdZNDAaxT0v7usBQHPeblENOz-q8q9ck5g
+
+
+### validate 2fa
+PUT https://localhost:8443/api/users/update/2fa/validation/ HTTP/1.1
+content-type: application/json
+Authorization: Bearer jZXNzIiwiZXhwIjoxNzI4NTc4MTMyLCJpYXQiOjE3Mjg1Nzc4MzIsImp0aSI6Ijg2ODQxNWEwZWZlZjRiZWI4MmYxOTg1ZjRlMzViNzhkIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.qwJ4ByXqcqvP2cafFBeTiJGEF0GOK21ryP_QUxfBi1I
+
+{
+	"token" : "804775"
+}
+
+### get picture profile
+GET https://localhost:8443/api/users/update/picture/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4ODIxMzkwLCJpYXQiOjE3Mjg4MTk4MDQsImp0aSI6ImFkMjA5YjM4NjdhYTQ5NzY5YjBhOWY1N2FjYTMyYWVlIiwidXNlcl9pZCI6OCwic2NvcGUiOiJub3JtYWwifQ.xYWzSF7cb3DQVm8klCdMnLM-IzekeQL27X3oEhl6zP0
+
+### update picture profile
+PUT https://localhost:8443/api/users/update/picture/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4ODIwMTc1LCJpYXQiOjE3Mjg4MTk4NzUsImp0aSI6IjVlZDhmOGFkODQyNzQ4NjJhODFlMzNiODQ1NDE2M2Q4IiwidXNlcl9pZCI6Nywic2NvcGUiOiJub3JtYWwifQ.eRFGgYo6fBeQ8tMseXOI5lPLZQqJB68kSN-zS2AjzYc
+
+{
+	"profile_picture" : "jg"
+}

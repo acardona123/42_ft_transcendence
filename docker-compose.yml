@@ -1,7 +1,6 @@
 include:
+  - ./backend/users/docker-compose.yml
   - ./backend/friends/docker-compose.yml
-  # - ./backend/users/docker-compose.yml
-  # - ./backend/history/docker-compose.yml
 
 services:
   nginx:
@@ -10,14 +9,14 @@ services:
     restart: always
     volumes:
      - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf
+     - ./frontend/:/var/www/html/transcendence/
     ports:
       - "8443:8443"
     networks:
       - website-network
     depends_on:
-      - friends_app
-      # - users_app
-      # - history_app
+      - users
+      - friends
   vault:
     build: ./backend/vault
     container_name: vault

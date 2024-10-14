@@ -1,15 +1,15 @@
 services:
-  friends_app_dev:
+  friends_dev:
     build: .
-    container_name: friends_app_dev
-    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'"
+    container_name: friends_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8003'"
     restart: always
     environment:
       - VAULT_DATABASE_NAME=friends_db_dev
     volumes:
       - .:/usr/src/app/django
     ports:
-      - "8002:8002"
+      - "8003:8003"
     networks:
       - website-network
       - friends-network

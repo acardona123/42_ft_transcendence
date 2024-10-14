@@ -27,19 +27,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_client, read_kv
+	from vault.hvac_vault import create_client, read_kv
 
 	client = create_client()
 	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
 	cred = read_kv(client, path)
 	SECRET_KEY = cred['data'][database_name]
 else:
-	SECRET_KEY = os.getenv('SERCRET_KEY')
+	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'friends']
 
 
 # Application definition
@@ -51,6 +51,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'myDatabase',
+	'vault',
+	'rest_framework',
+	'drf_yasg',
+	'friend',
 ]
 
 MIDDLEWARE = [
@@ -88,17 +93,13 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_cred, create_client
-
-	client = create_client()
-	cred = create_cred(client, database_name)
 
 	DATABASES = {
 		'default': {
-			'ENGINE': 'django.db.backends.postgresql',
+			'ENGINE': 'myDatabase',
 			'NAME': os.getenv('DB_NAME'),
-			'USER': cred["data"]['username'],
-			'PASSWORD': cred["data"]['password'],
+			'USER': 'user',
+			'PASSWORD': 'password',
 			'HOST': database_name,
 			'PORT': '5432',
 			'OPTIONS': {
@@ -117,7 +118,6 @@ else:
 			'PORT': '5432',
 		}
 	}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -159,3 +159,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# microservice url
+
+USERS_MICROSERVICE_URL = 'http://users:8002'
+
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
+    )
+}

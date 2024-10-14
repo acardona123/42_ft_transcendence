@@ -1,0 +1,47 @@
+services:
+  users_dev:
+    build: .
+    container_name: users_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8002'"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=users_db_dev
+    volumes:
+      - .:/usr/src/app/django
+    ports:
+      - "8002:8002"
+    networks:
+      - website-network
+      - users-network
+    depends_on:
+      users_db_dev:
+        condition: service_healthy
+
+  users_db_dev:
+    build: ./postgre
+    container_name: users_db_dev
+    restart: always
+    volumes:
+      - users_db:/var/lib/postgresql/data/
+    networks:
+      - users-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  users_db:
+
+networks:
+  website-network:
+    name: website_network
+  users-network:
+    name: users_network

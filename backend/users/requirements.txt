@@ -1,0 +1,16 @@
+Django>=5.0,<6.0
+psycopg2-binary>=2.8
+python-dotenv
+hvac
+gunicorn
+djangorestframework
+certifi
+PyJWT
+requests
+setuptools
+drf-yasg
+django-phonenumber-field
+django-phonenumbers
+djangorestframework-simplejwt
+django-otp
+qrcode[pil]
