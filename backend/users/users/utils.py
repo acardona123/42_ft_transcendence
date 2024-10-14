@@ -105,3 +105,18 @@ def generate_qr_code(data):
 	buffer.seek(0)
 	img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
 	return img_base64
+
+# ------------------Random word--------------
+from string import capwords
+def get_random_word():
+	api_url = 'https://api.api-ninjas.com/v1/randomword'+'?type=noun'
+	response = requests.get(api_url, headers={'X-Api-Key': os.getenv('API_KEY_RANDOM_WORD')}, verify=certifi.where())
+	if response.status_code == requests.codes.ok:
+		word = response.json().get('word', None)
+		if word != None:
+			word = word[0]
+			word = capwords(word)
+			word.replace(" ", "_")
+		return word
+	else:
+		return None
