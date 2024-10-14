@@ -1,13 +1,13 @@
 # {
-# 	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODMxMzMyMSwiaWF0IjoxNzI4MjI2OTIxLCJqdGkiOiJjM2UwNzFhNGM5MGU0YzFjYTI3N2UxNzliZDJmOTA3ZiIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.ohHypccmxyg-t641nJdAoHeAOs8g-8kObFrFjkxJvfw",
-# 	"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MjI3ODIxLCJpYXQiOjE3MjgyMjY5MjEsImp0aSI6ImJiMTc4MmNmNWYwMjRhMjViZDQwZjRjMzNlM2M4NjI4IiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.uTL6qXuPc9Sjet-2_FZyS0b_-azBKyueivp4cuO3ejE"
-# }
+#       "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyOTAxMDg1MCwiaWF0IjoxNzI4OTI0NDUwLCJqdGkiOiIwODJhMjg2Yjk1YmQ0YjFjOWQ4MzE4N2YxZDg3ZGY4MiIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIiwidXNlcm5hbWUiOiJoZXkifQ.pvvaUdS_EKGAz-fDQ1nVH-_pHH35bT7-BL4bEb6Plvs",
+#       "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4OTI0NzUwLCJpYXQiOjE3Mjg5MjQ0NTAsImp0aSI6IjJiZDExYjUyNjA5ODQwMTJhZTg0YmE5MjgzMDA5ZGUyIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.l5nJGckop82E68_Q5LYbR-vLx_Pmzp53IDbErFgwgH4"
+#     }
 ### sign up
 POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "hey",
+	"username" : "c",
 	"password" : "123asd123+",
 	"password2" : "123asd123+",
 	"email" : "J@gmai.coM",
@@ -23,7 +23,7 @@ content-type: application/json
 
 {
 	"password" : "123asd123+",
-	"username" : "coucou"
+	"username" : "cououyyy"
 }
 
 ### login 2fa
@@ -65,11 +65,12 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MzA1MTU4LCJpYXQiOjE3MjgzMDQ4NTgsImp0aSI6ImMxMGQ0Zjk5NTAzMTQ4ZmZhZmY3ODA2Y2UyNDg4YWY4IiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwifQ.J2shhvh09iFDrQE8Pwgxvy_BkHOCX3TketTH0a46-I0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4OTI1ODYzLCJpYXQiOjE3Mjg5MjU1NjMsImp0aSI6IjExZDE3NTE4MDM3MjQ1MTU4ZjA5OTA3YzY4OWU2OGVhIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNkZCJ9.Z7YhpNiIVM12UQIBH_ya-Bb_km1qPP0OTkaAS15AoIE
 content-type: application/json
 
 {
-	"username": "coucou",
+	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyOTAxMTk2MywiaWF0IjoxNzI4OTI1NTYzLCJqdGkiOiIzYmY0YTI0ZGE1OTI0MDg3ODVlYzc0NGUwZTk3NWQ0OCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIiwidXNlcm5hbWUiOiJjZGQifQ.Pr7Pb-UI8UAgbu_yCa_VBhNxvahR_10N7cUmjoupKuE",
+	"username": "fffff",
 	"email": "fghf@fdg.ds",
 	"phone": "0326597845",
 	"pin": "4"

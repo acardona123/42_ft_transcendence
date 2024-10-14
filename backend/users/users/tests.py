@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework.exceptions import ErrorDetail
 import json
 from .models import CustomUser
-from .utils import create_user_oauth
+from .utils import create_user_oauth, get_random_word
 
 class TestRandomName(TestCase):
 	def create_user(self, username, email=None, phone=None):
@@ -12,6 +12,18 @@ class TestRandomName(TestCase):
 		data['email'] = email
 		data['phone'] = phone
 		return CustomUser.objects.create_user(username, **data)
+
+	def test_random_word(self):
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
+		get_random_word()
 
 class UserManagment(TestCase):
 	def setUp(self):

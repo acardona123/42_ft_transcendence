@@ -66,6 +66,7 @@ class TemporaryToken(AccessToken):
 def get_temp_tokens_for_user(user):
 	acces_token = TemporaryToken.for_user(user)
 	acces_token["scope"] = "temporary"
+	acces_token["username"] = user.username
 	return {
 		'access': str(acces_token),
 	}
@@ -73,6 +74,7 @@ def get_temp_tokens_for_user(user):
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
 	refresh["scope"] = "normal"
+	refresh["username"] = user.username
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),
@@ -105,3 +107,18 @@ def generate_qr_code(data):
 	buffer.seek(0)
 	img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
 	return img_base64
+
+# ------------------Random word--------------
+from string import capwords
+def get_random_word():
+	api_url = 'https://api.api-ninjas.com/v1/randomword'+'?type=noun'
+	response = requests.get(api_url, headers={'X-Api-Key': os.getenv('API_KEY_RANDOM_WORD')}, verify=certifi.where())
+	if response.status_code == requests.codes.ok:
+		word = response.json().get('word', None)
+		if word != None:
+			word = word[0]
+			word = capwords(word)
+			word.replace(" ", "_")
+		return word
+	else:
+		return None

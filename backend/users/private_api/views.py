@@ -5,6 +5,7 @@ from users.models import CustomUser
 # from users.serializer import UserSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from users.utils import get_random_word
 import random
 import uuid
 
@@ -218,8 +219,12 @@ def get_user_id(request):
 	except CustomUser.DoesNotExist:
 		return Response({'message': MSG_ERROR_USER_NOT_FOUND}, status=400)
 
-def get_random_ai_username(): # todo username random + check username unique
-	return "AI#"+str(random.randint(0000,9999))
+def get_random_ai_username():
+	while True:
+		word = f"AI#{random.randint(000000,999999):04d}"
+		if not CustomUser.objects.filter(username=word).exists():
+			break
+	return word
 
 @swagger_auto_schema(method='post',
 	responses={
@@ -234,8 +239,12 @@ def create_ai(request):
 					"data": {"id" : user.id,
 							"username": user.username}}, status=200)
 
-def get_random_guest_username(): # todo username random + check username unique
-	return "Guest#"+str(random.randint(0000,9999))
+def get_random_username():
+	while True:
+		word = f"{get_random_word()}#{random.randint(0000,9999):04d}"
+		if not CustomUser.objects.filter(username=word).exists():
+			break
+	return word
 
 @swagger_auto_schema(method='post',
 	responses={
@@ -244,7 +253,7 @@ def get_random_guest_username(): # todo username random + check username unique
 	})
 @api_view(['POST'])
 def create_guest(request):
-	username = get_random_guest_username()
+	username = get_random_username()
 	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.GST)
 	return Response({"message": MSG_GUEST_CREATED,
 					"data": {"id" : user.id,
