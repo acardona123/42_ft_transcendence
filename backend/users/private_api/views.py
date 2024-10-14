@@ -10,6 +10,7 @@ import uuid
 
 # ---------------- DOC --------------------------
 MSG_ERROR_USER_ID_REQUIRED = "The field 'users_id' is required"
+MSG_ERROR_USERNAME_REQUIRED = "The field 'username' is required"
 MSG_ERROR_USER_ID_ONLY_INTEGERS = "The field 'users_id' must contain only integer"
 MSG_ERROR_USER_NOT_FOUND = "Error user not found"
 MSG_ERROR_USERNAME_PIN_REQUIRED = "The field 'username' and 'pin' is required"
@@ -55,17 +56,17 @@ DOC_USER_INFO = openapi.Response(
 					"data": {
 					"1": {
 					"username": "root",
-					"picutre": "https://localhost:8443/api/users/media/profile_pictures/default.jpg",
+					"picture": "https://localhost:8443/api/users/media/profile_pictures/default.jpg",
 					"status": "online"
 					},
 					"10": {
 					"username": "hey",
-					"picutre": "https://cdn.intra.42.fr/users/f918d2fa74c06509c8413fe4006f1235/small_hey.jpg",
+					"picture": "https://cdn.intra.42.fr/users/f918d2fa74c06509c8413fe4006f1235/small_hey.jpg",
 					"status": "inactif"
 					},
 					"8": {
 					"username": "coucou#7236",
-					"picutre": "https://localhost:8443/api/users/media/profile_pictures/8_412bca24fc144e4bba91078e2dd18e23.png",
+					"picture": "https://localhost:8443/api/users/media/profile_pictures/8_412bca24fc144e4bba91078e2dd18e23.png",
 					"status": "offline"
 					}
 				}}
@@ -116,6 +117,21 @@ DOC_LOGIN_PIN= openapi.Response(
 			description=MSG_USER_LOGIN_PIN,
 			examples={
 				"application/json": {"message": MSG_USER_LOGIN_PIN}
+			}
+		)
+
+DOC_ERROR_USERNAME= openapi.Response(
+			description=MSG_ERROR_USERNAME_REQUIRED+' or '+MSG_ERROR_USER_NOT_FOUND,
+			examples={
+				"application/json": {"message": MSG_ERROR_USER_NOT_FOUND}
+			}
+		)
+
+DOC_GET_USERNAME= openapi.Response(
+			description=MSG_ID_USERNAME,
+			examples={
+				"application/json": {"message": MSG_ID_USERNAME,
+						'data':{'id' : 5}}
 			}
 		)
 
@@ -172,10 +188,35 @@ def get_friend_info_by_id(request):
 	data = dict()
 	for user in users:
 		data[user.id] = {'username': user.username,
-					'picutre': user.get_picture(),
+					'picture': user.get_picture(),
 					'status': user.get_status()}
 	return Response({"message": MSG_ID_USERNAME_INFO,
 					"data": data})
+
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['username'],
+		properties={
+			'username': openapi.Schema(type=openapi.TYPE_STRING),
+		}
+	),
+	responses={
+		200: DOC_GET_USERNAME,
+		400: DOC_ERROR_USERNAME,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
+@api_view(['POST'])
+def get_user_id(request):
+	username = request.data.get("username", None)
+	if username is None:
+		return Response({"message": MSG_ERROR_USERNAME_REQUIRED}, status=400)
+	try:
+		user = CustomUser.objects.get(username=username)
+		return Response({'message': MSG_ID_USERNAME,
+					'data': {'id': user.id}}, status=200)
+	except CustomUser.DoesNotExist:
+		return Response({'message': MSG_ERROR_USER_NOT_FOUND}, status=400)
 
 def get_random_ai_username(): # todo username random + check username unique
 	return "AI#"+str(random.randint(0000,9999))
