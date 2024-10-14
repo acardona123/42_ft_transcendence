@@ -1,18 +1,8 @@
-function clear_edp_pass_inputs()
-{
-	document.getElementById("edp-input-cur-password").value = "";
-	document.getElementById("edp-input-new-password").value = "";
-	document.getElementById("edp-input-confirm-password").value = "";
-}
-
-function clear_edp_pass_error_fields(placeholders)
+function clear_edp_pass_error_fields()
 {
 	for (field in placeholders)
 	{
-		console.log("reset --");
-		console.log(field);
-		console.log("---");
-		placeholders[field].border = "";
+		placeholders[field].style.border = "thin solid black";
 		placeholders[field].value = "";
 		placeholders[field].parentNode.children[2].innerHTML = "";
 	}
@@ -26,17 +16,9 @@ function error_update_password_from_back(data)
 		return ;
 	}
 	data = data.data;
-	const placeholders = 
-	{
-		old_password: document.getElementById("edp-input-cur-password"),
-		password: document.getElementById("edp-input-new-password"),
-		password2: document.getElementById("edp-input-confirm-password"),
-		non_field_errors: document.getElementById("edp-input-new-password")
-	}
-	clear_edp_pass_error_fields(placeholders);
+	clear_edp_pass_error_fields();
 	for (field in data)
 	{
-		console.log(field);
 		placeholders[field].parentNode.children[1].style.border = "thin solid red";
 		for (message of data[field])
 			placeholders[field].parentNode.children[2].innerHTML += message + "<br />";
@@ -71,20 +53,25 @@ async function submit_pass_form(form)
 		create_popup("Password updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
 		clear_edp_pass_error_fields(placeholders);
 		return ;
-		
-		// TODO: popups, clear inputs
 	}
 	catch (error)
 	{
-		// TODO: handle errors properly
-		console.log(error);
+		create_popup("Error while updating password.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
 
+let placeholders = undefined;
+
+
 document.addEventListener("onModalsLoaded", function()
 {
+	placeholders = {
+		old_password: document.getElementById("edp-input-cur-password"),
+		password: document.getElementById("edp-input-new-password"),
+		password2: document.getElementById("edp-input-confirm-password"),
+		non_field_errors: document.getElementById("edp-input-new-password")
+	}
 	let form_pass = document.getElementById("edp-form-password");
-	// 42 api can't update password
 	change_form_behavior_for_SPA(form_pass, submit_pass_form);
 });
