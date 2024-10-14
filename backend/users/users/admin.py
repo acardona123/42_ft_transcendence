@@ -7,7 +7,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 class AccountAdmin(BaseUserAdmin):
     model=CustomUser
 
-    list_display = ('username', 'type', 'email', 'phone', 'pin', 'is_staff', 'last_activity',
+    list_display = ('id', 'username', 'type', 'email', 'phone', 'pin', 'is_staff', 'last_activity',
                     'oauth_id', 'is_2fa_enable', 'is_superuser', 'is_online')
     list_filter = ('is_superuser',)
 

@@ -6,6 +6,14 @@ content-type: application/json
 	"users_id": [-25]
 }
 
+### get username from ids
+POST http://localhost:8002/api/private/users/retrieve/friends_info/
+content-type: application/json
+
+{
+	"users_id": [-25, 1, 2, 8, 9, 10]
+}
+
 ### create new AI
 POST http://localhost:8002/api/private/users/new/player/ai/
 content-type: application/json
@@ -16,7 +24,7 @@ POST http://localhost:8002/api/private/users/new/player/guest/
 content-type: application/json
 
 ### get type of user
-GET http://localhost:8002/api/private/users/0/type/
+GET http://localhost:8002/api/private/users/10/type/
 
 ###
 POST http://localhost:8002/api/private/users/login/pin/

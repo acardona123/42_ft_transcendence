@@ -7,7 +7,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "jvigny",
+	"username" : "hey",
 	"password" : "123asd123+",
 	"password2" : "123asd123+",
 	"email" : "J@gmai.coM",
@@ -23,7 +23,7 @@ content-type: application/json
 
 {
 	"password" : "123asd123+",
-	"username" : "jvigny"
+	"username" : "coucou"
 }
 
 ### login 2fa
@@ -40,17 +40,16 @@ POST https://localhost:8443/api/users/token/refresh/ HTTP/1.1
 content-type: application/json
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODkwNjIwNCwiaWF0IjoxNzI4ODE5ODA0LCJqdGkiOiI5OTgwNzdhNDJjZDU0NDM4ODk5YWUxNzE3ZmM1ZTE1ZSIsInVzZXJfaWQiOjgsInNjb3BlIjoibm9ybWFsIn0.lroPffIAVkO7lIckUS6ZGdnyOw5oTMKeRHAGzumQDPs"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODkxODQ1MSwiaWF0IjoxNzI4ODMyMDUxLCJqdGkiOiJlZTc4YzQwYTgzNzM0ZjY4OGNlM2ViNDRkNzE2MTgwNyIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.vqHvu6OaFxfgq7oSk9AgEVSsKLTxA-hRiv7Gb8IAqc0"
 }
 
 
 ### logout
 POST https://localhost:8443/api/users/logout/ HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4MDcxODYzLCJpYXQiOjE3MjgwNzA5NjMsImp0aSI6ImRjOWQ4N2FmYmM0MTRlNzhhMzAxMDM5ZTJiODk3MjFhIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwifQ.8lIxGL1ZLYdlq1Zbqw4K0XcGdwlnoNsAUTgd0DczkNQ
 
 {
-	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODE1NzM2MywiaWF0IjoxNzI4MDcwOTYzLCJqdGkiOiI4OThmMmFkMDY2Y2E0OTUxOWY1YzlkMTJiOTdkODcwOSIsInVzZXJfaWQiOjIsInNjb3BlIjoibm9ybWFsIn0.Kq2fhQPXDsNWjwuzKN8TlDnAfYUvkLQy7Y6sG-oZdUY"
+	"refresh" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyODkxODg4MCwiaWF0IjoxNzI4ODMyNDgwLCJqdGkiOiJlY2E0NTY0YzBjZTA0N2NjODk0YTIyNDIxMzllN2QwNSIsInVzZXJfaWQiOjEsInNjb3BlIjoibm9ybWFsIn0.CQimSQm7OCDCVPP6_Fn1ScUrpCKcbonqs_210xtaTt4"
 }
 
 ### update password

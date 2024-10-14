@@ -9,3 +9,4 @@ certifi
 requests
 setuptools
 drf-yasg
+djangorestframework-simplejwt

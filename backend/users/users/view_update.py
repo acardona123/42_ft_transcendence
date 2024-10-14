@@ -134,14 +134,9 @@ class UpdateProfilePicture(APIView):
 		})
 	def get(self, request):
 		user = request.user
-		if not (hasattr(user, 'profilepicture') and user.profilepicture):
+		picture = user.get_picture()
+		if picture == None:
 			return Response({'message': MSG_ERROR_NO_IMAGE}, status=404)
-		picture = user.profilepicture
-		if picture.oauth_profile_picture:
-			return Response({"message": MSG_PICTURE_URL,
-							"data": picture.oauth_profile_picture}, status=200)
-		elif picture.profile_picture:
-			return Response({"message": MSG_PICTURE_URL,
-							"data": f"https://localhost:8443{picture.profile_picture.url}"}, status=200)
 		else:
-			return Response({"message": MSG_ERROR_NO_IMAGE}, status=404)
+			return Response({"message": MSG_PICTURE_URL,
+							"data": picture}, status=200)

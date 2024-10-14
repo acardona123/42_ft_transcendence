@@ -8,7 +8,8 @@ import random
 import re
 import os
 from django.utils import timezone
-
+from datetime import timedelta
+from app.settings import TIME_TIMEOUT
 from django.core.validators import FileExtensionValidator
 
 def test_username(username):
@@ -59,6 +60,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def create_profil_picture(self, url=None):
         ProfilePicture.objects.create(user=self, oauth_profile_picture=url)
 
+    def get_picture(self):
+        if not (hasattr(self, 'profilepicture') and self.profilepicture):
+            return None
+        return self.profilepicture.get_picture()
+
+    def get_status(self):
+        if not self.is_online:
+            return "offline"
+        elif (timezone.now() - self.last_activity) > TIME_TIMEOUT:
+            return "inactif"
+        else:
+            return "online"
+
 DEFAULT_IMAGE = 'profile_pictures/default.jpg'
 
 def upload_path(instance, filename):
@@ -85,3 +99,11 @@ class ProfilePicture(models.Model):
             return True
         except:
             return False
+    
+    def get_picture(self):
+        if self.oauth_profile_picture:
+            return self.oauth_profile_picture
+        elif self.profile_picture:
+            return f"https://localhost:8443{self.profile_picture.url}"
+        else:
+            return None
