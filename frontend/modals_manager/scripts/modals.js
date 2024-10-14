@@ -170,6 +170,7 @@ function openModalEditProfile() {
 	var modaldialog = document.getElementById('modal-edit-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
 	clear_edp_user_inputs();
+	clear_edp_user_error_fields(true);
 	clear_edp_pass_error_fields();
 	modalEditProfile.showModal();
 }

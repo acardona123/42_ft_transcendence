@@ -1,10 +1,10 @@
 function clear_edp_pass_error_fields()
 {
-	for (field in placeholders)
+	for (field in edp_placeholders_pass)
 	{
-		placeholders[field].style.border = "thin solid black";
-		placeholders[field].value = "";
-		placeholders[field].parentNode.children[2].innerHTML = "";
+		edp_placeholders_pass[field].style.border = "thin solid black";
+		edp_placeholders_pass[field].value = "";
+		edp_placeholders_pass[field].parentNode.children[2].innerHTML = "";
 	}
 }
 
@@ -19,9 +19,9 @@ function error_update_password_from_back(data)
 	clear_edp_pass_error_fields();
 	for (field in data)
 	{
-		placeholders[field].parentNode.children[1].style.border = "thin solid red";
+		edp_placeholders_pass[field].parentNode.children[1].style.border = "thin solid red";
 		for (message of data[field])
-			placeholders[field].parentNode.children[2].innerHTML += message + "<br />";
+			edp_placeholders_pass[field].parentNode.children[2].innerHTML += message + "<br />";
 	}
 }
 
@@ -51,7 +51,7 @@ async function submit_pass_form(form)
 		}
 		data = data.data;
 		create_popup("Password updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
-		clear_edp_pass_error_fields(placeholders);
+		clear_edp_pass_error_fields(edp_placeholders_pass);
 		return ;
 	}
 	catch (error)
@@ -61,12 +61,12 @@ async function submit_pass_form(form)
 	}
 }
 
-let placeholders = undefined;
+let edp_placeholders_pass = undefined;
 
 
 document.addEventListener("onModalsLoaded", function()
 {
-	placeholders = {
+	edp_placeholders_pass = {
 		old_password: document.getElementById("edp-input-cur-password"),
 		password: document.getElementById("edp-input-new-password"),
 		password2: document.getElementById("edp-input-confirm-password"),

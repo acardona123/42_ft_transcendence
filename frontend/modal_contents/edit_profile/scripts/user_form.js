@@ -50,6 +50,35 @@ function dfa_collapse()
 	dfa_is_visible = !dfa_is_visible;
 }
 
+function edp_allow_only_digits(event)
+{
+	if (!regex_digit.test(event.key) && event.key != "Backspace" && event.key != "Enter")
+		event.preventDefault();
+}
+
+function clear_edp_user_error_fields(should_clear_inputs)
+{
+	for (field in edp_placeholders_user)
+	{
+		edp_placeholders_user[field].style.border = "thin solid black";
+		edp_placeholders_user[field].parentNode.children[2].innerHTML = "";
+		if (should_clear_inputs)
+			edp_placeholders_user[field].value = "";
+	}
+}
+
+function error_update_user_from_back(data)
+{
+	data = data;
+	clear_edp_user_error_fields(false);
+	for (field in data)
+	{
+		edp_placeholders_user[field].parentNode.children[1].style.border = "thin solid red";
+		for (message of data[field])
+			edp_placeholders_user[field].parentNode.children[2].innerHTML += message + "<br />";
+	}
+}
+
 async function get_user_informations()
 {
 	const url = "https://localhost:8443/api/users/update/user/";
@@ -66,17 +95,11 @@ async function get_user_informations()
 function clear_edp_user_inputs()
 {
 	const save_button = document.getElementById("edp-save-informations-button");
-	const inputs = [
-		document.getElementById("edp-input-username"),
-		document.getElementById("edp-input-email"),
-		document.getElementById("edp-input-phone"),
-		document.getElementById("edp-input-pin")
-	];
 	save_button.disabled = true;
-	for (elem of inputs)
+	for (field in edp_placeholders_user)
 	{
-		elem.value = "";
-		elem.disabled = true;
+		edp_placeholders_user[field].value = "";
+		edp_placeholders_user[field].disabled = true;
 	}
 	get_user_informations()
 		.then((infos) => {
@@ -84,8 +107,8 @@ function clear_edp_user_inputs()
 			let i = 0;
 			for (field in infos)
 			{
-				inputs[i].value = infos[field];
-				inputs[i].disabled = false;
+				edp_placeholders_user[field].value = infos[field];
+				edp_placeholders_user[field].disabled = false;
 				i++;
 			}
 		}).catch(() => {
@@ -102,18 +125,20 @@ function format_empty_values(body)
 	return body;
 }
 
-function error_update_user_from_back(data)
+function check_form_pin(pin)
 {
-	// TODO: errors on front
-	for (field in data)
+	if (!pin || pin.value.length != 4)
 	{
-		for (msg of data[field])
-			console.log(field + ": " + msg);
+		error_update_user_from_back({pin: ["Pin code must be 4 digits long."]});
+		return false;
 	}
+	return true;
 }
 
 async function submit_user_form(form)
 {
+	if (!check_form_pin(form["pin"]))
+		return ;
 	let body = JSON.stringify(format_empty_values({
 		username : form["username"].value,
 		email : form["email"].value,
@@ -137,6 +162,7 @@ async function submit_user_form(form)
 			error_update_user_from_back(data);
 			return ;
 		}
+		clear_edp_user_error_fields(false);
 		create_popup("Informations updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
 		return ;
 	}
@@ -157,6 +183,8 @@ function change_form_behavior_for_SPA(form, new_function)
 	});
 }
 
+let edp_placeholders_user = undefined;
+
 document.addEventListener("onModalsLoaded", function()
 {
 	username_collapse_obj = new bootstrap.Collapse(document.getElementById(
@@ -166,6 +194,14 @@ document.addEventListener("onModalsLoaded", function()
 	dfa_collapse_obj = new bootstrap.Collapse(document.getElementById(
 		'edp-2fa-edit-collapse-div'), {toggle: false});
 
+	edp_placeholders_user = {
+		username: document.getElementById("edp-input-username"),
+		email: document.getElementById("edp-input-email"),
+		phone: document.getElementById("edp-input-phone"),
+		pin: document.getElementById("edp-input-pin"),
+		non_field_errors: document.getElementById("edp-input-username")
+	}
+
 	let form_user = document.getElementById("edp-form-user");
 
 	change_form_behavior_for_SPA(form_user, submit_user_form);
@@ -173,5 +209,6 @@ document.addEventListener("onModalsLoaded", function()
 	document.getElementById("edp-informations-edit-text").onclick = username_collapse;
 	document.getElementById("edp-password-edit-text").onclick = password_collapse;
 	document.getElementById("edp-2fa-edit-text").onclick = dfa_collapse;
+	document.getElementById("edp-input-pin").onkeydown = edp_allow_only_digits;
 });
 
