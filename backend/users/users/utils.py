@@ -66,6 +66,7 @@ class TemporaryToken(AccessToken):
 def get_temp_tokens_for_user(user):
 	acces_token = TemporaryToken.for_user(user)
 	acces_token["scope"] = "temporary"
+	acces_token["username"] = user.username
 	return {
 		'access': str(acces_token),
 	}
@@ -73,6 +74,7 @@ def get_temp_tokens_for_user(user):
 def get_tokens_for_user(user):
 	refresh = RefreshToken.for_user(user)
 	refresh["scope"] = "normal"
+	refresh["username"] = user.username
 	return {
 		'refresh': str(refresh),
 		'access': str(refresh.access_token),

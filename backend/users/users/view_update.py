@@ -1,17 +1,19 @@
 from .authentication import IsNormalToken
 from .serializer import UpdatePasswordSerializer, UpdateUserSerializer, UpdateProfilPictureSerializer
-# from .models import ProfilePicture
+from .utils import get_tokens_for_user
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .doc import (JWT_TOKEN, MSG_ERROR_UPDATE_PASSWORD_OAUTH,
 		MSG_ERROR_UPDATE_PASSWORD, MSG_ERROR_UPDATE_USER_INFO,
 		MSG_PASSWORD_UPDATE, MSG_USER_INFO, MSG_INFO_USER_UPDATE,
 		MSG_PICTURE_URL, MSG_ERROR_NO_IMAGE, MSG_UPDATE_PICTURE,
-		MSG_ERROR_UPDATING_IMAGE, DOC_IMAGE_URL, DOC_ERROR_NO_IMAGE,
+		MSG_ERROR_UPDATING_IMAGE, MSG_ERROR_REFRESH_REQUIRED,
+		DOC_IMAGE_URL, DOC_ERROR_NO_IMAGE,
 		DOC_IMAGE_UPDATED, DOC_ERROR_UPADTE_IMAGE,
 		DOC_ERROR_UPDATE_PASSWORD, DOC_IMPOSSIBLE_UPDATE_PASSWORD,
 		DOC_UPDATE_PASSWORD, DOC_ERROR_UPDATE_INFO, DOC_UPDATE_INFO,
@@ -57,12 +59,13 @@ class UpdateUserInfo(APIView):
 		manual_parameters=[JWT_TOKEN],
 		request_body=openapi.Schema(
 			type=openapi.TYPE_OBJECT,
-			required=['username', 'email', 'phone', 'pin'],
+			required=['username', 'email', 'phone', 'pin', 'refresh'],
 			properties={
 				'username': openapi.Schema(type=openapi.TYPE_STRING),
 				'email': openapi.Schema(type=openapi.TYPE_STRING),
 				'phone': openapi.Schema(type=openapi.TYPE_STRING),
 				'pin': openapi.Schema(type=openapi.TYPE_STRING),
+				'refresh': openapi.Schema(type=openapi.TYPE_STRING),
 			}
 		),
 		responses={
@@ -72,17 +75,33 @@ class UpdateUserInfo(APIView):
 			405: DOC_ERROR_METHOD_NOT_ALLOWED,
 		})
 	def put(self, request):
+		refresh = request.data.get('refresh', None)
+		if refresh is None:
+			return Response({"message": MSG_ERROR_REFRESH_REQUIRED}, 400)
+		username = request.user.username
 		serializer = UpdateUserSerializer(request.user, data=request.data)
 		if serializer.is_valid():
 			serializer.save()
+			if username != serializer.data.get('username', None):
+				return self.renew_token_username(request.user, refresh, serializer)
+			token = {'refresh': refresh, 'access': str(request.auth)}
+			token.update(dict(serializer.data))
 			return Response({"message": MSG_INFO_USER_UPDATE,
-							"data": serializer.data}, status=200)
-		data = {
-			"message" : MSG_ERROR_UPDATE_USER_INFO,
-			"data" : serializer.errors
-		}
-		return Response(data, status=400)
+							"data": token}, status=200)
+		return Response({"message" : MSG_ERROR_UPDATE_USER_INFO,
+			"data" : serializer.errors}, status=400)
 	
+	def renew_token_username(self, user, refresh, serializer):
+		try:
+			token = RefreshToken(refresh)
+			token.blacklist()
+			token = get_tokens_for_user(user)
+			token.update(dict(serializer.data))
+			return Response({"message": MSG_INFO_USER_UPDATE,
+					"data": token}, status=200)
+		except:
+			return Response({"message" : MSG_ERROR_UPDATE_USER_INFO}, status=400)
+
 	@swagger_auto_schema(
 		manual_parameters=[JWT_TOKEN],
 		responses={
