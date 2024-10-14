@@ -14,7 +14,6 @@ async function validate_code_setup(user_code)
 			},
 			body: body
 		});
-		console.log(await fetched_data.json());
 		if (fetched_data.status == 400)
 			return "invalid";
 		else if (fetched_data.status == 401)
@@ -28,7 +27,7 @@ async function validate_code_setup(user_code)
 	}
 	catch (error)
 	{
-		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error validating the code.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return "invalid";
 	}
 }
@@ -86,12 +85,10 @@ async function send_code_to_validation(digit_inputs, is_setup)
 	validation_res = await validate_code(code, is_setup)
 	if (validation_res == "invalid")
 	{
-		console.log("invalid");
 		animate_on_error(digit_inputs);
 	}
 	else if (validation_res == "expired")
 	{
-		console.log("expired");
 		if (is_setup)
 			hideModalTwoFASetup();
 		else

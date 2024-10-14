@@ -154,7 +154,7 @@ async function submit_user_form(form)
 			body: body
 		});
 		if (!fetched_data.ok && fetched_data.status != 400)
-			throw new Error("Error while updating password.");
+			throw new Error("Error while updating informations.");
 		let data = await fetched_data.json();
 		data = data.data;
 		if (fetched_data.status == 400)
@@ -168,8 +168,7 @@ async function submit_user_form(form)
 	}
 	catch (error)
 	{
-		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		console.log(error);
+		create_popup("Error while updating informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }

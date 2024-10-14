@@ -59,7 +59,7 @@ async function enable_2fa(should_enable)
 	}
 	catch (error)
 	{
-		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error while enabling 2fa.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }

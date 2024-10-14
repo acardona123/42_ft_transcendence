@@ -48,7 +48,7 @@ async function logout_user()
 	}
 	catch (error)
 	{
-		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error while disconnecting.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
