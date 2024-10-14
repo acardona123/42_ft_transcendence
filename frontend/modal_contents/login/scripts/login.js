@@ -37,7 +37,7 @@ async function logout_user()
 	});
 	try
 	{
-		let fetched_data = await fetch_with_token(url, {
+		let fetched_data = await fetch(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
 			body: body
