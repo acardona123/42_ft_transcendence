@@ -143,7 +143,8 @@ async function submit_user_form(form)
 		username : form["username"].value,
 		email : form["email"].value,
 		phone : form["phone"].value,
-		pin : form["pin"].value
+		pin : form["pin"].value,
+		refresh : sessionStorage.getItem("resfresh_token")
 	}));
 	const url = "https://localhost:8443/api/users/update/user/";
 	try
@@ -164,6 +165,8 @@ async function submit_user_form(form)
 		}
 		clear_edp_user_error_fields(false);
 		create_popup("Informations updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
+		sessionStorage.setItem("refresh_token", data.resfresh);
+		sessionStorage.setItem("access_token", data.access);
 		return ;
 	}
 	catch (error)
