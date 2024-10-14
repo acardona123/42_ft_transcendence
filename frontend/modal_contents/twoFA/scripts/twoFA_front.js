@@ -12,9 +12,9 @@ function clear_code_inputs_setup()
 	}
 }
 
-function clear_code_inputs_login()
+function clear_code_inputs_valid()
 {
-	for (input of digit_inputs_login)
+	for (input of digit_inputs_valid)
 	{
 		input.value = '';
 		input.disabled = false;

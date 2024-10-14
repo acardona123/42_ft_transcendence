@@ -100,7 +100,7 @@ async function send_form_login(form)
 	}
 	catch (error)
 	{
-		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error while login in.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }

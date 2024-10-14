@@ -10,7 +10,6 @@ async function validate_code_setup(user_code)
 			method: 'PUT',
 			headers: {
 				'content-type': 'application/json',
-				'Authorization' : "Bearer " + sessionStorage.getItem("access_token")
 			},
 			body: body
 		});
@@ -48,13 +47,13 @@ async function validate_code_valid(user_code)
 			},
 			body: body
 		});
-		let data = await fetched_data.json();
 		if (fetched_data.status == 400)
 			return "invalid";
 		else if (fetched_data.status == 401)
 			return "expired";
 		else if (!fetched_data.ok)
 			throw new Error("Error validating the code.");
+		let data = await fetched_data.json();
 		data = data.data;
 		apply_login_user(data.refresh, data.access);
 		hideModalTwoFAValid();
@@ -90,10 +89,17 @@ async function send_code_to_validation(digit_inputs, is_setup)
 	else if (validation_res == "expired")
 	{
 		if (is_setup)
+		{
 			hideModalTwoFASetup();
+			openModalEditProfile();
+		}
 		else
+		{
 			hideModalTwoFAValid();
-		openModalLogin();
-		// TODO: go to login page with message
+			openModalLogin();
+		}
+		create_popup("The session is expired.", 10000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
+	else
+		is_btn_on_enable = !is_btn_on_enable;
 }

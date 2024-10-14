@@ -172,6 +172,11 @@ function openModalEditProfile() {
 	clear_edp_user_inputs();
 	clear_edp_user_error_fields(true);
 	clear_edp_pass_error_fields();
+	button_dfa.disabled = true;
+	get_2fa_state().then(() => {
+		button_dfa.disabled = false;
+		is_btn_on_enable ? set_to_disable_2fa_button() : set_to_enable_2fa_button();
+	});
 	modalEditProfile.showModal();
 }
 
@@ -218,10 +223,9 @@ function openModalTwoFASetup() {
 	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
 	modaldialog.classList.add('grow-bottom-right');
 
-	// set focus on code enter
 	clear_code_inputs_setup();
-	on_click_div_event(document.getElementById("tfas-key-enter-div"));
 	modalTwoFASetup.showModal();
+	on_click_div_event(document.getElementById("tfas-key-enter-div"));
 }
 
 function hideModalTwoFASetup() {
@@ -237,10 +241,9 @@ function openModalTwoFAValid() {
 	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
 	modaldialog.classList.add('grow-bottom-right');
 	
-	// set focus on code enter
-	clear_code_inputs_setup();
-	on_click_div_event(document.getElementById("tfav-key-enter-div"));
+	clear_code_inputs_valid();
 	modalTwoFAValid.showModal();
+	on_click_div_event(document.getElementById("tfav-key-enter-div"));
 }
 
 function hideModalTwoFAValid() {

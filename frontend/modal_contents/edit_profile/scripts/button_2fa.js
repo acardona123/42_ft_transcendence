@@ -35,6 +35,29 @@ function open_2fa_setup_page(data)
 	openModalTwoFASetup();
 }
 
+async function get_2fa_state()
+{
+	const url = "https://localhost:8443/api/users/update/2fa/";
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'GET',
+			headers: {}
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error while enabling 2fa.");
+		let data = await fetched_data.json();
+		data = data.data;
+		is_btn_on_enable = data["2fa_status"] == "on" ? true : false;
+		return ;
+	}
+	catch (error)
+	{
+		create_popup("Error while enabling 2fa.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		return ;
+	}
+}
+
 async function enable_2fa(should_enable)
 {
 	const url = "https://localhost:8443/api/users/update/2fa/";
@@ -69,9 +92,8 @@ function send_dfa_change()
 	if (is_btn_on_enable)
 	{
 		stop_click_on_all_page = true;
-		enable_2fa(true).then(() =>
+		enable_2fa(false).then(() =>
 		{
-			is_btn_on_enable = false;
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
 		});
@@ -80,9 +102,8 @@ function send_dfa_change()
 	else
 	{
 		stop_click_on_all_page = true;
-		enable_2fa(false).then(() =>
+		enable_2fa(true).then(() =>
 		{
-			is_btn_on_enable = true;
 			set_to_enable_2fa_button();
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
@@ -91,16 +112,12 @@ function send_dfa_change()
 	}
 }
 
-let is_btn_on_enable = false;
+let is_btn_on_enable = true;
 let button_dfa = undefined;
 
 document.addEventListener("onModalsLoaded", function()
 {
 	button_dfa = document.getElementById("edp-button-2fa");
-	set_to_enable_2fa_button();
-
-	// fetch the actual state of the button
-	is_btn_on_enable = true; // tmp
-
+	set_waiting_initial_fetch();
 	button_dfa.onclick = send_dfa_change;
 });
