@@ -55,7 +55,7 @@ async function validate_code_valid(user_code)
 			throw new Error("Error validating the code.");
 		let data = await fetched_data.json();
 		data = data.data;
-		apply_login_user(data.refresh, data.access);
+		await apply_login_user(data.refresh, data.access, undefined);
 		hideModalTwoFAValid();
 		return "valid";
 	}

@@ -13,13 +13,17 @@ function send_user_to_2fa()
 	openModalTwoFAValid();
 }
 
-function apply_login_user(refresh, access)
+async function apply_login_user(refresh, access, username)
 {
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 	isConnected = true;
-	get_friend_list();
-	get_friends_request_list();
+
+	await Promise.all([
+		get_friend_list(),
+		get_friends_request_list(),
+		create_user_infos(username)
+	]);
 	updateUI();
 }
 
@@ -68,16 +72,16 @@ async function send_form_login(form)
 {
 	form.children[2].disabled = true;
 	const url = "https://localhost:8443/api/users/login/";
-	const body = JSON.stringify({
+	const body = {
 		username: form["username"].value,
 		password: form["password"].value,
-	});
+	};
 	try
 	{
 		let fetched_data = await fetch(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
-			body: body
+			body: JSON.stringify(body)
 		});
 		form.children[2].disabled = false;
 		if (!fetched_data.ok && fetched_data.status != 401)
@@ -91,7 +95,7 @@ async function send_form_login(form)
 		data = data.data;
 		if (data['2fa_status'] == "off")
 		{
-			apply_login_user(data.refresh, data.access);
+			await apply_login_user(data.refresh, data.access, body.username);
 			closeModalLogin();
 		}
 		else
