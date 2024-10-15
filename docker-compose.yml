@@ -10,6 +10,7 @@ services:
     volumes:
      - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf
      - ./frontend/:/var/www/html/transcendence/
+     - ./backend/users/media/:/var/www/html/media/
     ports:
       - "8443:8443"
     networks:
