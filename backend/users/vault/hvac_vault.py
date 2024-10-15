@@ -98,14 +98,20 @@ def create_cred(client, name):
 # ------------ KV -------------
 
 def create_kv(client, path, secret):
-	load_dotenv()
 	client.secrets.kv.v1.create_or_update_secret(
 		path=path,
-		secret= secret,
+		secret=secret,
 	)
+
 
 def read_kv(client, path):
 	return client.secrets.kv.v1.read_secret(path=path)
 
 def list_kv(client):
 	return client.secrets.kv.v1.list_secrets(path='')
+
+from django.conf import settings
+
+def get_vault_kv_variable(path):
+	cred = read_kv(settings.VAULT_CLIENT, path)
+	return cred['data']['value']

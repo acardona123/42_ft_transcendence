@@ -30,9 +30,8 @@ if (database_name.endswith('_dev') == False):
 	from vault.hvac_vault import create_client, read_kv
 
 	client = create_client()
-	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
-	cred = read_kv(client, path)
-	SECRET_KEY = cred['data'][database_name]
+	cred = read_kv(client, 'secret-key')
+	SECRET_KEY = cred['data']['value']
 else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 

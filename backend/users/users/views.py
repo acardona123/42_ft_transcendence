@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view, permission_classes
 from django_otp.plugins.otp_totp.models import TOTPDevice
-from .authentication import IsNormalToken
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from .serializer import UserSerializer
+from vault.hvac_vault import get_vault_kv_variable
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth, get_refresh_token
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
@@ -159,8 +159,8 @@ def refresh_token(request):
 	})
 @api_view(['GET'])
 def get_url_api(request):
-	client_id = os.getenv('CLIENT_ID')
-	state = os.getenv('STATE')
+	client_id = get_vault_kv_variable('oauth-id')
+	state = get_vault_kv_variable('oauth-state')
 	redirect = os.getenv('OAUTH_REDIRECT_URL')
 	url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect}&response_type=code&scope=public&state={state}"
 	return Response({'message' : MSG_SEND_URL_OAUTH,
@@ -176,7 +176,7 @@ def get_url_api(request):
 	})
 @api_view(['GET'])
 def login_oauth(request):
-	if request.GET.get('state') != os.getenv('STATE'):
+	if request.GET.get('state') != get_vault_kv_variable('oauth-state'):
 		return Response({'message' : MSG_ERROR_OAUTH_LOGIN}, status=400)
 	error, token = get_token_oauth(request.GET.get('code'))
 	if error:
