@@ -104,6 +104,6 @@ class ProfilePicture(models.Model):
         if self.oauth_profile_picture:
             return self.oauth_profile_picture
         elif self.profile_picture:
-            return f"https://localhost:8443{self.profile_picture.url}"
+            return self.profile_picture.url
         else:
             return None
