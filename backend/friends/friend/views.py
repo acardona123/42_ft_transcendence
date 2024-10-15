@@ -31,6 +31,42 @@ MSG_DELETE_FRIENDSHIP = 'Friendship deleted'
 MSG_LIST_FRIEND_REQUEST = 'List friend request'
 MSG_LIST_FRIENDSHIP = 'List friendship'
 
+JWT_TOKEN = openapi.Parameter('Authentication : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
+
+DOC_ERROR_METHOD_NOT_ALLOWED = openapi.Response(
+			description="Method Not Allowed",
+			examples={
+				"application/json": {
+					"detail": "Method \"PUT\" not allowed."
+					}
+			}
+		)
+
+DOC_ERROR_UNAUTHORIZED = openapi.Response(
+			description="Unauthorized to access the page, need to have jwt",
+			examples={
+				"application/json": {
+					"detail": "Given token not valid for any token type",
+					"code": "token_not_valid",
+					"messages": [
+						{
+						"token_class": "AccessToken",
+						"token_type": "access",
+						"message": "Token is invalid or expired"
+						}
+					]
+				}
+			}
+		)
+
+DOC_ERROR_USERNAME = openapi.Response(
+				description=MSG_ERROR_USERNAME,
+				examples={
+					"application/json": {
+						'message': MSG_ERROR_USERNAME
+					}
+				}
+			)
 
 DOC_ERROR_RESPONSE = openapi.Response(
 				description="Error",
@@ -66,7 +102,9 @@ DOC_ADD_FRIENDSHIP_RESPONSE = openapi.Response(
 				"data": {
 					"friendship": {
 						"id": 1,
-						"username": "coucou"
+						"username": "coucou",
+						"profile_picture": "https://fdgfjghkdf",
+						"status": "offline"
 					},
 					"remove_friend_request": 1
 					}
@@ -125,11 +163,21 @@ DOC_LIST_FRIENDSHIP_RESPONSE = openapi.Response(
 					"data": [
 						{
 							"id": 3,
-							"username": "johanne"
+							"username": "johanne",
+							"profile_picture": "https://fdgfjghkdf",
+							"status": "offline"
 						},
 						{
 							"id": 4,
-							"username": "quentin"
+							"username": "quentin",
+							"profile_picture": "https://fdgfjghkdf",
+							"status": "online"
+						},
+						{
+							"id": 4,
+							"username": "quentin",
+							"profile_picture": "https://fdgfjghkdf",
+							"status": "inactif"
 						}
 					]
 				}
@@ -160,7 +208,8 @@ def add_frienship(user1, user2):
 
 # ------------------------FRIENDREQUEST-------------------------
 
-@swagger_auto_schema(method='post', 
+@swagger_auto_schema(method='post',
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT, 
 		properties={
@@ -171,7 +220,10 @@ def add_frienship(user1, user2):
 		200: DOC_ADD_FRIEND_REQUEST_RESPONSE,
 		'200bis': DOC_ADD_FRIENDSHIP_RESPONSE,
 		201: 'friend request created',
-		'400/401/404': DOC_ERROR_RESPONSE,
+		400: DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		500: DOC_ERROR_USERNAME
 	})
 @api_view(['POST'])
 @permission_classes([IsNormalToken])
@@ -209,15 +261,22 @@ def send_friend_request(request):
 	return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
 @swagger_auto_schema(method='post',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_ADD_FRIENDSHIP_RESPONSE,
 		201: 'friend request created',
-		'400/401/500': DOC_ERROR_RESPONSE,
+		400: DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		500: DOC_ERROR_USERNAME,
 	})
 @swagger_auto_schema(method='delete',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_FRIEND_REQUEST_DELETE_RESPONSE,
-		'400/401': DOC_ERROR_RESPONSE,
+		400: DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED
 	})
 @api_view(['POST', 'DELETE'])
 @permission_classes([IsNormalToken])
@@ -249,9 +308,12 @@ def manage_request(request, request_id):
 		return Response(data, status=status.HTTP_200_OK)
 
 @swagger_auto_schema(method='get',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_LIST_FRIEND_REQUEST_RESPONSE,
-		'401/500': DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		500: DOC_ERROR_USERNAME
 	})
 @api_view(['GET'])
 @permission_classes([IsNormalToken])
@@ -270,9 +332,12 @@ def request_list(request):
 # ------------------------FRIENDSHIP-------------------------
 
 @swagger_auto_schema(method='get',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_LIST_FRIENDSHIP_RESPONSE,
-		'401/500': DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		500: DOC_ERROR_USERNAME
 	})
 @api_view(['GET'])
 @permission_classes([IsNormalToken])
@@ -288,9 +353,12 @@ def friend_list(request):
 				status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @swagger_auto_schema(method='delete',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_FRIENDSHIP_DELETE_RESPONSE,
-		'400/401': DOC_ERROR_RESPONSE,
+		400: DOC_ERROR_RESPONSE,
+		401: DOC_ERROR_UNAUTHORIZED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED
 	})
 @api_view(['DELETE'])
 @permission_classes([IsNormalToken])
