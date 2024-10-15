@@ -18,6 +18,8 @@ function apply_login_user(refresh, access)
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 	isConnected = true;
+	get_friend_list();
+	get_friends_request_list();
 	updateUI();
 }
 
@@ -74,7 +76,7 @@ async function send_form_login(form)
 	{
 		let fetched_data = await fetch(url, {
 			method: 'POST',
-			headers: new Headers({'content-type': 'application/json'}),
+			headers: {'content-type': 'application/json'},
 			body: body
 		});
 		form.children[2].disabled = false;

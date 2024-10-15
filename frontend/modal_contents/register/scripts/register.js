@@ -60,7 +60,7 @@ async function send_form_register(form)
 	{
 		let fetched_data = await fetch(url, {
 			method: 'POST',
-			headers: new Headers({'content-type': 'application/json'}),
+			headers: {'content-type': 'application/json'},
 			body: body
 		});
 		if (!fetched_data.ok && fetched_data.status != 400)

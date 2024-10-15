@@ -141,14 +141,14 @@ async function remove_friend(event)
 	const id_to_remove = friend_list_data.find(o => o.username === pseudo_to_remove).id;
 
 	const url = "https://localhost:8443/api/friends/remove/" + id_to_remove + "/";
-
-	let fetched_data = await fetch(url, {method:'DELETE'});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'DELETE',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		fetched_data = await fetched_data.json();
 		let id_to_remove_back = fetched_data.data.friendship;
 		if (id_to_remove != id_to_remove_back)
@@ -236,7 +236,10 @@ async function get_friend_list()
 	const url = "https://localhost:8443/api/friends/";
 	try
 	{
-		let fetched_data = await fetch(url);
+		let fetched_data = await fetch_with_token(url, {
+			method : 'GET',
+			headers: {}
+		});
 		if (!fetched_data.ok)
 			throw new Error(`${fetched_data.status}`);
 
@@ -290,10 +293,8 @@ function update_friend_list(is_init=false)
 
 let friend_list_data = undefined;
 
-document.addEventListener("onModalsLoaded", function()
+async function setup_friend_list()
 {
-	(async () => {
-		friend_list_data = await get_friend_list();
-		update_friend_list(true);
-	})()
-});
+	friend_list_data = await get_friend_list();
+	update_friend_list(true);
+}

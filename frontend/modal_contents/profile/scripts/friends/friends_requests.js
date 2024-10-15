@@ -55,14 +55,13 @@ async function send_friend_request()
 	if (input_zone.value.length == 0)
 		return ;
 	const body = JSON.stringify({name: input_zone.value});
-
-	let fetched_data = await fetch(url, {
-		method: 'POST',
-		headers: new Headers({'content-type': 'application/json'}),
-		body: body
-	});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {'content-type': 'application/json'},
+			body: body
+		});
 		if (!fetched_data.ok)
 		{
 			throw new Error(`${fetched_data.status}`);
@@ -126,13 +125,14 @@ async function accept_friend_req(event)
 	const accepted_id = data_requests.find(o => o.username === accepted_pseudo)?.id;
 	const url = "https://localhost:8443/api/friends/request/" + accepted_id + "/";
 
-	let fetched_data = await fetch(url, {method: 'POST'});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		data = data.data;
 		if (fetched_data.status == 201) // the friendship did not exist
@@ -140,7 +140,6 @@ async function accept_friend_req(event)
 			add_friend_array({id: data.friendship.id, username: data.friendship.username, is_online : (Math.random() <= 0.5)})
 			update_friend_list(false);
 		}
-		// remove request
 		remove_friend_request_front(event.target, data, accepted_id, accepted_pseudo);
 	}
 	catch (error)
@@ -158,13 +157,14 @@ async function reject_friend_req(event)
 	const rejected_id = data_requests.find(o => o.username === rejected_pseudo)?.id;
 	const url = "https://localhost:8443/api/friends/request/" + rejected_id + "/";
 
-	let fetched_data = await fetch(url, {method:'DELETE'});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'DELETE',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`Response status: ${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		data = data.data;
 		remove_friend_request_front(event.target, data, rejected_id, rejected_pseudo);
@@ -248,11 +248,12 @@ async function get_data_from_database()
 {
 	const url = "https://localhost:8443/api/friends/request/";
 	try {
-		let fetched_data = await fetch(url);
+		let fetched_data = await fetch_with_token(url, {
+			method: 'GET',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		return data.data;
 	}
@@ -267,10 +268,8 @@ async function get_data_from_database()
 
 let data_requests = undefined;
 
-document.addEventListener("onModalsLoaded", function()
+async function get_friends_request_list()
 {
-	(async () => {
-		data_requests = await get_data_from_database();
-		update_requests_list(true);
-	})()
-});
+	data_requests = await get_data_from_database();
+	update_requests_list(true);
+}
