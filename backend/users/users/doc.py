@@ -336,7 +336,9 @@ DOC_UPDATE_INFO = openapi.Response(
 						"username": "coucou",
 						"email": "fghf@fdg.ds",
 						"phone": "+33326597845",
-						"pin": "0004"
+						"pin": "0004",
+						"refresh": "dfggggggggggggggggggggggg",
+						"access": "dfggggggggggggggggggggggg"
 					}
 				}
 			}
@@ -358,6 +360,15 @@ DOC_ERROR_UPDATE_INFO = openapi.Response(
 							"The phone number entered is not valid."
 						]
 					}
+				}
+			}
+		)
+
+DOC_ERROR_UPDATE_INFO_BIS = openapi.Response(
+			description=MSG_ERROR_UPDATE_USER_INFO,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATE_USER_INFO,
 				}
 			}
 		)
@@ -460,3 +471,4 @@ DOC_ERROR_UPADTE_IMAGE = openapi.Response(
 				}
 			}
 		)
+

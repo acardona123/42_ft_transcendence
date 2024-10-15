@@ -52,7 +52,7 @@ def create_user_oauth(data):
 				'data': serializer.errors}, status=400)
 
 def login_user_oauth(id):
-	user = CustomUser.objects.filter(oauth_id=id).first()
+	user = CustomUser.objects.get(oauth_id=id)
 	user.set_status_online()
 	tokens = get_tokens_for_user(user)
 	return Response({'message': MSG_LOGIN_OAUTH,
