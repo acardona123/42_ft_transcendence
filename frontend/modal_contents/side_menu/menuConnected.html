@@ -1,15 +1,17 @@
-<div class="offcanvas-body container-offcanvas connected" tabindex="-1">
-	<div class="menuCanvasProfile">
-		<h4 class="user-name"></h4>
-		<img id="connectedImageMenu" class="userImage menuUserImage change-color" alt="Menu User Image">
-		<span id="connection-badge"></span>
+<div id="smc-main-div" tabindex="-1">
+	<div id="smc-short-profile-div">
+		<h4 id="smc-user-name" class="user-name"></h4>
+		<div id="smc-connected-pp-div">
+			<img id="smc-connected-pp" class="userImage">
+			<span id="smc-connection-badge"></span>
+		</div>
 	</div>
 
-	<div id="menuColumnButton" class="gap-2">
-		<button id="profileButton" type="button" class="btn large-rounded-button" tabindex="1" onclick="openModalProfile()">Profile</button>
-		<button id="logoutButton" type="button" class="btn large-rounded-button " tabindex="2" onclick="logout_user()">Logout</button>
-		<button id="parameterButton" class="btn" tabindex="3" data-bs-dismiss="offcanvas" onclick="openModalEditProfile()">
-			<img id="parameterButtonIcon" src="img/engrenage.png" alt="Parameter">
+	<div id="smc-buttons-div">
+		<button id="smc-logout-button" type="button" class="btn btn-success" tabindex="1" onclick="openModalProfile()">Profile</button>
+		<button id="smc-logout-button" type="button" class="btn btn-success" tabindex="2" onclick="logout_user()">Logout</button>
+		<button id="smc-parameter-button" class="btn" tabindex="3" data-bs-dismiss="offcanvas" onclick="openModalEditProfile()">
+			<img id="smc-parameter-button-image" src="img/engrenage.png" alt="Parameter">
 		</button>
 	</div>
 </div>

@@ -1,0 +1,89 @@
+#smc-main-div
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	padding: 10px;
+}
+
+#smc-short-profile-div
+{
+	display: flex;
+	width: 100%;
+	height: fit-content;
+}
+
+#smc-user-name
+{
+	width: 60%;
+	padding: 10px;
+	margin: 0;
+}
+
+#smc-connected-pp-div
+{
+	position: relative;
+	width: 40%;
+}
+
+#smc-connected-pp
+{
+	width: 100%;
+	position: relative;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+}
+
+#smc-connection-badge
+{
+	position: absolute;
+	bottom: 0%;
+	left: 0%;
+	padding: 10% 10%;
+	border-radius: 50%;
+	background-color: lawngreen;
+}
+
+#smc-buttons-div
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#SMC-profile-Button
+{
+	position: relative;
+	width: 85%;
+}
+
+#smc-logout-button
+{
+	position: relative;
+	width: 85%;
+}
+
+#smc-parameter-button
+{
+	position: relative;
+	width: 15%;
+
+	display: flex;
+	justify-content: center;
+	align-self: flex-end;
+	padding: 0;
+}
+
+#smc-parameter-button:hover, #smc-parameter-button:focus
+{
+	transform: scale(1.05) rotate(180deg);
+	transition: all 0.5s;
+}
+
+#smc-parameter-button-image
+{
+	position: relative;
+	width: 100%;
+}

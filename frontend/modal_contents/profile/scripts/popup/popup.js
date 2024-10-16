@@ -62,6 +62,7 @@ function add_popup_to_document_modal(popup_main)
 function create_popup(text, t_before_decay=2000,
 					t_after_hover=4000, hex_color="HEX_GREEN", hover_hex_color="HEX_GREEN_HOVER")
 {
+	return ; // TODO: remove anti-popup
 	const popup_main = document.createElement('div');
 	popup_main.className = "popup-main-div";
 	popup_main.style.backgroundColor = hex_color;

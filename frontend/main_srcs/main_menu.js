@@ -2,7 +2,7 @@ function updateUI() {
 	const side_login_path = 'modal_contents/side_menu/menuConnected.html';
 	const side_logout_path = 'modal_contents/side_menu/menuDisconnected.html';
 	const menuHtml = (global_user_infos !== undefined) ? side_login_path : side_logout_path;
-		
+
 	fetch(menuHtml)
 		.then(response => response.text())
 		.then(html => {
@@ -17,7 +17,6 @@ function updateUI() {
 		.catch(error => console.error('Error loading menu HTML:', error));
 }
 
-let defaultUserImage = 'img/compte-utilisateur-1.png';
 
 function updateUserName() {
 	const userNameElements = document.querySelectorAll('.user-name');

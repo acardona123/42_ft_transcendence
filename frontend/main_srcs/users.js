@@ -1,4 +1,10 @@
-let global_user_infos = undefined;
+const defaultUserImage = 'img/compte-utilisateur-1.png';
+
+let global_user_infos = {
+	profile_picture: defaultUserImage,
+	username: "coucou"
+};
+// TODO change user to undefined
 
 async function get_profil_picture()
 {

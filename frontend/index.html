@@ -8,7 +8,8 @@
 		<link rel="stylesheet" href="css/styles.css">
 		<link rel="stylesheet" href="css/animations.css">
 		<link rel="stylesheet" href="modals_manager/styles/modals.css">
-		<link rel="stylesheet" href="modal_contents/side_menu/styles/side_menu.css">
+		<link rel="stylesheet" href="modal_contents/side_menu/styles/side_menu_connected.css">
+		<link rel="stylesheet" href="modal_contents/side_menu/styles/side_menu_disconnected.css">
 		<link rel="stylesheet" href="modal_contents/versus_menu/styles/match_creation.css">
 		<link rel="stylesheet" href="modal_contents/tournament_menu/styles/tournament_menu.css">
 		<link rel="stylesheet" href="modal_contents/login/styles/styles.css">
@@ -28,9 +29,10 @@
 	</head>
 	<body>
 		<!-- MENU CANVAS -->
-		<div class="offcanvas offcanvas-end" id="menuProfile" tabindex="-1"></div>
+		<div class="offcanvas offcanvas-end show" id="menuProfile" tabindex="-1"></div>
 		<!-- +++ -->
 		<div id="modals"></div>
+		<button onclick="logout_user_no_back()">force logout</button>
 
 		<div class="container-fluid text-white main-container" style="background-color: burlywood;">
 			<div class="col d-flex justify-content-center align-items-center">
@@ -39,7 +41,6 @@
 				</button>
 			</div>
 		</div>
-		
 		<div class="home-photo-profile">
 			<a data-bs-toggle="offcanvas" href="#menuProfile" onclick="disableButtonPlay()">
 				<img id="homeUserImage" class="userImage" alt="Home User Image">
