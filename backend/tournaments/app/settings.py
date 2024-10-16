@@ -36,7 +36,7 @@ else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'tournaments']
 
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 	'vault',
 	'rest_framework',
 	'drf_yasg',
+	'tournaments'
 ]
 
 MIDDLEWARE = [
@@ -162,9 +163,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# # microservice url
+# microservice url
 
-# USERS_MICROSERVICE_URL = 'http://users:8002'
+USERS_MICROSERVICE_URL = 'http://users:8002'
 
 
 SWAGGER_SETTINGS = {
