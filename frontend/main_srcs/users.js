@@ -47,3 +47,9 @@ function update_user_infos(username)
 {
 	global_user_infos.username = username;
 }
+
+function update_profile_picture_front(picture)
+{
+	global_user_infos.profile_picture = picture;
+	update_pp();
+}
