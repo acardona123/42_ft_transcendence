@@ -2,7 +2,7 @@ services:
   users:
     build: .
     container_name: users
-    command: bash -c "python3 ./django/app/vault/vault_init.py"
+    command: bash -c "python3 ./django/vault/vault_init.py"
     restart: always
     environment:
       - VAULT_DATABASE_NAME=users_db
@@ -13,6 +13,8 @@ services:
     networks:
       - website-network
       - users-network
+    ports:
+      - "8002:8002"
     depends_on:
       users_db:
         condition: service_healthy
