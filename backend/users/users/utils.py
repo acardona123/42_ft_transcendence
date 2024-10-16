@@ -31,7 +31,7 @@ def get_token_oauth(code):
 	response = requests.post('https://api.intra.42.fr/oauth/token', data=data, verify=certifi.where())
 	if response.status_code != 200:
 		return True, None
-	return False, response.json()['access_token']
+	return False, response.json().get('access_token')
 
 def get_user_oauth(token):
 	header = {'Authorization' : f'Bearer {token}'}

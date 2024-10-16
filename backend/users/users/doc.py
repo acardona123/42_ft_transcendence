@@ -22,6 +22,7 @@ MSG_ERROR_INVALID_REFRESH_TOKEN = "Invalid refresh token"
 MSG_ERROR_DEVICE_NOT_CONFIRMED = "Device 2fa is not confirmed"
 MSG_ERROR_NO_IMAGE = "No image saved for this user"
 MSG_ERROR_UPDATING_IMAGE = "Error while updating image"
+MSG_ERROR_CODE_STATE_REQUIRED = "The fields 'state' and 'code' are required"
 
 MSG_USER_CREATED = "User created"
 MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"

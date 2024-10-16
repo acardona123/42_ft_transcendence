@@ -11,18 +11,17 @@ import os
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
-	MSG_ERROR_OAUTH_LOGIN, MSG_ERROR_OAUTH_INFO,  MSG_USER_CREATED, MSG_LOGIN_NEED_2FA,
-	MSG_LOGIN,  MSG_SEND_URL_OAUTH,
-	MSG_ERROR_REFRESH_REQUIRED,
+	MSG_ERROR_OAUTH_LOGIN, MSG_ERROR_OAUTH_INFO,  MSG_USER_CREATED,
+	MSG_LOGIN_NEED_2FA, MSG_LOGIN,  MSG_SEND_URL_OAUTH,
+	MSG_ERROR_REFRESH_REQUIRED, MSG_ERROR_CODE_STATE_REQUIRED,
 	MSG_ERROR_INVALID_REFRESH_TOKEN, MSG_LOGOUT, MSG_TOKEN_REFRESH,
-	
 	DOC_ERROR_METHOD_NOT_ALLOWED, DOC_USER_CREATED, DOC_ERROR_CREATING_USER,
 	DOC_USER_LOGIN, DOC_USER_LOGIN_2FA, DOC_ERROR_LOGIN_FAILED,
 	DOC_ERROR_UNAUTHORIZED,
-	JWT_TOKEN, 
 	DOC_URL_OAUTH42, DOC_USER_LOGIN_API42, DOC_USER_CREATED_API42_WARNING,
-	DOC_USER_CREATED_API42, DOC_ERROR_LOGIN_API42, DOC_LOGOUT, DOC_ERROR_NEED_REFRESH_TOKEN,
-	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH, )
+	DOC_USER_CREATED_API42, DOC_ERROR_LOGIN_API42,
+	DOC_LOGOUT, DOC_ERROR_NEED_REFRESH_TOKEN,
+	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH)
 
 # --------------- user managment --------------------
 
@@ -167,6 +166,8 @@ def get_url_api(request):
 					'data' : url}, status=200)
 
 @swagger_auto_schema(method='get',
+	manual_parameters=[openapi.Parameter('state', openapi.IN_QUERY,description="state receive in the response from API 42", type=openapi.TYPE_STRING, required=True),
+		openapi.Parameter('code', openapi.IN_QUERY,description="code receive in the response from API 42", type=openapi.TYPE_STRING, required=True)],
 	responses={
 		'200': DOC_USER_LOGIN_API42,
 		'200bis': DOC_USER_CREATED_API42,
@@ -176,9 +177,13 @@ def get_url_api(request):
 	})
 @api_view(['GET'])
 def login_oauth(request):
-	if request.GET.get('state') != get_vault_kv_variable('oauth-state'):
+	state = request.query_params.get("state", None)
+	code = request.query_params.get("code", None)
+	if state is None or code is None:
+		return Response({"message": MSG_ERROR_CODE_STATE_REQUIRED}, status=400)
+	if state != get_vault_kv_variable('oauth-state'):
 		return Response({'message' : MSG_ERROR_OAUTH_LOGIN}, status=400)
-	error, token = get_token_oauth(request.GET.get('code'))
+	error, token = get_token_oauth(code)
 	if error:
 		return Response({'message' : MSG_ERROR_OAUTH_LOGIN}, status=401)
 	response = get_user_oauth(token)
