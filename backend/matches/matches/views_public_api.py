@@ -7,6 +7,8 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+from .authentication import IsNormalToken
+
 from matches.models import Match
 from matches.serializer import MatchSerializer, MatchDisplaySerializer
 
@@ -89,16 +91,9 @@ def doc_error_generation(err_description, err_msg):
 		# ???: error form the authentication, should be impossible with jwt tockens...
 	})
 @api_view(['GET'])
+@permission_classes([IsNormalToken])
 def match_history(request):
-	authentication_check_response = get_authenticated_user_id(request)
-	response_data = authentication_check_response['data']
-	response_status = authentication_check_response['status']
-	if response_status != 200:
-		return JsonResponse(status = response_status, data = response_data, safe=False)
-	if response_data.get('is_logged') == False:
-		response_data = {'message': MSG_ERROR_UNIDENTIFIED_USER}
-		return JsonResponse(status = 403, data = response_data, safe=False)
-	user_id = response_data.get('user_id')
+	user_id = request.user.id
 	matches = Match.objects.filter((Q(user1=user_id) | Q(user2=user_id)) & Q(is_finished=True))
 	try:
 		serializer= MatchDisplaySerializer(matches, many=True, context={'user_id': user_id}, fields=['game', 'date', 'duration', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score'])
@@ -160,17 +155,9 @@ def send_request_for_new_match(request_data):
 		'400/500': "see all the error messages of private_api/matches/new_match_verified_id/" 
 	})
 @api_view(['POST'])
+@permission_classes([IsNormalToken])
 def new_match_against_ai(request):
-	authentication_check_response = get_authenticated_user_id(request)
-	response_data = authentication_check_response['data']
-	response_status = authentication_check_response['status']
-	if response_status != 200:
-		return JsonResponse(status = response_status, data= response_data, safe=False)
-	if response_data.get('is_logged') == False:
-		response_data = {'message': MSG_ERROR_UNIDENTIFIED_USER}
-		return JsonResponse(status = 403, data = response_data, safe=False)
-	user_id = response_data.get('user_id')
-
+	user_id = request.user.id
 	ai_generation_response = get_new_ai_request()
 	if ai_generation_response['status'] != 200:
 		return JsonResponse(status = ai_generation_response['status'], data= ai_generation_response, safe=False)
@@ -209,17 +196,9 @@ def new_match_against_ai(request):
 		'400/500': "see all the error messages of private_api/matches/new_match_verified_id/" 
 	})
 @api_view(['POST'])
+@permission_classes([IsNormalToken])
 def new_match_against_guest(request):
-	authentication_check_response = get_authenticated_user_id(request)
-	response_data = authentication_check_response['data']
-	response_status = authentication_check_response['status']
-	if response_status != 200:
-		return JsonResponse(status = response_status, data= response_data, safe=False)
-	if response_data.get('is_logged') == False:
-		response_data = {'message': MSG_ERROR_UNIDENTIFIED_USER}
-		return JsonResponse(status = 403, data = response_data, safe=False)
-	user_id = response_data.get('user_id')
-
+	user_id = request.user.id
 	new_guest_response = get_new_guest_request()
 	if new_guest_response['status'] != 200:
 		return JsonResponse(status = new_guest_response['status'], data = new_guest_response['data'], safe=False)
@@ -264,17 +243,9 @@ def new_match_against_guest(request):
 		'400/500': "see all the error messages of private_api/matches/new_match_verified_id/" ,
 	})
 @api_view(['POST'])
+@permission_classes([IsNormalToken])
 def new_match_against_player(request):
-	authentication_check_response = get_authenticated_user_id(request)
-	response_data = authentication_check_response['data']
-	response_status = authentication_check_response['status']
-	if response_status != 200:
-		return JsonResponse(status = response_status, data= response_data, safe=False)
-	if response_data.get('is_logged') == False:
-		response_data = {'message': MSG_ERROR_UNIDENTIFIED_USER}
-		return JsonResponse(status = 403, data = response_data, safe=False)
-	user_id = response_data.get('user_id')
-
+	user_id = request.user.id
 	try:
 		json_data = json.loads(request.body)
 	except:
@@ -299,7 +270,7 @@ def new_match_against_player(request):
 
 
 def can_update_match(request, match_instance):
-	request_emitter_id = 7 #here the request emitter id will be deduced based on the jwt token
+	request_emitter_id = request.user.id
 	if match_instance.tournament_id >= 0:
 		host_check = is_host_of_tournament(match_instance.tournament_id, request_emitter_id)
 		if host_check['status'] != 200:
@@ -345,6 +316,7 @@ def is_match_finishable(request, match_instance):
 		'400/401/404/...': 'all errors from tournaments/private_api/is_host/{tournament_id}/{user_id}',
 	})
 @api_view(['POST'])
+@permission_classes([IsNormalToken])
 def finish_match(request, match_id):
 	try:
 		match_instance = Match.objects.get(id = match_id)

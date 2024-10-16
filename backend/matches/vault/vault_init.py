@@ -9,7 +9,7 @@ configure_database(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
-os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations \
+os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations matches\
 	&& python3 ./manage.py migrate && \
 	python3 ./manage.py runserver 0.0.0.0:8004'")
 	# gunicorn app.wsgi:application --bind 0.0.0.0:8004  --log-level \"debug\"'")

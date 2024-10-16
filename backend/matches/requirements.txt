@@ -9,3 +9,4 @@ requests
 gunicorn
 setuptools
 drf-yasg
+djangorestframework-simplejwt

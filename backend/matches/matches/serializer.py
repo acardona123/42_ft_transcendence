@@ -83,7 +83,7 @@ class MatchDisplaySerializer(DynamicFieldsModelSerializer):
 
 	def get_main_player_username(self, obj):
 		if "main_player_username" in self.fields:
-			return self.get_usernames_request([self.user_id]).get(str(self.user_id));
+			return self.get_usernames_request([self.user_id]).get(str(self.user_id))
 		else:
 			return ""
 	
