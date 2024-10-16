@@ -11,3 +11,5 @@ RUN apk --no-cache add openssl;\
 	-newkey rsa:2048 -nodes -sha256 -x509 -subj "/O=HashiCorp/CN=Vault"\
 	-addext "subjectAltName = IP:0.0.0.0,DNS:vault" -days 365;\
 	chown vault:vault /vault/tls/*;
+
+COPY --chown=vault:vault ./.env /.env
