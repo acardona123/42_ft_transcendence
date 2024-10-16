@@ -169,10 +169,11 @@ function openModalEditProfile() {
 
 	var modaldialog = document.getElementById('modal-edit-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
+	button_dfa.disabled = true;
 	clear_edp_user_inputs();
 	clear_edp_user_error_fields(true);
 	clear_edp_pass_error_fields();
-	button_dfa.disabled = true;
+	edp_update_profile_picture();
 	get_2fa_state().then(() => {
 		button_dfa.disabled = false;
 		is_btn_on_enable ? set_to_disable_2fa_button() : set_to_enable_2fa_button();

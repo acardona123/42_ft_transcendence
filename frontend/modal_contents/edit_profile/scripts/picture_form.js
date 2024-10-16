@@ -58,7 +58,7 @@ async function send_picture_to_back(form_data)
 			return ;
 		}
 		create_popup("Profile picture updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
-		// TODO: update pp
+		update_profile_picture_front(data.profile_picture);
 	}
 	catch (error)
 	{
@@ -75,6 +75,12 @@ function process_submitted_file()
 	let form_data = new FormData();
 	form_data.append('profile_picture', input_file_button.files[0]);
 	send_picture_to_back(form_data);
+}
+
+function edp_update_profile_picture()
+{
+	const profile_picture = document.getElementById("edp-picture-img");
+	profile_picture.src = global_user_infos.profile_picture;
 }
 
 let input_file_button;

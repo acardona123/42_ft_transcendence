@@ -56,5 +56,6 @@ function update_user_infos(username)
 function update_profile_picture_front(picture)
 {
 	global_user_infos.profile_picture = picture;
+	edp_update_profile_picture();
 	update_pp();
 }
