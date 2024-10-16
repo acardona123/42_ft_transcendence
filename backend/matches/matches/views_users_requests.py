@@ -17,21 +17,16 @@ def get_new_ai_request():
 	return {'status': status, 'body': body_content}
 
 def get_new_guest_request():
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/private/users/new/guest"
-	# response = requests.get(url)
-	# return response
-	# status = response.status_code
-	# body_content = response.json()
-	status = 200
-	body_content = {'message': 'new_guest generated', 'guest_id': 9}
+	url = f"{settings.USERS_MICROSERVICE_URL}/api/private/users/new/player/guest"
+	response = requests.get(url)
+	status = response.status_code
+	body_content = response.json()
 	return {'status': status, 'body': body_content}
 
-def check_player_pin_ok(player_username, player_hashed_pin):
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/private/users/???"
-	# body = {'pin': player_hashed_pin}
-	# response = requests.post(url, body)
-	# status = response.status_code
-	# body_content = response.json()
-	status = 200
-	body_content = {'message': 'player pin validated', 'body': {'valid': True, 'user_id': 12}}
+def check_player_pin_ok(player_username, player_pin):
+	url = f"{settings.USERS_MICROSERVICE_URL}/api/private/users/login/pin"
+	body = {'username': player_username, 'pin': player_pin}
+	response = requests.post(url, body)
+	status = response.status_code
+	body_content = response.json()
 	return {'status': status, 'body': body_content}

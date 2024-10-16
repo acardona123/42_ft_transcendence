@@ -105,9 +105,9 @@ def send_request_for_new_match(request_data):
 @permission_classes([IsNormalToken])
 def new_match_against_ai(request):
 	user_id = request.user.id
-	ai_generation_response = get_new_ai_request()
-	response_status = ai_generation_response.get('status')
-	response_body = ai_generation_response.get('body')
+	new_ai_response = get_new_ai_request()
+	response_status = new_ai_response.get('status')
+	response_body = new_ai_response.get('body')
 	if response_status != 200:
 		return JsonResponse(status = response_status, data= response_body, safe=False)
 	ai_id = response_body["data"].get("id")
@@ -149,9 +149,11 @@ def new_match_against_ai(request):
 def new_match_against_guest(request):
 	user_id = request.user.id
 	new_guest_response = get_new_guest_request()
-	if new_guest_response['status'] != 200:
-		return JsonResponse(status = new_guest_response['status'], data = new_guest_response['data'], safe=False)
-	guest_id = new_guest_response['data'].get("guest_id")
+	response_status = new_guest_response.get('status')
+	response_body = new_guest_response.get('body')
+	if response_status != 200:
+		return JsonResponse(status = response_status, data= response_body, safe=False)
+	guest_id = response_body["data"].get("id")
 
 	new_match_request_data = generate_request_data_with_players(request, user_id, guest_id)
 	if new_match_request_data['status'] != 200:
@@ -206,10 +208,10 @@ def new_match_against_player(request):
 		return JsonResponse(status = 400, data = {'message' : MSG_NEW_MATCH_ERROR_MISSING_FIELD})
 	check_second_player = check_player_pin_ok(player2_username, player2_pin)
 	if check_second_player['status'] != 200:
-		return JsonResponse(status = check_second_player['status'], data = check_second_player['data'], safe=False)
-	if check_second_player['data']['data'].get('valid') != True:
+		return JsonResponse(status = check_second_player['status'], data = check_second_player['body'], safe=False)
+	if check_second_player['body']['data'].get('valid') != True:
 		return JsonResponse(status =  400, data = {'message' : MSG_NEW_MATCH_ERROR_WRONG_PIN})
-	player2_id = check_second_player['data']['data'].get('user_id')
+	player2_id = check_second_player['body']['data'].get('user_id')
 	
 	new_match_request_data = generate_request_data_with_players(request, user_id, player2_id)
 	if new_match_request_data['status'] != 200:
@@ -224,7 +226,7 @@ def can_update_match(request, match_instance):
 		host_check = is_host_of_tournament(match_instance.tournament_id, request_emitter_id)
 		if host_check['status'] != 200:
 			return host_check
-		updatable = host_check['data']['data']['is_host']
+		updatable = host_check['body']['data']['is_host']
 	else:
 		updatable = request_emitter_id == match_instance.user1 or request_emitter_id == match_instance.user2
 	return {'status': 200, 'data': {'is_updatable': updatable}}
@@ -235,7 +237,6 @@ def is_match_finishable(request, match_instance):
 		return match_updatability
 	if match_updatability['data']['is_updatable'] == False:
 		return {'status':403, 'data': {'message' : MSG_FINISH_MATCH_ERROR_NOT_ALLOWED}}
-	print(f"finished: {match_instance.is_finished}")
 	if match_instance.is_finished:
 		return {'status': 403, 'data': {'message' : MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED}}
 	return {'status': 200}
@@ -277,16 +278,12 @@ def finish_match(request, match_id):
 	if match_finishable['status'] != 200:
 		return JsonResponse(status = match_finishable['status'], data = match_finishable['data'])
 
-	# check the existence of the required fields (not their )
 	data = request.data
 	if not 'score1' in data or not 'score2' in data or not 'duration' in data :
 		return JsonResponse(status = 400, data = {'message' : MSG_FINISH_MATCH_ERROR_MISSING_FIELD})
 	request_score1 = data.get('score1')
 	request_score2 = data.get('score2')
 	request_duration = data.get('duration')
-	# print(f"request_score1 = {request_score1}")
-	# print(f"request_score2 = {request_score2}")
-	# print(f"request_duration = {request_duration}"
 
 	try:
 		match_instance.score1 = request_score1
@@ -297,6 +294,7 @@ def finish_match(request, match_id):
 	except Exception as e:
 		return JsonResponse(status = 400, data = {'message' : f"Error when trying to finish the match: {e}"})
 
-	# if match_instance.tournament_id:
-		# TODO: send the request to the users microservice to clean the ai/guest user of this match if needed. returns the player1 and player2 updated id. They would be updated in the match data
+	# if match_instance.tournament_id >= 0:
+		# TODO: send the request to the tournament microservice to signal the match end and transmit the results
+	# TODO: send the results to the stats microservice
 	return JsonResponse(status = 200, data = {'message': f"Match {match_instance.id} successfully ended"})
