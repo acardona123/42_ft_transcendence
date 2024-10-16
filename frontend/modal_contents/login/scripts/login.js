@@ -19,8 +19,7 @@ async function apply_login_user(refresh, access, username)
 	sessionStorage.setItem("access_token", access);
 
 	await Promise.all([
-		setup_friend_list(),
-		get_friends_request_list(),
+		get_friend_list(),
 		create_user_infos(username)
 	]);
 	updateUI();

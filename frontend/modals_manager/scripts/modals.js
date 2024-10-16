@@ -202,11 +202,16 @@ function keypressModalEditProfile(event) {
 function openModalProfile() {
 
 	modalProfile = new ModalManager('modal-profile');
-
 	var modaldialog = document.getElementById('modal-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalProfile.showModal();
-	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
+	Promise.all([
+		setup_friend_list(),
+		setup_friends_request_list()
+	])
+	.then(() => {
+		modalProfile.showModal();
+		on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
+	});
 }
 
 function hideModalProfile() {

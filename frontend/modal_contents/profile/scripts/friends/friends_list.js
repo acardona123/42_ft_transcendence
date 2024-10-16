@@ -1,3 +1,7 @@
+const PATH_ONLINE_DOT = "modal_contents/profile/img/online.png";
+const PATH_OFFLINE_DOT = "modal_contents/profile/img/offline.png";
+const PATH_INACTIVE_DOT = "modal_contents/profile/img/inactive.png";
+
 function getFriendProfilPic(picture) {
 	const profil_pic = document.createElement("img");
 	profil_pic.className = "prof-profil-pic";
@@ -22,13 +26,17 @@ function getFriendPseudo(pseudo)
 	return text;
 }
 
-function getFriendOnline(f_is_online)
+function getFriendOnline(online_status)
 {
-	const is_online = f_is_online;
 	const online_dot_div = document.createElement('div');
 	online_dot_div.className = "prof-online-dot-div";
 	const online_dot_img = document.createElement('img');
-	online_dot_img.src = is_online ? "modal_contents/profile/img/online.png" : "modal_contents/profile/img/offline.png";
+	if (online_status == "online")
+		online_dot_img.src = PATH_ONLINE_DOT;
+	else if (online_status == "inactif")
+		online_dot_img.src = PATH_INACTIVE_DOT;
+	else
+		online_dot_img.src = PATH_OFFLINE_DOT;
 	online_dot_img.className = "prof-friend-online-dot";
 	online_dot_img.href = online_dot_img.src;
 	online_dot_img.tabIndex = "0";
@@ -172,12 +180,12 @@ async function remove_friend(event)
 			remove_friend_array(pseudo_to_remove);
 		}
 		if (elem_list_parent.children.length == 0)
-			update_friend_list(false);
+			update_friend_list_front();
 	}
 	catch (error)
 	{
 		create_popup("Removing friend failed.",
-			2000, 4000,
+			4000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
@@ -192,24 +200,27 @@ function remove_friend_array(username_to_remove)
 	friend_list_data.splice(friend_list_data.findIndex(o => o.username === username_to_remove), 1);
 }
 
-function add_friend_front(pseudo, is_online, picture)
+function add_friend_front(pseudo, online_status, picture)
 {
 	const newElement = getFriendDiv();
 	newElement.appendChild(getFriendProfilPic(picture));
 	newElement.appendChild(getFriendPseudo(pseudo));
-	newElement.appendChild(getFriendOnline(is_online));
+	newElement.appendChild(getFriendOnline(online_status));
 	return newElement;
 }
 
 function sort_by_online_alpha(data)
 {
 	const online_friend_list = [];
+	const inactive_friend_list = [];
 	const offline_friend_list = [];
 
 	for (let i = 0; i < data.length; i++)
 	{
-		if (data[i].is_online)
+		if (data[i].online_status == "online")
 			online_friend_list.push(data[i]);
+		else if (data[i].online_status == "inactive")
+			inactive_friend_list.push(data[i]);
 		else
 			offline_friend_list.push(data[i]);
 	}
@@ -220,15 +231,19 @@ function sort_by_online_alpha(data)
 		const name2 = b.username.toLowerCase();
 		return name1.localeCompare(name2);
 	});
-
+	inactive_friend_list.sort((a, b) =>
+	{
+		const name1 = a.username.toLowerCase();
+		const name2 = b.username.toLowerCase();
+		return name1.localeCompare(name2);
+	});
 	offline_friend_list.sort((a, b) =>
 	{
 		const name1 = a.username.toLowerCase();
 		const name2 = b.username.toLowerCase();
 		return name1.localeCompare(name2);
 	});
-
-	return online_friend_list.concat(offline_friend_list);
+	return online_friend_list.concat(inactive_friend_list.concat(offline_friend_list));
 }
 
 async function get_friend_list()
@@ -248,7 +263,7 @@ async function get_friend_list()
 		data = data.map(data => ({
 				id: data.id,
 				username: data.username,
-				is_online: data.status == "online" ? true : false,
+				online_status: data.status,
 				profile_picture: data.profile_picture
 			}));
 		return sort_by_online_alpha(data);
@@ -256,7 +271,7 @@ async function get_friend_list()
 	catch (error)
 	{
 		create_popup("Retrieving friend list failed.",
-			2000, 4000,
+			4000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
@@ -271,10 +286,9 @@ function empty_friend_list()
 	}
 }
 
-function update_friend_list(is_init=false)
+function update_friend_list_front()
 {
-	if (!is_init)
-		empty_friend_list();
+	empty_friend_list();
 	if (friend_list_data == undefined || friend_list_data.length == 0)
 	{
 		const friends_list = document.getElementById('friends-list');
@@ -287,7 +301,7 @@ function update_friend_list(is_init=false)
 	for (let i = 0; i < friend_list_data.length; i++)
 	{
 		const friends_list = document.getElementById('friends-list');
-		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].profile_picture)
+		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].online_status, friend_list_data[i].profile_picture)
 		friends_list.appendChild(new_friend);
 	}
 }
@@ -297,5 +311,5 @@ let friend_list_data = undefined;
 async function setup_friend_list()
 {
 	friend_list_data = await get_friend_list();
-	update_friend_list(true);
+	update_friend_list_front();
 }
