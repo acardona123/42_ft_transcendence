@@ -31,11 +31,11 @@ from .doc import (MSG_ERROR_UNIDENTIFIED_USER, MSG_ERROR_JSON_FORMAT, MSG_LIST_E
 # === Historic display ===
 @swagger_auto_schema(
 	method='get',
+	manual_parameters=[JWT_TOKEN],
 	responses={
 		200: DOC_LIST_MATCHES,
 		403: doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
 		500: doc_error_generation("serializer display", MSG_LIST_ERROR_SERIALIZER_DISPLAY)
-		# ???: error form the authentication, should be impossible with jwt tockens...
 	})
 @api_view(['GET'])
 @permission_classes([IsNormalToken])
@@ -79,6 +79,7 @@ def send_request_for_new_match(request_data):
 @swagger_auto_schema(
 	method='post',
 	operation_description = "start a new match against a bot",
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties={
@@ -95,7 +96,6 @@ def send_request_for_new_match(request_data):
 		),
 	responses = {
 		200: "see the response 200 of private_api/matches/new_match_verified_id/",
-		# ???: error form the authentication, should be impossible with jwt tockens...
 		403: doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
 		400: doc_error_generation("json body", MSG_ERROR_JSON_FORMAT),
 		'400/401/404/...': 'all the error returns of user/api/users/new/ai',
@@ -120,6 +120,7 @@ def new_match_against_ai(request):
 @swagger_auto_schema(
 	method='post',
 	operation_description = "start a new match against a guest",
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties={
@@ -136,7 +137,6 @@ def new_match_against_ai(request):
 		),
 	responses = {
 		200: "see the response 200 of private_api/matches/new_match_verified_id/",
-		# ???: error form the authentication, should be impossible with jwt tockens...
 		403: doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
 		400: doc_error_generation("json body", MSG_ERROR_JSON_FORMAT),
 		'400/401/404/...': 'all the error returns of user/api/users/new/guest',
@@ -161,6 +161,7 @@ def new_match_against_guest(request):
 @swagger_auto_schema(
 	method='post',
 	operation_description = "start a new match against another player identified by its username and pin",
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties={
@@ -181,7 +182,6 @@ def new_match_against_guest(request):
 		),
 	responses = {
 		200: "see the response 200 of private_api/matches/new_match_verified_id/",
-		# ???: error form the authentication, should be impossible with jwt tockens...
 		403: doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
 		'400 (0)': doc_error_generation("json body", MSG_ERROR_JSON_FORMAT),
 		'400 (1)': doc_error_generation("missing field", MSG_NEW_MATCH_ERROR_MISSING_FIELD),
@@ -241,6 +241,7 @@ def is_match_finishable(request, match_instance):
 @swagger_auto_schema(
 	method='post',
 	operation_description = "finish a match and saving its scores and duration",
+	manual_parameters=[JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties={
