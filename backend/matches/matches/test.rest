@@ -209,7 +209,7 @@ Content-Type: application/json
 
 {
 	"game": "PG",
-	"player2_id": 9,
+	"player2_username": "toto",
 	"player2_pin": "1234",
 	"max_score": 10,
 	"max_duration": 60,

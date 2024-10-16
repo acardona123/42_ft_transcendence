@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 import requests
 
 def get_authenticated_user_id(request):
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/is_logged_in"
+	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/???"
 	# response = requests.get(url)
 	# status = response.status_code
 	# data_content = response.json()
@@ -16,15 +16,6 @@ def get_authenticated_user_id(request):
 	data_content={'message': 'player successfully identified', 'is_logged': True, 'user_id': 7}
 	return {'status': status, 'data': data_content}
 
-def get_authenticated_user_id_or_new_guest(request):
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/my_id"
-	# # header=??? fot authentication
-	# response = requests.get(url)
-	# status = response.status_code
-	# data_content = response.json()
-	status = 200
-	data_content = {'message': 'player successfully identified or created', 'was_logged': 'True', 'user_id': 7}
-	return {'status': status, 'data': data_content}
 
 def get_new_ai_request():
 	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/new/ai"
@@ -46,12 +37,12 @@ def get_new_guest_request():
 	data_content = {'message': 'new_guest generated', 'guest_id': 9}
 	return {'status': status, 'data': data_content}
 
-def check_player_pin_ok(player_id, player_hashed_pin):
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/{player_id}/check_pin"
+def check_player_pin_ok(player_username, player_hashed_pin):
+	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/???"
 	# data = {'pin': player_hashed_pin}
 	# response = requests.post(url, data)
 	# status = response.status_code
 	# data_content = response.json()
 	status = 200
-	data_content = {'message': 'player pin validated', 'valid': True}
+	data_content = {'message': 'player pin validated', 'data': {'valid': True, 'user_id': 12}}
 	return {'status': status, 'data': data_content}

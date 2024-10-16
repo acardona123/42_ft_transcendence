@@ -13,5 +13,5 @@ def is_host_of_tournament(tournament_id, user_id):
 	# status = response.status_code
 	# data_content = response.json()
 	status = 200
-	data_content = {'message': 'tournament host check done', 'is_host': True}
+	data_content = {'message': 'tournament host check done', 'data': {'is_host': True}}
 	return {'status': status, 'data': data_content}

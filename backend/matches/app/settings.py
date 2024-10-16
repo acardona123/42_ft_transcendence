@@ -39,7 +39,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'matches']
 
 
 # Application definition
@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'rest_framework',
-	'matches'
+	'drf_yasg',
+	'matches',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +165,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 USERS_MICROSERVICE_URL = 'http://users:8002'
 MATCHES_MICROSERVICE_URL = 'http://localhost:8004'
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}

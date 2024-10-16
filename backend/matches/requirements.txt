@@ -6,3 +6,5 @@ djangorestframework
 certifi
 requests
 gunicorn
+setuptools
+drf-yasg

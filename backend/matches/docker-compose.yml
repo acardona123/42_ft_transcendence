@@ -16,6 +16,8 @@ services:
     depends_on:
       matches_db:
         condition: service_healthy
+    ports:
+      - "8004:8004"
   matches_db:
     build: ./postgre
     container_name: matches_db
