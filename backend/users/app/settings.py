@@ -24,21 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
 database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
-	from vault.hvac_vault import create_client, read_kv
-
-	client = create_client()
-	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
-	cred = read_kv(client, path)
-	SECRET_KEY = cred['data'][database_name]
+	from vault.hvac_vault import create_client, get_vault_kv_variable
+	VAULT_CLIENT = create_client()
+	
+	SECRET_KEY = get_vault_kv_variable('secret-key')
 else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'users']
 
@@ -54,6 +51,7 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'myDatabase',
 	'vault',
+	'corsheaders',
 	'django_otp',
 	'django_otp.plugins.otp_totp',
 	'rest_framework',
@@ -68,6 +66,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -164,12 +163,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'api/users/media/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 PHONENUMBER_DEFAULT_REGION = 'FR'
 PHONENUMBER_DEFAULT_FORMAT = 'E164'

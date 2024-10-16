@@ -15,7 +15,6 @@ MSG_ERROR_USERNAME_REQUIRED = "The field 'username' is required"
 MSG_ERROR_USER_ID_ONLY_INTEGERS = "The field 'users_id' must contain only integer"
 MSG_ERROR_USER_NOT_FOUND = "Error user not found"
 MSG_ERROR_USERNAME_PIN_REQUIRED = "The field 'username' and 'pin' is required"
-MSG_ERROR_INVALID_USERNAME_PIN = "Incorrect username or pin"
 
 MSG_ID_USERNAME = "Id associated with username"
 MSG_ID_USERNAME_INFO = "Id associated with username, picture and online status"
@@ -23,6 +22,7 @@ MSG_AI_CREATED = "AI created"
 MSG_GUEST_CREATED = "Guest user created"
 MSG_TYPE_USER = "Get type of user"
 MSG_USER_LOGIN_PIN = "User login with pin to play game"
+MSG_INVALID_USERNAME_PIN = "Incorrect username or pin"
 
 DOC_ERROR_METHOD_NOT_ALLOWED = openapi.Response(
 			description="Method Not Allowed",
@@ -108,7 +108,7 @@ DOC_ERROR_USER_NOT_FOUND = openapi.Response(
 		)
 
 DOC_ERROR_LOGIN_PIN= openapi.Response(
-			description=MSG_ERROR_USERNAME_PIN_REQUIRED+" or "+MSG_ERROR_INVALID_USERNAME_PIN,
+			description=MSG_ERROR_USERNAME_PIN_REQUIRED,
 			examples={
 				"application/json": {"message": MSG_ERROR_USERNAME_PIN_REQUIRED}
 			}
@@ -117,7 +117,21 @@ DOC_ERROR_LOGIN_PIN= openapi.Response(
 DOC_LOGIN_PIN= openapi.Response(
 			description=MSG_USER_LOGIN_PIN,
 			examples={
-				"application/json": {"message": MSG_USER_LOGIN_PIN}
+				"application/json": {"message": MSG_USER_LOGIN_PIN,
+								"data": {
+									"user_id": "45",
+									"valid": True
+								}}
+			}
+		)
+
+DOC_NOT_LOGIN_PIN= openapi.Response(
+			description=MSG_USER_LOGIN_PIN,
+			examples={
+				"application/json": {"message": MSG_INVALID_USERNAME_PIN,
+								"data": {
+									"valid": False
+								}}
 			}
 		)
 
@@ -285,6 +299,7 @@ def get_type_user(request, user_id):
 	),
 	responses={
 		200: DOC_LOGIN_PIN,
+		'200bis': DOC_NOT_LOGIN_PIN,
 		400: DOC_ERROR_LOGIN_PIN,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
@@ -298,6 +313,9 @@ def check_pin_code(request):
 		user = CustomUser.objects.get(username=username)
 		if user.pin != pin:
 			raise
-		return Response({"message": MSG_USER_LOGIN_PIN}, status=200)
+		return Response({"message": MSG_USER_LOGIN_PIN,
+						"data": {"user_id": user.id,
+							"valid" : True}}, status=200)
 	except:
-		return Response({"message": MSG_ERROR_INVALID_USERNAME_PIN}, status=400)
+		return Response({"message": MSG_INVALID_USERNAME_PIN,
+						"data": {"valid": False}}, status=200)

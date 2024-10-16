@@ -30,14 +30,13 @@ if (database_name.endswith('_dev') == False):
 	from vault.hvac_vault import create_client, read_kv
 
 	client = create_client()
-	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
-	cred = read_kv(client, path)
-	SECRET_KEY = cred['data'][database_name]
+	cred = read_kv(client, 'secret-key')
+	SECRET_KEY = cred['data']['value']
 else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'friends']
 
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'corsheaders',
 	'myDatabase',
 	'vault',
 	'rest_framework',
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -159,6 +160,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # microservice url
 

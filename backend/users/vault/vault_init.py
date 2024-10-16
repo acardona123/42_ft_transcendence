@@ -10,9 +10,13 @@ configure_database(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
-path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
-secret= {f'{os.getenv('VAULT_DATABASE_NAME')}': f"{os.getenv('SECRET_KEY')}"}
-create_kv(VAULT_CLIENT, path, secret)
+list = list_kv(VAULT_CLIENT)
+if list['data']['keys'] == ['secret-key']:
+	print('coucou')
+	create_kv(VAULT_CLIENT, 'api-key', {'value': f"{os.getenv('API_KEY_RANDOM_WORD')}"})
+	create_kv(VAULT_CLIENT, 'oauth-id', {'value': f"{os.getenv('CLIENT_ID')}"})
+	create_kv(VAULT_CLIENT, 'oauth-secret', {'value': f"{os.getenv('CLIENT_SECRET')}"})
+	create_kv(VAULT_CLIENT, 'oauth-state', {'value': f"{os.getenv('STATE')}"})
 
 os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations users\
 	&& python3 ./manage.py migrate && \

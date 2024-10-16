@@ -15,22 +15,23 @@ import base64
 import io
 import os
 from django.utils import timezone
+from vault.hvac_vault import get_vault_kv_variable
 
 # --------------- Oauth --------------------
 
 def get_token_oauth(code):
 	data = {
 		'grant_type' : 'authorization_code',
-		'client_id' : os.getenv('CLIENT_ID'),
-		'client_secret' : os.getenv('CLIENT_SECRET'),
+		'client_id' : get_vault_kv_variable('oauth-id'),
+		'client_secret' : get_vault_kv_variable('oauth-secret'),
 		'code' : code,
 		'redirect_uri' : os.getenv('OAUTH_REDIRECT_URL'),
-		'state' : os.getenv('STATE'),
+		'state' : get_vault_kv_variable('oauth-state'),
 	}
 	response = requests.post('https://api.intra.42.fr/oauth/token', data=data, verify=certifi.where())
 	if response.status_code != 200:
 		return True, None
-	return False, response.json()['access_token']
+	return False, response.json().get('access_token')
 
 def get_user_oauth(token):
 	header = {'Authorization' : f'Bearer {token}'}
@@ -52,7 +53,7 @@ def create_user_oauth(data):
 				'data': serializer.errors}, status=400)
 
 def login_user_oauth(id):
-	user = CustomUser.objects.filter(oauth_id=id).first()
+	user = CustomUser.objects.get(oauth_id=id)
 	user.set_status_online()
 	tokens = get_tokens_for_user(user)
 	return Response({'message': MSG_LOGIN_OAUTH,
@@ -110,9 +111,12 @@ def generate_qr_code(data):
 
 # ------------------Random word--------------
 from string import capwords
+from vault.hvac_vault import get_vault_kv_variable
+
 def get_random_word():
 	api_url = 'https://api.api-ninjas.com/v1/randomword'+'?type=noun'
-	response = requests.get(api_url, headers={'X-Api-Key': os.getenv('API_KEY_RANDOM_WORD')}, verify=certifi.where())
+	api_key = get_vault_kv_variable('api-key')
+	response = requests.get(api_url, headers={'X-Api-Key': api_key}, verify=certifi.where())
 	if response.status_code == requests.codes.ok:
 		word = response.json().get('word', None)
 		if word != None:

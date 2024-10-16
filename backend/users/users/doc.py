@@ -22,6 +22,7 @@ MSG_ERROR_INVALID_REFRESH_TOKEN = "Invalid refresh token"
 MSG_ERROR_DEVICE_NOT_CONFIRMED = "Device 2fa is not confirmed"
 MSG_ERROR_NO_IMAGE = "No image saved for this user"
 MSG_ERROR_UPDATING_IMAGE = "Error while updating image"
+MSG_ERROR_CODE_STATE_REQUIRED = "The fields 'state' and 'code' are required"
 
 MSG_USER_CREATED = "User created"
 MSG_LOGIN_NEED_2FA = "User login successfully, need to validate 2fa"
@@ -336,7 +337,9 @@ DOC_UPDATE_INFO = openapi.Response(
 						"username": "coucou",
 						"email": "fghf@fdg.ds",
 						"phone": "+33326597845",
-						"pin": "0004"
+						"pin": "0004",
+						"refresh": "dfggggggggggggggggggggggg",
+						"access": "dfggggggggggggggggggggggg"
 					}
 				}
 			}
@@ -358,6 +361,15 @@ DOC_ERROR_UPDATE_INFO = openapi.Response(
 							"The phone number entered is not valid."
 						]
 					}
+				}
+			}
+		)
+
+DOC_ERROR_UPDATE_INFO_BIS = openapi.Response(
+			description=MSG_ERROR_UPDATE_USER_INFO,
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_UPDATE_USER_INFO,
 				}
 			}
 		)
@@ -460,3 +472,4 @@ DOC_ERROR_UPADTE_IMAGE = openapi.Response(
 				}
 			}
 		)
+
