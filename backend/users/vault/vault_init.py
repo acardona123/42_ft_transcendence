@@ -10,10 +10,9 @@ configure_database(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 create_role(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
-try:
-	list = list_kv(VAULT_CLIENT)
-except:
-	print("--------------------init---------------")
+list = list_kv(VAULT_CLIENT)
+if list['data']['keys'] == ['secret-key']:
+	print('coucou')
 	create_kv(VAULT_CLIENT, 'api-key', {'value': f"{os.getenv('API_KEY_RANDOM_WORD')}"})
 	create_kv(VAULT_CLIENT, 'oauth-id', {'value': f"{os.getenv('CLIENT_ID')}"})
 	create_kv(VAULT_CLIENT, 'oauth-secret', {'value': f"{os.getenv('CLIENT_SECRET')}"})
