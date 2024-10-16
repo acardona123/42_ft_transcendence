@@ -48,6 +48,10 @@ else
 	#enable kv1
 	echo 'Enable kv1 in Vault server...'
 	vault secrets enable -path=secret kv-v1
+
+	#store secret-key django in kv
+	secret_key=$(source .env; echo $SECRET_KEY)
+	vault kv put secret/secret-key value=$secret_key
 fi
 
 vault status > /vault/file/status;

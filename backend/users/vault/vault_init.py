@@ -18,7 +18,6 @@ except:
 	create_kv(VAULT_CLIENT, 'oauth-id', {'value': f"{os.getenv('CLIENT_ID')}"})
 	create_kv(VAULT_CLIENT, 'oauth-secret', {'value': f"{os.getenv('CLIENT_SECRET')}"})
 	create_kv(VAULT_CLIENT, 'oauth-state', {'value': f"{os.getenv('STATE')}"})
-	create_kv(VAULT_CLIENT, 'secret-key', {'value': f"{os.getenv('SECRET_KEY')}"})
 
 os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations users\
 	&& python3 ./manage.py migrate && \
