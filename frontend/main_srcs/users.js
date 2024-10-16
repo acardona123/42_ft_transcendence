@@ -7,6 +7,11 @@ let global_user_infos = undefined;
 // };
 // TODO change user to undefined
 
+function is_connected()
+{
+	return global_user_infos !== undefined;
+}
+
 async function get_profil_picture()
 {
 	const url = "https://localhost:8443/api/users/update/picture/";
