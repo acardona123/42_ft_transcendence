@@ -17,7 +17,6 @@ async function apply_login_user(refresh, access, username)
 {
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
-	isConnected = true;
 
 	await Promise.all([
 		get_friend_list(),
@@ -31,7 +30,7 @@ function logout_user_no_back()
 {
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
-	isConnected = false;
+	global_user_infos = undefined;
 	updateUI();
 }
 
