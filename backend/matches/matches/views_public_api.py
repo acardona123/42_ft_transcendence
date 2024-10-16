@@ -106,9 +106,11 @@ def send_request_for_new_match(request_data):
 def new_match_against_ai(request):
 	user_id = request.user.id
 	ai_generation_response = get_new_ai_request()
-	if ai_generation_response['status'] != 200:
-		return JsonResponse(status = ai_generation_response['status'], data= ai_generation_response, safe=False)
-	ai_id = ai_generation_response['data'].get("ai_id")
+	response_status = ai_generation_response.get('status')
+	response_body = ai_generation_response.get('body')
+	if response_status != 200:
+		return JsonResponse(status = response_status, data= response_body, safe=False)
+	ai_id = response_body["data"].get("id")
 
 	new_match_request_data = generate_request_data_with_players(request, user_id, ai_id)
 	if new_match_request_data['status'] != 200:
