@@ -8,7 +8,7 @@ function getFriendProfilPic(picture) {
 function getFriendDiv()
 {
 	const div_object = document.createElement('div');
-	div_object.className = "prof-friend-div friend-container";
+	div_object.className = "prof-friend-div prof-friend-container";
 	div_object.onmouseenter = remove_friend_enter;
 	div_object.onmouseleave = remove_friend_leave;
 	return div_object;
@@ -245,11 +245,12 @@ async function get_friend_list()
 
 		fetched_data = await fetched_data.json();
 		let data = fetched_data.data;
-
-		// TODO: add online and picture
-		data = data.map(data => (
-			{id: data.id, username: data.username, is_online: (Math.random() <= 0.5)}
-		));
+		data = data.map(data => ({
+				id: data.id,
+				username: data.username,
+				is_online: data.status == "online" ? true : false,
+				profile_picture: data.profile_picture
+			}));
 		return sort_by_online_alpha(data);
 	}
 	catch (error)
@@ -286,7 +287,7 @@ function update_friend_list(is_init=false)
 	for (let i = 0; i < friend_list_data.length; i++)
 	{
 		const friends_list = document.getElementById('friends-list');
-		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].picture)
+		const new_friend = add_friend_front(friend_list_data[i].username, friend_list_data[i].is_online, friend_list_data[i].profile_picture)
 		friends_list.appendChild(new_friend);
 	}
 }
