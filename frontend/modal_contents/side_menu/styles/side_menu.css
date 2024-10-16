@@ -32,14 +32,14 @@
 }
 
 .large-rounded-button {
-    display: inline-block;
+	display: inline-block;
 	cursor: pointer;
 	border-radius: 25% !important;
 	background-color: #eaaf00 !important;
 	border: black 0.1vh solid !important;
 
 	transition: transform 0.5s !important;
-    /* clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%); */
+	/* clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%); */
 }
 
 .large-rounded-button:hover, .large-rounded-button:focus{
@@ -87,6 +87,7 @@
 	right: 20%;
 	padding: 10px 10px;
 	border-radius: 50%;
+	background-color: green;
 }
 
 #menuColumn {
@@ -105,13 +106,13 @@
 	border: 1px solid #ccc;
 	/* height: 30%; */
 	height: fit-content;
-    margin-bottom: 2%;
+	margin-bottom: 2%;
 }
 
 .win-loss-circle {
 	position: relative;
-    width: 5vh;
-    height: 5vh;
+	width: 5vh;
+	height: 5vh;
 	min-width: 50px;
 	min-height: 50px;
 	border-radius: 50%;
