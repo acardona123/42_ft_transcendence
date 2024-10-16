@@ -296,14 +296,18 @@ async function get_modals_html()
 document.addEventListener("DOMContentLoaded", function()
 {
 	const event = new Event("onModalsLoaded");
-	updateUI();
 
-	get_modals_html().then((html) => {
-		document.getElementById('modals').innerHTML = html;
-	})
-	.then(() =>
-	{
-		document.dispatchEvent(event);
-		addFocusOutListener();
+	load_side_menu_html().then(() => {
+
+		get_modals_html().then((html) => {
+			document.getElementById('modals').innerHTML = html;
+		})
+		.then(() =>
+		{
+			document.dispatchEvent(event);
+			addFocusOutListener();
+			updateUI();
+		});
 	});
+
 });
