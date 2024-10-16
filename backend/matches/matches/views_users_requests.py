@@ -7,15 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 import requests
 
-def get_authenticated_user_id(request):
-	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/???"
-	# response = requests.get(url)
-	# status = response.status_code
-	# data_content = response.json()
-	status = 200
-	data_content={'message': 'player successfully identified', 'is_logged': True, 'user_id': 7}
-	return {'status': status, 'data': data_content}
-
+from django.conf import settings
 
 def get_new_ai_request():
 	# url = f"{settings.USERS_MICROSERVICE_URL}/api/users/new/ai"

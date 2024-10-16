@@ -21,7 +21,7 @@ import json
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
-from matches.views_users_requests import get_authenticated_user_id, get_authenticated_user_id, get_new_ai_request, get_new_guest_request, check_player_pin_ok
+from matches.views_users_requests import get_new_ai_request, get_new_guest_request, check_player_pin_ok
 from matches.views_tournaments_requests import is_host_of_tournament
 
 from .doc import (MSG_ERROR_UNIDENTIFIED_USER, MSG_ERROR_JSON_FORMAT, MSG_LIST_ERROR_SERIALIZER_DISPLAY, MSG_LIST_SUCCESS, DOC_LIST_MATCHES, MSG_NEW_MATCH_ERROR_MISSING_FIELD, MSG_NEW_MATCH_ERROR_WRONG_PIN, MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND, MSG_FINISH_MATCH_ERROR_NOT_ALLOWED, MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED, MSG_FINISH_MATCH_ERROR_MISSING_FIELD, JWT_TOKEN, doc_error_generation)
