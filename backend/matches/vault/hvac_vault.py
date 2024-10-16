@@ -109,3 +109,9 @@ def read_kv(client, path):
 
 def list_kv(client):
 	return client.secrets.kv.v1.list_secrets(path='')
+
+from django.conf import settings
+
+def get_vault_kv_variable(path):
+	cred = read_kv(settings.VAULT_CLIENT, path)
+	return cred['data']['value']
