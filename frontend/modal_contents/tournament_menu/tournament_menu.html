@@ -1,8 +1,8 @@
-<div id="modalTournamentMatchCreation" class="modal" tabindex="-1">
+<div id="modal-tournament-creation" class="modal" tabindex="-1">
 	<div id="modalTournamentCreationDialog" class="modal-dialog modal-dialog-centered custom-match-creation-dialog">
 		<div class="modal-content custom-match-creation-content main-container">
 			<div class="header debug-m">
-				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="returnToModalPlay('TournamentMatchCreation')">
+				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="close_modal('modal-ia-match-creation', return_to_modal_play)">
 					<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
 				</button>
 				<h1 class="header-text bold">MATCH CREATION</h1>
@@ -72,7 +72,7 @@
 				<div class="debug-output" id="debugOutput">Debug Output: Names Array</div>
 
 				<!-- Submit Button -->
-				<button id="1v1submitButton" type="submit" class="btn btn-form submit-btn-form">Create Match</button>	
+				<button id="1v1submitButton" type="submit" class="btn btn-form submit-btn-form">Create Match</button>
 		</div>
 	</div>
 </div>

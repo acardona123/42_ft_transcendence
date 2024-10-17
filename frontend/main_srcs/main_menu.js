@@ -21,8 +21,11 @@ function updateUserName() {
 }
 
 function disableButtonPlay() {
-	const buttonPlay = document.getElementById('buttonPlay');
-	buttonPlay.disabled = true;
+	const button = document.getElementById('buttonPlay');
+	if (button) {
+		button.disabled = true;
+		button.removeAttribute('autofocus');
+	}
 
 	document.getElementById("menuProfile").addEventListener('hide.bs.offcanvas', function () {
 		buttonPlay.disabled = false;

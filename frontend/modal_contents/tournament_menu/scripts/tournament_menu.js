@@ -182,13 +182,6 @@ function OnClickAddConnectedPlayer() {
 	});
 }
 
-function clearInputFields() {
-	var inputs = document.querySelectorAll('.input-container input');
-	inputs.forEach(function (input) {
-		input.value = ''; // Clear the input value
-	});
-}
-
 function addFocusOutListener() {
 	var inputs = document.querySelectorAll('.input-container input');
 
@@ -254,24 +247,24 @@ function handleTounamentFormSubmission() {
 // =================================================================================================
 // =================================================================================================
 
-	let playerGrid;
-	let playerCards;
-	let btnAddGuestPlayer;
-	let btnAddConnectedPlayer;
-	let ToggleConnectedPlayerContainer;
-	let buttonAddIA;
-	let debugOutput;
+let playerGrid;
+let playerCards;
+let btnAddGuestPlayer;
+let btnAddConnectedPlayer;
+let ToggleConnectedPlayerContainer;
+let buttonAddIA;
+let debugOutput;
 
-	const numRows = 4;
-	const numCols = 4;
-	const arrayCardPosToNumber = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15];
+const numRows = 4;
+const numCols = 4;
+const arrayCardPosToNumber = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15];
 
-	const maxCards = 16;
-	let cardsNumber = 1;
-	let IANumber = 0;
-	let guestNumber = 0;
-	let playerNumber = 1;
-	let playerList = [];
+const maxCards = 16;
+let cardsNumber = 1;
+let IANumber = 0;
+let guestNumber = 0;
+let playerNumber = 1;
+let playerList = [];
 
 function updateGrid() {
 	for (let i = 0; i < playerList.length; ++i) {
@@ -500,48 +493,53 @@ function initPlayerGird() {
 	playerList = [];
 
 	/* Set array */
-	playerList.push({name: userName, type: 'PLAYER'});
+	playerList.push({name: "PATATOR", type: 'PLAYER'});
+	// playerList.push({name: global_user_infos.username, type: 'PLAYER'});
 	updateGrid();
 
-	/* Set events */
-	eventDeleteCard();
-	eventAddGuestPlayer();
-	eventAddIA();
-}
 
-function escapeKeyPressTournamentMenu(event) {
-	if (event.key === "Escape")
-	{
-		returnToModalPlay("TournamentMatchCreation")
-		removeEventListener('keydown', escapeKeyPressTournamentMenu);
-	}
 }
 
 function initTournamentCreation() {
+	modal_play.hide();
+
+	const sliderTime = document.getElementById('tournamentTimeSlider');
+	const sliderPoints = document.getElementById('tournamentPointsSlider');
+
+	sliderTime.value = 45;
+	sliderPoints.value = 5;
+
 	/* Slider */
 	updateSlider("TournamentForm");
-
-	/* Player Grid */
+	
+	/* Visual Features */
+	clearInputFields();
+	
 	initPlayerGird();
 
-	/* Connected Player */
+	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
+	// disableFormSubmitOnEnter('PlayerConnectedPin');
+}
+
+document.addEventListener("onModalsLoaded", () => {
+	initTournamentCreation();
+
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === "Escape") {
+			returnToModalPlay("TournamentMatchCreation")
+		}
+	});
+
 	pincodeOnlyDigits();
 	OnClickToggleContainerConnectedPlayer();
 	OnEnterInputConnectedPlayer();
 	OnClickAddConnectedPlayer();
 
-	/* Visual Features */
-	clearInputFields();
-	addFocusOutListener();
+	eventDeleteCard();
+	eventAddGuestPlayer();
+	eventAddIA();
 
-	/* Form Submission */
 	handleTounamentFormSubmission();
-	
-	addEventListener('keydown', escapeKeyPressTournamentMenu);
-	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
-	// disableFormSubmitOnEnter('PlayerConnectedPin');
-}
 
-// document.addEventListener('focus', function() {
-// 	console.log('focused: ', document.activeElement)
-// }, true);
+});

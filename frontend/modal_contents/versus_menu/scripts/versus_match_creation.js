@@ -249,7 +249,9 @@ async function sumbit1v1Player(matchData) {
 	}
 }
 
-function initMatch1v1Creation() {
+function initMatchVersusCreation() {
+	modal_play.hide();
+
 	const sliderTime = document.getElementById('1v1TimeSlider');
 	const sliderPoints = document.getElementById('1v1PointsSlider');
 
@@ -260,7 +262,6 @@ function initMatch1v1Creation() {
 
 	clearErrorFields();
 	clearInputFields();
-
 }
 
 document.addEventListener("onModalsLoaded", function()
@@ -270,7 +271,7 @@ document.addEventListener("onModalsLoaded", function()
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key === "Escape") {
-			returnToModalPlay("1v1MatchCreation");
+			close_modal('modal-versus-match-creation', return_to_modal_play);
 		}
 	});
 

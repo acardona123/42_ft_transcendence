@@ -20,8 +20,8 @@ async function validate_code_setup(user_code)
 		else if (!fetched_data.ok)
 			throw new Error("Error validating the code.");
 		toggle_2fa_button();
-		hideModalTwoFASetup();
-		openModalEditProfile();
+		hide_modal('modal-2fa-setup');
+		open_modal('modal-edit-profile', init_modal_edit_profile , undefined);
 		return "valid";
 	}
 	catch (error)
@@ -56,7 +56,7 @@ async function validate_code_valid(user_code)
 		let data = await fetched_data.json();
 		data = data.data;
 		await apply_login_user(data.refresh, data.access, undefined);
-		hideModalTwoFAValid();
+		close_modal('modal-2fa-valid');
 		return "valid";
 	}
 	catch (error)
@@ -90,13 +90,14 @@ async function send_code_to_validation(digit_inputs, is_setup)
 	{
 		if (is_setup)
 		{
-			hideModalTwoFASetup();
-			openModalEditProfile();
+			close_modal('modal-2fa-setup');
+			open_modal('modal-edit-profile', init_modal_edit_profile , undefined);
+
 		}
 		else
 		{
-			hideModalTwoFAValid();
-			openModalLogin();
+			close_modal('modal-2fa-valid');
+			open_modal('modal-login', clear_login_inputs, focus_modal_login);
 		}
 		create_popup("The session is expired.", 10000, 4000, HEX_RED, HEX_RED_HOVER);
 	}

@@ -95,10 +95,10 @@ function pincodeOnlyDigits() {
 
 function clearInputFields() {
 	var inputs = document.querySelectorAll('.input-container input');
-		inputs.forEach(function(input) {
-			input.value = '';
-			input.classList.remove('has-content');
-		});
+	inputs.forEach(function(input) {
+		input.value = '';
+		input.classList.remove('has-content');
+	});
 }
 
 function clearErrorFields() {
@@ -112,8 +112,6 @@ function clearErrorFields() {
 
 function addFocusOutListener() {
 	var inputs = document.querySelectorAll('.input-container input');
-
-	console.log(inputs);
 
 	inputs.forEach(function(input) {
 			input.addEventListener('focusout', function() {
