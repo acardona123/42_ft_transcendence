@@ -21,8 +21,6 @@ def get_new_guest_request():
 	response = requests.post(url, json={})
 	status = response.status_code
 	body_content = response.json()
-	print("content: ===============================")
-	print (body_content) #///////////////////////////////////////
 	return {'status': status, 'body': body_content}
 
 def check_player_pin_ok(player_username, player_pin):

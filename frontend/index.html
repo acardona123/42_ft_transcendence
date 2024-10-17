@@ -71,60 +71,128 @@
 		<script src="modal_contents/side_menu/scripts/side_menu.js"></script>
 
 		<div aria-label="game js" >
-			<!-- Shared between games -->
-			<script src="modal_contents/games/shared/scripts/phaser.min.js"></script>
-			<script src="modal_contents/games/shared/scripts/tools.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/AbstractVerticallyScaledTileSprite.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/Button.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/EntitledTimeDisplay.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/Icon.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/SceneTexture.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/Texture.js"></script>
-			<script src="modal_contents/games/shared/scripts/scene_objects/TimeDisplay.js"></script>
-
-			<!-- utils for all scenes -->
-			<script src="modal_contents/games/pong/scripts/gamemode.js"></script>
-			<script src="modal_contents/games/pong/scripts/tools.js"></script>
-
-			<!-- scene boot -->
-			<script src="modal_contents/games/pong/scripts/scene_boot/SceneBoot.js"></script>
-
-			<!-- scene menu -->
-				<!-- objects -->
-			<script src="modal_contents/games/pong/scripts/scene_menu/objects/MenuBackground.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_menu/objects/PlayerDescriptionPanel.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_menu/objects/BotDescriptionPanel.js"></script>
-				<!-- scene -->
-			<script src="modal_contents/games/pong/scripts/scene_menu/SceneMenu.js"></script>
-
-			<!-- scene play -->
-				<!-- objects -->
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/Ball.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/Paddle.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/AlignedText.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/Score.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/PlayBackground.js"></script>
-					<!-- borders -->
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/AbstractBorder.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/DeathBorder.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/BounceBorder.js"></script>
-					<!-- clock -->
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/AbstractClock.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Timer.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Chronometer.js"></script>
-				<!-- scene -->
-			<script src="modal_contents/games/pong/scripts/scene_play/ScenePlay.js"></script>
-
-			<!-- scene game finished -->
-				<!-- objects -->
-			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/Confetti.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
-			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
-				<!-- scene -->
-			<script src="modal_contents/games/pong/scripts/scene_game_finished/SceneGameFinished.js"></script>
-
-			<script src="modal_contents/games/pong/scripts/game_config.js"></script>
-			<script src="modal_contents/games/pong/scripts/textures_config.js"></script>
+			<div aria-label="Shared between games">
+				<script src="modal_contents/games/shared/scripts/phaser.min.js"></script>
+				<script src="modal_contents/games/shared/scripts/tools.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/AbstractVerticallyScaledTileSprite.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/Button.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/EntitledTimeDisplay.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/Icon.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/SceneTexture.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/Texture.js"></script>
+				<script src="modal_contents/games/shared/scripts/scene_objects/TimeDisplay.js"></script>
+			</div>
+			<div aria-label="Pong">
+				<div aria-label="utils for all scenes">
+					<script src="modal_contents/games/pong/scripts/gamemode.js"></script>
+					<script src="modal_contents/games/pong/scripts/tools.js"></script>
+				</div>
+				<div aria-label="scene boot">
+					<script src="modal_contents/games/pong/scripts/scene_boot/SceneBoot.js"></script>
+				</div>
+				<div aria-label="scene menu">
+					<div aria-label="objects">
+						<script src="modal_contents/games/pong/scripts/scene_menu/objects/MenuBackground.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_menu/objects/PlayerDescriptionPanel.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_menu/objects/BotDescriptionPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/pong/scripts/scene_menu/SceneMenu.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene play">
+					<div aria-label="objects">
+						<script src="modal_contents/games/pong/scripts/scene_play/objects/Ball.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_play/objects/Paddle.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_play/objects/AlignedText.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_play/objects/Score.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_play/objects/PlayBackground.js"></script>
+						<div aria-label="borders">
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/AbstractBorder.js"></script>
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/DeathBorder.js"></script>
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/BounceBorder.js"></script>
+						</div>
+						<div aria-label="clock">
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/AbstractClock.js"></script>
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Timer.js"></script>
+							<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Chronometer.js"></script>
+						</div>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/pong/scripts/scene_play/ScenePlay.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene game finished">
+					<div aria-label="objects">
+						<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/Confetti.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+						<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/pong/scripts/scene_game_finished/SceneGameFinished.js"></script>
+					</div>
+				</div>
+				<script src="modal_contents/games/pong/scripts/game_config.js"></script>
+				<script src="modal_contents/games/pong/scripts/textures_config.js"></script>
+			</div>
+			<div aria-label="flappy bird">
+				<div aria-label="utils for all scenes">
+					<script src="modal_contents/games/flappy_bird/scripts/gamemode.js"></script>
+					<script src="modal_contents/games/flappy_bird/scripts/tools.js"></script>
+				</div>
+				<div aria-label="SceneBoot">
+					<script src="modal_contents/games/flappy_bird/scripts/scene_boot/SceneBoot.js"></script>
+				</div>
+				<div aria-label="SceneMenu">
+					<div aria-label="objects">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuBackground.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuGround.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuCeiling.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_menu/objects/PlayerDescription.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_menu/SceneMenu.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene_play">
+					<div aria-label="objects">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PipePair.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PipePairsPool.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/Player.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayGround.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayCeiling.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayBackground.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/StartingLine.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayerExplosion.js"></script>
+					</div>
+					<div aria-label="Textboard">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/AbstractClock.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/Timer.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/Chronometer.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/AlignedText.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/ScoreText.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/Score.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/textboard/Textboard.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_play/ScenePlay.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene game finished">
+					<div aria-label="objects">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/Confetti.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedCeiling.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedGround.js"></script>
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_game_finished/SceneGameFinished.js"></script>
+					</div>
+				</div>
+				<script src="modal_contents/games/flappy_bird/scripts/game_config.js"></script>
+				<script src="modal_contents/games/flappy_bird/scripts/textures_config.js"></script>
+			</div>
 		</div>
 	</body>
 </html>

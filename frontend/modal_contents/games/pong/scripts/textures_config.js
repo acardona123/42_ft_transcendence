@@ -1,4 +1,4 @@
-const pg_assets_path = document.querySelector('base').getAttribute('href') + "pong/assets/"
+const pg_assets_path = "modal_contents/games/pong/assets/"
 
 const pg_gameTextures = {
 	background:		new Texture(pg_assets_path + "images/background_sky.jpg",	"image", 1920, 1080),

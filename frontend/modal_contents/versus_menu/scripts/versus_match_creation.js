@@ -179,13 +179,14 @@ function handle1v1FormSubmission() {
 
 function start_game(response_data)
 {
+	match_data = response_data["data"][0]
 	gameConfig = pg_gameConfig;
-	pg_gameMode.maxPoints = response_data["max_score"];
+	pg_gameMode.maxPoints = match_data["max_score"];
 	pg_gameMode.bot_level = -1;
-	pg_gameMode.maxTime = response_data["max_duration"];
-	pg_gameMode.username_player1 = response_data["main_player_username"];
-	pg_gameMode.username_player2 = response_data["opponent_username"];
-	pg_gameMode.match_id = response_data["id"];
+	pg_gameMode.maxTime = match_data["max_duration"];
+	pg_gameMode.username_player1 = match_data["main_player_username"];
+	pg_gameMode.username_player2 = match_data["opponent_username"];
+	pg_gameMode.match_id = match_data["id"];
 	var game = new Phaser.Game(gameConfig);
 }
 
@@ -193,10 +194,6 @@ async function sumbit1v1Guest(matchData) {
 	const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
 
 	const url = "/api/matches/new/me-guest/";
-
-	console.log("fetch to /api/matches/new/me-guest/");
-	console.log(matchData);
-
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -215,11 +212,7 @@ async function sumbit1v1Guest(matchData) {
 		let data = await fetched_data.json();
 		close_modal('modal-versus-match-creation', undefined);
 		open_modal('modal-game', undefined, undefined);
-
 		start_game(data);
-
-		console.log("Match created.");
-
 	}
 	catch (error)
 	{
@@ -231,7 +224,7 @@ async function sumbit1v1Guest(matchData) {
 async function sumbit1v1Player(matchData) {
 	const errorBoxVSPlayer = document.getElementById('ErrorBoxConnectionVSPlayer');
 
-	const url = "/api/matches/new/me-player";
+	const url = "/api/matches/new/me-player/";
 
 	console.log("fetch to /api/matches/new/me-player");
 	console.log(matchData);

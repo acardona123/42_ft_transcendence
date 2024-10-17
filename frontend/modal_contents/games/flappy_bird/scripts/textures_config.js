@@ -1,4 +1,4 @@
-const fb_assets_path = document.querySelector('base').getAttribute('href') + "flappy_bird/assets/"
+const fb_assets_path = "modal_contents/games/flappy_bird/assets/"
 
 const fb_gameTextures = {
 	pipe: {
