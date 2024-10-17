@@ -218,6 +218,23 @@
 
 /* ================================================ */
 
+/* === MODAL GAME === */
+
+#modal-game-dialog
+{
+	height: 80vh !important;
+	width: 80vw !important;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+
+#modal-game-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
 /* === MODAL LOGIN === */
 
 #modal-login-dialog

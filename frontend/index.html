@@ -69,5 +69,62 @@
 		<script src="modal_contents/twoFA/scripts/twoFA_front.js"></script>
 		<script src="modal_contents/twoFA/scripts/twoFA_back.js"></script>
 		<script src="modal_contents/side_menu/scripts/side_menu.js"></script>
+
+		<div aria-label="game js" >
+			<!-- Shared between games -->
+			<script src="modal_contents/games/shared/scripts/phaser.min.js"></script>
+			<script src="modal_contents/games/shared/scripts/tools.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/AbstractVerticallyScaledTileSprite.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/Button.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/EntitledTimeDisplay.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/Icon.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/SceneTexture.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/Texture.js"></script>
+			<script src="modal_contents/games/shared/scripts/scene_objects/TimeDisplay.js"></script>
+
+			<!-- utils for all scenes -->
+			<script src="modal_contents/games/pong/scripts/gamemode.js"></script>
+			<script src="modal_contents/games/pong/scripts/tools.js"></script>
+
+			<!-- scene boot -->
+			<script src="modal_contents/games/pong/scripts/scene_boot/SceneBoot.js"></script>
+
+			<!-- scene menu -->
+				<!-- objects -->
+			<script src="modal_contents/games/pong/scripts/scene_menu/objects/MenuBackground.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_menu/objects/PlayerDescriptionPanel.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_menu/objects/BotDescriptionPanel.js"></script>
+				<!-- scene -->
+			<script src="modal_contents/games/pong/scripts/scene_menu/SceneMenu.js"></script>
+
+			<!-- scene play -->
+				<!-- objects -->
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/Ball.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/Paddle.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/AlignedText.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/Score.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/PlayBackground.js"></script>
+					<!-- borders -->
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/AbstractBorder.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/DeathBorder.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/borders/BounceBorder.js"></script>
+					<!-- clock -->
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/AbstractClock.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Timer.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_play/objects/clock/Chronometer.js"></script>
+				<!-- scene -->
+			<script src="modal_contents/games/pong/scripts/scene_play/ScenePlay.js"></script>
+
+			<!-- scene game finished -->
+				<!-- objects -->
+			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/Confetti.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+			<script src="modal_contents/games/pong/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+				<!-- scene -->
+			<script src="modal_contents/games/pong/scripts/scene_game_finished/SceneGameFinished.js"></script>
+
+			<script src="modal_contents/games/pong/scripts/game_config.js"></script>
+			<script src="modal_contents/games/pong/scripts/textures_config.js"></script>
+		</div>
 	</body>
 </html>

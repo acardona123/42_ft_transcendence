@@ -4,4 +4,5 @@ let pg_gameMode = {
 	username_player1:"username1",
 	username_player2: "username2",
 	bot_level: -1,
+	match_id: -1,
 }

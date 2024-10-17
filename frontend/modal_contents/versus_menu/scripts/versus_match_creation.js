@@ -148,7 +148,8 @@ function handle1v1FormSubmission() {
 				game : "PG",
 				max_score,
 				max_duration,
-				clean_when_finished: false
+				tournament_id : -1,
+				bot_level : -1,
 			};
 
 			sumbit1v1Guest(matchData);
@@ -167,7 +168,8 @@ function handle1v1FormSubmission() {
 				player2_pin,
 				max_score,
 				max_duration,
-				clean_when_finished: false
+				tournament_id : -1,
+				bot_level : -1,
 			};
 
 			sumbit1v1Player(matchData);
@@ -175,12 +177,24 @@ function handle1v1FormSubmission() {
 	});
 }
 
+function start_game(response_data)
+{
+	gameConfig = pg_gameConfig;
+	pg_gameMode.maxPoints = response_data["max_score"];
+	pg_gameMode.bot_level = -1;
+	pg_gameMode.maxTime = response_data["max_duration"];
+	pg_gameMode.username_player1 = response_data["main_player_username"];
+	pg_gameMode.username_player2 = response_data["opponent_username"];
+	pg_gameMode.match_id = response_data["id"];
+	var game = new Phaser.Game(gameConfig);
+}
+
 async function sumbit1v1Guest(matchData) {
 	const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
 
-	const url = "/api/matches/new/me-guest";
+	const url = "/api/matches/new/me-guest/";
 
-	console.log("fetch to /api/matches/new/me-guest");
+	console.log("fetch to /api/matches/new/me-guest/");
 	console.log(matchData);
 
 	try
@@ -188,22 +202,24 @@ async function sumbit1v1Guest(matchData) {
 		let fetched_data = await fetch_with_token(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
-			body: JSON.stringify(matchData),
+			body: JSON.stringify(matchData)
 		});
 		if (!fetched_data.ok)
 		{
 			errorBoxVSGuest.textContent = 'Error connecting to server.';
 			throw new Error("Error while creating match.");
 		}
-		let data = await fetched_data.json();
-		if (!data.success)
-		{
-			errorBoxVSGuest.textContent = 'Invalid connection. Please try again.';
-			throw new Error("Error while creating match.");
-		}
 		errorBoxVSGuest.textContent = '';
 		errorBoxVSGuest.style.display = 'none';
+		
+		let data = await fetched_data.json();
+		close_modal('modal-versus-match-creation', undefined);
+		open_modal('modal-game', undefined, undefined);
+
+		start_game(data);
+
 		console.log("Match created.");
+
 	}
 	catch (error)
 	{
