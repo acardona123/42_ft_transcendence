@@ -116,6 +116,7 @@ function open_modal(id_modal, init_function_bf, init_function_af)
 			modal_2fa_valid.show();
 			break;
 		default:
+			console.log("Error : this is not a id for modal.");
 			return;
 	}
 
@@ -235,9 +236,6 @@ document.addEventListener("DOMContentLoaded", function()
 
 		get_modals_html().then((html) => {
 			document.getElementById('modals').innerHTML = html;
-		})
-		.then(() =>
-		{
 			document.dispatchEvent(event);
 			addFocusOutListener();
 			updateUI();
