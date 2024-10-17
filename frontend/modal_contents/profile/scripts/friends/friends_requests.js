@@ -3,14 +3,14 @@ function send_request(data, status)
 	if (status == "201")
 	{
 		create_popup("Waiting for " + data.friend_request.username + " to accept.",
-			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			4000, 4000,
+			hex_color=HEX_GREEN, t_hover_color=HEX_GREEN_HOVER);
 	}
 	else
 	{
 		create_popup("You already sent a request to " + data.friend_request.username + ".",
-			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			4000, 4000,
+			hex_color=HEX_GREEN, t_hover_color=HEX_GREEN_HOVER);
 	}
 }
 
@@ -23,15 +23,17 @@ function send_request_lead_to_friendship(data, status)
 {
 	// add friendship
 	const id_to_remove = data.remove_friend_request;
-	const username_to_remove = data_requests.find(o => o.id === id_to_remove).username;
+	const username_to_remove = data_requests.find(o => o.id === id_to_remove)?.username;
 	const request_container = document.getElementById("req_container");
 	for (let i = 0; i < request_container.children.length; i++)
 	{
+		if (username_to_remove === undefined)
+			break ;
 		if (request_container.children[i].children[0].textContent == username_to_remove)
 		{
 			request_container.children[i].remove();
 			remove_request_from_data(username_to_remove);
-			update_requests_list(false);
+			update_requests_list_front();
 			break;
 		}
 	}
@@ -39,12 +41,16 @@ function send_request_lead_to_friendship(data, status)
 	// friendship as it already exists
 	if (status == "201")
 	{
-		// TODO: add online and picture
-		add_friend_array({id : data.friendship.id, username : data.friendship.username, is_online : Math.random() <= 0.5});
-		update_friend_list(false);
+		add_friend_array({
+			id: data.friendship.id,
+			username: data.friendship.username,
+			online_status: data.friendship.status,
+			profile_picture: data.friendship.profile_picture
+		});
+		update_friend_list_front();
 		create_popup("You're now friend with " + data.friendship.username + "!",
-			2000, 4000,
-			hex_color="#00FF0080", t_hover_color="#00FF00C0");
+			4000, 4000,
+			hex_color=HEX_GREEN, t_hover_color=HEX_GREEN_HOVER);
 	}
 }
 
@@ -55,35 +61,27 @@ async function send_friend_request()
 	if (input_zone.value.length == 0)
 		return ;
 	const body = JSON.stringify({name: input_zone.value});
-
-	let fetched_data = await fetch(url, {
-		method: 'POST',
-		headers: new Headers({'content-type': 'application/json'}),
-		body: body
-	});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {'content-type': 'application/json'},
+			body: body
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		data = data.data;
 		if (data.hasOwnProperty('remove_friend_request'))
-		{
 			send_request_lead_to_friendship(data, fetched_data.status);
-		}
 		else
-		{
 			send_request(data, fetched_data.status);
-		}
-
 	}
 	catch (error)
 	{
 		create_popup("Friend request failed.",
-			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			4000, 4000,
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	remove_friends_popup();
 }
@@ -117,7 +115,7 @@ function remove_friend_request_front(elem, data, id, pseudo)
 		remove_request_from_data(pseudo);
 	}
 	if (elem_parent_list.children.length == 0)
-		update_requests_list(false);
+		update_requests_list_front();
 }
 
 async function accept_friend_req(event)
@@ -126,28 +124,33 @@ async function accept_friend_req(event)
 	const accepted_id = data_requests.find(o => o.username === accepted_pseudo)?.id;
 	const url = "https://localhost:8443/api/friends/request/" + accepted_id + "/";
 
-	let fetched_data = await fetch(url, {method: 'POST'});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		data = data.data;
 		if (fetched_data.status == 201) // the friendship did not exist
 		{
-			add_friend_array({id: data.friendship.id, username: data.friendship.username, is_online : (Math.random() <= 0.5)})
-			update_friend_list(false);
+			add_friend_array({
+				id: data.friendship.id,
+				username: data.friendship.username,
+				online_status: data.friendship.status,
+				profile_picture: data.friendship.profile_picture
+			});
+			update_friend_list_front();
 		}
-		// remove request
 		remove_friend_request_front(event.target, data, accepted_id, accepted_pseudo);
 	}
 	catch (error)
 	{
 		create_popup("Accepting request failed.",
-			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			4000, 4000,
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
 
@@ -158,13 +161,14 @@ async function reject_friend_req(event)
 	const rejected_id = data_requests.find(o => o.username === rejected_pseudo)?.id;
 	const url = "https://localhost:8443/api/friends/request/" + rejected_id + "/";
 
-	let fetched_data = await fetch(url, {method:'DELETE'});
 	try
 	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'DELETE',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`Response status: ${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		data = data.data;
 		remove_friend_request_front(event.target, data, rejected_id, rejected_pseudo);
@@ -172,8 +176,8 @@ async function reject_friend_req(event)
 	catch (error)
 	{
 		create_popup("Rejecting request failed.",
-			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			4000, 4000,
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 }
 
@@ -222,13 +226,12 @@ function empty_requests_list()
 	}
 }
 
-function update_requests_list(is_init=false)
+function update_requests_list_front()
 {
 	const requests_pseudo = get_requests_pseudo();
 	const container = document.getElementById('req_container');
 	
-	if (!is_init)
-		empty_requests_list();
+	empty_requests_list();
 	if (requests_pseudo == undefined || requests_pseudo.length == 0)
 	{
 		const empty_text = document.createElement('p');
@@ -248,29 +251,28 @@ async function get_data_from_database()
 {
 	const url = "https://localhost:8443/api/friends/request/";
 	try {
-		let fetched_data = await fetch(url);
+		let fetched_data = await fetch_with_token(url, {
+			method: 'GET',
+			headers: {}
+		});
 		if (!fetched_data.ok)
-		{
 			throw new Error(`${fetched_data.status}`);
-		}
 		let data = await fetched_data.json();
 		return data.data;
 	}
 	catch (error)
 	{
 		create_popup("Retrieving friend requests failed.",
-			2000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			4000, 4000,
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
 }
 
 let data_requests = undefined;
 
-document.addEventListener("onModalsLoaded", function()
+async function setup_friends_request_list()
 {
-	(async () => {
-		data_requests = await get_data_from_database();
-		update_requests_list(true);
-	})()
-});
+	data_requests = await get_data_from_database();
+	update_requests_list_front();
+}

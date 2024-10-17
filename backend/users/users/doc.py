@@ -186,7 +186,7 @@ DOC_2FA_VALID = openapi.Response(
 			}
 		)
 
-JWT_TOKEN = openapi.Parameter('Authentication : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
+JWT_TOKEN = openapi.Parameter('Authorization : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
 
 DOC_ERROR_WRONG_2FA_STATUS = openapi.Response(
 			description=MSG_ERROR_WRONG_2FA_STATUS,

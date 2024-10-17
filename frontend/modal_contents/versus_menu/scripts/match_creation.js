@@ -10,7 +10,6 @@ function invalidForm(id)
 	const elements = Array.from(formElements);
 
 	const countMaxValues = elements.filter((element) => element.value == element.max && element.type == "range").length;
-	
 
 	const btns = form.querySelectorAll("button[type='submit']");
 	const values = form.querySelectorAll('.slider-value');
@@ -96,9 +95,10 @@ function pincodeOnlyDigits() {
 
 function clearInputFields() {
 	var inputs = document.querySelectorAll('.input-container input');
-		inputs.forEach(function(input) {
-			input.value = ''; // Clear the input value
-		});
+	inputs.forEach(function(input) {
+		input.value = '';
+		input.classList.remove('has-content');
+	});
 }
 
 function clearErrorFields() {
@@ -115,7 +115,6 @@ function addFocusOutListener() {
 
 	inputs.forEach(function(input) {
 			input.addEventListener('focusout', function() {
-				// console.log(input.value);
 				if (input.value !== "") {
 					input.classList.add('has-content');
 				} else {

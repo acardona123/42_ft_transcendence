@@ -4,7 +4,7 @@
 			<h1 id="edp-main-title">Edit profile</h1>
 			<div id="edp-main-div">
 				<div id="edp-picture-div">
-					<img id="edp-picture-img" src="modal_contents/edit_profile/img/edit_button.png">
+					<img id="edp-picture-img">
 					<img id="edp-picture-edit-img" src="modal_contents/edit_profile/img/edit_button.png">
 					<input type="file" id="edp-picture-file-input" accept="image/png, image/jpg, image/jpeg" hidden>
 				</div>
@@ -16,23 +16,27 @@
 					</p>
 					<div class="collapse show" id="edp-information-edit-collapse-div">
 						<form id="edp-form-user">
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-username" style="margin: 0">Username</p>
-								<input class="edp-input-class" id="edp-input-username" name="username">
+								<input class="edp-input-class" id="edp-input-username" name="username" placeholder="Username" required>
+								<span class="edp-error-text"></span>
 							</div>
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-email" style="margin: 0">Email</p>
-								<input class="edp-input-class" id="edp-input-email" name="email">
+								<input class="edp-input-class" id="edp-input-email" name="email" placeholder="Email">
+								<span class="edp-error-text"></span>
 							</div>
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-phone" style="margin: 0">Phone number</p>
-								<input class="edp-input-class" id="edp-input-phone" name="phone">
+								<input class="edp-input-class" id="edp-input-phone" name="phone" placeholder="Phone number">
+								<span class="edp-error-text"></span>
 							</div>
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-pin" style="margin: 0">Pin code</p>
-								<input class="edp-input-class" id="edp-input-pin" name="pin">
+								<input class="edp-input-class" id="edp-input-pin" name="pin" maxlength="4" required>
+								<span class="edp-error-text"></span>
 							</div>
-							<button class="btn btn-primary" type="submit">Save</button>
+							<button id="edp-save-informations-button" class="btn btn-primary" type="submit">Save</button>
 						</form>
 					</div>
 					<hr>
@@ -42,17 +46,20 @@
 					</p>
 					<div class="collapse" id="edp-password-edit-collapse-div">
 						<form id="edp-form-password">
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-cur-pass" style="margin: 0">Current password</p>
-								<input class="edp-input-class" id="edp-input-cur-password" name="cur_pass">
+								<input class="edp-input-class" id="edp-input-cur-password" type="password" name="cur_pass" required>
+								<span class="edp-error-text"></span>
 							</div>
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-new-pass" style="margin: 0">New password</p>
-								<input class="edp-input-class" id="edp-input-new-password" name="new_pass">
+								<input class="edp-input-class" id="edp-input-new-password" type="password" name="new_pass" required>
+								<span class="edp-error-text"></span>
 							</div>
-							<div>
+							<div class="edp-input-div">
 								<p id="edp-text-confirm-pass" style="margin: 0">Confirm password</p>
-								<input class="edp-input-class" id="edp-input-confirm-password" name="conf_pass">
+								<input class="edp-input-class" id="edp-input-confirm-password" type="password" name="conf_pass" required>
+								<span class="edp-error-text"></span>
 							</div>
 							<button class="btn btn-primary">Save</button>
 						</form>

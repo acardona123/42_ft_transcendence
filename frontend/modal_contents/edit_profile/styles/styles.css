@@ -54,10 +54,20 @@
 #edp-input-pin
 {
 	width: 20%;
-	margin-bottom: 10px;
+}
+
+#edp-save-informations-button
+{
+	margin-top: 10px;
 }
 
 #password-edit-div
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.edp-input-div
 {
 	display: flex;
 	flex-direction: column;
@@ -67,6 +77,12 @@
 {
 	cursor: pointer;
 	margin: 0;
+}
+
+.edp-error-text
+{
+	font-size: small;
+	color: red;
 }
 
 #edp-input-confirm-password

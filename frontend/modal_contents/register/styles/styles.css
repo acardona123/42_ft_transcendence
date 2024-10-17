@@ -1,32 +1,27 @@
-#main-div
+#register-main-div
 {
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
-	width: fit-content;
-	margin-left: auto;
-	margin-right: auto;
+	margin: auto;
+	width: 300px;
 }
 
-#main-content-div
+#register-main-content-div
 {
+	width: 100%;
 	border: thin solid black;
 	display: grid;
 	padding: 50px;
-	padding-top: 50px;
+	padding-top: 25px;
 	padding-bottom: 25px;
-	grid-template-columns: 1fr;
-	grid-template-rows: 0.3fr 1fr 0.25fr 0.4fr;
+	grid-template-rows: 0.1fr 1fr 0.25fr 0.1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
 }
 
-#title-text
+#register-title-text
 {
 	margin: auto;
 	margin-top: 0;
+	padding-bottom: 50px;
 	font-size: 2em;
 }
 
@@ -49,9 +44,20 @@
 	align-items: start;
 	height: 50%;
 	position: relative;
+	margin-bottom: 5px;
 }
 
-.text-span
+.register-on-error-span
+{
+	width: 100%;
+	color: crimson;
+	font-size: small;
+	height: fit-content;
+	margin: auto;
+	white-space: wrap;
+}
+
+.register-text-span
 {
 	transition: transform 0.2s;
 	transform-origin: top left;
@@ -70,7 +76,6 @@
 	width: 100%;
 	height: 30px;
 	border-radius: 5px;
-	margin-bottom: 5px;
 	font-size: 0.8em;
 }
 

@@ -1,38 +1,17 @@
-<!-- <div class="offcanvas-header"> -->
-	<!-- <h1 class="offcanvas-title">Menu</h1> -->
-	<!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button> -->
-<!-- </div> -->
-
-<div class="offcanvas-body container-offcanvas connected" tabindex="-1">
-	<div class="menuCanvasProfile">
-		<h4 class="user-name"></h4>
-		<img id="connectedImageMenu" class="userImage menuUserImage change-color" alt="Menu User Image">
-		<span id="connection-badge"></span>
-	</div>
-
-	<div id="menuColumn">
-		<div class="stats">
-			<p>Stats</p>
-			<!-- Stats content here -->
-			<div class="win-loss-circle" data-toggle="tooltip">
-			</div>
-		</div>
-		<div class="friends-list">
-			<p>Friends</p>
-			<!-- Friends list content here -->
-		</div>
-		<div class="play-history">
-			<p>Play History</p>
-			<!-- Play history content here -->
+<div id="smc-main-div" tabindex="-1">
+	<div id="smc-short-profile-div">
+		<h4 id="smc-user-name" class="user-name"></h4>
+		<div id="smc-connected-pp-div">
+			<img id="smc-connected-pp" class="userImage">
+			<span id="smc-connection-badge"></span>
 		</div>
 	</div>
-	<div id="menuColumnButton" class="gap-2">
-		<button id="profileButton" type="button" class="btn large-rounded-button" tabindex="1" onclick="openModalProfile()">Profile</button>
-		<button id="logoutButton" type="button" class="btn large-rounded-button " tabindex="2" onclick="logout()">Logout</button>
-		<button id="parameterButton" class="btn" tabindex="3" data-bs-dismiss="offcanvas" onclick="openModalParameters()">  <!-- onkeypress="openModalParameters()" -->
-			<img id="parameterButtonIcon" src="img/engrenage.png" alt="Parameter">
+
+	<div id="smc-buttons-div">
+		<button id="smc-logout-button" type="button" class="btn btn-success" tabindex="1" data-bs-dismiss="offcanvas" onclick="open_modal('modal-profile', undefined, init_modal_profile)"">Profile</button>
+		<button id="smc-logout-button" type="button" class="btn btn-success" tabindex="2" onclick="logout_user()">Logout</button>
+		<button id="smc-parameter-button" class="btn" tabindex="3" data-bs-dismiss="offcanvas" onclick="open_modal('modal-edit-profile', init_modal_edit_profile , undefined)">
+			<img id="smc-parameter-button-image" src="img/engrenage.png" alt="Parameter">
 		</button>
-		<!-- <img id="parameterButton" src="img/engrenage.png" alt="Parameter"  tabindex="3" data-bs-dismiss="offcanvas" onclick="openModalParameters()"> -->
-		<!-- <button id="parameterButton-" type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" onclick="openModalParameters()">Parameter</button> -->
 	</div>
 </div>

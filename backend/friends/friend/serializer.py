@@ -117,7 +117,7 @@ class FriendshipSerializer(serializers.ModelSerializer):
 	
 	def get_usernames_request(self, users_id):
 		url = f"{settings.USERS_MICROSERVICE_URL}/api/private/users/retrieve/friends_info/"
-		response = requests.post(url, json={'users_idf': users_id})
+		response = requests.post(url, json={'users_id': users_id})
 		if response.status_code != 200:
 			raise Exception
 		return response.json().get('data', None)

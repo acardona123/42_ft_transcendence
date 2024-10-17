@@ -4,14 +4,14 @@
 <!-- </div> -->
 
 <div class="offcanvas-body container-offcanvas" tabindex="-1">
-	<div class="menuCanvasProfile">
+	<div class="sm-short-profile-div">
 		<h4>Unknow Profile</h4>
 		<img class="userImage menuUserImage" alt="Menu User Default Image" >
 	</div>
 	<p>Insert a message ?</p>
 	<div id="disconnectedGroupButtons" class="btn-group-vertical gap-3" role="group">
-		<button id="loginButton" type="button" class="btn large-rounded-button bg-purple" onclick="openModalLogin()" >Login</button>
-		<button id="signUpButton" type="button" class="btn large-rounded-button bg-purple" onclick="openModalSignUp()">Sign Up</button>
+		<button id="loginButton" type="button" class="btn large-rounded-button bg-purple" onclick="open_modal('modal-login', clear_login_inputs, focus_modal_login)" >Login</button>
+		<button id="signUpButton" type="button" class="btn large-rounded-button bg-purple" onclick="open_modal('modal-register', clear_register_inputs, focus_modal_register)">Sign Up</button>
 </div>
 
 <!-- <script src="js/app.js"></script> -->

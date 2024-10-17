@@ -1,0 +1,263 @@
+#AddConnectedPlayerContainer {
+	display: none;
+	/* display: block; */
+	/* display: flex; */
+	position: absolute;
+	flex-direction: column;
+	/* justify-content: space-between; */
+	align-items: center;
+	margin-top: 2vh;
+	background-color: wheat;
+	padding: 1vh;
+	border-radius: 10px;
+	width: fit-content;
+	/* min-width: 500px; */
+}
+
+#AddConntectedPlayerContent {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+}
+
+/* INPUT TEMPLATE */
+
+:focus {
+	outline: none;
+}
+
+.input-container {
+	position: relative;
+	float: left;
+	/* width: 27.33%; */
+	width: 30%;
+	min-width: 100px;
+	/* margin: 2% 3% 0 0; */
+	/* margin: 40px 3%; */
+}
+
+input[type="text"],
+input[type="password"] {
+	font: 15px/24px "Lato", Arial, sans-serif;
+	color: #333;
+	width: 100%;
+	box-sizing: border-box;
+	letter-spacing: 1px;
+}
+
+.input {
+	border: 0;
+	padding: 4px 0;
+	border-bottom: 1px solid #ccc;
+	background-color: transparent;
+}
+
+
+.input~.focus-border {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 2px;
+	background-color: #3399FF;
+	transition: 0.4s;
+}
+
+.input:focus~.focus-border,
+.has-content.input~.focus-border {
+	width: 100%;
+	transition: 0.4s;
+	left: 0;
+}
+
+.input~label {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 9px;
+	color: #aaa;
+	transition: 0.3s;
+	pointer-events: none;
+	letter-spacing: 0.5px;
+	border: 0;
+}
+
+.input:focus~label,
+.has-content.input~label {
+	top: -16px;
+	font-size: 12px;
+	color: #3399FF;
+	transition: 0.3s;
+}
+
+/* <div class="input-container">
+	<input class="input" type="text" placeholder="">
+	<label>First Name</label>
+	<span class="focus-border"></span>
+</div> */
+
+/* ================================= */
+
+#toggleConnectedPlayerContainer,
+#toggleGuestPlayerContainer {
+	z-index: 1;
+}
+
+#addGuestPlayerContainer {
+	/* width: 1%; */
+	/* background-color: #0056b3; */
+}
+
+#playerConnectedPinContainer {
+	width: 10%;
+}
+
+.submit-btn-form {
+	margin-top: 2vh;
+}
+
+/* ================================= */
+
+@keyframes sliderFromAbove {
+	from {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+#AddConnectedPlayerContainer.appear {
+	animation: sliderFromAbove 0.5s ease-in-out;
+}
+
+@keyframes reverseSliderFromAbove {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+}
+
+#AddConnectedPlayerContainer.disappear {
+	animation: reverseSliderFromAbove 0.5s ease-in-out;
+}
+
+/* ================================= */
+
+#TournamentPlayerListContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	align-items: center;
+
+	background-color: #b56d9b;
+
+	width: 100%;
+	height: 100%;
+}
+
+#TournamentButtonsContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+
+	background-color: #a1caff;
+	/* height: 43vh; */
+
+	width: 20%;
+	height: 100%;
+}
+
+#PlayerGrid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	/* 4 columns */
+	gap: 10px;
+	row-gap: 50px;
+	height: 100%;
+	width: 65%;
+
+	place-items: center;
+	place-content: center;
+	/* max-width: 600px; */
+	/* margin: 20px auto; */
+	position: relative;
+	background-color: #39da46;
+}
+
+.player-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+	width: 100%;
+
+	border: 1px solid #c82333;
+
+	/* padding: 10%; */
+	/* text-align: center; */
+	text-wrap: nowrap;
+	/* text-justify: auto */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	opacity: 0;
+	position: relative;
+}
+
+.player-card.show {
+	opacity: 1;
+}
+
+.player-card:hover {
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+	transition: box-shadow 0.3s ease;
+}
+
+.delete-button {
+	position: absolute;
+	/* top: 5px; */
+	right: 5px;
+	background-color: #dc3545;
+	color: white;
+	border: none;
+	border-radius: 50%;
+	/* padding: 5px 10px; */
+	cursor: pointer;
+	font-size: 14px;
+	width: 20px;
+}
+
+.delete-button:hover {
+	background-color: #c82333;
+}
+
+/* Debug output styles */
+.debug-output {
+	margin-top: 20px;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 80%;
+	max-width: 600px;
+	font-family: monospace;
+	white-space: pre-wrap;
+	overflow-x: auto;
+
+	display: none;
+}

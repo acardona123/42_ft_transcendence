@@ -25,24 +25,62 @@ function is_valid_file()
 	{
 		create_popup("Error: You must provide only one file.",
 			4000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 		return false;
 	}
 	if (!correct_formats.includes(input_file_button.files[0].type))
 	{
 		create_popup("Error: Accepted formats are [png, jpg, jpeg].",
 			4000, 4000,
-			hex_color="#FF000080", t_hover_color="#FF0000C0");
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 		return false;
 	}
+	return true;
+}
 
+async function send_picture_to_back(form_data)
+{
+	const url = "https://localhost:8443/api/users/update/picture/";
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'PUT',
+			headers: {},
+			body: form_data
+		});
+		if (!fetched_data.ok && fetched_data.status != 400)
+			throw new Error(`${fetched_data.status}`);
+		let data = await fetched_data.json();
+		data = data.data;
+		if (fetched_data.status == 400)
+		{
+			create_popup(data.profile_picture, 4000, 4000, HEX_RED, HEX_RED_HOVER);
+			return ;
+		}
+		create_popup("Profile picture updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
+		update_profile_picture_front(data.profile_picture);
+	}
+	catch (error)
+	{
+		create_popup("Error while uploading image.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		return ;
+	}
 }
 
 function process_submitted_file()
 {
 	if (!is_valid_file())
 		return ;
-	// send to back and wait for validation
+
+	let form_data = new FormData();
+	form_data.append('profile_picture', input_file_button.files[0]);
+	send_picture_to_back(form_data);
+}
+
+function edp_update_profile_picture()
+{
+	const profile_picture = document.getElementById("edp-picture-img");
+	profile_picture.src = global_user_infos.profile_picture;
 }
 
 let input_file_button;
