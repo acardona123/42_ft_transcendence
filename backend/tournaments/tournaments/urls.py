@@ -1,12 +1,13 @@
 from django.urls import path
-# from .views import create_tournament
+from .views import (create_tournament, ManagePlayer, start_tournament, guest_list,
+		get_match_for_round, start_match, match_finished)
 
 urlpatterns = [
-	# POST path("/create/", ),
-	# POST DELETE path("/player/", ),
-	# POST path("/validate/", ),
-	# GET path("/guests/", ),
-	# GET path("/round/", ),
-	# GET path("/match/start/", ),
-	# POST path("/match/finish/", ), private_api
+	path("create/", create_tournament),
+	path("player/", ManagePlayer.as_view()),
+	path("validate/", start_tournament),
+	path("guests/", guest_list),
+	path("round/", get_match_for_round),
+	path("match/start/", start_match),
+	path("match/finish/", match_finished)
 ]

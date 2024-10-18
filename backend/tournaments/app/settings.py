@@ -166,14 +166,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 # microservice url
 
 USERS_MICROSERVICE_URL = 'http://users:8002'
+MATCHES_MICROSERVICE_URL = 'http://matches:8004'
 
 
 SWAGGER_SETTINGS = {
     "DEFAULT_MODEL_RENDERING": "example"
 }
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
-#     )
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
+    )
+}

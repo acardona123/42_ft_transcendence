@@ -9,20 +9,22 @@ class Tournament(models.Model):
 	
 	class GameStatus(models.TextChoices):
 		CREATION = "CR", _("Creation")
+		ADD_USER = "AD", _("Add User")
 		STARTED = "ST", _("Started")
 		FINISHED = "FN", _("Finished")
 
-	host = models.IntegerField()
+	host = models.IntegerField('user id, not the participant id')
 	game = models.CharField(max_length=2, choices=GameType, null=True)
 	max_score = models.IntegerField(null=True)
 	max_duration = models.IntegerField(null=True)
 	status = models.CharField(max_length=2, choices=GameStatus, default=GameStatus.CREATION)
-	max_round = models.IntegerField(null=True)
-	round_played = models.IntegerField(null=True)
+	max_match = models.IntegerField(null=True)
+	next_match = models.IntegerField(null=True)
 
 class Participant(models.Model):
 	user = models.IntegerField()
+	is_playing = models.BooleanField(default=False)
+	position = models.IntegerField(null=True)
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
-	round = models.IntegerField(null=True)
+	match = models.IntegerField(null=True)
 	is_eliminated = models.BooleanField(default=False)
-

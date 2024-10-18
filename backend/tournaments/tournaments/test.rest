@@ -1,0 +1,67 @@
+@hostname = localhost
+@port = 8443
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5Mjc5MjcxLCJpYXQiOjE3MjkyNzg5NzEsImp0aSI6IjdlMWYyNGE0ZDY5ZDQ4YWI4YzA0ZGQzNTQ5YThlNTljIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.x5k8qf_ElUCfi8_5OG70juYZ_TI272en0GUxT3dvO0o
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5MTY2MTMxLCJpYXQiOjE3MjkxNjU4MzEsImp0aSI6IjA3OTM3OTQwMWFiYzQxNmQ4YmJlYzhmZGYwZDM5ZWVmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImMifQ.R4YwKkALu57V8wpJeWz3S7KKTIiqeO75EW7qoi75OSU
+
+### create empty tournament
+POST https://{{host}}/api/tournaments/create/
+Authorization: Bearer {{access_token}}
+
+### add player to tournament
+POST https://{{host}}/api/tournaments/player/
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"username": "coucou3",
+	"pin": "0004",
+	"tournament_id": 1
+}
+
+### remove player from tournament
+DELETE  https://{{host}}/api/tournaments/player/?tournament_id=1&player_id=5
+Authorization: Bearer {{access_token}}
+
+### start tournament
+POST https://{{host}}/api/tournaments/validate/
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"tournament_id": 5,
+	"game": "PG",
+	"max_score": -1,
+	"max_duration": 56,
+	"nb_guest": 5,
+	"nb_ai": 5
+}
+
+### list guest
+GET https://{{host}}/api/tournaments/guests/?tournament_id=5
+Authorization: Bearer {{access_token}}
+
+### display matches in round
+GET https://{{host}}/api/tournaments/round/?tournament_id=5
+Authorization: Bearer {{access_token}}
+
+### start match
+POST https://{{host}}/api/tournaments/match/start/
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"tournament_id": 5
+}
+
+### finish match
+POST https://{{host}}/api/tournaments/match/finish/
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"tournament_id": 5,
+	"score1": 1,
+	"score2": 2
+}
