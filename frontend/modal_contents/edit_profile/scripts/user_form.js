@@ -167,6 +167,8 @@ async function submit_user_form(form)
 		create_popup("Informations updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
 		sessionStorage.setItem("refresh_token", data.refresh);
 		sessionStorage.setItem("access_token", data.access);
+		global_user_infos.username = data.username;
+		updateUserName();
 		return ;
 	}
 	catch (error)
