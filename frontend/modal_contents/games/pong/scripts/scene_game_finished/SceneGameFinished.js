@@ -149,11 +149,17 @@ class pg_SceneGameFinished extends Phaser.Scene{
 				this.#quit_button.depth = pg_gameConfig.scene_game_finished.depths.button;
 			}
 			#setButtonInteraction(){
-				this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
+				if (pg_gameMode.tournament_id < 0)
+					this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
+					else
+				this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
 			}
 			#goBackHome(){
-				console.log("Generate a https request to go back to home");
+				console.log("Go back to home");
+				close_modal('modal-game', reset_game);
 				//TODO
 			}
-			
+			#continueTournament(){
+				console.log("Continue the tournament");
+			}
 }

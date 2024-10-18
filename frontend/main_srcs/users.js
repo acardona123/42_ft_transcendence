@@ -45,7 +45,7 @@ async function create_user_infos(username)
 		username : username,
 		profile_picture: picture
 	}
-	updateUI();
+	update_ui();
 }
 
 function update_user_infos(username)

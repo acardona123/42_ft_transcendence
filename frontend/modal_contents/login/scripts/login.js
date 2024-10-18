@@ -22,7 +22,7 @@ async function apply_login_user(refresh, access, username)
 		get_friend_list(),
 		create_user_infos(username)
 	]);
-	updateUI();
+	update_ui();
 }
 
 function logout_user_no_back()
@@ -30,7 +30,7 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
-	updateUI();
+	update_ui();
 }
 
 async function logout_user()

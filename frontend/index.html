@@ -35,24 +35,30 @@
 
 		<div class="container-fluid text-white main-container" style="background-color: burlywood;">
 			<div class="col d-flex justify-content-center align-items-center">
-				<button id="buttonPlay" type="button" class="btn btn-lg btn-success rounded-pill btn-play" onclick="open_modal('modal-play', disableButtonPlay, undefined)">
-					PLAY
+				<button id="buttonPlay" type="button" class="btn btn-lg btn-success rounded-pill btn-play" onclick="open_modal('modal-play', init_play_menu, set_global_game_pong)">
+					PLAY PONG
+				</button>
+				<button id="buttonPlay" type="button" class="btn btn-lg btn-success rounded-pill btn-play" onclick="open_modal('modal-play', init_play_menu, set_global_game_flappy_bird)">
+					PLAY FLAPPY BIRD
 				</button>
 			</div>
 		</div>
 		<div class="home-photo-profile">
-			<a data-bs-toggle="offcanvas" href="#menuProfile" onclick="disableButtonPlay()">
+			<a data-bs-toggle="offcanvas" href="#menuProfile" onclick="disable_buttons_play()">
 				<img id="homeUserImage" class="userImage" alt="Home User Image">
 			</a>
 		</div>
 		<script src="main_srcs/main_menu.js"></script>
 		<script src="main_srcs/shared.js"></script>
 		<script src="main_srcs/users.js"></script>
+		<script src="modals_manager/scripts/game.js"></script>
 		<script src="modals_manager/scripts/modals.js"></script>
+		<script src="modal_contents/play_menu/scripts/play_menu.js"></script>
 		<script src="modal_contents/versus_menu/scripts/match_creation.js"></script>
 		<script src="modal_contents/solo_ai_menu/scripts/ia_match_creation.js"></script>
 		<script src="modal_contents/versus_menu/scripts/versus_match_creation.js"></script>
 		<script src="modal_contents/tournament_menu/scripts/tournament_menu.js"></script>
+		<script src="modal_contents/tournament_menu/scripts/tournament_menu_grid.js"></script>
 		<script src="modal_contents/edit_profile/scripts/user_form.js"></script>
 		<script src="modal_contents/edit_profile/scripts/pass_form.js"></script>
 		<script src="modal_contents/edit_profile/scripts/picture_form.js"></script>

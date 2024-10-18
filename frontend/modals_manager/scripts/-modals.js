@@ -266,7 +266,7 @@ async function get_modals_html()
 document.addEventListener("DOMContentLoaded", function()
 {
 	const event = new Event("onModalsLoaded");
-	updateUI();
+	update_ui();
 
 	get_modals_html().then((html) => {
 		document.getElementById('modals').innerHTML = html;
