@@ -18,7 +18,7 @@ async function submitIAForm(event) {
 		max_score,
 		max_duration,
 		tournament_id : -1,
-		bot_level : 0,
+		bot_level : 1,
 		// bot_level : 1,
 	};
 	
@@ -41,7 +41,7 @@ async function submitIAForm(event) {
 		close_modal('modal-ia-match-creation', undefined);
 		open_modal('modal-game', undefined, undefined);
 
-		start_pong_game(data);
+		start_pong_game(data, body.bot_level);
 	}
 	catch (error)
 	{
