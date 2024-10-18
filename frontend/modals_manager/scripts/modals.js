@@ -36,6 +36,7 @@ document.addEventListener('onModalsLoaded', function() {
 		modal_on_screen = undefined;
 		});
 	});
+
 });
 
 function set_global_game_pong()
@@ -141,8 +142,6 @@ function open_modal(id_modal, init_function_bf, init_function_af)
 
 	if (init_function_af !== undefined)
 		init_function_af();
-
-	console.log("Global game modal : " + global_game_modal);
 }
 
 function return_to_modal_play()

@@ -15,8 +15,16 @@ function play_menu_setup_display_on_game()
 	}
 }
 
-function init_play_menu()
+function init_play_menu_pong()
 {
+	set_global_game_pong()
+	play_menu_setup_display_on_game();
+	disable_buttons_play();
+}
+
+function init_play_menu_flappy_bird()
+{
+	set_global_game_flappy_bird()
 	play_menu_setup_display_on_game();
 	disable_buttons_play();
 }
