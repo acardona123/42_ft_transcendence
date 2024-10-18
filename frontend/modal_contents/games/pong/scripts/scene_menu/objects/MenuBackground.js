@@ -20,7 +20,7 @@ class pg_MenuBackground {
 		}
 		#positionObject(){
 			this.object.setOrigin(0);
-			this.object.depth = pg_gameConfig.scene_menu.background;
+			this.object.depth = pg_gameConfig.scene_menu.depths.background;
 		}
 		#applyObjectAnimation(){
 			this.#scene_texture.playAnimationOn(this.object);
