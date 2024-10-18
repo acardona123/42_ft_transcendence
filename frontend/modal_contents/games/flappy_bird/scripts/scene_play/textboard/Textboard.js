@@ -117,12 +117,16 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 			}
 		}
 
+		getPastTime(){
+			return this.#clock.getPastTime();
+		}
+
 		getAllValues(){
-			return ({
+			return {
 				score_player1: this.#score_player1.getScoreValue(),
 				score_player2: this.#score_player2.getScoreValue(),
 				past_time: this.#clock.getPastTime()
-			})
+			};
 		}
 
 }

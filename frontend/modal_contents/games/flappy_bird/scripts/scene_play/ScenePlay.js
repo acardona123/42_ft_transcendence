@@ -147,7 +147,7 @@ class fb_ScenePlay extends Phaser.Scene{
 					this.#createExplosion(player_object);
 					this.#addDeathToScoreboard(player_object);
 					if (!this.#textboard.doesPlayerHasRemainingLife(player_object.index)){
-						this.#gameOver();
+						this.#finishParty();
 					} else {
 						this.#respawnPlayer(player_object);
 					}
@@ -261,18 +261,44 @@ class fb_ScenePlay extends Phaser.Scene{
 		#updateTextboard(){
 			this.#textboard.update();
 			if (this.#textboard.isTimeOver()){
-				this.#gameOver();
+				this.#finishParty();
 			}
 		}
 
-		#gameOver(){
-			this.#sendGameResultsToServer();
-			this.#goToFinishScene();
+		async #finishParty(){
+			this.scene.pause();
+			await this.#sendMatchResults();
+			this.launchEndScene();
 		}
-			#sendGameResultsToServer(){
-				//TODO
+			async #sendMatchResults(){
+				const url = "/api/matches/finish/" + fb_gameMode.match_id + "/";
+				const match_results = {
+					"score1": this.#textboard.getPlayerScore(player_index.PLAYER1),
+					"score2": this.#textboard.getPlayerScore(player_index.PLAYER2),
+					"duration": this.#textboard.getPastTime() / 1000
+				}
+				try
+				{
+					let fetched_data = await fetch_with_token(url, {
+						method: 'POST',
+						headers: {'content-type': 'application/json'},
+						body: JSON.stringify(match_results)
+					});
+					if (!fetched_data.ok)
+					{
+						throw new Error("");
+					}
+				}
+				catch (error)
+				{
+
+					create_popup("Error while trying to save the match results. Match cancelled", 10000, 4000, HEX_RED, HEX_RED_HOVER)
+					// =====================================================================================
+					// retour a la page d'accueil ????
+					// =====================================================================================
+				}
 			}
-			#goToFinishScene(){
+			launchEndScene(){
 				this.scene.start("fb_GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
 			}
 }

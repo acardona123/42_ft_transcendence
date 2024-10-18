@@ -411,7 +411,7 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#movePlayersManager();
 		this.#clock.update();
 		if (this.#isPartyFinished()){
-			this.scene.start("pg_GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
+			this.#finishParty();
 		}
 	}
 	#timeConditionedBotCalculous(){
@@ -443,6 +443,43 @@ class pg_ScenePlay extends Phaser.Scene{
 		return party_finished;
 	}
 
+	async #finishParty(){
+		this.scene.pause();
+		await this.#sendMatchResults();
+		this.#launchEndScene();
+	}
+		async #sendMatchResults(){
+			const url = "/api/matches/finish/" + pg_gameMode.match_id + "/";
+			const match_results = {
+				"score1": this.#scores.left.getScore(),
+				"score2": this.#scores.right.getScore(),
+				"duration": this.#clock.getPastTime() / 1000
+			}
+			try
+			{
+				let fetched_data = await fetch_with_token(url, {
+					method: 'POST',
+					headers: {'content-type': 'application/json'},
+					body: JSON.stringify(match_results)
+				});
+				if (!fetched_data.ok)
+				{
+					throw new Error("");
+				}
+			}
+			catch (error)
+			{
+
+				create_popup("Error while trying to save the match results. Match cancelled", 10000, 4000, HEX_RED, HEX_RED_HOVER)
+				// =====================================================================================
+				// retour a la page d'accueil ????
+				// =====================================================================================
+			}
+		}
+		#launchEndScene(){
+			this.scene.start("pg_GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
+		}
+
 
 
 	addToBallsGroup(object)
@@ -464,6 +501,5 @@ class pg_ScenePlay extends Phaser.Scene{
 	{
 		this.#death_borders.add(object)
 	}
-
 
 }
