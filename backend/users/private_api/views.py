@@ -93,12 +93,12 @@ DOC_GUEST_CREATED = openapi.Response(
 		)
 
 DOC_USER_TYPE = openapi.Response(
-			description=MSG_TYPE_USER+" can be User, Bot, Guest",
+			description=MSG_TYPE_USER+" can be User=>USR, Bot=>BOT, Guest=>GST",
 			examples={
 				"application/json": {"message": MSG_TYPE_USER,
-						"data": {'1': 'Guest',
-							'2': 'User',
-							'5': 'Bot'}}
+						"data": {'1': 'GST',
+							'2': 'USR',
+							'5': 'BOT'}}
 			}
 		)
 
