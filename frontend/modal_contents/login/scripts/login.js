@@ -1,3 +1,5 @@
+let username_2fa_valid = undefined;
+
 function change_form_behavior_for_SPA(form, new_function)
 {
 	form.addEventListener('submit', (event) =>
@@ -10,7 +12,7 @@ function change_form_behavior_for_SPA(form, new_function)
 function send_user_to_2fa()
 {
 	close_modal("modal-login");
-	open_modal("modal-2fa-valid", init_modal_2fa_valid, undefined);
+	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af);
 }
 
 async function apply_login_user(refresh, access, username)
@@ -20,8 +22,11 @@ async function apply_login_user(refresh, access, username)
 
 	await Promise.all([
 		get_friend_list(),
-		create_user_infos(username)
+		create_user_infos(username),
+		get_2fa_state()
 	]);
+	button_dfa.disabled = false;
+	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
 	updateUI();
 }
 
@@ -94,10 +99,12 @@ async function send_form_login(form)
 		if (data['2fa_status'] == "off")
 		{
 			await apply_login_user(data.refresh, data.access, body.username);
+			username_2fa_valid = undefined;
 			close_modal("modal-login");
 		}
 		else
 		{
+			username_2fa_valid = body.username;
 			sessionStorage.setItem("access_token", data.access);
 			send_user_to_2fa(data.access);
 		}

@@ -29,6 +29,7 @@ var modalSignUp = undefined;
 var modalPlay = undefined;
 var modalIAMatchCreation = undefined;
 var modal1v1MatchCreation = undefined;
+var modalTournamentMatchCreation = undefined;
 var modalEditProfile = undefined;
 var modalProfile = undefined;
 var modalTwoFASetup = undefined;
@@ -96,16 +97,35 @@ function openModal1v1MatchCreation() {
 
 	modal1v1MatchCreation = new ModalManager('modal1v1MatchCreation');
 
-	var modaldialog = document.getElementById('modal-versus-match-creation-dialog');
+	var modaldialog = document.getElementById('modal-1v1-match-creation-dialog');
 	modaldialog.classList.add('grow-top-right');
-	initMatchVersusCreation();
+	initMatch1v1Creation();
 	modal1v1MatchCreation.showModal();
 }
 
 function hideModal1v1MatchCreation() {
-	var modaldialog = document.getElementById('modal-versus-match-creation-dialog');
+	var modaldialog = document.getElementById('modal-1v1-match-creation-dialog');
 	modaldialog.classList.remove('grow-top-right');
 	modal1v1MatchCreation.hideModal();
+}
+
+// 
+
+function openModalTournamentMatchCreation() {
+	modalPlay.hideModal();
+
+	modalTournamentMatchCreation = new ModalManager('modalTournamentMatchCreation');
+
+	var modaldialog = document.getElementById('modalTournamentCreationDialog');
+	modaldialog.classList.add('grow-top-down');
+	initTournamentCreation();
+	modalTournamentMatchCreation.showModal();
+}
+
+function hideModalTournamentMatchCreation() {
+	var modaldialog = document.getElementById('modalTournamentCreationDialog');
+	modaldialog.classList.remove('grow-top-down');
+	modalTournamentMatchCreation.hideModal();
 }
 
 // 
@@ -130,7 +150,14 @@ function returnToModalPlay(source) {
 		hideModalIAMatchCreation();
 	}
 	else if (source === '1v1MatchCreation') {
+		clearInputFields();
+		addFocusOutListener();
+		// hidePlayer2ConnectionSection();
+		// initBoxs();
 		hideModal1v1MatchCreation();
+	}
+	else if (source === 'TournamentMatchCreation') {
+		hideModalTournamentMatchCreation();
 	}
 	modalPlay.showModal();
 }
@@ -142,8 +169,15 @@ function openModalEditProfile() {
 
 	var modaldialog = document.getElementById('modal-edit-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
+	button_dfa.disabled = true;
 	clear_edp_user_inputs();
-	clear_edp_pass_inputs();
+	clear_edp_user_error_fields(true);
+	clear_edp_pass_error_fields();
+	edp_update_profile_picture();
+	get_2fa_state().then(() => {
+		button_dfa.disabled = false;
+		is_btn_on_enable ? set_to_disable_2fa_button() : set_to_enable_2fa_button();
+	});
 	modalEditProfile.showModal();
 }
 
@@ -168,11 +202,16 @@ function keypressModalEditProfile(event) {
 function openModalProfile() {
 
 	modalProfile = new ModalManager('modal-profile');
-
 	var modaldialog = document.getElementById('modal-profile-dialog');
 	modaldialog.classList.add('grow-bottom-right');
-	modalProfile.showModal() 
-	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
+	Promise.all([
+		setup_friend_list(),
+		setup_friends_request_list()
+	])
+	.then(() => {
+		modalProfile.showModal();
+		on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
+	});
 }
 
 function hideModalProfile() {
@@ -190,10 +229,9 @@ function openModalTwoFASetup() {
 	var modaldialog = document.getElementById('modal-2fa-setup-dialog');
 	modaldialog.classList.add('grow-bottom-right');
 
-	// set focus on code enter
 	clear_code_inputs_setup();
-	on_click_div_event(document.getElementById("tfas-key-enter-div"));
 	modalTwoFASetup.showModal();
+	on_click_div_event(document.getElementById("tfas-key-enter-div"));
 }
 
 function hideModalTwoFASetup() {
@@ -209,10 +247,9 @@ function openModalTwoFAValid() {
 	var modaldialog = document.getElementById('modal-2fa-valid-dialog');
 	modaldialog.classList.add('grow-bottom-right');
 	
-	// set focus on code enter
-	clear_code_inputs_setup();
-	on_click_div_event(document.getElementById("tfav-key-enter-div"));
+	clear_code_inputs_valid();
 	modalTwoFAValid.showModal();
+	on_click_div_event(document.getElementById("tfav-key-enter-div"));
 }
 
 function hideModalTwoFAValid() {
@@ -258,7 +295,6 @@ async function get_modals_html()
 	catch (error)
 	{
 		console.log("Error retrieving static modal code.");
-		// TODO: popup ?
 		return "";
 	}
 }
@@ -266,14 +302,18 @@ async function get_modals_html()
 document.addEventListener("DOMContentLoaded", function()
 {
 	const event = new Event("onModalsLoaded");
-	updateUI();
 
-	get_modals_html().then((html) => {
-		document.getElementById('modals').innerHTML = html;
-	})
-	.then(() =>
-	{
-		document.dispatchEvent(event);
-		addFocusOutListener();
+	load_side_menu_html().then(() => {
+
+		get_modals_html().then((html) => {
+			document.getElementById('modals').innerHTML = html;
+		})
+		.then(() =>
+		{
+			document.dispatchEvent(event);
+			addFocusOutListener();
+			updateUI();
+		});
 	});
+
 });

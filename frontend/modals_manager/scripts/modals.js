@@ -42,37 +42,55 @@ function focus_modal_register()
 	document.getElementById("input-register-username").focus();
 }
 
-function init_modal_2fa_setup()
+function init_modal_2fa_setup_bf()
 {
 	clear_code_inputs_setup();
+}
+
+function init_modal_2fa_setup_af()
+{
 	on_click_div_event(document.getElementById("tfas-key-enter-div"));
 }
 
-function init_modal_2fa_valid()
+function init_modal_2fa_valid_bf()
 {
-	clear_code_inputs_setup();
+	clear_code_inputs_valid();
+}
+
+function init_modal_2fa_valid_af()
+{
 	on_click_div_event(document.getElementById("tfav-key-enter-div"));
 }
 
-function init_modal_profile()
+async function init_modal_profile_bf()
+{
+	await Promise.all([
+		setup_friend_list(),
+		setup_friends_request_list()
+	]);
+}
+
+function init_modal_profile_af()
 {
 	on_click_tab_history(document.getElementsByClassName("prof-tab-text")[0]);
 }
 
-function init_modal_edit_profile()
+async function init_modal_edit_profile()
 {
 	clear_edp_user_inputs();
-	clear_edp_pass_inputs();
+	clear_edp_user_error_fields(true);
+	clear_edp_pass_error_fields();
+	edp_update_profile_picture();
 }
 
-function open_modal(id_modal, init_function_bf, init_function_af)
+async function open_modal(id_modal, init_function_bf, init_function_af)
 {
 	modal_on_screen = id_modal;
 
 	let modal_dialog = document.getElementById(id_modal).getElementsByClassName('modal-dialog')[0];
 
 	if (init_function_bf !== undefined)
-		init_function_bf();
+		await init_function_bf();
 
 	switch (id_modal)
 	{
@@ -107,11 +125,11 @@ function open_modal(id_modal, init_function_bf, init_function_af)
 			modal_dialog.classList.add('grow-bottom-right');
 			modal_profile.show();
 			break;
-		case "modal-two-fa-setup":
+		case "modal-2fa-setup":
 			modal_dialog.classList.add('grow-bottom-right');
 			modal_2fa_setup.show();
 			break;
-		case "modal-two-fa-valid":
+		case "modal-2fa-valid":
 			modal_dialog.classList.add('grow-bottom-right');
 			modal_2fa_valid.show();
 			break;
@@ -121,7 +139,7 @@ function open_modal(id_modal, init_function_bf, init_function_af)
 	}
 
 	if (init_function_af !== undefined)
-		init_function_af();
+		await init_function_af();
 }
 
 function return_to_modal_play()
@@ -168,11 +186,11 @@ function close_modal(id_modal, init_function_af)
 			modal_dialog.classList.remove('grow-bottom-right');
 			modal_profile.hide();
 			break;
-		case "modal-two-fa-setup":
+		case "modal-2fa-setup":
 			modal_dialog.classList.remove('grow-bottom-right');
 			modal_2fa_setup.hide();
 			break;
-		case "modal-two-fa-valid":
+		case "modal-2fa-valid":
 			modal_dialog.classList.remove('grow-bottom-right');
 			modal_2fa_valid.hide();
 			break;
