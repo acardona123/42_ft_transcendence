@@ -7,7 +7,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "coucou",
+	"username" : "heyf",
 	"password" : "123asd123+",
 	"password2" : "123asd123+",
 	"email" : "J@gmai.coM",
@@ -25,8 +25,8 @@ POST https://localhost:8443/api/users/login/ HTTP/1.1
 content-type: application/json
 
 {
-	"password" : "123asd123+",
-	"username" : "coucou"
+	"password" : "123",
+	"username" : "root"
 }
 
 ### login 2fa

@@ -276,6 +276,13 @@ def create_guest(request):
 							"username": user.username}}, status=200)
 
 @swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['users_id'],
+		properties={
+			'users_id': openapi.Schema(type=openapi.TYPE_STRING, description="list of user Id"),
+		}
+	),
 	responses={
 		200: DOC_USER_TYPE,
 		400: DOC_ERROR_USER_ID,

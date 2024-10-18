@@ -19,13 +19,14 @@ class CustomUserManager(BaseUserManager):
 			user.set_password(password)
 		user.set_status_online()
 		try:
-			if user.type == user.UserType.USR:
+			if user.type == user.UserType.USER:
 				user.random_pin()
 				user.create_profil_picture(url=image_url)
 			else:
 				user.pin = None
 			user.save()
-		except:
+		except Exception as error:
+			print(error)
 			self.model.objects.filter(username=username).delete()
 		return user
 
