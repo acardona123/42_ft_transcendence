@@ -12,6 +12,8 @@ var modal_2fa_valid = undefined;
 
 let modal_on_screen = undefined;
 
+let global_game_modal = undefined;
+
 document.addEventListener('onModalsLoaded', function() {
 
 	modal_login = new bootstrap.Modal(document.getElementById('modal-login'));
@@ -20,19 +22,32 @@ document.addEventListener('onModalsLoaded', function() {
 	modal_ia_match_creation = new bootstrap.Modal(document.getElementById('modal-ia-match-creation'));
 	modal_versus_match_creation = new bootstrap.Modal(document.getElementById('modal-versus-match-creation'));
 	modal_tournament_creation = new bootstrap.Modal(document.getElementById('modal-tournament-creation'));
-	modal_game = new bootstrap.Modal(document.getElementById('modal-game'), {backdrop : "false"});
+	modal_game = new bootstrap.Modal(document.getElementById('modal-game'), {backdrop : "static", keyboard : false});
 	modal_edit_profile = new bootstrap.Modal(document.getElementById('modal-edit-profile'));
 	modal_profile = new bootstrap.Modal(document.getElementById('modal-profile'));
 	modal_2fa_setup = new bootstrap.Modal(document.getElementById('modal-2fa-setup'));
 	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'));
 
 	document.getElementById('modal-play').addEventListener('hidden.bs.modal', function () {
-		const button = document.getElementById('buttonPlay');
+		const buttons = document.querySelectorAll('.btn-play');
+		buttons.forEach(button => {
 		button.disabled = false;
 		button.focus();
 		modal_on_screen = undefined;
+		});
 	});
+
 });
+
+function set_global_game_pong()
+{
+	global_game_modal = "PONG";
+}
+
+function set_global_game_flappy_bird()
+{
+	global_game_modal = "FLAPPYBIRD";
+}
 
 function focus_modal_login()
 {
@@ -98,7 +113,7 @@ function open_modal(id_modal, init_function_bf, init_function_af)
 			modal_versus_match_creation.show();
 			break;
 		case "modal-tournament-creation":
-			modal_dialog.classList.add('grow-top-right');
+			modal_dialog.classList.add('grow-top-down');
 			modal_tournament_creation.show();
 			break;
 		case "modal-game":
@@ -250,8 +265,9 @@ document.addEventListener("DOMContentLoaded", function()
 		.then(() =>
 		{
 			document.dispatchEvent(event);
+			enable_buttons_play_event_offcanvas();
 			addFocusOutListener();
-			updateUI();
+			update_ui();
 		});
 	});
 

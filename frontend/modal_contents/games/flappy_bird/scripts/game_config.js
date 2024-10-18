@@ -8,7 +8,7 @@ const fb_gameConfig = {
 	title: "flappy_bird",
 	version: 0.1,
 	
-	parent: "phaser_flappy_bird_game", //html DOM element or id
+	parent: "phaser_game", //html DOM element or id
 	// scene: [SceneTest, fb_SceneBoot, ScenePlay, fb_SceneGameFinished],
 	scene: [fb_SceneBoot, fb_SceneMenu, fb_ScenePlay, fb_SceneGameFinished],
 

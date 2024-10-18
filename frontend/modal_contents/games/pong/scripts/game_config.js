@@ -8,7 +8,7 @@ const pg_gameConfig = {
 	title: "custom_pong",
 	version: 0.1,
 	
-	parent: "phaser_pong_game", //html DOM element or id
+	parent: "phaser_game", //html DOM element or id
 	scene: [pg_SceneBoot, pg_SceneMenu, pg_ScenePlay, pg_SceneGameFinished],
 
 	

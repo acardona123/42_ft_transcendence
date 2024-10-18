@@ -1,27 +1,27 @@
 <div id="modal-tournament-creation" class="modal" tabindex="-1">
-	<div id="modalTournamentCreationDialog" class="modal-dialog modal-dialog-centered custom-match-creation-dialog">
-		<div class="modal-content custom-match-creation-content main-container">
-			<div class="header debug-m">
+	<div id="modal-tournament-creation-dialog" class="modal-dialog modal-dialog-overwrite-size">
+		<div id="modal-tournament-creation-content" class="modal-content main-container">
+			<div class="header">
 				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="close_modal('modal-ia-match-creation', return_to_modal_play)">
 					<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
 				</button>
-				<h1 class="header-text bold">MATCH CREATION</h1>
+				<h1 id="tournament-menu-header-text" class="header-text bold">MATCH CREATION</h1>
 			</div>
-			<form id="TournamentForm" class="form-container debug-y">
+			<form id="TournamentForm" class="form-container">
 				<!-- Time Slider -->
-				<div class="slider-container debug-c">
-					<label class="slider-label debug-r" for="tournamentTimeSlider">Time:</label>
-					<input id="tournamentTimeSlider" type="range" class="slider time debug-g" min="10" max="310" step="10"
+				<div class="slider-container">
+					<label class="slider-label" for="tournamentTimeSlider">Time:</label>
+					<input id="tournamentTimeSlider" type="range" class="slider time" min="10" max="310" step="10"
 						value="45">
-					<div id="1v1TimeValue" class="slider-value debug-o"></div>
+					<div id="1v1TimeValue" class="slider-value"></div>
 				</div>
 				<!-- Points Slider -->
-				<div class="slider-container debug-m">
-					<label class="slider-label debug-r" for="tournamentPointsSlider">Points:</label>
-					<input id="tournamentPointsSlider" type="range" class="slider debug-g" min="1" max="12" value="5">
-					<div id="1v1PointsValue" class="slider-value debug-o"></div>
+				<div class="slider-container">
+					<label id="tournament-point-label" class="slider-label" for="tournamentPointsSlider">Points:</label>
+					<input id="tournamentPointsSlider" type="range" class="slider" min="1" max="12" value="5">
+					<div id="1v1PointsValue" class="slider-value"></div>
 				</div>
-				<div id="TournamentPlayerListContainer">
+				<div id="Tournamentplayer_listContainer">
 					<!-- Grid Player List -->
 					<div id="PlayerGrid">
 						<!-- Initial placeholder cards -->
@@ -46,30 +46,27 @@
 					<div id="TournamentButtonsContainer">
 						<button id="ButtonAddGuestPlayer" class="btn btn-form" type="button">Add Guest</button>
 						<button id="ToggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player 2</button>
-						<div id="AddConnectedPlayerContainer" class="debug-y">
+						<div id="AddConnectedPlayerContainer">
 							<div id="AddConntectedPlayerContent">
-								<div id="ConnectedPlayerInputContainer" class="input-container debug-r">
+								<div id="ConnectedPlayerInputContainer" class="input-container">
 									<input id="ConnectedPlayerPseudo" class="input" type="text" placeholder=""
 										maxlength="20">
 									<label for="ConnectedPlayerPseudo">Pseudo</label>
 									<span class="focus-border"></span>
 								</div>
-								<div id="PlayerConnectedPinContainer" class="input-container debug-b">
+								<div id="PlayerConnectedPinContainer" class="input-container">
 									<input id="PlayerConnectedPin" class="input" type="password" placeholder=""
 										maxlength="4" pattern="[0-9]*" inputmode="numeric">
 									<label for="PlayerConnectedPin">Pin</label>
 									<span class="focus-border"></span>
 								</div>
-								<button id="ButtonAddConnectedPlayer" class="btn btn-form debug-m" type="button">Validate Connection</button>
+								<button id="ButtonAddConnectedPlayer" class="btn btn-form" type="button">Validate Connection</button>
 							</div>
 							<div id="ErrorAddConnectedPlayer" class="error">Invalid connection. Please try again.</div>
 						</div>
-						<button id="ButtonAddIA" class="btn btn-form" >Add IA</button>
+						<button id="button_add_ia" class="btn btn-form" >Add IA</button>
 					</div>
 				</div>
-
-				<!-- Debug output container -->
-				<div class="debug-output" id="debugOutput">Debug Output: Names Array</div>
 
 				<!-- Submit Button -->
 				<button id="1v1submitButton" type="submit" class="btn btn-form submit-btn-form">Create Match</button>
