@@ -30,7 +30,7 @@ async function get_profil_picture()
 	catch (error)
 	{
 		create_popup("Error retrieving profil picture.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		return ""; // TODO: default pp
+		return DEFAULT_PP_PATH;
 	}
 }
 

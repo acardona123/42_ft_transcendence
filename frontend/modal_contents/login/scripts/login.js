@@ -1,4 +1,5 @@
 let username_2fa_valid = undefined;
+const DEFAULT_PP_PATH = "/media/profile_picture/default.jpg";
 
 function change_form_behavior_for_SPA(form, new_function)
 {
@@ -116,8 +117,36 @@ async function send_form_login(form)
 	}
 }
 
+async function auto_login()
+{
+	const refresh_token = sessionStorage.getItem("refresh_token");
+	const access_token = sessionStorage.getItem("access_token");
+	if (!refresh_token || !access_token)
+		return ;
+	try
+	{
+		let user_infos = await get_user_informations();
+		let picture = await get_profil_picture();
+
+		if (picture == DEFAULT_PP_PATH)
+			throw new Error ("Error while login in.");
+		global_user_infos = {
+			username: user_infos.username,
+			profile_picture: picture,
+			pin: user_infos.pin
+		};
+	}
+	catch (error)
+	{
+		// nothing to do on error, this is a intended silent error
+	}
+}
 document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");
 	change_form_behavior_for_SPA(form, send_form_login);
+	auto_login().then(() => 
+	{
+		updateUI();
+	});
 });

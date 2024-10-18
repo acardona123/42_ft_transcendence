@@ -256,7 +256,6 @@ document.addEventListener("DOMContentLoaded", function()
 			document.getElementById('modals').innerHTML = html;
 			document.dispatchEvent(event);
 			addFocusOutListener();
-			updateUI();
 		});
 	});
 
