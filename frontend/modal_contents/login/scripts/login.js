@@ -31,11 +31,38 @@ async function apply_login_user(refresh, access, username)
 	updateUI();
 }
 
+function empty_globals()
+{
+	friend_list_data = undefined;
+	clicked_once = false;
+	lastReplacedElemFocus = undefined;
+	lastReplacedElemHover = undefined;
+	friend_popup_just_popped = false;
+	data_requests = undefined;
+	clicked_element = undefined;
+	history_list = undefined;
+	
+	playerGrid = undefined;
+	playerCards = undefined;
+	btnAddGuestPlayer = undefined;
+	btnAddConnectedPlayer = undefined;
+	ToggleConnectedPlayerContainer = undefined;
+	buttonAddIA = undefined;
+	debugOutput = undefined;
+	
+	cardsNumber = 1;
+	IANumber = 0;
+	guestNumber = 0;
+	playerNumber = 1;
+	playerList = [];
+}
+
 function logout_user_no_back()
 {
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
+	empty_globals();
 	updateUI();
 }
 
@@ -52,13 +79,13 @@ async function logout_user()
 			headers: {'content-type': 'application/json'},
 			body: body
 		});
+		logout_user_no_back();
 		if (!fetched_data.ok)
 			throw new Error("Error while disconnecting.");
-		logout_user_no_back();
 	}
 	catch (error)
 	{
-		create_popup("Error while disconnecting.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		// this is a normal silent error
 		return ;
 	}
 }

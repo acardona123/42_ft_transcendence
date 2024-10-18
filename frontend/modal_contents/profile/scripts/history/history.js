@@ -245,7 +245,7 @@ function update_history_list(tab_name)
 	}
 			
 	const _history_list = document.getElementById("history_list");
-	if (_history_list.childNodes.length == 0 || history_list == undefined) // display message if the history is empty
+	if (_history_list.children.length == 0 && history_list == undefined) // display message if the history is empty
 	{
 		const no_history_message = document.createElement('p');
 		no_history_message.textContent = "There is no history to display yet."
@@ -253,7 +253,7 @@ function update_history_list(tab_name)
 		no_history_message.style.marginTop = "10px";
 		_history_list.appendChild(no_history_message);
 	}
-	else // remove last element margin bottom
+	else if (_history_list.children.length != 0) // remove last element margin bottom
 	{
 		_history_list.childNodes[_history_list.childNodes.length - 1].style.marginBottom = "0px";
 	}

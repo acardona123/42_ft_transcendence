@@ -247,13 +247,13 @@ function handleTounamentFormSubmission() {
 // =================================================================================================
 // =================================================================================================
 
-let playerGrid;
-let playerCards;
-let btnAddGuestPlayer;
-let btnAddConnectedPlayer;
-let ToggleConnectedPlayerContainer;
-let buttonAddIA;
-let debugOutput;
+let playerGrid = undefined;
+let playerCards = undefined;
+let btnAddGuestPlayer = undefined;
+let btnAddConnectedPlayer = undefined;
+let ToggleConnectedPlayerContainer = undefined;
+let buttonAddIA = undefined;
+let debugOutput = undefined;
 
 const numRows = 4;
 const numCols = 4;
