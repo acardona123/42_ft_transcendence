@@ -50,6 +50,18 @@ function on_input_write_when_filled(is_not_event, elem)
 		reset_input_position(this);
 }
 
+function on_click_login_to_sign_up()
+{
+	close_modal("modal-login");
+	open_modal('modal-register', clear_register_inputs, focus_modal_register)
+}
+
+function on_click_sign_up_to_login()
+{
+	close_modal("modal-register");
+	open_modal('modal-login', clear_login_inputs, focus_modal_login);
+}
+
 document.addEventListener("onModalsLoaded", function()
 {
 	const list_inputs = document.getElementsByClassName("inputs-login");

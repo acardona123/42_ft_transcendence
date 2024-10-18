@@ -148,3 +148,9 @@
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
+
+.button-link-signup-login
+{
+	color: #4f95db;
+	cursor: pointer;
+}
