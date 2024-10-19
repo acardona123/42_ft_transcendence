@@ -267,8 +267,9 @@ class fb_ScenePlay extends Phaser.Scene{
 
 		async #finishParty(){
 			this.scene.pause();
+			this.scene.stop("Pause");
 			await this.#sendMatchResults();
-			this.launchEndScene();
+			this.#launchEndScene();
 		}
 			async #sendMatchResults(){
 				const url = "/api/matches/finish/" + fb_gameMode.match_id + "/";
@@ -276,9 +277,8 @@ class fb_ScenePlay extends Phaser.Scene{
 					"score1": this.#textboard.getPlayerScore(player_index.PLAYER1),
 					"score2": this.#textboard.getPlayerScore(player_index.PLAYER2),
 					"duration": this.#textboard.getPastTime() / 1000
-				}
-				try
-				{
+				};
+				try {
 					let fetched_data = await fetch_with_token(url, {
 						method: 'POST',
 						headers: {'content-type': 'application/json'},
@@ -288,17 +288,15 @@ class fb_ScenePlay extends Phaser.Scene{
 					{
 						throw new Error("");
 					}
-				}
-				catch (error)
-				{
+				} catch (error) {
 
-					create_popup("Error while trying to save the match results. Match cancelled", 10000, 4000, HEX_RED, HEX_RED_HOVER)
+					create_popup("Error while trying to save the match results. Match cancelled", 10000, 4000, HEX_RED, HEX_RED_HOVER);
 					// =====================================================================================
 					// retour a la page d'accueil ????
 					// =====================================================================================
 				}
 			}
-			launchEndScene(){
+			#launchEndScene(){
 				this.scene.start("fb_GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
 			}
 }

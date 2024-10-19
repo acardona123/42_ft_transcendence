@@ -9,7 +9,7 @@ const pg_gameConfig = {
 	version: 0.1,
 	
 	parent: "phaser_game", //html DOM element or id
-	scene: [pg_SceneBoot, pg_SceneMenu, pg_ScenePlay, pg_SceneGameFinished],
+	scene: [pg_SceneBoot, pg_SceneMenu, pg_ScenePlay, pg_ScenePause, pg_SceneGameFinished],
 
 	
 	width: pg_resize(1200 * 2.25),
@@ -111,7 +111,9 @@ const pg_gameConfig = {
 			fill: 'white',
 			padding_top: pg_resize(50)
 		},
-
+		pause: {
+			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
+		},
 		depths: {
 			background: 5,
 			bounce_border: 4,
@@ -120,6 +122,42 @@ const pg_gameConfig = {
 			clock: 1,
 			paddles:0,
 			balls: 0
+		}
+	},
+
+	scene_pause: {
+		padding:{
+			top: pg_resize(400),
+			under_text: pg_resize(150),
+			between_buttons: pg_resize(100)
+		},
+		text_style:{
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '' + pg_resize(150) + 'px',
+			fill: 'white'
+		},
+		button_style:{
+			margin : pg_resize(50),
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '' + pg_resize(150) + 'px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: pg_resize(15)
+			},
+		},
+		resume: {
+			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
+		},
+		depths: {
+			background: -1,
+			text: 0,
+			buttons: 0
 		}
 	},
 

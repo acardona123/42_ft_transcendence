@@ -19,8 +19,10 @@ class pg_ScenePlay extends Phaser.Scene{
 	#death_borders;
 
 	//bot_calculous
-
 	#bot;
+
+	//pause management
+	#pause;
 
 	constructor(){
 		super("PlayGame");
@@ -173,8 +175,9 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#createBallDeathBorderCollision();
 		this.#createBallBounceBorderCollision();
 		this.#createPlayersControls();
+		this.#createPauseControl();
+		this.#limitControlsToTheScene();
 	}
-	
 	
 	#createBallPaddleCollision(){
 		this.#setTwoPaddlesBounceAngleFunction();
@@ -399,6 +402,33 @@ class pg_ScenePlay extends Phaser.Scene{
 				return -1
 			}
 		}
+	#createPauseControl(){
+		this.#createPauseKey();
+		this.#createPauseEvent();
+		this.#createResumeEvent();
+	}
+		#createPauseKey(){
+			this.#pause = {
+				key: this.input.keyboard.addKey(pg_gameConfig.scene_play.pause.control.key_code)
+			};
+		}
+		#createPauseEvent(){
+			this.events.on('pause', () => {this.#pauseEventListener()})
+		}
+			#pauseEventListener(){
+				this.#clock.pause();
+			}
+		#createResumeEvent(){
+			this.events.on('resume', () => {setTimeout(() => {this.#resumeEventListener()}, 10);})
+		}
+			#resumeEventListener(){
+				this.#clock.resume();
+			}
+	
+	#limitControlsToTheScene(){
+		this.input.stopPropagation();
+	}
+
 	
 	#newRound(){
 		this.#ball = this.createBall();
@@ -407,11 +437,18 @@ class pg_ScenePlay extends Phaser.Scene{
 	}
 
 	update(){
+		this.#pauseManagement();
 		this.#timeConditionedBotCalculous();
 		this.#movePlayersManager();
 		this.#clock.update();
 		if (this.#isPartyFinished()){
 			this.#finishParty();
+		}
+	}
+	#pauseManagement(){
+		if (this.#pause.key.isDown){
+			this.scene.pause();	
+			this.scene.run('Pause');
 		}
 	}
 	#timeConditionedBotCalculous(){
