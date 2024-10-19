@@ -130,7 +130,7 @@
 	overflow: hidden;
 }
 
-.prof-tabs-history {
+#prof-tabs-history {
 	display: flex;
 }
 
