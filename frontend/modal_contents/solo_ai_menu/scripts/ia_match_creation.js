@@ -1,10 +1,10 @@
 function handleIAFormSubmission() {
 	document.getElementById('IAMatchForm').addEventListener('submit', (event) => {
-		sumbitIAForm(event);
+		submitIAForm(event);
 	});
 }
 
-async function sumbitIAForm(event) {
+async function submitIAForm(event) {
 	event.preventDefault();
 
 	const timeSliderValue = document.getElementById('IATimeSlider').value;
@@ -17,12 +17,14 @@ async function sumbitIAForm(event) {
 		game: "PG",
 		max_score,
 		max_duration,
-		clean_when_finished: false
+		tournament_id : -1,
+		bot_level : 1,
+		// bot_level : 1,
 	};
 	
 	console.log(body);
 
-	const url = "/api/matches/new/me-ai";
+	const url = "/api/matches/new/me-ai/";
 
 	try
 	{
@@ -33,10 +35,13 @@ async function sumbitIAForm(event) {
 		});
 		if (!fetched_data.ok)
 			throw new Error("Error while creating match.");
+
 		let data = await fetched_data.json();
-		if (!data.success)
-			throw new Error("Error while creating match.");
-		console.log("Match created.");
+
+		close_modal('modal-ia-match-creation', undefined);
+		open_modal('modal-game', undefined, undefined);
+
+		start_pong_game(data, body.bot_level);
 	}
 	catch (error)
 	{
@@ -44,26 +49,27 @@ async function sumbitIAForm(event) {
 	}
 }
 
-function initMatchIACreation() {
-	modal_play.hide();
 
+function initMatchIACreation() {
 	const sliderTime = document.getElementById('IATimeSlider');
 	const sliderPoints = document.getElementById('IAPointsSlider');
-
+	
 	sliderTime.value = 45;
 	sliderPoints.value = 5;
-
+	
 	updateSlider("IAMatchForm");
+
+	modal_play.hide();
 }
 
 document.addEventListener("onModalsLoaded", () => {
 	initMatchIACreation();
 
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "Escape") {
-			close_modal('modal-ia-match-creation', return_to_modal_play);
-		}
-	});
+	// document.addEventListener('keydown', (event) => {
+	// 	if (event.key === "Escape") {
+	// 		close_modal('modal-ia-match-creation', return_to_modal_play);
+	// 	}
+	// });
 
 	handleIAFormSubmission();
 });

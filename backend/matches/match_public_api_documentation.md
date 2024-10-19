@@ -31,6 +31,31 @@ return:
 
 
 ## start match
+### me against identified player
+`POST /api/matches/new/me-player`
+body:
+{
+	game,
+	player2_id,
+	player2_pin,
+	max_score,
+	max_duration,
+	tournament_id
+}
+return:
+{
+	status,
+	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
+}
 ### me against AI
 The user that do the request can be an identified player or a guest. If it is a guest a random guest user will be generated and used for the game
 
@@ -40,28 +65,21 @@ body:
 	game
 	max_score,
 	max_duration,
-	clean_when_finished
+	tournament_id
 }
 return:
 {
 	status,
 	message,
-}
-### me against identified player
-`POST /api/matches/new/me-player`
-body:
-{
-	game
-	player2_id,
-	player2_pin,
-	max_score,
-	max_duration,
-	clean_when_finished
-}
-return:
-{
-	status,
-	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
 }
 ### me against guest
 `POST /api/matches/new/me-guest`
@@ -70,10 +88,18 @@ body:
 	game
 	max_score,
 	max_duration
-	clean_when_finished
+	tournament_id
 }
 return:
 {
-	status,
 	message,
+	data: [{
+		id,
+		user1,
+		user2,
+		game,
+		max_score,
+		max_duration,
+		tournament_id
+		}]
 }

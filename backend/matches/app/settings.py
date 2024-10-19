@@ -27,19 +27,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 database_name = os.getenv("VAULT_DATABASE_NAME")
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_client, read_kv
-
-	client = create_client()
-	path=f'secret-key-{os.getenv('VAULT_DATABASE_NAME')}'
-	cred = read_kv(client, path)
-	SECRET_KEY = cred['data'][database_name]
+	from vault.hvac_vault import create_client, get_vault_kv_variable
+	VAULT_CLIENT = create_client()
+	
+	SECRET_KEY = get_vault_kv_variable('secret-key')
 else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'matches']
 
 
 # Application definition
@@ -51,13 +49,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'myDatabase',
+	'vault',
+	'corsheaders',
 	'rest_framework',
-	'matches'
+	'drf_yasg',
+	'matches',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,17 +93,13 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 if (database_name.endswith('_dev') == False):
-	from .vault.hvac_vault import create_cred, create_client
-
-	client = create_client()
-	cred = create_cred(client, database_name)
 
 	DATABASES = {
 		'default': {
-			'ENGINE': 'django.db.backends.postgresql',
+			'ENGINE': 'myDatabase',
 			'NAME': os.getenv('DB_NAME'),
-			'USER': cred["data"]['username'],
-			'PASSWORD': cred["data"]['password'],
+			'USER': 'user',
+			'PASSWORD': 'password',
 			'HOST': database_name,
 			'PORT': '5432',
 			'OPTIONS': {
@@ -162,5 +161,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 USERS_MICROSERVICE_URL = 'http://users:8002'
 MATCHES_MICROSERVICE_URL = 'http://localhost:8004'
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_MODEL_RENDERING": "example"
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
+    )
+}

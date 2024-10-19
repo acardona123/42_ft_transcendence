@@ -28,7 +28,7 @@ async function apply_login_user(refresh, access, username)
 	]);
 	button_dfa.disabled = false;
 	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
-	updateUI();
+	update_ui();
 }
 
 function empty_globals()
@@ -62,8 +62,12 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
+<<<<<<< HEAD
 	empty_globals();
 	updateUI();
+=======
+	update_ui();
+>>>>>>> origin/feature/games_integration
 }
 
 async function logout_user()

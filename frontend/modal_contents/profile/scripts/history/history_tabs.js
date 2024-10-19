@@ -25,7 +25,7 @@ function unload_elements()
 
 function load_elements(elem)
 {
-	update_history_list({type : elem.textContent});
+	update_history_list(elem.textContent);
 }
 
 function on_click_tab_history(elem)

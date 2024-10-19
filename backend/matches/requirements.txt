@@ -1,8 +1,12 @@
 Django>=5.0,<6.0
 psycopg2-binary>=2.8
+django-cors-headers
 python-dotenv
 hvac
 djangorestframework
 certifi
 requests
 gunicorn
+setuptools
+drf-yasg
+djangorestframework-simplejwt

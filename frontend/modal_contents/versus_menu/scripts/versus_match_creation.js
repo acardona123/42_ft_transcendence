@@ -145,13 +145,14 @@ function handle1v1FormSubmission() {
 		if (event.submitter.id === 'VSGuestPlayButton')
 		{
 			const matchData = {
-				game : "PG",
+				game : (global_game_modal==="FLAPPYBIRD") ? "FB" : "PG",
 				max_score,
 				max_duration,
-				clean_when_finished: false
+				tournament_id : -1,
+				bot_level : -1,
 			};
 
-			sumbit1v1Guest(matchData);
+			submit1v1Guest(matchData);
 		}
 		else if (event.submitter.id === 'VSPlayerPlayButton')
 		{
@@ -162,48 +163,48 @@ function handle1v1FormSubmission() {
 			const player2_pin = document.getElementById('player2Pin').value || null;
 
 			const matchData = {
-				game : "PG",
+				game : (global_game_modal==="FLAPPYBIRD") ? "FB" : "PG",
 				player2_id,
 				player2_pin,
 				max_score,
 				max_duration,
-				clean_when_finished: false
+				tournament_id : -1,
+				bot_level : -1,
 			};
 
-			sumbit1v1Player(matchData);
+			submit1v1Player(matchData);
 		}
 	});
 }
 
-async function sumbit1v1Guest(matchData) {
+async function submit1v1Guest(matchData) {
 	const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
 
-	const url = "/api/matches/new/me-guest";
-
-	console.log("fetch to /api/matches/new/me-guest");
-	console.log(matchData);
-
+	const url = "/api/matches/new/me-guest/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
-			body: JSON.stringify(matchData),
+			body: JSON.stringify(matchData)
 		});
 		if (!fetched_data.ok)
 		{
 			errorBoxVSGuest.textContent = 'Error connecting to server.';
-			throw new Error("Error while creating match.");
-		}
-		let data = await fetched_data.json();
-		if (!data.success)
-		{
-			errorBoxVSGuest.textContent = 'Invalid connection. Please try again.';
+			errorBoxVSGuest.style.display = 'block';
 			throw new Error("Error while creating match.");
 		}
 		errorBoxVSGuest.textContent = '';
 		errorBoxVSGuest.style.display = 'none';
-		console.log("Match created.");
+		
+		let data = await fetched_data.json();
+		close_modal('modal-versus-match-creation', undefined);
+		open_modal('modal-game', undefined, undefined);
+
+		if (global_game_modal === "FLAPPYBIRD")
+			start_flappybird_game(data);
+		else
+			start_pong_game(data);
 	}
 	catch (error)
 	{
@@ -212,10 +213,10 @@ async function sumbit1v1Guest(matchData) {
 	}
 }
 
-async function sumbit1v1Player(matchData) {
+async function submit1v1Player(matchData) {
 	const errorBoxVSPlayer = document.getElementById('ErrorBoxConnectionVSPlayer');
 
-	const url = "/api/matches/new/me-player";
+	const url = "/api/matches/new/me-player/";
 
 	console.log("fetch to /api/matches/new/me-player");
 	console.log(matchData);
@@ -249,8 +250,27 @@ async function sumbit1v1Player(matchData) {
 	}
 }
 
+function versus_match_creation_setup_display_on_game()
+{
+	const header = document.getElementById('versus-match-creation-menu-header-text');
+	const slider_label = document.getElementById('versus-points-label');
+
+	if (global_game_modal === "FLAPPYBIRD")
+	{
+		header.textContent = "CREATE A FLAPPY BIRD VERSUS";
+		slider_label.textContent = "Deaths:";
+	}
+	else
+	{
+		header.textContent = "CREATE A PONG VERSUS";
+		slider_label.textContent = "Points:";
+		
+	}
+}
+
 function initMatchVersusCreation() {
-	modal_play.hide();
+
+	versus_match_creation_setup_display_on_game();
 
 	const sliderTime = document.getElementById('1v1TimeSlider');
 	const sliderPoints = document.getElementById('1v1PointsSlider');
@@ -262,20 +282,22 @@ function initMatchVersusCreation() {
 
 	clearErrorFields();
 	clearInputFields();
+
+	modal_play.hide();
 }
 
 document.addEventListener("onModalsLoaded", function()
 {
 	updateSlider("1v1MatchForm");
-	updateUserName();
+	update_user_name();
 
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "Escape") {
-			close_modal('modal-versus-match-creation', return_to_modal_play);
-		}
-	});
+	// document.addEventListener('keydown', (event) => {
+	// 	if (event.key === "Escape") {
+	// 		close_modal('modal-versus-match-creation', return_to_modal_play);
+	// 	}
+	// });
 
-	pincodeOnlyDigits();
+	pincodeOnlyDigits('player2Pin');
 
 	clearErrorFields();
 	clearInputFields();

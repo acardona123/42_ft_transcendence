@@ -1,5 +1,3 @@
-
-
 from rest_framework import serializers
 from .models import Match
 from django.core.exceptions import BadRequest
@@ -25,13 +23,13 @@ class MatchSerializer(DynamicFieldsModelSerializer):
 
 	class Meta:
 		model = Match
-		fields = ['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'date', 'score1', 'score2', 'duration', 'is_finished', 'clean_when_finished']
+		fields = ['id', 'user1', 'user2', 'game', 'max_score', 'max_duration', 'date', 'score1', 'score2', 'duration', 'is_finished', 'tournament_id']
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
 
-class MatchHistorySerializer(DynamicFieldsModelSerializer):
+class MatchDisplaySerializer(DynamicFieldsModelSerializer):
 	main_player_id = serializers.SerializerMethodField()
 	opponent_id = serializers.SerializerMethodField()
 	main_player_username = serializers.SerializerMethodField()
@@ -41,14 +39,14 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 
 	class Meta:
 		model = Match
-		fields = ['id', 'game', 'max_score', 'max_duration', 'date', 'duration', 'main_player_id', 'opponent_id', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score']
+		fields = ['id', 'game', 'max_score', 'max_duration', 'date', 'duration', 'main_player_id', 'opponent_id', 'main_player_username', 'opponent_username', 'main_player_score', 'opponent_score', 'tournament_id']
 
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
 		self.user_id = self.context.get('user_id')
-		if not self.user_id:
+		if self.user_id == None:
 			raise ("user_id is needed in context to use the match history serializer")
 		if hasattr(self, 'instance') and 'opponent_username' in self.fields:
 			opponents_ids = list()
@@ -85,7 +83,7 @@ class MatchHistorySerializer(DynamicFieldsModelSerializer):
 
 	def get_main_player_username(self, obj):
 		if "main_player_username" in self.fields:
-			return self.get_usernames_request([self.user_id]).get(str(self.user_id));
+			return self.get_usernames_request([self.user_id]).get(str(self.user_id))
 		else:
 			return ""
 	

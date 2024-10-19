@@ -83,8 +83,8 @@ function isdigit(str)
 	return /^\d+$/.test(str);
 }
 
-function pincodeOnlyDigits() {
-	const pincode = document.getElementById('player2Pin');
+function pincodeOnlyDigits(id) {
+	const pincode = document.getElementById(id);
 
 	pincode.oninput = function() {
 		if (!isdigit(pincode.value)) {

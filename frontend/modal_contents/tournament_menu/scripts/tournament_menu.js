@@ -8,11 +8,11 @@ function OnClickToggleContainerConnectedPlayer() {
 	btn.addEventListener('click', ToggleContainerConnectedPlayer);
 }
 
-function EscapeContainerConnectedPlayer(event) {
-	if (event.key === 'Escape') {
-		ToggleContainerConnectedPlayer();
-	}
-}
+// function EscapeContainerConnectedPlayer(event) {
+// 	if (event.key === 'Escape') {
+// 		ToggleContainerConnectedPlayer();
+// 	}
+// }
 
 function LoseFocusContainerConnectedPlayer(event) {
 	const toggleBtn = document.getElementById('ToggleConnectedPlayerContainer');
@@ -43,8 +43,7 @@ function ToggleContainerConnectedPlayer() {
 		AddConnectedPlayerContainer.classList.add('appear');
 
 		/* Set escape event */
-		// document.removeEventListener('keydown', escape);
-		document.addEventListener('keydown', EscapeContainerConnectedPlayer);
+		// document.addEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.addEventListener('click', LoseFocusContainerConnectedPlayer);
 
 
@@ -61,8 +60,7 @@ function ToggleContainerConnectedPlayer() {
 		AddConnectedPlayerContainer.classList.add('disappear');
 
 		/* Remove escape event */
-		// document.addEventListener('keydown', escape);
-		document.removeEventListener('keydown', EscapeContainerConnectedPlayer);
+		// document.removeEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.removeEventListener('click', LoseFocusContainerConnectedPlayer);
 
 		/* Focus on the button */
@@ -116,6 +114,30 @@ function CheckAddConnectedPlayer(pseudo, pin) {
 	return errorMessage;
 }
 
+async function tournament_add_player(player_data)
+{
+	const url = "/add-connected-player-in-tournament/";
+
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(player_data)
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error while adding the player");
+
+		clearInputFields();
+		AddCard(pseudo, 'PLAYER');
+	}
+	catch (error)
+	{
+		document.getElementById('ErrorAddConnectedPlayer').textContent = 'Invalid connection. Please try again.';
+		document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
+	}
+}
+
 function OnClickAddConnectedPlayer() {
 	btn = document.getElementById('ButtonAddConnectedPlayer');
 
@@ -140,44 +162,9 @@ function OnClickAddConnectedPlayer() {
 			document.getElementById('PlayerConnectedPin').classList.remove('has-content');
 		}
 		else {
-			fetch('/add-connected-player-in-tournament', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ pseudo, pin })
-			})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						AddCard(pseudo, 'PLAYER');
-						document.getElementById('ErrorAddConnectedPlayer').textContent = '';
-						document.getElementById('ErrorAddConnectedPlayer').style.display = 'none';
+			let player_data = {pseudo, pin};
 
-						/* Clear input */
-						document.getElementById('ConnectedPlayerPseudo').value = '';
-						document.getElementById('ConnectedPlayerPseudo').classList.remove('has-content');
-						document.getElementById('PlayerConnectedPin').value = '';
-						document.getElementById('PlayerConnectedPin').classList.remove('has-content');
-					}
-					else {
-						document.getElementById('ErrorAddConnectedPlayer').textContent = 'Invalid connection. Please try again.';
-						document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
-						
-						/* Clear input */
-						document.getElementById('PlayerConnectedPin').value = '';
-						document.getElementById('PlayerConnectedPin').classList.remove('has-content');
-					}
-				})
-				.catch(() => {
-					document.getElementById('ErrorAddConnectedPlayer').textContent = 'Error connecting to server.';
-					document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
-
-					/* Clear input */
-					document.getElementById('ConnectedPlayerPseudo').value = '';
-					document.getElementById('ConnectedPlayerPseudo').classList.remove('has-content');
-					document.getElementById('PlayerConnectedPin').value = '';
-					document.getElementById('PlayerConnectedPin').classList.remove('has-content');
-				});
-			AddCard(pseudo, 'PLAYER');
+			tournament_add_player(player_data);
 		}
 	});
 }
@@ -204,8 +191,38 @@ function disableFormSubmitOnEnter(id) {
 	});
 }
 
+async function submit_tournament_creation(tournament_data)
+{
+	const url = "/create-tournament/";
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(tournament_data),
+		});
+		if (!fetched_data.ok)
+		{
+			throw new Error("Error while creating the tournament");
+		}
+
+		let data = await fetched_data.json();
+
+		console.log(data);
+		console.log("create Tournament");
+
+		close_modal('modal-tournament-creation', undefined);
+		open_modal('modal-game', undefined, undefined);
+
+	}
+	catch (error)
+	{
+		console.log(error);
+	}
+}
+
 function handleTounamentFormSubmission() {
-	document.getElementById('TournamentForm').addEventListener('submit', (event) => {
+	document.getElementById('TournamentForm').addEventListener('submit', async (event) => {
 		event.preventDefault();
 
 		timeSliderValue = document.getElementById('tournamentTimeSlider').value;
@@ -214,294 +231,44 @@ function handleTounamentFormSubmission() {
 		const time = timeSliderValue === '310' ? '∞' : timeSliderValue;
 		const points = pointsSliderValue === '12' ? '∞' : pointsSliderValue;
 
-		const tournamentData = {
+		const tournament_data = {
 			time,
 			points,
-			IANumber,
-			guestNumber,
+			number_ia,
+			number_guest,
 		};
 
-		console.log(tournamentData);
+			submit_tournament_creation(tournament_data);
 
-		// Send match data to the backend
-		fetch('/create-tournament', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(tournamentData),
-		})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					// alert('Match created successfully!');
-				} else {
-					// alert('Error creating match.');
-				}
-			})
-			.catch(() => {
-				// alert('Error connecting to server.');
-			});
+		console.log(tournament_data);
+
 	});
 }
 
-// =================================================================================================
-// =================================================================================================
-// =================================================================================================
-
-let playerGrid = undefined;
-let playerCards = undefined;
-let btnAddGuestPlayer = undefined;
-let btnAddConnectedPlayer = undefined;
-let ToggleConnectedPlayerContainer = undefined;
-let buttonAddIA = undefined;
-let debugOutput = undefined;
-
-const numRows = 4;
-const numCols = 4;
-const arrayCardPosToNumber = [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15];
-
-const maxCards = 16;
-let cardsNumber = 1;
-let IANumber = 0;
-let guestNumber = 0;
-let playerNumber = 1;
-let playerList = [];
-
-function updateGrid() {
-	for (let i = 0; i < playerList.length; ++i) {
-		let column = i % numCols;
-		let row = Math.floor(i / numCols);
-		let idCol = column * numRows;
-		let index = idCol + row;
-
-		const card = playerCards[index];
-		card.textContent = playerList[i].name;
-		card.classList.add('show');
-		if (playerList[i].type === 'IA') {
-			card.style.backgroundColor = '#28a745';
-		} else if (playerList[i].type === 'GUEST') {
-			card.style.backgroundColor = '#ffc107';
-		} else {
-			card.style.backgroundColor = '#007bff';
-		}
-
-		if (i !== 0) {
-			const deleteButton = document.createElement('button');
-			deleteButton.textContent = 'X';
-			deleteButton.classList.add('delete-button');
-			card.appendChild(deleteButton);
-		}
-	}
-	for (let i = playerList.length; i < maxCards; ++i) {
-		let column = i % numCols;
-		let row = Math.floor(i / numCols);
-		let idCol = column * numRows;
-		let index = idCol + row;
-
-		const card = playerCards[index];
-		card.textContent = `Player ${i + 1}`;
-		card.classList.remove('show');
-		card.style.backgroundColor = '#fff';
-	}
-}
-
-function disableButtons() {
-	if (cardsNumber >= maxCards) {
-		ToggleConnectedPlayerContainer.disabled = true;
-		btnAddConnectedPlayer.disabled = true;
-		btnAddGuestPlayer.disabled = true;
-		buttonAddIA.disabled = true;
-	} else {
-		ToggleConnectedPlayerContainer.disabled = false;
-		btnAddConnectedPlayer.disabled = false;
-		btnAddGuestPlayer.disabled = false;
-		buttonAddIA.disabled = false;
-	}
-}
-
-function CheckAddCard(name, type)
+function tournament_creation_setup_display_on_game()
 {
-	if (cardsNumber < maxCards)
+	const header = document.getElementById('tournament-menu-header-text');
+	const slider_label = document.getElementById('tournament-point-label');
+	const button_ia = document.getElementById('button_add_ia');
+
+	if (global_game_modal === "FLAPPYBIRD")
 	{
-		if (type === 'PLAYER' && playerList.find(item => item.name === name)) {
-				return "Player already exists.";
-		}
-		else
-			return "";
+		header.textContent = "CREATE A FLAPPY BIRD TOURNAMENT";
+		slider_label.textContent = "Deaths:";
+		button_ia.disable = true;
+		button_ia.style.display = 'none';
 	}
 	else
 	{
-		return "No more slots available.";
+		header.textContent = "CREATE A PONG TOURNAMENT";
+		slider_label.textContent = "Points:";
+		button_ia.disable = false;
+		button_ia.style.display = 'flex';
 	}
-}
-
-function AddCard(name, type) {
-	if (cardsNumber < maxCards) {
-
-		if (type === 'PLAYER') {
-			++playerNumber;
-			const lastPlayerIndex = playerList.findLastIndex(item => item.type === 'PLAYER');
-			if (lastPlayerIndex === -1) {
-				playerList.push({ name, type });
-			} else {
-				playerList.splice(lastPlayerIndex + 1, 0, { name, type });
-			}
-		}
-		else if (type === 'GUEST') {
-			++guestNumber;
-			const lastGuestIndex = playerList.findLastIndex(item => item.type === 'GUEST');
-			const lastPlayerIndex = playerList.findLastIndex(item => item.type === 'PLAYER');
-			if (lastGuestIndex === -1 && lastPlayerIndex === -1) {
-				playerList.push({ name, type });
-			} else if (lastGuestIndex === -1) {
-				playerList.splice(lastPlayerIndex + 1, 0, { name, type });
-			} else {
-				playerList.splice(lastGuestIndex + 1, 0, { name, type });
-			}
-		}
-		else {
-			playerList.push({ name, type }); // Add the name and type to the array
-			++IANumber;
-		}
-
-		++cardsNumber;
-
-		updateDebugOutput(); // Update the debug output
-		updateGrid(); // Update the grid
-		disableButtons();
-	}
-}
-
-async function deleteCard(cardElement) {
-	const cardIndex = arrayCardPosToNumber[playerCards.indexOf(cardElement)];
-	if (cardIndex !== -1)
-	{
-		--cardsNumber;
-		switch (playerList[cardIndex].type)
-		{
-			case 'PLAYER':
-				await fetch('/delete-connected-player-in-tournament', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ name: playerList[cardIndex].name })
-				})
-					.then(response => response.json())
-					.then(data => {
-						if (data.success) {
-							--playerNumber;
-							shiftCards(cardIndex);
-							playerList.pop();
-						} else {
-							++cardsNumber;
-						}
-					})
-					.catch(() => {
-						--playerNumber;
-						shiftCards(cardIndex);
-						playerList.pop();
-					});
-				break;
-
-			case 'GUEST':
-				--guestNumber;
-				const lastGuestIndex = playerList.findLastIndex(item => item.type === 'GUEST');
-				if (lastGuestIndex === -1) {
-					playerList.pop();
-				} else {
-					shiftCards(lastGuestIndex);
-					playerList.pop();
-				}
-				break;
-
-			case 'IA':
-				--IANumber;
-				playerList.pop();
-				break;
-
-			default:
-				break;
-		}
-
-		updateDebugOutput();
-		updateGrid();
-		disableButtons();
-	}
-}
-
-const cardNumberToPos = (cardNumber) => {
-	return arrayCardPosToNumber.indexOf(cardNumber);
-}
-
-function shiftCards(startCardIndex) {
-	for (let i = startCardIndex; i < playerList.length; ++i) {
-		playerList[i] = playerList[i + 1];
-	}
-	updateDebugOutput();
-}
-
-function updateDebugOutput() {
-	// Convert the playerList array to a formatted string
-	debugOutput.textContent = `Debug Output: playerList Array\n${JSON.stringify(playerList, null, 2)}`;
-}
-
-function eventDeleteCard() {
-
-	playerGrid.addEventListener('click', (event) => {
-		if (event.target.classList.contains('delete-button')) {
-			event.preventDefault();
-			const card = event.target.parentElement;
-			deleteCard(card);
-		}
-	});
-}
-
-function eventAddGuestPlayer() {
-
-	btnAddGuestPlayer.addEventListener('click', (event) => {
-		event.preventDefault();
-		const guestName = `Guest`;
-		// const guestName = `Guest ${guestNumber + 1}`;
-		AddCard(guestName, 'GUEST');
-	});
-}
-
-function eventAddIA() {
-	
-	buttonAddIA.addEventListener('click', (event) => {
-		event.preventDefault();
-		const iaName = `IA`;
-		// const iaName = `IA ${IANumber + 1}`;
-		AddCard(iaName, 'IA');
-	});
-}
-
-
-function initPlayerGird() {
-
-	/* Set var */
-	playerGrid = document.getElementById('PlayerGrid');
-	playerCards = Array.from(playerGrid.getElementsByClassName('player-card'));
-	btnAddGuestPlayer = document.getElementById('ButtonAddGuestPlayer');
-	btnAddConnectedPlayer = document.getElementById('ButtonAddConnectedPlayer');
-	ToggleConnectedPlayerContainer = document.getElementById('ToggleConnectedPlayerContainer');
-	buttonAddIA = document.getElementById('ButtonAddIA');
-	debugOutput = document.getElementById('debugOutput');
-
-	cardsNumber = 1;
-	IANumber = 0;
-	guestNumber = 0;
-	playerNumber = 1;
-	playerList = [];
-
-	/* Set array */
-	playerList.push({name: "PATATOR", type: 'PLAYER'});
-	// playerList.push({name: global_user_infos.username, type: 'PLAYER'});
-	updateGrid();
-
-
 }
 
 function initTournamentCreation() {
-	modal_play.hide();
+	tournament_creation_setup_display_on_game();
 
 	const sliderTime = document.getElementById('tournamentTimeSlider');
 	const sliderPoints = document.getElementById('tournamentPointsSlider');
@@ -511,27 +278,29 @@ function initTournamentCreation() {
 
 	/* Slider */
 	updateSlider("TournamentForm");
-	
+
 	/* Visual Features */
 	clearInputFields();
-	
+
 	initPlayerGird();
 
 	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
 	// disableFormSubmitOnEnter('PlayerConnectedPin');
+
+	modal_play.hide();
 }
 
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();
 
 
-	document.addEventListener('keydown', (event) => {
-		if (event.key === "Escape") {
-			returnToModalPlay("TournamentMatchCreation")
-		}
-	});
+	// document.addEventListener('keydown', (event) => {
+	// 	if (event.key === "Escape") {
+	// 		returnToModalPlay("TournamentMatchCreation")
+	// 	}
+	// });
 
-	pincodeOnlyDigits();
+	pincodeOnlyDigits('PlayerConnectedPin');
 	OnClickToggleContainerConnectedPlayer();
 	OnEnterInputConnectedPlayer();
 	OnClickAddConnectedPlayer();

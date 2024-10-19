@@ -4,12 +4,15 @@ var modal_play = undefined;
 var modal_ia_match_creation = undefined;
 var modal_versus_match_creation = undefined;
 var modal_tournament_creation = undefined;
+var modal_game = undefined;
 var modal_edit_profile = undefined;
 var modal_profile = undefined;
 var modal_2fa_setup = undefined;
 var modal_2fa_valid = undefined;
 
 let modal_on_screen = undefined;
+
+let global_game_modal = undefined;
 
 document.addEventListener('onModalsLoaded', function() {
 
@@ -19,18 +22,32 @@ document.addEventListener('onModalsLoaded', function() {
 	modal_ia_match_creation = new bootstrap.Modal(document.getElementById('modal-ia-match-creation'));
 	modal_versus_match_creation = new bootstrap.Modal(document.getElementById('modal-versus-match-creation'));
 	modal_tournament_creation = new bootstrap.Modal(document.getElementById('modal-tournament-creation'));
+	modal_game = new bootstrap.Modal(document.getElementById('modal-game'), {backdrop : "static", keyboard : false});
 	modal_edit_profile = new bootstrap.Modal(document.getElementById('modal-edit-profile'));
 	modal_profile = new bootstrap.Modal(document.getElementById('modal-profile'));
 	modal_2fa_setup = new bootstrap.Modal(document.getElementById('modal-2fa-setup'));
 	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'));
 
 	document.getElementById('modal-play').addEventListener('hidden.bs.modal', function () {
-		const button = document.getElementById('buttonPlay');
+		const buttons = document.querySelectorAll('.btn-play');
+		buttons.forEach(button => {
 		button.disabled = false;
 		button.focus();
 		modal_on_screen = undefined;
+		});
 	});
+
 });
+
+function set_global_game_pong()
+{
+	global_game_modal = "PONG";
+}
+
+function set_global_game_flappy_bird()
+{
+	global_game_modal = "FLAPPYBIRD";
+}
 
 function focus_modal_login()
 {
@@ -114,8 +131,12 @@ async function open_modal(id_modal, init_function_bf, init_function_af)
 			modal_versus_match_creation.show();
 			break;
 		case "modal-tournament-creation":
-			modal_dialog.classList.add('grow-top-right');
+			modal_dialog.classList.add('grow-top-down');
 			modal_tournament_creation.show();
+			break;
+		case "modal-game":
+			modal_dialog.classList.add();
+			modal_game.show();
 			break;
 		case "modal-edit-profile":
 			modal_dialog.classList.add('grow-bottom-right');
@@ -178,6 +199,9 @@ function close_modal(id_modal, init_function_af)
 			modal_dialog.classList.remove('grow-top-right');
 			modal_tournament_creation.hide();
 			break;
+		case "modal-game":
+			modal_dialog.classList.remove();
+			modal_game.hide();
 		case "modal-edit-profile":
 			modal_dialog.classList.remove('grow-bottom-right');
 			modal_edit_profile.hide();
@@ -210,7 +234,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -218,13 +242,14 @@ async function get_modals_html()
 			fetch('modal_contents/solo_ai_menu/solo_ai_menu.html'),
 			fetch('modal_contents/versus_menu/versus_menu.html'),
 			fetch('modal_contents/tournament_menu/tournament_menu.html'),
+			fetch('modal_contents/games/game.html'),
 			fetch('modal_contents/edit_profile/edit_profile.html'),
 			fetch('modal_contents/profile/profile.html'),
 			fetch('modal_contents/twoFA/twoFA_setup.html'),
 			fetch('modal_contents/twoFA/twoFA_valid.html')
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, edit_profile, profile, twoFA_setup, twoFA_valid] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -232,12 +257,13 @@ async function get_modals_html()
 			solo_ai_menu.text(),
 			versus_menu.text(),
 			tournament_menu.text(),
+			game.text(),
 			edit_profile.text(),
 			profile.text(),
 			twoFA_setup.text(),
 			twoFA_valid.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + edit_profile + profile + twoFA_setup + twoFA_valid;
+		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + game + edit_profile + profile + twoFA_setup + twoFA_valid;
 	}
 	catch (error)
 	{
@@ -255,6 +281,7 @@ document.addEventListener("DOMContentLoaded", function()
 		get_modals_html().then((html) => {
 			document.getElementById('modals').innerHTML = html;
 			document.dispatchEvent(event);
+			enable_buttons_play_event_offcanvas();
 			addFocusOutListener();
 		});
 	});
