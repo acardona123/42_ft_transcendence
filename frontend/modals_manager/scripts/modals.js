@@ -45,7 +45,7 @@ function init_modals()
 	});
 }
 
-document.addEventListener('onModalsLoaded', init_modals());
+document.addEventListener('onModalsLoaded', init_modals);
 
 function set_global_game_pong()
 {
