@@ -1,4 +1,5 @@
 import random
+from .models import Tournament
 
 def matchmaking(tournament):
 	players = list(tournament.participant_set.all())
@@ -28,4 +29,6 @@ def dispatch_player(tournament):
 		player.save()
 	tournament.next_match = 1
 	tournament.max_match = max(new_match)
+	if tournament.max_match == 1 and len(players) == 1:
+		tournament.status = Tournament.GameStatus.FINISHED
 	tournament.save()

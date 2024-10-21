@@ -22,7 +22,13 @@ class Tournament(models.Model):
 	next_match = models.IntegerField(null=True)
 
 class Participant(models.Model):
+	class UserType(models.TextChoices):
+		GUEST = "GST", _("Guest")
+		BOT = "BOT", _("Bot")
+		USER = "USR", _("User")
+
 	user = models.IntegerField()
+	type = models.CharField(max_length=3, choices=UserType.choices, default=UserType.USER)
 	is_playing = models.BooleanField(default=False)
 	position = models.IntegerField(null=True)
 	tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)

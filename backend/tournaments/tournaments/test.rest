@@ -2,7 +2,7 @@
 @port = 8443
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NTA3MDY2LCJpYXQiOjE3Mjk1MDY3NjYsImp0aSI6IjA4ZjdiNWI3YThkYzRiNTI5NzY5ZDEzNmI0NDAzMGYxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.OqTW1pX-eMLiAH9UmcZE3vlbdNhkvqQS28b2Hv6ncfU
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NTEyMDQ1LCJpYXQiOjE3Mjk1MTE3NDUsImp0aSI6ImU5OWUzYzEyNWU2MjQyYTM5ZTZlMmNjNmJhMDFiMGUyIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.2RwcsBGVO339qR5vDxHXBim8J6nupbDGzXqxfpYowns
 @refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5MTY2MTMxLCJpYXQiOjE3MjkxNjU4MzEsImp0aSI6IjA3OTM3OTQwMWFiYzQxNmQ4YmJlYzhmZGYwZDM5ZWVmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImMifQ.R4YwKkALu57V8wpJeWz3S7KKTIiqeO75EW7qoi75OSU
 
 ### create empty tournament
@@ -30,20 +30,20 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 2,
+	"tournament_id": 7,
 	"game": "PG",
 	"max_score": -1,
 	"max_duration": 56,
-	"nb_guest": 5,
-	"nb_ai": 5
+	"nb_guest": 8,
+	"nb_ai": 10
 }
 
 ### list guest
-GET https://{{host}}/api/tournaments/guests/?tournament_id=2
+GET https://{{host}}/api/tournaments/guests/?tournament_id=5
 Authorization: Bearer {{access_token}}
 
 ### display matches in round
-GET https://{{host}}/api/tournaments/round/?tournament_id=2
+GET https://{{host}}/api/tournaments/round/?tournament_id=5
 Authorization: Bearer {{access_token}}
 
 ### start match
@@ -52,7 +52,7 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 2
+	"tournament_id": 5
 }
 
 ### finish match
@@ -61,7 +61,7 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 2,
+	"tournament_id": 5,
 	"score1": 1,
 	"score2": 2
 }

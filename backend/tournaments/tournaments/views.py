@@ -2,11 +2,12 @@ from rest_framework.decorators import api_view, permission_classes
 from .authentication import IsNormalToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Tournament
+from .models import Tournament, Participant
 from django.conf import settings
 from .serializer import TournamentSerializer
 from .utils import dispatch_player
 import requests
+import random
 
 def get_tournament_id(request, query_string, status):
 	if query_string:
@@ -31,7 +32,7 @@ def get_tournament_id(request, query_string, status):
 def create_tournament(request):
 	try:
 		tournament = Tournament.objects.create(host=request.user.id)
-		tournament.participant_set.create(user=request.user.id)
+		tournament.participant_set.create(user=request.user.id, type=Participant.UserType.USER)
 		return Response({"message": "Tournament created, host added to the tournament",
 						"data": {"tournament_id": tournament.id}}, status=200)
 	except:
@@ -43,7 +44,7 @@ def add_participant(tournament, user_id, username):
 		return Response({'message': 'Player already in the tournament',
 				"data": {"username":username, "player_id": player.id}}, status=200)
 	try:
-		participant = tournament.participant_set.create(user=user_id)
+		participant = tournament.participant_set.create(user=user_id, type=Participant.UserType.USER)
 		return Response({"message": "Player added to the tournament",
 						"data": {"username": username, "player_id": participant.id}}, status=201)
 	except:
@@ -106,20 +107,14 @@ def guest_list(request):
 	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
 	if isinstance(tournament, Response):
 		return tournament
-	url = settings.USERS_MICROSERVICE_URL+"/api/private/users/retrieve/type/"
-	players = list(tournament.participant_set.all())
-	players_id = [player.user for player in players]
-	response = requests.post(url=url, json={'users_id':players_id})
-	if response.status_code != 200:
-		return Response({"message": "Error while retrieving user type"}, status=400)
-	data = response.json().get('data')
-	players_id = [player_id for player_id in players_id if data.get(str(player_id)) == 'GST']
+	guests = tournament.participant_set.filter(type=Participant.UserType.GUEST)
+	guests_id = [guest.user for guest in guests]
 	url = settings.USERS_MICROSERVICE_URL+"/api/private/users/retrieve/usernames/"
-	response = requests.post(url=url, json={"users_id": players_id})
+	response = requests.post(url=url, json={"users_id": guests_id})
 	if response.status_code != 200:
 		return Response({"message": "Error while retrieving username"}, status=400)
 	data = response.json().get('data')
-	username = [data.get(str(player_id)) for player_id in players_id]
+	username = [data.get(str(guest_id)) for guest_id in guests_id]
 	return Response({'message': 'Guests username', 'data': username}, status=200)
 
 @api_view(['GET'])
@@ -143,35 +138,37 @@ def get_match_for_round(request):
 					'data': {'matches': matches}}, status=200)
 
 def create_match(tournament, players):
-	players[0].is_playing = True
-	players[0].position = 1
-	players[0].save()
-	players[1].is_playing = True
-	players[1].position = 2
-	players[1].save()
+	if players[0].type == Participant.UserType.BOT:
+		players1 = players[1]
+		players2 = players[0]
+	else:
+		players1 = players[0]
+		players2 = players[1]
+
+	players1.is_playing = True
+	players1.position = 1
+	players1.save()
+	players2.is_playing = True
+	players2.position = 2
+	players2.save()
 	url = settings.MATCHES_MICROSERVICE_URL+"/private_api/matches/new_match_verified_id/"
-	data = {"player1": players[0].user,
-			"player2": players[1].user,
+	data = {"player1": players1.user,
+			"player2": players2.user,
 			"game": tournament.game,
 			"max_score": tournament.max_score,
 			"max_duration": tournament.max_duration,
 			"tournament_id": tournament.id}
 	response = requests.post(url=url, json=data)
 	if response.status_code != 200:
-		players[0].is_playing = False
-		players[0].save()
-		players[1].is_playing = False
-		players[1].save()
+		players1.is_playing = False
+		players1.save()
+		players2.is_playing = False
+		players2.save()
 		return Response({"message": "Error while creating match"}, status=500)
 	data = response.json().get('data')
 	return Response({"message": "Match created", 'data': data}, status=201)
 
-@api_view(['POST'])
-@permission_classes([IsNormalToken])
-def start_match(request):
-	tournament = get_tournament_id(request, False, Tournament.GameStatus.STARTED)
-	if isinstance(tournament, Response):
-		return tournament
+def start_match(tournament):
 	match_id = tournament.next_match
 	if match_id > tournament.max_match:
 		dispatch_player(tournament)
@@ -186,10 +183,29 @@ def start_match(request):
 		else:
 			tournament.next_match += 1
 			tournament.save()
-			return Response({"message": "Player is alone for the match, he wins by default"}, status=200)
+			return start_match(tournament)
 	if players[0].is_playing or players[1].is_playing:
 		return Response({"message": "Players are already playing"}, status=400)
+	if players[0].type == Participant.UserType.BOT and players[1].type == Participant.UserType.BOT:
+		winner = random.randint(0,1)
+		if winner == 0:
+			players[1].is_eliminated = True
+			players[1].save()
+		else:
+			players[0].is_eliminated = True
+			players[0].save()
+		tournament.next_match += 1
+		tournament.save()
+		return start_match(tournament)
 	return create_match(tournament, players)
+
+@api_view(['POST'])
+@permission_classes([IsNormalToken])
+def start_match_view(request):
+	tournament = get_tournament_id(request, False, Tournament.GameStatus.STARTED)
+	if isinstance(tournament, Response):
+		return tournament
+	return start_match(tournament)
 
 @api_view(['POST'])
 @permission_classes([IsNormalToken])

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tournament
+from .models import Tournament, Participant
 from django.conf import settings
 import requests
 from .utils import matchmaking
@@ -45,13 +45,13 @@ class TournamentSerializer(serializers.ModelSerializer):
 			response = requests.post(url=url)
 			if response.status_code != 200:
 				raise Exception("Error while creating guest user")
-			instance.participant_set.create(user=response.json()['data']['id'])
+			instance.participant_set.create(user=response.json()['data']['id'], type=Participant.UserType.GUEST)
 		for i in range(0, validated_data['nb_ai']):
 			url=settings.USERS_MICROSERVICE_URL+'/api/private/users/new/player/ai/'
 			response = requests.post(url=url)
 			if response.status_code != 200:
 				raise Exception("Error while creating ai user")
-			instance.participant_set.create(user=response.json()['data']['id'])
+			instance.participant_set.create(user=response.json()['data']['id'], type=Participant.UserType.BOT)
 		
 		instance.game = validated_data['game']
 		instance.max_score = validated_data['max_score']
