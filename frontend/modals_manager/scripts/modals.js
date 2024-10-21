@@ -1,43 +1,51 @@
-var modal_login = undefined;
-var modal_register = undefined;
-var modal_play = undefined;
-var modal_ia_match_creation = undefined;
-var modal_versus_match_creation = undefined;
-var modal_tournament_creation = undefined;
-var modal_game = undefined;
-var modal_edit_profile = undefined;
-var modal_profile = undefined;
-var modal_2fa_setup = undefined;
-var modal_2fa_valid = undefined;
+let modal_login = undefined;
+let modal_register = undefined;
+let modal_play = undefined;
+let modal_ia_match_creation = undefined;
+let modal_versus_match_creation = undefined;
+let modal_tournament_creation = undefined;
+let modal_game = undefined;
+let modal_edit_profile = undefined;
+let modal_profile = undefined;
+let modal_2fa_setup = undefined;
+let modal_2fa_valid = undefined;
 
 let modal_on_screen = undefined;
 
 let global_game_modal = undefined;
 
-document.addEventListener('onModalsLoaded', function() {
-
-	modal_login = new bootstrap.Modal(document.getElementById('modal-login'));
-	modal_register = new bootstrap.Modal(document.getElementById('modal-register'));
-	modal_play = new bootstrap.Modal(document.getElementById('modal-play'));
-	modal_ia_match_creation = new bootstrap.Modal(document.getElementById('modal-ia-match-creation'));
-	modal_versus_match_creation = new bootstrap.Modal(document.getElementById('modal-versus-match-creation'));
-	modal_tournament_creation = new bootstrap.Modal(document.getElementById('modal-tournament-creation'));
+function init_modals()
+{
+	modal_login = new bootstrap.Modal(document.getElementById('modal-login'), {backdrop : "static", keyboard : false});
+	modal_register = new bootstrap.Modal(document.getElementById('modal-register'), {backdrop : "static", keyboard : false});
+	modal_play = new bootstrap.Modal(document.getElementById('modal-play'), {backdrop : "static", keyboard : false});
+	modal_ia_match_creation = new bootstrap.Modal(document.getElementById('modal-ia-match-creation'), {backdrop : "static", keyboard : false});
+	modal_versus_match_creation = new bootstrap.Modal(document.getElementById('modal-versus-match-creation'), {backdrop : "static", keyboard : false});
+	modal_tournament_creation = new bootstrap.Modal(document.getElementById('modal-tournament-creation'), {backdrop : "static", keyboard : false});
 	modal_game = new bootstrap.Modal(document.getElementById('modal-game'), {backdrop : "static", keyboard : false});
-	modal_edit_profile = new bootstrap.Modal(document.getElementById('modal-edit-profile'));
-	modal_profile = new bootstrap.Modal(document.getElementById('modal-profile'));
-	modal_2fa_setup = new bootstrap.Modal(document.getElementById('modal-2fa-setup'));
-	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'));
-
-	document.getElementById('modal-play').addEventListener('hidden.bs.modal', function () {
-		const buttons = document.querySelectorAll('.btn-play');
-		buttons.forEach(button => {
-		button.disabled = false;
-		button.focus();
-		modal_on_screen = undefined;
-		});
+	modal_edit_profile = new bootstrap.Modal(document.getElementById('modal-edit-profile'), {backdrop : "static", keyboard : false});
+	modal_profile = new bootstrap.Modal(document.getElementById('modal-profile'), {backdrop : "static", keyboard : false});
+	modal_2fa_setup = new bootstrap.Modal(document.getElementById('modal-2fa-setup'), {backdrop : "static", keyboard : false});
+	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'), {backdrop : "static", keyboard : false});
+	
+	document.addEventListener("hidePrevented.bs.modal", (event) => 
+	{
+		event.preventDefault();
+		if (event.target.id !== 'modal-game')
+		{
+			modal_on_screen = undefined;
+			
+			const buttons = document.querySelectorAll('.btn-play');
+			buttons.forEach(button => {
+				button.disabled = false;
+				button.focus();
+			});
+			close_modal(event.target.id);
+		}
 	});
+}
 
-});
+document.addEventListener('onModalsLoaded', init_modals());
 
 function set_global_game_pong()
 {

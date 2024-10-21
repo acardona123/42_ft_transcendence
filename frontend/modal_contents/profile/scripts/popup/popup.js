@@ -33,7 +33,6 @@ function add_popup_to_document_modal(popup_main)
 
 	// let modal_on_screen = document.getElementById("modal-profile"); // test
 
-	let modal_on_screen = undefined;
 	if (!modal_on_screen)
 		document.body.appendChild(popup_main);
 	else
