@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function()
 		{
 			document.dispatchEvent(event);
 			addFocusOutListener();
-			updateUI();
+			update_ui();
 		});
 	});
 

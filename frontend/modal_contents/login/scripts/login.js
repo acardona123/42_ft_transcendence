@@ -62,12 +62,8 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
-<<<<<<< HEAD
 	empty_globals();
-	updateUI();
-=======
 	update_ui();
->>>>>>> origin/feature/games_integration
 }
 
 async function logout_user()
@@ -178,6 +174,6 @@ document.addEventListener("onModalsLoaded", function()
 	change_form_behavior_for_SPA(form, send_form_login);
 	auto_login().then(() => 
 	{
-		updateUI();
+		update_ui();
 	});
 });
