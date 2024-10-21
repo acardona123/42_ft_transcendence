@@ -112,56 +112,43 @@ async function open_modal(id_modal, init_function_bf, init_function_af)
 {
 	modal_on_screen = id_modal;
 
-	let modal_dialog = document.getElementById(id_modal).getElementsByClassName('modal-dialog')[0];
-
 	if (init_function_bf !== undefined)
 		await init_function_bf();
 
 	switch (id_modal)
 	{
 		case "modal-login":
-			modal_dialog.classList.add('slide-right');
 			modal_login.show();
 			break;
 		case "modal-register":
-			modal_dialog.classList.add('slide-right');
 			modal_register.show();
 			break;
 		case "modal-play":
 			modal_play.show();
 			break;
 		case "modal-ia-match-creation":
-			modal_dialog.classList.add('grow-top-left');
 			modal_ia_match_creation.show();
 			break;
 		case "modal-versus-match-creation":
-			modal_dialog.classList.add('grow-top-right');
 			modal_versus_match_creation.show();
 			break;
 		case "modal-tournament-creation":
-			modal_dialog.classList.add('grow-top-down');
 			modal_tournament_creation.show();
 			break;
 		case "modal-game":
-			modal_dialog.classList.add();
 			modal_game.show();
 			break;
 		case "modal-edit-profile":
-			modal_dialog.classList.add('grow-bottom-right');
 			modal_edit_profile.show();
 			break;
 		case "modal-profile":
-			modal_dialog.classList.add('grow-bottom-right');
 			modal_profile.show();
 			break;
 		case "modal-2fa-setup":
-			modal_dialog.classList.add('grow-bottom-right');
 			modal_2fa_setup.show();
 			break;
 		case "modal-2fa-valid":
-			modal_dialog.classList.add('grow-bottom-right');
 			modal_2fa_valid.show();
-			break;
 		default:
 			console.log("Error : this is not a id for modal.");
 			return;
@@ -179,51 +166,38 @@ function return_to_modal_play()
 
 function close_modal(id_modal, init_function_af)
 {
-	let modal_dialog = document.getElementById(id_modal).getElementsByClassName('modal-dialog')[0];
-
 	switch (id_modal)
 	{
 		case "modal-login":
-			modal_dialog.classList.remove('slide-right');
 			modal_login.hide();
 			break;
 		case "modal-register":
-			modal_dialog.classList.remove('slide-right');
-			modal_dialog.classList.add('slide-center-to-right');
 			modal_register.hide();
 			break;
 		case "modal-play":
 			modal_play.hide();
 			break;
 		case "modal-ia-match-creation":
-			modal_dialog.classList.remove('grow-top-left');
 			modal_ia_match_creation.hide();
 			break;
 		case "modal-versus-match-creation":
-			modal_dialog.classList.remove('grow-top-right');
 			modal_versus_match_creation.hide();
 			break;
 		case "modal-tournament-creation":
-			modal_dialog.classList.remove('grow-top-right');
 			modal_tournament_creation.hide();
 			break;
 		case "modal-game":
-			modal_dialog.classList.remove();
 			modal_game.hide();
 		case "modal-edit-profile":
-			modal_dialog.classList.remove('grow-bottom-right');
 			modal_edit_profile.hide();
 			break;
 		case "modal-profile":
-			modal_dialog.classList.remove('grow-bottom-right');
 			modal_profile.hide();
 			break;
 		case "modal-2fa-setup":
-			modal_dialog.classList.remove('grow-bottom-right');
 			modal_2fa_setup.hide();
 			break;
 		case "modal-2fa-valid":
-			modal_dialog.classList.remove('grow-bottom-right');
 			modal_2fa_valid.hide();
 			break;
 		default:

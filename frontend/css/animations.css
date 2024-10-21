@@ -14,7 +14,7 @@
     }
 }
 
-.modal-dialog.grow-top-left {
+.grow-top-left {
 	animation: growFromTopLeftQuarter 0.5s ease-in-out; /* Adjust duration and easing as needed */
 }
 
@@ -31,11 +31,11 @@
 	}
 }
 
-.modal-dialog.grow-top-right {
+.grow-top-right {
 	animation: growFromTopRightQuarter 0.5s ease-in-out; /* Adjust duration and easing as needed */
 }
 
-@keyframes growFromTopDown {
+@keyframes growFromBottomToCenter {
 	from {
 		opacity: 0;
 		transform: scale(0);
@@ -47,9 +47,11 @@
 	}
 }
 
-.modal-dialog.grow-top-down {
-	animation: growFromTopDown 0.5s ease-in-out;
+.grow-bottom-center {
+	animation: growFromBottomToCenter 0.5s ease-in-out;
 }
+
+
 
 @keyframes decreaseFromCenter {
     from {
@@ -63,8 +65,24 @@
     }
 }
 
-.modal-dialog.decrease {
+.decrease {
 	animation: decreaseFromCenter 0.5s;
+}
+
+@keyframes increaseFromCenter {
+	from {
+		opacity: 0;
+        transform: scale(0);
+        transform-origin: center;
+	}
+	to {
+		opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.increase {
+	animation: increaseFromCenter 0.5s;
 }
 
 @keyframes slideFromRight {
@@ -82,6 +100,21 @@
 	animation: slideFromRight 0.5s ease-in-out;
 }
 
+@keyframes slideFromLeft {
+	from {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.slide-left {
+	animation: slideFromLeft 0.5s ease-in-out;
+}
+
 @keyframes slideCenterToRight {
 	from {
 		opacity: 1;
@@ -97,6 +130,20 @@
 	animation: slideCenterToRight 0.5s;
 }
 
+@keyframes slideCenterToLeft {
+	from {
+		opacity: 1;
+		transform: translate(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+}
+
+.slide-center-to-left {
+	animation: slideCenterToLeft 0.5s;
+}
 
 @keyframes changeColor {
 	/* from {

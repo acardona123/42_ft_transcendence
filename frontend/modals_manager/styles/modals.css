@@ -154,7 +154,7 @@
 #modal-login-dialog
 {
 	height: 80vh;
-	width: 100%;
+	width: 50%;
 	--bs-modal-margin: 10vh 0 10vh 0;
 }
 
@@ -170,7 +170,7 @@
 #modal-register-dialog
 {
 	height: 80vh;
-	width: 100%;
+	width: 50%;
 	--bs-modal-margin: 10vh 0 10vh 0;
 }
 
