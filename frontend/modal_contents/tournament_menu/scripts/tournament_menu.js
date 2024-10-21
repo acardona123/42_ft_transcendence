@@ -211,8 +211,8 @@ async function submit_tournament_creation(tournament_data)
 		console.log(data);
 		console.log("create Tournament");
 
-		close_modal('modal-tournament-creation', undefined);
-		open_modal('modal-game', undefined, undefined);
+		close_modal('modal-tournament-creation', undefined, false);
+		open_modal('modal-game', undefined, undefined, false);
 
 	}
 	catch (error)

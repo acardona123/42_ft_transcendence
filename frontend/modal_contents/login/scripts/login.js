@@ -12,8 +12,8 @@ function change_form_behavior_for_SPA(form, new_function)
 
 function send_user_to_2fa()
 {
-	close_modal("modal-login");
-	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af);
+	close_modal("modal-login", undefined, false);
+	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af, false);
 }
 
 async function apply_login_user(refresh, access, username)
@@ -128,7 +128,7 @@ async function send_form_login(form)
 		{
 			await apply_login_user(data.refresh, data.access, body.username);
 			username_2fa_valid = undefined;
-			close_modal("modal-login");
+			close_modal("modal-login", undefined, false);
 		}
 		else
 		{
