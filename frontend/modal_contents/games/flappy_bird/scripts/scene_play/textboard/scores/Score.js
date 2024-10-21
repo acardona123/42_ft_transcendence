@@ -10,11 +10,11 @@ class fb_Score extends Phaser.GameObjects.Container{
 	#icon;
 	#text;
 
-	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = fb_gameConfig.width / 3, height = fb_gameConfig.scenePlay.textboard.height, icon_size = fb_gameConfig.scenePlay.textboard.icon_size, icon_padding = fb_gameConfig.scenePlay.textboard.icon_padding){
+	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = fb_gameConfig.width / 3, height = fb_gameconfig.scene_play.textboard.height, icon_size = fb_gameconfig.scene_play.textboard.icon_size, icon_padding = fb_gameconfig.scene_play.textboard.icon_padding){
 		super(scene);
 		this.height = height;
 		this.width = width;
-		this.depth = fb_gameConfig.scenePlay.depth.textboard.text;
+		this.depth = fb_gameconfig.scene_play.depth.textboard.text;
 
 		this.#scene = scene;
 		this.#player_index_symbol = player_index_symbol;

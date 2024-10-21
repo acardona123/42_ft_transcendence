@@ -10,19 +10,19 @@ class fb_Player{
 		this.#scene_texture = scene_texture;
 		this.#index = player_index_symbol;
 		this.#createObject();
-		this.#resizeObject(fb_gameConfig.scenePlay.player.width, fb_gameConfig.scenePlay.player.height);
+		this.#resizeObject(fb_gameconfig.scene_play.player.width, fb_gameconfig.scene_play.player.height);
 		player_group.add(this.object);
 		this.#addPhysics();
 		this.#playAnimation();
 	}
 
 	#createObject(){
-		const init_x = fb_gameConfig.scenePlay.player.position_x;
+		const init_x = fb_gameconfig.scene_play.player.position_x;
 		const init_y = flyable_zone_center_y;
 		const addToPhysics = true;
 		this.object = this.#scene_texture.createOnScene(init_x, init_y, addToPhysics),
-		this.object.depth = fb_gameConfig.scenePlay.depth.players;
-		this.object.setAlpha(fb_gameConfig.scenePlay.player.alpha);
+		this.object.depth = fb_gameconfig.scene_play.depth.players;
+		this.object.setAlpha(fb_gameconfig.scene_play.player.alpha);
 		this.object.index = this.#index;
 		this.object.is_active = true;
 	}
@@ -61,7 +61,7 @@ class fb_Player{
 	
 
 	jump(){
-		this.object.setVelocityY(-fb_gameConfig.scenePlay.player.jump_strength);
+		this.object.setVelocityY(-fb_gameconfig.scene_play.player.jump_strength);
 	}
 
 	update(velocity_x){
@@ -76,7 +76,7 @@ class fb_Player{
 
 	activateGravity(boolean){
 		if (boolean === true){
-			this.object.setGravityY(fb_gameConfig.scenePlay.player.gravity_intensity);
+			this.object.setGravityY(fb_gameconfig.scene_play.player.gravity_intensity);
 		} else {
 			this.object.setGravityY(0);
 		}
@@ -87,16 +87,16 @@ class fb_Player{
 		this.object.alpha = 0;
 		this.object.setVelocityY(0);
 		this.activateGravity(false);
-		const respawn_time = fb_gameConfig.scenePlay.pipe_repartition.horizontal_distance_default / (velocity / 1000) / 4;
+		const respawn_time = fb_gameconfig.scene_play.pipe_repartition.horizontal_distance_default / (velocity / 1000) / 4;
 		var tween = this.#scene_texture.scene.tweens.add({
 			targets: this.object,
 			y: respawn_y,
-			alpha: fb_gameConfig.scenePlay.player.alpha / 2,
+			alpha: fb_gameconfig.scene_play.player.alpha / 2,
 			ease: 'Power1',
 			duration: respawn_time,
 			repeat: 0,
 			onComplete: function(){
-				this.object.alpha = fb_gameConfig.scenePlay.player.alpha;
+				this.object.alpha = fb_gameconfig.scene_play.player.alpha;
 				this.activateGravity(true);
 				this.object.is_active = true;
 			},

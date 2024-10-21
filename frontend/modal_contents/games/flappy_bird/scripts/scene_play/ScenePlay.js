@@ -45,8 +45,8 @@ class fb_ScenePlay extends Phaser.Scene{
 		this.#pipes_group = this.physics.add.group();
 		this.#player_group = this.physics.add.group();
 		this.#active_pipes = []
-		this.#velocity_x = fb_gameConfig.scenePlay.velocity_x.init_value;
-		this.#pipes_pair_horizontal_distance = fb_gameConfig.scenePlay.pipe_repartition.horizontal_distance_default;
+		this.#velocity_x = fb_gameconfig.scene_play.velocity_x.init_value;
+		this.#pipes_pair_horizontal_distance = fb_gameconfig.scene_play.pipe_repartition.horizontal_distance_default;
 		this.#new_pipes_pair_trigger = fb_gameConfig.width - this.#pipes_pair_horizontal_distance - this.#calculatePipeWidth();
 
 		this.#createAnimations();
@@ -94,7 +94,7 @@ class fb_ScenePlay extends Phaser.Scene{
 			this.#pipes_pairs_pool = new fb_PipePairsPool(this, this.#pipes_group, pipe_textures, pool_size);
 		}
 			#calculatePipeWidth(){
-				return (Math.max(fb_gameConfig.scenePlay.pipe.core_width, fb_gameConfig.scenePlay.pipe.head_width))
+				return (Math.max(fb_gameconfig.scene_play.pipe.core_width, fb_gameconfig.scene_play.pipe.head_width))
 			}
 
 		#createPlayers(){
@@ -180,8 +180,8 @@ class fb_ScenePlay extends Phaser.Scene{
 		}
 			#createPlayersControls(){
 				this.#controls = {
-					player1:  this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player1),
-					player2: this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player2)
+					player1:  this.input.keyboard.addKey(fb_gameconfig.scene_play.controls.player1),
+					player2: this.input.keyboard.addKey(fb_gameconfig.scene_play.controls.player2)
 				};
 			}
 			#createPauseControl(){
@@ -192,7 +192,7 @@ class fb_ScenePlay extends Phaser.Scene{
 			}
 				#createPauseKey(){
 					this.#pause = {
-						key: this.input.keyboard.addKey(fb_gameConfig.scenePlay.pause.control.key_code)
+						key: this.input.keyboard.addKey(fb_gameconfig.scene_play.pause.control.key_code)
 					};
 				}
 				#createPauseEvent(){
@@ -257,18 +257,18 @@ class fb_ScenePlay extends Phaser.Scene{
 				return (last_pipe_pair.x < this.#new_pipes_pair_trigger)
 			}
 			#introduceNewPipePair(offset_to_middle = this.#calculateRandomPipePairOffset()){
-				const targeted_spacer_height = fb_gameConfig.scenePlay.pipe_spacer.height_default;
+				const targeted_spacer_height = fb_gameconfig.scene_play.pipe_spacer.height_default;
 				const new_pipe_pair = this.#pipes_pairs_pool.getPipePair(targeted_spacer_height, offset_to_middle);
 				this.#active_pipes.push(new_pipe_pair);
 
 			}
 				#calculateRandomPipePairOffset(){
-					return (Phaser.Math.Between(-fb_gameConfig.scenePlay.pipe_repartition.vertical_offset_max, fb_gameConfig.scenePlay.pipe_repartition.vertical_offset_max));
+					return (Phaser.Math.Between(-fb_gameconfig.scene_play.pipe_repartition.vertical_offset_max, fb_gameconfig.scene_play.pipe_repartition.vertical_offset_max));
 				}
 
 		#updateVelocities(delta){
 			const delta_sec = delta / 1000;
-			this.#velocity_x += delta_sec * fb_gameConfig.scenePlay.velocity_x.acceleration;
+			this.#velocity_x += delta_sec * fb_gameconfig.scene_play.velocity_x.acceleration;
 			this.#updateVelocityPlayers();
 			this.#updateVelocityCeiling(delta);
 			this.#updateVelocityGround(delta);
