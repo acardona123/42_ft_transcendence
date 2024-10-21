@@ -52,7 +52,7 @@ class pg_ScenePause extends Phaser.Scene{
 			}
 
 			#createResumeButton(x, y){
-				this.#resume_button = new Button(this, "Resume (Esc)", pg_gameConfig.scene_pause.button_style);
+				this.#resume_button = new Button(this, "Resume", pg_gameConfig.scene_pause.button_style);
 				this.#positionResumeButton(x, y);
 				this.#setResumeButtonInteraction();
 			}
