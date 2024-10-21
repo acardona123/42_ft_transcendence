@@ -13,14 +13,14 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 		scene,
 		pipe_group,
 		pipe_textures,
-		spacer_height = fb_gameconfig.scene_play.pipe_spacer.height_default,
+		spacer_height = fb_gameConfig.scene_play.pipe_spacer.height_default,
 		offset_to_middle = 0,
-		x = fb_gameConfig.width + (Math.max (fb_gameconfig.scene_play.pipe.core_width, fb_gameconfig.scene_play.pipe.head_width, fb_gameconfig.scene_play.pipe_spacer.width))/2
+		x = fb_gameConfig.width + (Math.max (fb_gameConfig.scene_play.pipe.core_width, fb_gameConfig.scene_play.pipe.head_width, fb_gameConfig.scene_play.pipe_spacer.width))/2
 		){
 		super(scene);
 		this.#scene = scene;
 		this.#pipe_group = pipe_group;
-		this.depth = fb_gameconfig.scene_play.depth.pipes;
+		this.depth = fb_gameConfig.scene_play.depth.pipes;
 		this.#generateComponents(pipe_textures);
 		this.#runComponentsAnimations(pipe_textures);
 		this.#setComponentsOrigin();
@@ -73,23 +73,23 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 		this.#calculateScaleSpacer(targeted_spacer_height);
 	}
 		#calculateScaleCore(){
-			const flyable_zone_height = fb_gameConfig.height - fb_gameconfig.scene_play.ground.height - fb_gameconfig.scene_play.ceiling.height;
-			this.#pipe_core_height = flyable_zone_height - fb_gameconfig.scene_play.pipe_spacer.height_min - 2 * fb_gameconfig.scene_play.pipe.head_height;
+			const flyable_zone_height = fb_gameConfig.height - fb_gameConfig.scene_play.ground.height - fb_gameConfig.scene_play.ceiling.height;
+			this.#pipe_core_height = flyable_zone_height - fb_gameConfig.scene_play.pipe_spacer.height_min - 2 * fb_gameConfig.scene_play.pipe.head_height;
 			this.scales.core = {
-				x: fb_gameconfig.scene_play.pipe.core_width / fb_gameTextures.pipe.core.width,
+				x: fb_gameConfig.scene_play.pipe.core_width / fb_gameTextures.pipe.core.width,
 				y: this.#pipe_core_height / fb_gameTextures.pipe.core.height
 			};
 		}
 		#calculateScaleHead(){
 			this.scales.head = {
-				x: fb_gameconfig.scene_play.pipe.head_width / fb_gameTextures.pipe.head.width,
-				y: fb_gameconfig.scene_play.pipe.head_height / fb_gameTextures.pipe.head.height
+				x: fb_gameConfig.scene_play.pipe.head_width / fb_gameTextures.pipe.head.width,
+				y: fb_gameConfig.scene_play.pipe.head_height / fb_gameTextures.pipe.head.height
 			}
 		}
 		#calculateScaleSpacer(targeted_spacer_height){
-			this.#spacer_height = clamp(targeted_spacer_height, fb_gameconfig.scene_play.pipe_spacer.height_min, fb_gameconfig.scene_play.pipe_spacer.height_max);
+			this.#spacer_height = clamp(targeted_spacer_height, fb_gameConfig.scene_play.pipe_spacer.height_min, fb_gameConfig.scene_play.pipe_spacer.height_max);
 			this.scales.spacer = {
-				x: fb_gameconfig.scene_play.pipe_spacer.width / fb_gameTextures.pipe_spacer.width,
+				x: fb_gameConfig.scene_play.pipe_spacer.width / fb_gameTextures.pipe_spacer.width,
 				y: this.#spacer_height / fb_gameTextures.pipe_spacer.height
 			}
 		}
@@ -130,7 +130,7 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 	}
 		#positionFirstComponent(container_components){
 			container_components[0];
-			container_components[0].y = - (this.#pipe_core_height + fb_gameconfig.scene_play.pipe.head_height + this.#spacer_height / 2);
+			container_components[0].y = - (this.#pipe_core_height + fb_gameConfig.scene_play.pipe.head_height + this.#spacer_height / 2);
 		}
 		#verticallyAlignComponent(container_components){
 			Phaser.Actions.AlignTo(container_components, Phaser.Display.Align.BOTTOM_CENTER);
@@ -176,13 +176,13 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 			this.#fitContainerToComponentsHeight();
 		}
 			#fitContainerToComponentsWidth(){
-				const container_width = Math.max (fb_gameconfig.scene_play.pipe.core_width, fb_gameconfig.scene_play.pipe.head_width, fb_gameconfig.scene_play.pipe_spacer.width);
+				const container_width = Math.max (fb_gameConfig.scene_play.pipe.core_width, fb_gameConfig.scene_play.pipe.head_width, fb_gameConfig.scene_play.pipe_spacer.width);
 				const container_height = this.height;
 				this.setSize(container_width, container_height);
 			}
 			#fitContainerToComponentsHeight(){
 				const container_width = this.width;
-				const container_height = 2 * (this.#pipe_core_height + fb_gameconfig.scene_play.pipe.head_height) + this.#spacer_height;
+				const container_height = 2 * (this.#pipe_core_height + fb_gameConfig.scene_play.pipe.head_height) + this.#spacer_height;
 				this.setSize(container_width, container_height);
 			}
 
@@ -199,7 +199,7 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 			});
 		}
 
-	reactivate(targeted_spacer_height = fb_gameconfig.scene_play.pipe_spacer.height_default, offset_to_middle = 0, x = fb_gameConfig.width + this.width/2){
+	reactivate(targeted_spacer_height = fb_gameConfig.scene_play.pipe_spacer.height_default, offset_to_middle = 0, x = fb_gameConfig.width + this.width/2){
 		this.#resetSpacerSize(targeted_spacer_height);
 		this.#enableBodies();
 		this.#moveToInitialPosition(offset_to_middle, x);
@@ -222,7 +222,7 @@ class fb_PipePair extends Phaser.GameObjects.Container{
 		}
 
 	setVerticalOffset(offset_to_middle){
-		offset_to_middle = clamp(offset_to_middle, -fb_gameconfig.scene_play.pipe_repartition.vertical_offset_max, fb_gameconfig.scene_play.pipe_repartition.vertical_offset_max);
+		offset_to_middle = clamp(offset_to_middle, -fb_gameConfig.scene_play.pipe_repartition.vertical_offset_max, fb_gameConfig.scene_play.pipe_repartition.vertical_offset_max);
 		this.y = flyable_zone_center_y + offset_to_middle;
 	}
 }

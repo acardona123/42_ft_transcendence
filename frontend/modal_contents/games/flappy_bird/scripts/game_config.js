@@ -15,7 +15,12 @@ const fb_gameConfig = {
 	width: fb_resize(1200 * 2.25),
 	height: fb_resize(800 * 2.25),
 
+	scene_boot:{
+		name: "fb_scene_boot"
+	},
+
 	scene_menu:{
+		name: "fb_scene_menu",
 		padding:{
 			top: fb_resize(50),
 			under_panels: fb_resize(30),
@@ -64,7 +69,8 @@ const fb_gameConfig = {
 		},
 	},
 
-	scenePlay:{
+	scene_play:{
+		name: "fb_scene_play",
 		controls:{
 			player1: Phaser.Input.Keyboard.KeyCodes.SPACE,
 			player2: Phaser.Input.Keyboard.KeyCodes.ENTER
@@ -137,6 +143,7 @@ const fb_gameConfig = {
 	},
 
 	scene_pause: {
+		name: "fb_scene_pause",
 		padding:{
 			top: fb_resize(400),
 			under_text: fb_resize(150),
@@ -173,6 +180,7 @@ const fb_gameConfig = {
 	},
 
 	scene_game_finished :{
+		name: "fb_scene_finished",
 		padding:{
 			top: fb_resize(150),
 			under_panels: fb_resize(30),
@@ -260,8 +268,8 @@ const fb_gameConfig = {
 
 
 function calculateFlyableZoneCenterY(){
-	const flyable_zone_min_y = fb_gameConfig.scenePlay.ceiling.height + fb_gameConfig.scenePlay.textboard.height;
-	const flyable_zone_max_y = fb_gameConfig.height - fb_gameConfig.scenePlay.ground.height;
+	const flyable_zone_min_y = fb_gameConfig.scene_play.ceiling.height + fb_gameConfig.scene_play.textboard.height;
+	const flyable_zone_max_y = fb_gameConfig.height - fb_gameConfig.scene_play.ground.height;
 	const flyable_zone_center_y =  flyable_zone_min_y + (flyable_zone_max_y - flyable_zone_min_y) / 2;
 	return (flyable_zone_center_y);
 }

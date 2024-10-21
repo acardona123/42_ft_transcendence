@@ -11,7 +11,7 @@ class fb_ScenePause extends Phaser.Scene{
 
 
 	constructor(){
-		super("Pause");
+		super(fb_gameConfig.scene_pause.name);
 	}
 
 	init(loaded_boot_textures){
@@ -25,7 +25,7 @@ class fb_ScenePause extends Phaser.Scene{
 	create(){
 		this.#createBackground();
 		this.#createContentObjects()
-		this.scene.launch('fb_playGame', this.#boot_textures);
+		this.scene.launch(fb_gameConfig.scene_play.name, this.#boot_textures);
 		this.scene.sleep();
 	}
 
@@ -79,11 +79,11 @@ class fb_ScenePause extends Phaser.Scene{
 
 	#resumeGame(){
 		this.scene.sleep();
-		this.scene.run('fb_playGame');
+		this.scene.run(fb_gameConfig.scene_play.name);
 	}
 
 	#finishGame(){
-		this.scene.run('fb_playGame');
+		this.scene.run(fb_gameConfig.scene_play.name);
 		this.scene.sleep();
 		custom_event.emit(event_stop_game);
 	}

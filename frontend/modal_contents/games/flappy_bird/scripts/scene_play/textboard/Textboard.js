@@ -6,9 +6,9 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 	#clock;
 
 	constructor(scene, texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2){
-		super(scene, fb_gameConfig.width / 2, fb_gameconfig.scene_play.textboard.height / 2);
+		super(scene, fb_gameConfig.width / 2, fb_gameConfig.scene_play.textboard.height / 2);
 		this.#scene = scene;
-		this.depth = fb_gameconfig.scene_play.depth.textboard;
+		this.depth = fb_gameConfig.scene_play.depth.textboard;
 
 		this.#resize_textboard();
 		this.#createComponents(texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2);
@@ -19,7 +19,7 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 	}
 		#resize_textboard(){
 			this.width = fb_gameConfig.width;
-			this.height = fb_gameconfig.scene_play.textboard.height;
+			this.height = fb_gameConfig.scene_play.textboard.height;
 		}
 		#createComponents(texture_scene_background, texture_scene_death, texture_scene_player1, texture_scene_player2){
 			this.#createBackground(texture_scene_background);
@@ -49,9 +49,9 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 			}
 				#createClockObject(){
 					if (fb_isTimeLimited()){
-						this.#clock = new fb_Timer(this.#scene, 0, 0, fb_gameconfig.scene_play.textboard.text_style, fb_gameMode.maxTime);
+						this.#clock = new fb_Timer(this.#scene, 0, 0, fb_gameConfig.scene_play.textboard.text_style, fb_gameMode.maxTime);
 					} else{
-						this.#clock = new fb_Chronometer(this.#scene, 0, 0, fb_gameconfig.scene_play.textboard.text_style)
+						this.#clock = new fb_Chronometer(this.#scene, 0, 0, fb_gameConfig.scene_play.textboard.text_style)
 					}
 				}
 				#resizeClock(){
@@ -64,9 +64,9 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 		}
 		#positionComponents(){
 			this.#background.setPosition(-this.width / 2, - this.height / 2);
-			this.#score_player1.setPositionCenterLeft(fb_gameconfig.scene_play.textboard.side_padding - this.width / 2, 0);
+			this.#score_player1.setPositionCenterLeft(fb_gameConfig.scene_play.textboard.side_padding - this.width / 2, 0);
 			this.#clock.setPosition(0, 0);
-			this.#score_player2.setPositionCenterRight(this.width / 2 - fb_gameconfig.scene_play.textboard.side_padding, 0);
+			this.#score_player2.setPositionCenterRight(this.width / 2 - fb_gameConfig.scene_play.textboard.side_padding, 0);
 		}
 		
 		update(){

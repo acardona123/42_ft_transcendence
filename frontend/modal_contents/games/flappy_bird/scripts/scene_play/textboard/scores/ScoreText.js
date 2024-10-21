@@ -8,7 +8,7 @@ class fb_ScoreText extends fb_AlignedText{
 		}
 		
 		const score_text = '0';
-		const score_style = fb_gameconfig.scene_play.textboard.text_style;
+		const score_style = fb_gameConfig.scene_play.textboard.text_style;
 		const score_alignment = (player_index === player_index.PLAYER1) ? text_alignment.ALIGN_LEFT : text_alignment.ALIGN_RIGHT;
 		super(scene, score_alignment, x, y, score_text, score_style);
 		scene.add.existing(this);

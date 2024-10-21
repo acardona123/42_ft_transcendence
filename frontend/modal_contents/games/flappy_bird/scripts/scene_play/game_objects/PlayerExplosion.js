@@ -7,8 +7,8 @@ class fb_PlayerExplosion {
 		explosion_scene_texture.playAnimationOn(this.object);
 	}
 		#rescaleExplosion(){
-			const scale_width = fb_gameconfig.scene_play.player.width/ this.object.width;
-			const scale_height = fb_gameconfig.scene_play.player.height / this.object.height;
+			const scale_width = fb_gameConfig.scene_play.player.width/ this.object.width;
+			const scale_height = fb_gameConfig.scene_play.player.height / this.object.height;
 			this.object.setScale(scale_width,scale_height);
 		}
 }

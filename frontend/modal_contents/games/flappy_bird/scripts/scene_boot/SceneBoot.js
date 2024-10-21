@@ -4,7 +4,7 @@ class fb_SceneBoot extends Phaser.Scene{
 	#scene_menu_and_game_over_textures;
 
 	constructor(){
-		super("fb_bootGame");
+		super(fb_gameConfig.scene_boot.name);
 		this.#constructScenePlayTextures();
 		this.#constructScenePauseTextures();
 		this.#constructSceneGameOverTextures();
@@ -63,7 +63,7 @@ class fb_SceneBoot extends Phaser.Scene{
 			scenePause: this.#scene_pause_textures,
 			sceneGameOver: this.#scene_menu_and_game_over_textures
 		}
-		this.scene.start("fb_Menu", boot_textures);
+		this.scene.start(fb_gameConfig.scene_menu.name, boot_textures);
 	}
 
 }

@@ -16,7 +16,7 @@ class fb_SceneGameFinished extends Phaser.Scene{
 	#quit_button;
 
 	constructor(){
-		super("fb_GameFinished");
+		super(fb_gameConfig.scene_game_finished.name);
 	}
 
 	init(data){

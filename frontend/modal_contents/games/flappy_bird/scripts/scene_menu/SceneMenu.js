@@ -13,7 +13,7 @@ class fb_SceneMenu extends Phaser.Scene{
 	#start_button;
 
 	constructor(){
-		super("fb_Menu");
+		super(fb_gameConfig.scene_menu.name);
 	}
 
 	init(boot_textures){
@@ -124,6 +124,6 @@ class fb_SceneMenu extends Phaser.Scene{
 			}
 
 		#startGame(){
-			this.scene.start("Pause", this.#boot_textures);
+			this.scene.start(fb_gameConfig.scene_pause.name, this.#boot_textures);
 		}
 }
