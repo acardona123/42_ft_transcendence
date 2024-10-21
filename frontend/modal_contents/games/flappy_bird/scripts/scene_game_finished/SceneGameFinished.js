@@ -178,7 +178,6 @@ class fb_SceneGameFinished extends Phaser.Scene{
 				this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
 			}
 			#goBackHome(){
-				console.log("Go back to home");
 				game.destroy(false);
 				game = undefined;
 				close_modal('modal-game', reset_game);
