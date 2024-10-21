@@ -1,3 +1,6 @@
+let username_2fa_valid = undefined;
+const DEFAULT_PP_PATH = "/media/profile_picture/default.jpg";
+
 function change_form_behavior_for_SPA(form, new_function)
 {
 	form.addEventListener('submit', (event) =>
@@ -10,7 +13,7 @@ function change_form_behavior_for_SPA(form, new_function)
 function send_user_to_2fa()
 {
 	close_modal("modal-login");
-	open_modal("modal-2fa-valid", init_modal_2fa_valid, undefined);
+	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af);
 }
 
 async function apply_login_user(refresh, access, username)
@@ -20,9 +23,38 @@ async function apply_login_user(refresh, access, username)
 
 	await Promise.all([
 		get_friend_list(),
-		create_user_infos(username)
+		create_user_infos(username),
+		get_2fa_state()
 	]);
+	button_dfa.disabled = false;
+	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
 	update_ui();
+}
+
+function empty_globals()
+{
+	friend_list_data = undefined;
+	clicked_once = false;
+	lastReplacedElemFocus = undefined;
+	lastReplacedElemHover = undefined;
+	friend_popup_just_popped = false;
+	data_requests = undefined;
+	clicked_element = undefined;
+	history_list = undefined;
+	
+	playerGrid = undefined;
+	playerCards = undefined;
+	btnAddGuestPlayer = undefined;
+	btnAddConnectedPlayer = undefined;
+	ToggleConnectedPlayerContainer = undefined;
+	buttonAddIA = undefined;
+	debugOutput = undefined;
+	
+	cardsNumber = 1;
+	IANumber = 0;
+	guestNumber = 0;
+	playerNumber = 1;
+	playerList = [];
 }
 
 function logout_user_no_back()
@@ -30,6 +62,7 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
+	empty_globals();
 	update_ui();
 }
 
@@ -46,13 +79,13 @@ async function logout_user()
 			headers: {'content-type': 'application/json'},
 			body: body
 		});
+		logout_user_no_back();
 		if (!fetched_data.ok)
 			throw new Error("Error while disconnecting.");
-		logout_user_no_back();
 	}
 	catch (error)
 	{
-		create_popup("Error while disconnecting.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		// this is a normal silent error
 		return ;
 	}
 }
@@ -94,10 +127,12 @@ async function send_form_login(form)
 		if (data['2fa_status'] == "off")
 		{
 			await apply_login_user(data.refresh, data.access, body.username);
+			username_2fa_valid = undefined;
 			close_modal("modal-login");
 		}
 		else
 		{
+			username_2fa_valid = body.username;
 			sessionStorage.setItem("access_token", data.access);
 			send_user_to_2fa(data.access);
 		}
@@ -109,8 +144,36 @@ async function send_form_login(form)
 	}
 }
 
+async function auto_login()
+{
+	const refresh_token = sessionStorage.getItem("refresh_token");
+	const access_token = sessionStorage.getItem("access_token");
+	if (!refresh_token || !access_token)
+		return ;
+	try
+	{
+		let user_infos = await get_user_informations();
+		let picture = await get_profil_picture();
+
+		if (picture == DEFAULT_PP_PATH)
+			throw new Error ("Error while login in.");
+		global_user_infos = {
+			username: user_infos.username,
+			profile_picture: picture,
+			pin: user_infos.pin
+		};
+	}
+	catch (error)
+	{
+		// nothing to do on error, this is a intended silent error
+	}
+}
 document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");
 	change_form_behavior_for_SPA(form, send_form_login);
+	auto_login().then(() => 
+	{
+		update_ui();
+	});
 });

@@ -8,7 +8,7 @@ from drf_yasg import openapi
 from rest_framework.views import APIView
 
 from .doc import (JWT_TOKEN, MSG_ERROR_TOKEN_REQUIRED, 	
-		MSG_ERROR_NO_TOTP_DEVICE, MSG_2FA_STATUS,
+		MSG_ERROR_NO_TOTP_DEVICE, MSG_2FA_STATUS, MSG_ERROR_UPDATE_2FA_OAUTH,
 		MSG_ERROR_WRONG_TOKEN, MSG_LOGIN, MSG_ERROR_WRONG_2FA_STATUS,
 		MSG_ERROR_2FA_IS_DISABLE,MSG_DISABLE_2FA, MSG_ENABLE_2FA,
 		MSG_ERROR_DEVICE_NOT_CONFIRMED, MSG_DEVICE_ALREADY_CONFIRMED,
@@ -76,6 +76,8 @@ class Update2fa(APIView):
 	def put(self, request):
 		status_2fa = request.data.get("2fa_status", None)
 		user = request.user
+		if request.user.oauth_id is not None:
+			return Response({"message": MSG_ERROR_UPDATE_2FA_OAUTH}, status=400)
 		if status_2fa not in ('on', 'off'):
 			return Response({"message": MSG_ERROR_WRONG_2FA_STATUS}, status=400)
 		if status_2fa == 'off':

@@ -17,7 +17,7 @@ function toggle_2fa_button()
 	if (button_dfa.textContent == "Enable")
 		set_to_disable_2fa_button();
 	else
-		set_to_enable_2fa_button()
+		set_to_enable_2fa_button();
 }
 
 function set_waiting_initial_fetch()
@@ -32,7 +32,7 @@ function open_2fa_setup_page(data)
 	document.getElementById("tfas-qrcode-img").src = data.qrcode;
 	document.getElementById("tfas-qrcode-key").textContent = data.code;
 	close_modal("modal-edit-profile");
-	open_modal("modal-2fa-setup", init_modal_2fa_setup, undefined);
+	open_modal("modal-2fa-setup", init_modal_2fa_setup_bf, init_modal_2fa_setup_af);
 }
 
 async function get_2fa_state()
@@ -48,7 +48,7 @@ async function get_2fa_state()
 			throw new Error("Error while enabling 2fa.");
 		let data = await fetched_data.json();
 		data = data.data;
-		is_btn_on_enable = data["2fa_status"] == "on" ? true : false;
+		is_btn_on_enable = data["2fa_status"] == "on" ? false : true;
 		return ;
 	}
 	catch (error)
@@ -61,15 +61,15 @@ async function get_2fa_state()
 async function enable_2fa(should_enable)
 {
 	const url = "https://localhost:8443/api/users/update/2fa/";
-	const body = JSON.stringify({
+	const body = {
 		"2fa_status" : (should_enable ? "on" : "off")
-	});
+	};
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
 			method: 'PUT',
 			headers: {'content-type': 'application/json'},
-			body: body
+			body: JSON.stringify(body)
 		});
 		if (!fetched_data.ok)
 			throw new Error("Error while enabling 2fa.");
@@ -79,6 +79,7 @@ async function enable_2fa(should_enable)
 			open_2fa_setup_page(data);
 		else
 			toggle_2fa_button();
+		
 	}
 	catch (error)
 	{
@@ -92,21 +93,21 @@ function send_dfa_change()
 	if (is_btn_on_enable)
 	{
 		stop_click_on_all_page = true;
-		enable_2fa(false).then(() =>
+		enable_2fa(true).then(() =>
 		{
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
 		});
 		button_dfa.disabled = true;
 	}
-	else
+	else if (!is_btn_on_enable)
 	{
 		stop_click_on_all_page = true;
-		enable_2fa(true).then(() =>
+		enable_2fa(false).then(() =>
 		{
-			set_to_enable_2fa_button();
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
+			is_btn_on_enable = !is_btn_on_enable;
 		});
 		button_dfa.disabled = true;
 	}

@@ -34,12 +34,13 @@ function on_click_tab_history(elem)
 		return;
 	
 	// unload all other tabs
-	if (clicked_element)
+	const tabs_history = document.getElementById("prof-tabs-history");
+	for (child of tabs_history.children)
 	{
-		clicked_element.style.backgroundColor = '#795833';
-		clicked_element.childNodes[1]?.remove();
-		unload_elements();
+		child.style.backgroundColor = '#795833';
+		child.childNodes[1]?.remove();
 	}
+	unload_elements();
 	// load tab
 	clicked_element = elem;
 	load_elements(clicked_element);

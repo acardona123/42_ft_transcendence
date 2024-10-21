@@ -7,7 +7,7 @@ POST https://localhost:8443/api/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-	"username" : "c",
+	"username" : "hey",
 	"password" : "123asd123+",
 	"password2" : "123asd123+",
 	"email" : "J@gmai.coM",
@@ -26,7 +26,7 @@ content-type: application/json
 
 {
 	"password" : "123asd123+",
-	"username" : "cououyyy"
+	"username" : "hey"
 }
 
 ### login 2fa
@@ -68,12 +68,12 @@ content-type: application/json
 
 ### update user
 PUT https://localhost:8443/api/users/update/user/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4OTI1ODYzLCJpYXQiOjE3Mjg5MjU1NjMsImp0aSI6IjExZDE3NTE4MDM3MjQ1MTU4ZjA5OTA3YzY4OWU2OGVhIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNkZCJ9.Z7YhpNiIVM12UQIBH_ya-Bb_km1qPP0OTkaAS15AoIE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5MTc4NTUwLCJpYXQiOjE3MjkxNzgyNTAsImp0aSI6ImYyYjczYjA4NDAzMjQ3ODJhZTc1N2U1ZWMzZjQ4OWM0IiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNvdWNvdTMifQ.awGbu45tNhZc7HVmcoUBB8t6JDFjLmzvEsuiAjOcj-M
 content-type: application/json
 
 {
 	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyOTAxMTk2MywiaWF0IjoxNzI4OTI1NTYzLCJqdGkiOiIzYmY0YTI0ZGE1OTI0MDg3ODVlYzc0NGUwZTk3NWQ0OCIsInVzZXJfaWQiOjMsInNjb3BlIjoibm9ybWFsIiwidXNlcm5hbWUiOiJjZGQifQ.Pr7Pb-UI8UAgbu_yCa_VBhNxvahR_10N7cUmjoupKuE",
-	"username": "fffff",
+	"username": "coucou3",
 	"email": "fghf@fdg.ds",
 	"phone": "0326597845",
 	"pin": "4"

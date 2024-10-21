@@ -28,3 +28,29 @@ function init_play_menu_flappy_bird()
 	play_menu_setup_display_on_game();
 	disable_buttons_play();
 }
+
+function open_game_menu_pong()
+{
+	if (is_connected() === true)
+	{
+		init_play_menu_pong();
+		open_modal('modal-play', undefined, undefined);
+	}
+	else
+	{
+		open_modal('modal-login', undefined, undefined);
+	}
+}
+
+function open_game_menu_flappy_bird()
+{
+	if (is_connected() === true)
+	{
+		init_play_menu_flappy_bird();
+		open_modal('modal-play', undefined, undefined);
+	}
+	else
+	{
+		open_modal('modal-login', undefined, undefined);
+	}
+}

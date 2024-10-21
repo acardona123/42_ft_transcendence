@@ -24,7 +24,12 @@ POST http://localhost:8002/api/private/users/new/player/guest/
 content-type: application/json
 
 ### get type of user
-GET http://localhost:8002/api/private/users/10/type/
+POST http://localhost:8002/api/private/users/retrieve/type/
+content-type: application/json
+
+{
+	"users_id": [-25, 1, 2, 8, 9, 10]
+}
 
 ###
 POST http://localhost:8002/api/private/users/login/pin/

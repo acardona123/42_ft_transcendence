@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from .manager import CustomUserManager
 import uuid
 import random
@@ -21,11 +22,11 @@ def test_username(username):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     class UserType(models.TextChoices):
-        GST = "Guest"
-        BOT = "Bot"
-        USR = "User"
+        GUEST = "GST", _("Guest")
+        BOT = "BOT", _("Bot")
+        USER = "USR", _("User")
 
-    type = models.CharField(max_length=5, choices=UserType.choices, default=UserType.USR)
+    type = models.CharField(max_length=3, choices=UserType.choices, default=UserType.USER)
     username = models.CharField(max_length=150, unique=True,
                             validators=[test_username])
     email = models.EmailField(null=True)
