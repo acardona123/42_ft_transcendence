@@ -56,7 +56,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### finish match
-POST https://{{host}}/api/tournaments/match/finish/
+POST http://localhost:8005/api/private/tournaments/match/finish/
 Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
