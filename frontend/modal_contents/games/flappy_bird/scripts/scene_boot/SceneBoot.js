@@ -1,10 +1,12 @@
 class fb_SceneBoot extends Phaser.Scene{
-	#scene_play_textures
-	#scene_menu_and_game_over_textures
+	#scene_play_textures;
+	#scene_pause_textures;
+	#scene_menu_and_game_over_textures;
 
 	constructor(){
 		super("fb_bootGame");
 		this.#constructScenePlayTextures();
+		this.#constructScenePauseTextures();
 		this.#constructSceneGameOverTextures();
 	}
 		#constructScenePlayTextures(){
@@ -23,6 +25,11 @@ class fb_SceneBoot extends Phaser.Scene{
 				starting_line:	new SceneTexture(this,	"play_starting_line",	fb_gameTextures.starting_line)
 			}
 		}
+		#constructScenePauseTextures(){
+			this.#scene_pause_textures = {
+				background:		new SceneTexture(this, "pause_background", fb_gameTextures.background),
+			}
+		}
 		#constructSceneGameOverTextures(){
 			this.#scene_menu_and_game_over_textures = {
 				player1_icon:	new SceneTexture(this,	"menus_player1",		fb_MenuAndGameOverTextures.player1_icon),
@@ -39,6 +46,7 @@ class fb_SceneBoot extends Phaser.Scene{
 
 	preload(){
 		this.#preloadAllTexturesFromMap(this.#scene_play_textures);
+		this.#preloadAllTexturesFromMap(this.#scene_pause_textures);
 		this.#preloadAllTexturesFromMap(this.#scene_menu_and_game_over_textures);
 	}
 
@@ -52,6 +60,7 @@ class fb_SceneBoot extends Phaser.Scene{
 		let boot_textures = {
 			sceneMenu: this.#scene_menu_and_game_over_textures,
 			scenePlay: this.#scene_play_textures,
+			scenePause: this.#scene_pause_textures,
 			sceneGameOver: this.#scene_menu_and_game_over_textures
 		}
 		this.scene.start("fb_Menu", boot_textures);

@@ -124,6 +124,6 @@ class fb_SceneMenu extends Phaser.Scene{
 			}
 
 		#startGame(){
-			this.scene.start("playGame", this.#boot_textures);
+			this.scene.start("Pause", this.#boot_textures);
 		}
 }

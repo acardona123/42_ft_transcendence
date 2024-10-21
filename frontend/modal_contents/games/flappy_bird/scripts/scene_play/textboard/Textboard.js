@@ -78,7 +78,11 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 		}
 
 		pause(){
-			this.pauseClock.pause();
+			this.#clock.pause();
+		}
+
+		resume(){
+			this.#clock.resume();
 		}
 
 		addDeath(player_index_symbol){

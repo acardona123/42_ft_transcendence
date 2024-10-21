@@ -171,7 +171,7 @@ class fb_SceneGameFinished extends Phaser.Scene{
 				this.#quit_button.depth = fb_gameConfig.scene_game_finished.depth.button;
 			}
 			#setButtonInteraction(){
-				if (pg_gameMode.tournament_id < 0)
+				if (fb_gameMode.tournament_id < 0)
 					this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
 					else
 				this.#quit_button.on('pointerdown', () => {this.#continueTournament();});

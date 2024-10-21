@@ -18,14 +18,16 @@ class fb_ScenePlay extends Phaser.Scene{
 	#player2;
 
 	#controls;
+	#pause;
 
 	#velocity_x;
 	#pipes_pair_horizontal_distance;
 	#new_pipes_pair_trigger;
 	#game_started;
 
+
 	constructor(){
-		super("playGame");
+		super("fb_playGame");
 		this.#game_started = false;
 	}
 	
@@ -173,20 +175,60 @@ class fb_ScenePlay extends Phaser.Scene{
 					}
 
 		#createControls(){
-			this.#controls = {
-				player1:  this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player1),
-				player2: this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player2)
-			};
+			this.#createPlayersControls();
+			this.#createPauseControl();
 		}
+			#createPlayersControls(){
+				this.#controls = {
+					player1:  this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player1),
+					player2: this.input.keyboard.addKey(fb_gameConfig.scenePlay.controls.player2)
+				};
+			}
+			#createPauseControl(){
+				this.#createPauseKey();
+				this.#createPauseEvent();
+				this.#createResumeEvent();
+				this.#createStopEvent();
+			}
+				#createPauseKey(){
+					this.#pause = {
+						key: this.input.keyboard.addKey(fb_gameConfig.scenePlay.pause.control.key_code)
+					};
+				}
+				#createPauseEvent(){
+					this.events.on('pause', () => {this.#pauseEventListener()})
+				}
+					#pauseEventListener(){
+						this.#textboard.pause();
+					}
+				#createResumeEvent(){
+					this.events.on('resume', () => {setTimeout(() => {this.#resumeEventListener()}, 10);})
+				}
+					#resumeEventListener(){
+						this.#textboard.resume();
+					}
+				#createStopEvent(){
+					custom_event.on(event_stop_game, () => {
+						this.#finishParty();
+					})
+				}
 
 
 	//=== update ===
 	
 		update(time, delta){
-			this.#updatePipesPairRecycling()
+		this.#pauseManagement();
+		this.#updatePipesPairRecycling()
 			this.#updateVelocities(delta)
 			this.#updateJumpPlayers();
 			this.#updateTextboard();
+		}
+
+		#pauseManagement(){
+			if (this.#pause.key.isDown){
+				this.scene.pause();	
+				this.scene.run('Pause');
+			}
 		}
 
 		#updatePipesPairRecycling(){
@@ -267,7 +309,6 @@ class fb_ScenePlay extends Phaser.Scene{
 
 		async #finishParty(){
 			this.scene.pause();
-			this.scene.stop("Pause");
 			await this.#sendMatchResults();
 			this.#launchEndScene();
 		}
@@ -297,6 +338,7 @@ class fb_ScenePlay extends Phaser.Scene{
 				}
 			}
 			#launchEndScene(){
+				this.scene.stop("Pause");
 				this.scene.start("fb_GameFinished",{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
 			}
 }

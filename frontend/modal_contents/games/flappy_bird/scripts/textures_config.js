@@ -25,3 +25,7 @@ const fb_MenuAndGameOverTextures = {
 	background:			new Texture(fb_assets_path + "images/background_menus.png", "image", 1781, 1785),
 	confetti:			new Texture(fb_assets_path + "sprites/confetti.png", "sprite", 150, 84, 25, -1),
 }
+
+const fb_PauseTextures = {
+	background:		new Texture(fb_assets_path + "images/background_menus.png", "image", 1781, 1785),
+}

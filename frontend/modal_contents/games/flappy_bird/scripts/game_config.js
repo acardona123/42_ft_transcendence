@@ -10,7 +10,7 @@ const fb_gameConfig = {
 	
 	parent: "phaser_game", //html DOM element or id
 	// scene: [SceneTest, fb_SceneBoot, ScenePlay, fb_SceneGameFinished],
-	scene: [fb_SceneBoot, fb_SceneMenu, fb_ScenePlay, fb_SceneGameFinished],
+	scene: [fb_SceneBoot, fb_SceneMenu, fb_ScenePlay, fb_ScenePause, fb_SceneGameFinished],
 
 	width: fb_resize(1200 * 2.25),
 	height: fb_resize(800 * 2.25),
@@ -122,6 +122,9 @@ const fb_gameConfig = {
 				fill: 'black'
 			}
 		},
+		pause: {
+			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
+		},
 		depth:{
 			textboard: 1,
 			ceiling: 0,
@@ -131,6 +134,42 @@ const fb_gameConfig = {
 			starting_line: -2,
 			background: -3
 		},
+	},
+
+	scene_pause: {
+		padding:{
+			top: fb_resize(400),
+			under_text: fb_resize(150),
+			between_buttons: fb_resize(100)
+		},
+		text_style:{
+			fontFamily: '"Goudy Bookletter 1911", Times, serif',
+			fontSize: '' + fb_resize(150) + 'px',
+			fill: 'black'
+		},
+		button_style:{
+			margin : fb_resize(50),
+			text:{
+				fontFamily: '"Goudy Bookletter 1911", Times, serif',
+				fontSize: '' + fb_resize(150) + 'px',
+				fill: 'black'
+			},
+			shape:{
+				fill_color: 0xffffff,
+				fill_alpha: 1,
+				line_color: 0xffff00,
+				line_alpha: 1,
+				line_width: fb_resize(15)
+			},
+		},
+		resume: {
+			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
+		},
+		depths: {
+			background: -1,
+			text: 0,
+			buttons: 0
+		}
 	},
 
 	scene_game_finished :{
