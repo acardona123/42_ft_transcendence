@@ -1,3 +1,12 @@
+let game = undefined;
+
+function stop_current_game(){
+	if (game != undefined){
+		game.destroy();
+		game = undefined;
+	}
+
+}
 
 function start_pong_game(response_data, bot_level = -1)
 {
@@ -8,7 +17,8 @@ function start_pong_game(response_data, bot_level = -1)
 	pg_gameMode.username_player2 = match_data["opponent_username"];
 	pg_gameMode.match_id = match_data["id"];
 	pg_gameMode.bot_level = bot_level;
-	new Phaser.Game(pg_gameConfig);
+	stop_current_game();
+	game = new Phaser.Game(pg_gameConfig);
 }
 
 function start_flappybird_game(response_data)
@@ -19,10 +29,12 @@ function start_flappybird_game(response_data)
 	fb_gameMode.username_player1 = match_data["main_player_username"];
 	fb_gameMode.username_player2 = match_data["opponent_username"];
 	fb_gameMode.match_id = match_data["id"];
-	new Phaser.Game(fb_gameConfig);
+	stop_current_game();
+	game = new Phaser.Game(fb_gameConfig);
 }
 
 function reset_game()
 {
+	stop_current_game();
 	document.getElementById('phaser_game').innerHTML = "";
 }

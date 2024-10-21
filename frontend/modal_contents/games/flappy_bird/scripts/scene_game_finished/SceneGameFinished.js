@@ -80,6 +80,7 @@ class fb_SceneGameFinished extends Phaser.Scene{
 		this.#createPlayerPanels();
 		this.#createMatchDurationDisplay();
 		this.#createQuitButton();
+
 	}
 
 		#createAnimations(){
@@ -161,10 +162,10 @@ class fb_SceneGameFinished extends Phaser.Scene{
 
 		#createQuitButton(){
 			this.#quit_button = new Button(this, "Home", fb_gameConfig.scene_game_finished.button_style);
-			this.#positionBotton();
+			this.#positionButton();
 			this.#setButtonInteraction();
 		}
-			#positionBotton(){
+			#positionButton(){
 				const x = fb_gameConfig.width / 2;
 				const y = fb_gameConfig.height - fb_gameConfig.scene_game_finished.ground.height - fb_gameConfig.scene_game_finished.padding.under_match_duration;
 				this.#quit_button.setBottomCenterPosition(x, y);
@@ -178,10 +179,13 @@ class fb_SceneGameFinished extends Phaser.Scene{
 			}
 			#goBackHome(){
 				console.log("Go back to home");
+				game.destroy(false);
+				game = undefined;
 				close_modal('modal-game', reset_game);
-				//TODO
 			}
 			#continueTournament(){
+				game.destroy(false);
+				game = undefined;
 				console.log("Continue the tournament");
 			}
 }
