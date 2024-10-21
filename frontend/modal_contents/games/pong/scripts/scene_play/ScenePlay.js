@@ -406,6 +406,7 @@ class pg_ScenePlay extends Phaser.Scene{
 		this.#createPauseKey();
 		this.#createPauseEvent();
 		this.#createResumeEvent();
+		this.#createStopEvent();
 	}
 		#createPauseKey(){
 			this.#pause = {
@@ -424,6 +425,11 @@ class pg_ScenePlay extends Phaser.Scene{
 			#resumeEventListener(){
 				this.#clock.resume();
 			}
+		#createStopEvent(){
+			custom_event.on(event_stop_game, () => {
+				this.#finishParty();
+			})
+		}
 	
 	#limitControlsToTheScene(){
 		this.input.stopPropagation();
@@ -514,6 +520,7 @@ class pg_ScenePlay extends Phaser.Scene{
 			}
 		}
 		#launchEndScene(){
+			this.scene.stop("Pause")
 			this.scene.start("pg_GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
 		}
 

@@ -83,7 +83,9 @@ class pg_ScenePause extends Phaser.Scene{
 	}
 
 	#finishGame(){
-		console.log("TODO: finish")
+		this.scene.sleep();
+		this.scene.run('PlayGame');
+		custom_event.emit(event_stop_game);
 	}
 
 	update(){
