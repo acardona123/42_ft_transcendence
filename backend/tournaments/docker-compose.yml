@@ -1,0 +1,50 @@
+services:
+  tournaments:
+    build: .
+    container_name: tournaments
+    command: bash -c "python3 ./django/vault/vault_init.py"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=tournaments_db
+      - REQUESTS_CA_BUNDLE=/usr/src/app/vault/vault.crt
+    volumes:
+      - .:/usr/src/app/django
+      - ../vault/data:/usr/src/app/vault/
+    networks:
+      - website-network
+      - tournaments-network
+    depends_on:
+      tournaments_db:
+        condition: service_healthy
+    ports:
+      - "8005:8005"
+  tournaments_db:
+    build: ./postgre
+    container_name: tournaments_db
+    restart: always
+    volumes:
+      - tournaments_db:/var/lib/postgresql/data/
+    networks:
+      - tournaments-network
+      - vault-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  tournaments_db:
+
+networks:
+  website-network:
+    name: website_network
+  tournaments-network:
+    name: tournaments_network
+  vault-network:
+    name: vault_network

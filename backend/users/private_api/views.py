@@ -93,10 +93,12 @@ DOC_GUEST_CREATED = openapi.Response(
 		)
 
 DOC_USER_TYPE = openapi.Response(
-			description=MSG_TYPE_USER+" can be User, Bot, Guest",
+			description=MSG_TYPE_USER+" can be User=>USR, Bot=>BOT, Guest=>GST",
 			examples={
 				"application/json": {"message": MSG_TYPE_USER,
-					"data": {"type" : 'User'}}
+						"data": {'1': 'GST',
+							'2': 'USR',
+							'5': 'BOT'}}
 			}
 		)
 
@@ -268,25 +270,37 @@ def get_random_username():
 @api_view(['POST'])
 def create_guest(request):
 	username = get_random_username()
-	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.GST)
+	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.GUEST)
 	return Response({"message": MSG_GUEST_CREATED,
 					"data": {"id" : user.id,
 							"username": user.username}}, status=200)
 
-@swagger_auto_schema(method='get',
+@swagger_auto_schema(method='post',
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		required=['users_id'],
+		properties={
+			'users_id': openapi.Schema(type=openapi.TYPE_STRING, description="list of user Id"),
+		}
+	),
 	responses={
 		200: DOC_USER_TYPE,
-		400: DOC_ERROR_USER_NOT_FOUND,
+		400: DOC_ERROR_USER_ID,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
-@api_view(['GET'])
-def get_type_user(request, user_id):
-	try:
-		user = CustomUser.objects.get(id=user_id)
-		return Response({"message": MSG_TYPE_USER,
-						"data": {"type": user.type}}, status=200)
-	except Exception as error:
-		return Response({"message": MSG_ERROR_USER_NOT_FOUND}, status=400)
+@api_view(['POST'])
+def get_type_user(request):
+	users_id = request.data.get("users_id", None)
+	if users_id is None:
+		return Response({"message": MSG_ERROR_USER_ID_REQUIRED}, status=400)
+	if not all(isinstance(number, (int)) for number in users_id):
+		return Response({"message": MSG_ERROR_USER_ID_ONLY_INTEGERS}, status=400)
+	users = CustomUser.objects.filter(pk__in=users_id)
+	data = dict()
+	for user in users:
+		data[user.id] = user.type
+	return Response({"message": MSG_TYPE_USER,
+					"data": data})
 
 @swagger_auto_schema(method='post',
 	request_body=openapi.Schema(
