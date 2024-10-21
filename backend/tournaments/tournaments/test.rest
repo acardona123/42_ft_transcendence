@@ -2,7 +2,7 @@
 @port = 8443
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5Mjc5MjcxLCJpYXQiOjE3MjkyNzg5NzEsImp0aSI6IjdlMWYyNGE0ZDY5ZDQ4YWI4YzA0ZGQzNTQ5YThlNTljIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.x5k8qf_ElUCfi8_5OG70juYZ_TI272en0GUxT3dvO0o
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NTA3MDY2LCJpYXQiOjE3Mjk1MDY3NjYsImp0aSI6IjA4ZjdiNWI3YThkYzRiNTI5NzY5ZDEzNmI0NDAzMGYxIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.OqTW1pX-eMLiAH9UmcZE3vlbdNhkvqQS28b2Hv6ncfU
 @refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5MTY2MTMxLCJpYXQiOjE3MjkxNjU4MzEsImp0aSI6IjA3OTM3OTQwMWFiYzQxNmQ4YmJlYzhmZGYwZDM5ZWVmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImMifQ.R4YwKkALu57V8wpJeWz3S7KKTIiqeO75EW7qoi75OSU
 
 ### create empty tournament
@@ -15,13 +15,13 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"username": "coucou3",
+	"username": "coucou",
 	"pin": "0004",
-	"tournament_id": 1
+	"tournament_id": 2
 }
 
 ### remove player from tournament
-DELETE  https://{{host}}/api/tournaments/player/?tournament_id=1&player_id=5
+DELETE  https://{{host}}/api/tournaments/player/?tournament_id=2&player_id=4
 Authorization: Bearer {{access_token}}
 
 ### start tournament
@@ -30,7 +30,7 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 5,
+	"tournament_id": 2,
 	"game": "PG",
 	"max_score": -1,
 	"max_duration": 56,
@@ -39,11 +39,11 @@ Authorization: Bearer {{access_token}}
 }
 
 ### list guest
-GET https://{{host}}/api/tournaments/guests/?tournament_id=5
+GET https://{{host}}/api/tournaments/guests/?tournament_id=2
 Authorization: Bearer {{access_token}}
 
 ### display matches in round
-GET https://{{host}}/api/tournaments/round/?tournament_id=5
+GET https://{{host}}/api/tournaments/round/?tournament_id=2
 Authorization: Bearer {{access_token}}
 
 ### start match
@@ -52,7 +52,7 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 5
+	"tournament_id": 2
 }
 
 ### finish match
@@ -61,7 +61,7 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 5,
+	"tournament_id": 2,
 	"score1": 1,
 	"score2": 2
 }
