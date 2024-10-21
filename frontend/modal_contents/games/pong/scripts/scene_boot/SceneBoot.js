@@ -8,6 +8,7 @@ class pg_SceneBoot extends Phaser.Scene{
 		this.#constructScenePlayTextures();
 		this.#constructScenePauseTextures();
 		this.#constructSceneGameOverTextures();
+		init_custom_event();
 	}
 	#constructScenePlayTextures(){
 		this.#scene_play_textures = {

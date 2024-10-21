@@ -155,14 +155,12 @@ class pg_SceneGameFinished extends Phaser.Scene{
 				this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
 			}
 			#goBackHome(){
-				game.destroy(false);
-				game = undefined;
+				stop_current_game();
 				close_modal('modal-game', reset_game);
 				//TODO
 			}
 			#continueTournament(){
-				game.destroy(false);
-				game = undefined;
+				stop_current_game();
 				console.log("Continue the tournament");
 			}
 }

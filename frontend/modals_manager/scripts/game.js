@@ -2,8 +2,9 @@ let game = undefined;
 
 function stop_current_game(){
 	if (game != undefined){
-		game.destroy();
+		game.destroy(false);
 		game = undefined;
+		custom_event = undefined;
 	}
 
 }
