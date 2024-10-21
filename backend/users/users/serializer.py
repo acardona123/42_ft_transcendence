@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = CustomUser
-		fields = ['id', 'email', 'phone', 'username', 'password', 'password2']
+		fields = ['email', 'phone', 'username', 'password', 'password2']
 		extra_kwargs = {'password': {'write_only': True}}
 
 	def validate_username(self, username):
@@ -44,7 +44,7 @@ class OauthUserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = CustomUser
-		fields = ['id', 'email', 'phone', 'username', 'oauth_id', 'image_url']
+		fields = ['email', 'phone', 'username', 'oauth_id', 'image_url']
 
 	def to_internal_value(self, data):
 		if data.get('phone') == 'hidden':
