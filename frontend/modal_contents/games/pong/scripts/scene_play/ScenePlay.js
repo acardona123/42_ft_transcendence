@@ -25,7 +25,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#pause;
 
 	constructor(){
-		super("PlayGame");
+		super(pg_gameConfig.scene_play.name);
 	}
 
 	init(loaded_boot_textures){
@@ -454,7 +454,7 @@ class pg_ScenePlay extends Phaser.Scene{
 	#pauseManagement(){
 		if (this.#pause.key.isDown){
 			this.scene.pause();	
-			this.scene.run('Pause');
+			this.scene.run(pg_gameConfig.scene_pause.name);
 		}
 	}
 	#timeConditionedBotCalculous(){
@@ -520,8 +520,8 @@ class pg_ScenePlay extends Phaser.Scene{
 			}
 		}
 		#launchEndScene(){
-			this.scene.stop("Pause");
-			this.scene.start("pg_GameFinished", {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
+			this.scene.stop(pg_gameConfig.scene_pause.name);
+			this.scene.start(pg_gameConfig.scene_game_finished.name, {boot_scene_textures : this.#boot_textures, scores: this.#scores, duration_ms: this.#clock.getPastTime()});
 		}
 
 

@@ -14,7 +14,7 @@ class pg_SceneGameFinished extends Phaser.Scene{
 	#quit_button;
 
 	constructor(){
-		super("pg_GameFinished");
+		super(pg_gameConfig.scene_game_finished.name);
 	}
 
 	init(data){

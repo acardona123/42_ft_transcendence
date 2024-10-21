@@ -4,7 +4,7 @@ class pg_SceneBoot extends Phaser.Scene{
 	#scene_menu_and_game_over_textures;
 
 	constructor(){
-		super("pg_bootGame");
+		super(pg_gameConfig.scene_boot.name);
 		this.#constructScenePlayTextures();
 		this.#constructScenePauseTextures();
 		this.#constructSceneGameOverTextures();
@@ -49,7 +49,7 @@ class pg_SceneBoot extends Phaser.Scene{
 			scenePause: this.#scene_pause_textures,
 			sceneGameOver: this.#scene_menu_and_game_over_textures
 		}
-		this.scene.start("pg_Menu", boot_textures);
+		this.scene.start(pg_gameConfig.scene_menu.name, boot_textures);
 	}
 
 

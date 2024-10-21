@@ -10,7 +10,7 @@ class pg_SceneMenu extends Phaser.Scene{
 	#start_button;
 
 	constructor(){
-		super ("pg_Menu");
+		super (pg_gameConfig.scene_menu.name);
 	}
 
 	init (loaded_boot_textures){
@@ -111,6 +111,6 @@ class pg_SceneMenu extends Phaser.Scene{
 			}
 
 		#startGame(){
-			this.scene.start("Pause", this.#boot_textures);
+			this.scene.start(pg_gameConfig.scene_pause.name, this.#boot_textures);
 		}
 }

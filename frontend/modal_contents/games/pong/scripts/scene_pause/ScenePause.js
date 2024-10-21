@@ -11,7 +11,7 @@ class pg_ScenePause extends Phaser.Scene{
 
 
 	constructor(){
-		super("Pause");
+		super(pg_gameConfig.scene_pause.name);
 	}
 
 	init(loaded_boot_textures){
@@ -25,7 +25,7 @@ class pg_ScenePause extends Phaser.Scene{
 	create(){
 		this.#createBackground();
 		this.#createContentObjects()
-		this.scene.launch("PlayGame", this.#boot_textures);
+		this.scene.launch(pg_gameConfig.scene_play.name, this.#boot_textures);
 		this.scene.sleep();
 	}
 
@@ -79,12 +79,12 @@ class pg_ScenePause extends Phaser.Scene{
 
 	#resumeGame(){
 		this.scene.sleep();
-		this.scene.run('PlayGame');
+		this.scene.run(pg_gameConfig.scene_play.name);
 	}
 
 	#finishGame(){
 		this.scene.sleep();
-		this.scene.run('PlayGame');
+		this.scene.run(pg_gameConfig.scene_play.name);
 		custom_event.emit(event_stop_game);
 	}
 

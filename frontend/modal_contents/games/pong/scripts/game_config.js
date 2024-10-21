@@ -15,7 +15,12 @@ const pg_gameConfig = {
 	width: pg_resize(1200 * 2.25),
 	height: pg_resize(800 * 2.25),
 
+	scene_boot: {
+		name: "pg_scene_boot"
+	},
+
 	scene_menu: {
+		name: "pg_scene_menu",
 		padding:{
 			top: pg_resize(100),
 			under_panels: pg_resize(50),
@@ -58,6 +63,7 @@ const pg_gameConfig = {
 	},
 
 	scene_play: {
+		name: "pg_scene_play",
 		player: {
 			max_speed: pg_resize(1000),
 			paddle_length: pg_resize(300),
@@ -126,6 +132,7 @@ const pg_gameConfig = {
 	},
 
 	scene_pause: {
+		name: "pg_scene_pause",
 		padding:{
 			top: pg_resize(400),
 			under_text: pg_resize(150),
@@ -162,6 +169,7 @@ const pg_gameConfig = {
 	},
 
 	scene_game_finished :{
+		name: "pg_scene_game_finished",
 		padding:{
 			top: pg_resize(300),
 			under_panels: pg_resize(30),
