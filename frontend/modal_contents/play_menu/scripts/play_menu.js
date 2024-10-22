@@ -38,7 +38,7 @@ function open_game_menu_pong()
 	}
 	else
 	{
-		open_modal('modal-login', undefined, undefined, true);
+		open_modal('modal-login', clear_login_inputs, focus_modal_login, true);
 	}
 }
 
@@ -51,7 +51,7 @@ function open_game_menu_flappy_bird()
 	}
 	else
 	{
-		open_modal('modal-login', undefined, undefined, true);
+		open_modal('modal-login', clear_login_inputs, focus_modal_login, true);
 	}
 }
 
