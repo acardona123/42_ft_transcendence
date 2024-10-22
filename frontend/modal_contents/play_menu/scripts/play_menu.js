@@ -31,7 +31,7 @@ function init_play_menu_flappy_bird()
 
 function open_game_menu_pong()
 {
-	if (is_connected() === false)
+	if (is_connected() === true)
 	{
 		init_play_menu_pong();
 		open_modal('modal-play', undefined, undefined, true);
