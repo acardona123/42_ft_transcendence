@@ -159,7 +159,7 @@ DOC_GET_USERNAME= openapi.Response(
 		type=openapi.TYPE_OBJECT,
 		required=['users_id'],
 		properties={
-			'users_id': openapi.Schema(type=openapi.TYPE_STRING, description="list of user Id"),
+			'users_id': openapi.Schema(type=openapi.TYPE_STRING, description="list of user Id", example="[-25, 1, 2, 8, 9, 10]"),
 		}
 	),
 	responses={

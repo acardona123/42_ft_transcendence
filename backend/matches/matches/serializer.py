@@ -5,6 +5,8 @@ from django.core.exceptions import BadRequest
 from django.conf import settings
 import requests
 
+from .views_users_requests import get_usernames_request
+
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 	def __init__(self, *args, **kwargs):
 		fields = kwargs.pop('fields', None)
@@ -96,19 +98,10 @@ class MatchDisplaySerializer(DynamicFieldsModelSerializer):
 		else :
 			return ""
 
-	# def get_usernames_request(self, users_id):
-	# 	url = f"{settings.USERS_MICROSERVICE_URL}/api/users/usernames/"
-	# 	response = requests.post(url, json={'users' : users_id})
-	# 	if response.status_code != 200:
-	# 		raise BadRequest
-	# 	return response.json()
-
-
 	def get_usernames_request(self, users_id):
-		usernames = {};
-		for user in users_id:
-			id = str(user)
-			name = "username_id_" + id
-			usernames[id] = name
+		usernames_request = get_usernames_request(users_id)
+		if usernames_request.get("status") != 200:
+			raise BadRequest(f"${usernames_request.get("body").get("message", "internal error")}")
+		usernames = usernames_request.get("body").get("data")
 		return usernames
 
