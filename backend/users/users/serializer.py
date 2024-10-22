@@ -154,4 +154,21 @@ class UpdateProfilPictureSerializer(serializers.ModelSerializer):
 		res = super(UpdateProfilPictureSerializer, self).to_representation(data)
 		res['profile_picture'] = "https://localhost:8443" + res['profile_picture']
 		return res
+	
+class UserInfoSerializer(serializers.ModelSerializer):
+	is_oauth = serializers.SerializerMethodField()
+	profile_picture = serializers.SerializerMethodField()
+
+	class Meta:
+		model = CustomUser
+		fields = ['username', 'email', 'phone', 'is_2fa_enable', 'pin', 'is_oauth', 'profile_picture']
+
+	def get_is_oauth(self, obj):
+		if obj.oauth_id == None:
+			return False
+		else:
+			return True
+	
+	def get_profile_picture(self, obj):
+		return obj.get_picture()
 
