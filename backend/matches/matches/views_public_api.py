@@ -225,7 +225,7 @@ def can_update_match(request, match_instance):
 	if match_instance.tournament_id >= 0:
 		host_check = get_is_host_of_tournament(match_instance.tournament_id, request_emitter_id)
 		if host_check['status'] != 200:
-			return host_check
+			return {'status': host_check['status'], 'data': host_check["body"]}
 		updatable = host_check['body']['data']['is_host']
 	else:
 		updatable = request_emitter_id == match_instance.user1 or request_emitter_id == match_instance.user2

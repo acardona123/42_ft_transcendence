@@ -324,7 +324,6 @@ def start_match_view(request):
 		200: doc.DOC_MATCH_TIE,
 		'400(0)': doc.DOC_ERROR_SCORE,
 		'400(1)': doc.DOC_ERROR_TRN_ID,
-		401: doc.DOC_ERROR_UNAUTHORIZED,
 		405: doc.DOC_ERROR_METHOD_NOT_ALLOWED
 	})
 @api_view(['POST'])
@@ -360,7 +359,6 @@ def match_finished(request):
 		200: doc.DOC_PLAYER_HOST,
 		'400(0)': doc.DOC_ERROR_HOST_REQUIRED,
 		'400(1)': doc.DOC_ERROR_TRN_ID,
-		401: doc.DOC_ERROR_UNAUTHORIZED,
 		405: doc.DOC_ERROR_METHOD_NOT_ALLOWED
 	})
 @api_view(['GET'])
