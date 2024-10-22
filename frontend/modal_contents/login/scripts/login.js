@@ -144,8 +144,39 @@ async function send_form_login(form)
 	}
 }
 
+async function auto_login_42()
+{
+	const params = new URLSearchParams(window.location.search);
+	const code = params.get('code');
+	const state = params.get('state');
+	
+	if (!code || !state)
+		return;
+	window.history.replaceState({}, document.title, '/');
+	const url = "https://localhost:8443/api/users/login/api42/" + "?" + new URLSearchParams({
+		code: code,
+		state: state,
+	}).toString();
+	try
+	{
+		let fetched_data = await fetch(url, {
+			method: 'GET'
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error while connecting to api 42.");
+		data_json = await fetched_data.json();
+		sessionStorage.setItem("access_token", data_json.data.tokens.access);
+		sessionStorage.setItem("refresh_token", data_json.data.tokens.refresh);
+	}
+	catch (error)
+	{
+		return ;
+	}
+}
+
 async function auto_login()
 {
+	await auto_login_42();
 	const refresh_token = sessionStorage.getItem("refresh_token");
 	const access_token = sessionStorage.getItem("access_token");
 	if (!refresh_token || !access_token)
@@ -168,6 +199,22 @@ async function auto_login()
 		// nothing to do on error, this is a intended silent error
 	}
 }
+
+async function login_with_42()
+{
+	const url = "/api/users/url/api42/";
+	fetch(url, {
+		method: 'GET'
+	})
+	.then((fetched_data) =>
+	{
+		fetched_data.json()
+		.then((data_json) => {
+			window.location.href = data_json.data;
+		});
+	})
+}
+
 document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");
