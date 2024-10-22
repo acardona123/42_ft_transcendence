@@ -31,8 +31,8 @@ function open_2fa_setup_page(data)
 {
 	document.getElementById("tfas-qrcode-img").src = data.qrcode;
 	document.getElementById("tfas-qrcode-key").textContent = data.code;
-	close_modal("modal-edit-profile");
-	open_modal("modal-2fa-setup", init_modal_2fa_setup_bf, init_modal_2fa_setup_af);
+	close_modal("modal-edit-profile", undefined, false);
+	open_modal("modal-2fa-setup", init_modal_2fa_setup_bf, init_modal_2fa_setup_af, false);
 }
 
 async function get_2fa_state()
@@ -45,7 +45,7 @@ async function get_2fa_state()
 			headers: {}
 		});
 		if (!fetched_data.ok)
-			throw new Error("Error while enabling 2fa.");
+			throw new Error("Error fetching 2fa status.");
 		let data = await fetched_data.json();
 		data = data.data;
 		is_btn_on_enable = data["2fa_status"] == "on" ? false : true;
@@ -53,7 +53,7 @@ async function get_2fa_state()
 	}
 	catch (error)
 	{
-		create_popup("Error while enabling 2fa.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error fetching 2fa status.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }

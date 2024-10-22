@@ -28,6 +28,6 @@ async function load_side_menu_html()
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error loading side menu.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }

@@ -52,14 +52,14 @@ function on_input_write_when_filled(is_not_event, elem)
 
 function on_click_login_to_sign_up()
 {
-	close_modal("modal-login");
-	open_modal('modal-register', clear_register_inputs, focus_modal_register)
+	close_modal("modal-login", undefined, false);
+	open_modal('modal-register', clear_register_inputs, focus_modal_register, true);
 }
 
 function on_click_sign_up_to_login()
 {
-	close_modal("modal-register");
-	open_modal('modal-login', clear_login_inputs, focus_modal_login);
+	close_modal("modal-register", undefined, false);
+	open_modal('modal-login', clear_login_inputs, focus_modal_login, true);
 }
 
 document.addEventListener("onModalsLoaded", function()

@@ -38,8 +38,8 @@ async function submitIAForm(event) {
 
 		let data = await fetched_data.json();
 
-		close_modal('modal-ia-match-creation', undefined);
-		open_modal('modal-game', undefined, undefined);
+		close_modal('modal-ia-match-creation', undefined, false);
+		open_modal('modal-game', undefined, undefined, false);
 
 		start_pong_game(data, body.bot_level);
 	}

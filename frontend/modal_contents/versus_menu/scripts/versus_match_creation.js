@@ -198,8 +198,8 @@ async function submit1v1Guest(matchData) {
 		errorBoxVSGuest.style.display = 'none';
 		
 		let data = await fetched_data.json();
-		close_modal('modal-versus-match-creation', undefined);
-		open_modal('modal-game', undefined, undefined);
+		close_modal('modal-versus-match-creation', undefined, false);
+		open_modal('modal-game', undefined, undefined, false);
 
 		if (global_game_modal === "FLAPPYBIRD")
 			start_flappybird_game(data);

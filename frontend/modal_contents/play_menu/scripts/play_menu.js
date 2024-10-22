@@ -34,11 +34,11 @@ function open_game_menu_pong()
 	if (is_connected() === true)
 	{
 		init_play_menu_pong();
-		open_modal('modal-play', undefined, undefined);
+		open_modal('modal-play', undefined, undefined, true);
 	}
 	else
 	{
-		open_modal('modal-login', undefined, undefined);
+		open_modal('modal-login', undefined, undefined, true);
 	}
 }
 
@@ -47,10 +47,16 @@ function open_game_menu_flappy_bird()
 	if (is_connected() === true)
 	{
 		init_play_menu_flappy_bird();
-		open_modal('modal-play', undefined, undefined);
+		open_modal('modal-play', undefined, undefined, true);
 	}
 	else
 	{
-		open_modal('modal-login', undefined, undefined);
+		open_modal('modal-login', undefined, undefined, true);
 	}
+}
+
+function return_to_modal_play(from_modal)
+{
+	close_modal(from_modal, undefined, false);
+	open_modal("modal-play", undefined, undefined, true);
 }
