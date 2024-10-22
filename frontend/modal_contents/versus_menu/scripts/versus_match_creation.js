@@ -194,10 +194,11 @@ async function submit1v1Guest(matchData) {
 			errorBoxVSGuest.style.display = 'block';
 			throw new Error("Error while creating match.");
 		}
+		let data = await fetched_data.json();
+
 		errorBoxVSGuest.textContent = '';
 		errorBoxVSGuest.style.display = 'none';
 		
-		let data = await fetched_data.json();
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
@@ -220,7 +221,6 @@ async function submit1v1Player(matchData) {
 
 	try
 	{
-		console.log(matchData)
 		let fetched_data = await fetch_with_token(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
@@ -228,20 +228,22 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
-			console.log("Error:")
-			console.log(await fetched_data.json())
+			console.log(await fetched_data.json());
 			errorBoxVSPlayer.textContent = 'Error connecting to server.';
 			throw new Error("Error while creating match.");
 		}
 		let data = await fetched_data.json();
-		if (!data.success)
-		{
-			errorBoxVSPlayer.textContent = 'Invalid connection. Please try again.';
-			throw new Error("Error while creating match.");
-		}
+
 		errorBoxVSPlayer.textContent = '';
 		errorBoxVSPlayer.style.display = 'none';
-		console.log("Match created.");
+		
+		close_modal('modal-versus-match-creation', undefined, false);
+		open_modal('modal-game', undefined, undefined, false);
+
+		if (global_game_modal === "FLAPPYBIRD")
+			start_flappybird_game(data);
+		else
+			start_pong_game(data);
 	}
 	catch (error)
 	{
