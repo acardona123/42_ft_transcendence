@@ -23,8 +23,7 @@ async function apply_login_user(refresh, access, username)
 
 	await Promise.all([
 		get_friend_list(),
-		create_user_infos(username),
-		get_2fa_state()
+		create_user_infos(username)
 	]);
 	button_dfa.disabled = false;
 	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
@@ -184,15 +183,8 @@ async function auto_login()
 	try
 	{
 		let user_infos = await get_user_informations();
-		let picture = await get_profil_picture();
-
-		if (picture == DEFAULT_PP_PATH)
-			throw new Error ("Error while login in.");
-		global_user_infos = {
-			username: user_infos.username,
-			profile_picture: picture,
-			pin: user_infos.pin
-		};
+		await apply_login_user(refresh_token, access_token, user_infos.username);
+		user_infos.is_42 = true;
 	}
 	catch (error)
 	{

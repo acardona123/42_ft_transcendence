@@ -157,6 +157,7 @@ async function open_modal(id_modal, init_function_bf, init_function_af, should_a
 			break;
 		case "modal-2fa-valid":
 			modal_2fa_valid.show();
+			break;
 		default:
 			console.log("Error : this is not a id for modal.");
 			return;

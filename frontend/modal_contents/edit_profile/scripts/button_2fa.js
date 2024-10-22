@@ -48,13 +48,12 @@ async function get_2fa_state()
 			throw new Error("Error fetching 2fa status.");
 		let data = await fetched_data.json();
 		data = data.data;
-		is_btn_on_enable = data["2fa_status"] == "on" ? false : true;
-		return ;
+		return data["2fa_status"] == "on" ? true : false;
 	}
 	catch (error)
 	{
 		create_popup("Error fetching 2fa status.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		return ;
+		return false;
 	}
 }
 

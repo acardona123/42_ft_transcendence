@@ -114,6 +114,11 @@ function clear_edp_user_inputs()
 		}).catch(() => {
 			create_popup("Error retrieving user informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		});
+	get_2fa_state()
+		.then ((is_enable) => {
+			is_enable ? set_to_disable_2fa_button() : set_to_enable_2fa_button();
+			is_btn_on_enable = !is_enable;
+		});
 }
 
 function format_empty_values(body)
