@@ -1,4 +1,5 @@
 from django.db import models
+from .views_users_requests import get_usernames_request
 
 GAME = {
 	"FB": "Flappy Fish",
@@ -23,7 +24,13 @@ class Match(models.Model):
 		ordering = ["-date", "game"]
 
 	def __str__(self):
-		return f"Match between User {self.user1} and User {self.user2}"
+		usernames_request = get_usernames_request([self.user1, self.user2])
+		if usernames_request.get("status") != 200:
+			return f"Match between User with id {self.user1} and User with id {self.user2}"
+		else :
+			players = usernames_request.get("body").get("data")
+			return f"Match between {players.get(str(self.user1))} and {players.get(str(self.user2))}"
+			
 	
 	# def get_absolute_url(self):
 		# ... ?
