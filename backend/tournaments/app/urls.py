@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from tournaments.views import match_finished
+from tournaments.views import match_finished, check_host_tournament
 
 schema_view = get_schema_view(
 	openapi.Info(
@@ -35,4 +35,5 @@ urlpatterns = [
 	path("admin/", admin.site.urls),
 	path("api/tournaments/", include("tournaments.urls")),
 	path("api/private/tournaments/match/finish/", match_finished),
+	path("api/private/tournaments/is_host/", check_host_tournament),
 ]

@@ -61,6 +61,10 @@ PLAYER = openapi.Parameter('player_id', openapi.IN_QUERY,
 							description="id of the player to be remove",
 							type=openapi.TYPE_STRING)
 
+HOST = openapi.Parameter('host_id', openapi.IN_QUERY,
+							description="id of the host user",
+							type=openapi.TYPE_STRING)
+
 TOURNAMENT = openapi.Parameter('tournament_id', openapi.IN_QUERY,
 							description="Id of the tournament to be manipulated",
 							type=openapi.TYPE_STRING)
@@ -181,4 +185,19 @@ DOC_ERROR_SCORE= openapi.Response(
 DOC_MATCH_TIE= openapi.Response(
 			description=MSG_MATCH_TIE+' or '+MSG_MATCH_FINISH,
 			examples={"application/json": {"message": MSG_MATCH_TIE}}
+	)
+
+MSG_ERROR_REQUIRED = "The field 'host_id' is required"
+MSG_PLAYER_NOT_HOST = "Player is not the host of the tournament"
+MSG_PLAYER_HOST = "Player is the host of the tournament"
+
+DOC_ERROR_HOST_REQUIRED= openapi.Response(
+			description=MSG_ERROR_REQUIRED,
+			examples={"application/json": {"message": MSG_ERROR_REQUIRED}}
+	)
+
+DOC_PLAYER_HOST= openapi.Response(
+			description=MSG_PLAYER_NOT_HOST+' or '+MSG_PLAYER_HOST,
+			examples={"application/json": {"message": MSG_PLAYER_HOST,
+						"data": {"is_host": True}}}
 	)

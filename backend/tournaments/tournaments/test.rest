@@ -2,8 +2,12 @@
 @port = 8443
 @host = {{hostname}}:{{port}}
 @contentType = application/json
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NTEyMDQ1LCJpYXQiOjE3Mjk1MTE3NDUsImp0aSI6ImU5OWUzYzEyNWU2MjQyYTM5ZTZlMmNjNmJhMDFiMGUyIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.2RwcsBGVO339qR5vDxHXBim8J6nupbDGzXqxfpYowns
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NTk4MDgxLCJpYXQiOjE3Mjk1OTc3ODEsImp0aSI6IjBhZGNhZjNlMTQ4NzRiMDZiNzhiZjkwMDQxYTlmM2ZkIiwidXNlcl9pZCI6Mywic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNvdWNvdSJ9.fGSlP1o21G_raPeT9S6ELctfFi6XjRcxfRY1VRCag6Q
 @refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5MTY2MTMxLCJpYXQiOjE3MjkxNjU4MzEsImp0aSI6IjA3OTM3OTQwMWFiYzQxNmQ4YmJlYzhmZGYwZDM5ZWVmIiwidXNlcl9pZCI6MSwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImMifQ.R4YwKkALu57V8wpJeWz3S7KKTIiqeO75EW7qoi75OSU
+
+### is host(private_api)
+GET http://localhost:8005/api/private/tournaments/is_host/?host_id=15&tournament_id=2
+Content-Type: {{contentType}}
 
 ### create empty tournament
 POST https://{{host}}/api/tournaments/create/
@@ -30,20 +34,20 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 7,
+	"tournament_id": 1,
 	"game": "PG",
 	"max_score": -1,
 	"max_duration": 56,
-	"nb_guest": 8,
+	"nb_guest": 4,
 	"nb_ai": 10
 }
 
 ### list guest
-GET https://{{host}}/api/tournaments/guests/?tournament_id=5
+GET https://{{host}}/api/tournaments/guests/?tournament_id=1
 Authorization: Bearer {{access_token}}
 
 ### display matches in round
-GET https://{{host}}/api/tournaments/round/?tournament_id=5
+GET https://{{host}}/api/tournaments/round/?tournament_id=1
 Authorization: Bearer {{access_token}}
 
 ### start match
@@ -52,16 +56,15 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 5
+	"tournament_id": 1
 }
 
-### finish match
+### finish match(private_api)
 POST http://localhost:8005/api/private/tournaments/match/finish/
 Content-Type: {{contentType}}
-Authorization: Bearer {{access_token}}
 
 {
-	"tournament_id": 5,
+	"tournament_id": 1,
 	"score1": 1,
 	"score2": 2
 }
