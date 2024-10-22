@@ -12,7 +12,7 @@ function error_update_password_from_back(data)
 {
 	if (!data.data) // api 42 changed password, not allowed
 	{
-		create_popup("42 api users can not change password.")
+		create_popup("42 api users can not change password.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 	data = data.data;

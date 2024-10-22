@@ -32,16 +32,24 @@ function init_modals()
 	{
 		event.preventDefault();
 		if (event.target.id !== 'modal-game')
-		{
-			modal_on_screen = undefined;
-			
-			const buttons = document.querySelectorAll('.btn-play');
-			buttons.forEach(button => {
-				button.disabled = false;
-				button.focus();
-			});
-			close_modal(event.target.id);
-		}
+			close_modal(event.target.id, undefined, true);
+	});
+}
+
+function enable_buttons_play()
+{
+	const buttons = document.querySelectorAll('.btn-play');
+	buttons.forEach(button => {
+		button.disabled = false;
+		button.focus();
+	});
+}
+
+function disable_buttons_play()
+{
+	const buttons = document.querySelectorAll('.btn-play');
+	buttons.forEach(button => {
+		button.disabled = true;
 	});
 }
 
@@ -108,7 +116,7 @@ async function init_modal_edit_profile()
 	edp_update_profile_picture();
 }
 
-async function open_modal(id_modal, init_function_bf, init_function_af)
+async function open_modal(id_modal, init_function_bf, init_function_af, should_add_to_history=true)
 {
 	modal_on_screen = id_modal;
 
@@ -149,13 +157,23 @@ async function open_modal(id_modal, init_function_bf, init_function_af)
 			break;
 		case "modal-2fa-valid":
 			modal_2fa_valid.show();
+			break;
 		default:
 			console.log("Error : this is not a id for modal.");
 			return;
 	}
-
+	disable_buttons_play();
 	if (init_function_af !== undefined)
 		await init_function_af();
+
+	if (should_add_to_history)
+	{
+		history.pushState({
+			modal_id : id_modal,
+			funcs : {bf : init_function_bf?.name, af : init_function_af?.name},
+			open : true,
+		}, null);
+	}
 }
 
 function return_to_modal_play()
@@ -164,7 +182,7 @@ function return_to_modal_play()
 	modal_play.show();
 }
 
-function close_modal(id_modal, init_function_af)
+function close_modal(id_modal, init_function_af, should_add_to_history=true)
 {
 	switch (id_modal)
 	{
@@ -203,11 +221,13 @@ function close_modal(id_modal, init_function_af)
 		default:
 			return;
 	}
-
+	enable_buttons_play();
 	modal_on_screen = undefined;
 
 	if (init_function_af !== undefined)
 		init_function_af();
+	if (should_add_to_history)
+		history.pushState({modal_id : id_modal, open : false}, null);
 }
 
 // FETCH MODALS

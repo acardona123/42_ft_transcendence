@@ -1,4 +1,3 @@
-let username_2fa_valid = undefined;
 const DEFAULT_PP_PATH = "/media/profile_picture/default.jpg";
 
 function change_form_behavior_for_SPA(form, new_function)
@@ -12,22 +11,19 @@ function change_form_behavior_for_SPA(form, new_function)
 
 function send_user_to_2fa()
 {
-	close_modal("modal-login");
-	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af);
+	close_modal("modal-login", undefined, false);
+	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af, false);
 }
 
-async function apply_login_user(refresh, access, username)
+async function apply_login_user(refresh, access)
 {
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 
 	await Promise.all([
 		get_friend_list(),
-		create_user_infos(username),
-		get_2fa_state()
+		create_user_infos()
 	]);
-	button_dfa.disabled = false;
-	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
 	update_ui();
 }
 
@@ -126,13 +122,11 @@ async function send_form_login(form)
 		data = data.data;
 		if (data['2fa_status'] == "off")
 		{
-			await apply_login_user(data.refresh, data.access, body.username);
-			username_2fa_valid = undefined;
-			close_modal("modal-login");
+			await apply_login_user(data.refresh, data.access);
+			close_modal("modal-login", undefined, false);
 		}
 		else
 		{
-			username_2fa_valid = body.username;
 			sessionStorage.setItem("access_token", data.access);
 			send_user_to_2fa(data.access);
 		}
@@ -144,30 +138,68 @@ async function send_form_login(form)
 	}
 }
 
+async function auto_login_42()
+{
+	const params = new URLSearchParams(window.location.search);
+	const code = params.get('code');
+	const state = params.get('state');
+	
+	if (!code || !state)
+		return;
+	window.history.replaceState({}, document.title, '/');
+	const url = "https://localhost:8443/api/users/login/api42/" + "?" + new URLSearchParams({
+		code: code,
+		state: state,
+	}).toString();
+	try
+	{
+		let fetched_data = await fetch(url, {
+			method: 'GET'
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error while connecting to api 42.");
+		data_json = await fetched_data.json();
+		sessionStorage.setItem("access_token", data_json.data.tokens.access);
+		sessionStorage.setItem("refresh_token", data_json.data.tokens.refresh);
+	}
+	catch (error)
+	{
+		return ;
+	}
+}
+
 async function auto_login()
 {
+	await auto_login_42();
 	const refresh_token = sessionStorage.getItem("refresh_token");
 	const access_token = sessionStorage.getItem("access_token");
 	if (!refresh_token || !access_token)
 		return ;
 	try
 	{
-		let user_infos = await get_user_informations();
-		let picture = await get_profil_picture();
-
-		if (picture == DEFAULT_PP_PATH)
-			throw new Error ("Error while login in.");
-		global_user_infos = {
-			username: user_infos.username,
-			profile_picture: picture,
-			pin: user_infos.pin
-		};
+		await apply_login_user(refresh_token, access_token);
 	}
 	catch (error)
 	{
 		// nothing to do on error, this is a intended silent error
 	}
 }
+
+async function login_with_42()
+{
+	const url = "/api/users/url/api42/";
+	fetch(url, {
+		method: 'GET'
+	})
+	.then((fetched_data) =>
+	{
+		fetched_data.json()
+		.then((data_json) => {
+			window.location.href = data_json.data;
+		});
+	})
+}
+
 document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");

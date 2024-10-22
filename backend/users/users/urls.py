@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import (register_user, get_url_api, login_oauth, login_user, logout, refresh_token)
+from .views import (register_user, get_url_api, login_oauth, login_user, logout, refresh_token, get_user_info)
 from .view_update import update_password, UpdateUserInfo, UpdateProfilePicture
 from .view_2fa import Update2fa, login_2fa, validate_2fa_enable
 
 urlpatterns = [
+	path("info/", get_user_info, name="get_user_info"),
 	path("signup/", register_user, name="signup"),
 	path("url/api42/", get_url_api, name="get_url_api"),
 	path("login/api42/", login_oauth, name="login_api"),

@@ -34,18 +34,33 @@ async function get_profil_picture()
 	}
 }
 
-async function create_user_infos(username)
+async function create_user_infos()
 {
-	if (username === undefined)
-		return ;
-
-	let picture = await get_profil_picture();
-	global_user_infos = 
+	const url = "https://localhost:8443/api/users/info/";
+	try
 	{
-		username : username,
-		profile_picture: picture
+		let fetched_data = await fetch_with_token(url, 
+		{
+			method: 'GET',
+			headers: {}
+		});
+		if (!fetched_data.ok)
+			throw new Error("Error logging in.");
+		let data = await fetched_data.json();
+		data = data.data;
+		global_user_infos =
+		{
+			username : data.username,
+			profile_picture : data.profile_picture,
+			pin : data.pin,
+			is_oauth : data.is_oauth
+		};
 	}
-	update_ui();
+	catch (error)
+	{
+		create_popup("Error logging in.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		logout_user_no_back();
+	}
 }
 
 function update_user_infos(username)

@@ -2,7 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from .serializer import UserSerializer
+from .authentication import IsNormalToken
+from .serializer import UserSerializer, UserInfoSerializer
 from vault.hvac_vault import get_vault_kv_variable
 from .utils import get_token_oauth, get_user_oauth, create_user_oauth, get_tokens_for_user, get_temp_tokens_for_user, login_user_oauth, get_refresh_token
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -194,3 +195,10 @@ def login_oauth(request):
 	if not CustomUser.objects.filter(oauth_id=id).exists():
 		return create_user_oauth(data)
 	return login_user_oauth(id)
+
+@api_view(['GET'])
+@permission_classes([IsNormalToken])
+def get_user_info(request):
+	serializer = UserInfoSerializer(request.user)
+	return Response({"message": "Get user info",
+				"data": serializer.data}, status=200)

@@ -154,13 +154,17 @@
 #modal-login-dialog
 {
 	height: 80vh;
-	width: 50%;
+	width: 100%;
 	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
 }
 
 #modal-login-content
 {
 	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /* ================================================ */
@@ -170,14 +174,17 @@
 #modal-register-dialog
 {
 	height: 80vh;
-	width: 50%;
+	width: 100%;
 	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
 }
 
 #modal-register-content
 {
 	height: 100% !important;
 	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /* ================================================ */
@@ -189,11 +196,15 @@
 	height: 80vh;
 	width: 100%;
 	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
 }
 
 #modal-edit-profile-content
 {
 	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /* ================================================ */
@@ -212,6 +223,7 @@
 {
 	height: 100% !important;
 	width: 100% !important;
+	overflow: auto;
 }
 
 /* ================================================ */
@@ -248,6 +260,8 @@
 {
 	height: 100% !important;
 	width: fit-content !important;
+	overflow: auto;
+	min-height: 150px;
 }
 
 /* ================================================ */
