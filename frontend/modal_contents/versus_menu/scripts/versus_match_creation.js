@@ -190,6 +190,7 @@ async function submit1v1Guest(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
+			console.log(await fetched_data.json());//
 			errorBoxVSGuest.textContent = 'Error connecting to server.';
 			errorBoxVSGuest.style.display = 'block';
 			throw new Error("Error while creating match.");
@@ -228,7 +229,7 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
-			console.log(await fetched_data.json());
+			console.log(await fetched_data.json());//
 			errorBoxVSPlayer.textContent = 'Error connecting to server.';
 			throw new Error("Error while creating match.");
 		}
