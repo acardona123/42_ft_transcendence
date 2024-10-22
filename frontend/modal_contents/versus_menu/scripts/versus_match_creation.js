@@ -159,12 +159,12 @@ function handle1v1FormSubmission() {
 			if (CheckPlayer2Data() === false)
 				return ;
 
-			const player2_id = document.getElementById('player2Pseudo').value || null;
+			const player2_username = document.getElementById('player2Pseudo').value || null;
 			const player2_pin = document.getElementById('player2Pin').value || null;
 
 			const matchData = {
 				game : (global_game_modal==="FLAPPYBIRD") ? "FB" : "PG",
-				player2_id,
+				player2_username,
 				player2_pin,
 				max_score,
 				max_duration,
@@ -218,11 +218,9 @@ async function submit1v1Player(matchData) {
 
 	const url = "/api/matches/new/me-player/";
 
-	console.log("fetch to /api/matches/new/me-player");
-	console.log(matchData);
-
 	try
 	{
+		console.log(matchData)
 		let fetched_data = await fetch_with_token(url, {
 			method: 'POST',
 			headers: {'content-type': 'application/json'},
@@ -230,6 +228,8 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
+			console.log("Error:")
+			console.log(await fetched_data.json())
 			errorBoxVSPlayer.textContent = 'Error connecting to server.';
 			throw new Error("Error while creating match.");
 		}
