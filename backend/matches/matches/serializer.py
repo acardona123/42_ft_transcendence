@@ -101,7 +101,7 @@ class MatchDisplaySerializer(DynamicFieldsModelSerializer):
 	def get_usernames_request(self, users_id):
 		usernames_request = get_usernames_request(users_id)
 		if usernames_request.get("status") != 200:
-			raise BadRequest(f"${usernames_request.get("body").get("message", "internal error")}")
+			raise BadRequest(f"{usernames_request.get("body").get("message", "internal error")}")
 		usernames = usernames_request.get("body").get("data")
 		return usernames
 
