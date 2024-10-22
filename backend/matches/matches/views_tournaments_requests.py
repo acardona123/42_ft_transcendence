@@ -10,7 +10,7 @@ import requests
 from django.conf import settings
 
 def get_is_host_of_tournament(tournament_id, user_id):
-	url = f"{settings.TOURNAMENT_MICROSERVICE_URL}/api/private/tournaments/is_host/?host_id=${user_id}&tournament_id=${tournament_id}"
+	url = f"{settings.TOURNAMENT_MICROSERVICE_URL}/private/tournaments/is_host/?host_id=${user_id}&tournament_id=${tournament_id}"
 	response = requests.get(url)
 	status = response.status_code
 	body_content = response.json()
