@@ -55,7 +55,7 @@ async function validate_code_valid(user_code)
 			throw new Error("Error validating the code.");
 		let data = await fetched_data.json();
 		data = data.data;
-		await apply_login_user(data.refresh, data.access, username_2fa_valid);
+		await apply_login_user(data.refresh, data.access);
 		close_modal('modal-2fa-valid', undefined, false);
 		return "valid";
 	}

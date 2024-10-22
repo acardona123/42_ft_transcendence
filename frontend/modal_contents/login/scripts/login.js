@@ -1,4 +1,3 @@
-let username_2fa_valid = undefined;
 const DEFAULT_PP_PATH = "/media/profile_picture/default.jpg";
 
 function change_form_behavior_for_SPA(form, new_function)
@@ -16,17 +15,15 @@ function send_user_to_2fa()
 	open_modal("modal-2fa-valid", init_modal_2fa_valid_bf, init_modal_2fa_valid_af, false);
 }
 
-async function apply_login_user(refresh, access, username)
+async function apply_login_user(refresh, access)
 {
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 
 	await Promise.all([
 		get_friend_list(),
-		create_user_infos(username)
+		create_user_infos()
 	]);
-	button_dfa.disabled = false;
-	is_btn_on_enable ? set_to_enable_2fa_button() : set_to_disable_2fa_button();
 	update_ui();
 }
 
@@ -125,13 +122,11 @@ async function send_form_login(form)
 		data = data.data;
 		if (data['2fa_status'] == "off")
 		{
-			await apply_login_user(data.refresh, data.access, body.username);
-			username_2fa_valid = undefined;
+			await apply_login_user(data.refresh, data.access);
 			close_modal("modal-login", undefined, false);
 		}
 		else
 		{
-			username_2fa_valid = body.username;
 			sessionStorage.setItem("access_token", data.access);
 			send_user_to_2fa(data.access);
 		}
@@ -182,9 +177,7 @@ async function auto_login()
 		return ;
 	try
 	{
-		let user_infos = await get_user_informations();
-		await apply_login_user(refresh_token, access_token, user_infos.username);
-		user_infos.is_42 = true;
+		await apply_login_user(refresh_token, access_token);
 	}
 	catch (error)
 	{
