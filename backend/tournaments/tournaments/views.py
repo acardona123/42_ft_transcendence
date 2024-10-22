@@ -11,6 +11,7 @@ import random
 import tournaments.doc as doc
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from django.contrib.auth.models import AnonymousUser
 
 def get_tournament_id(request, query_string, status):
 	if query_string:
@@ -22,7 +23,7 @@ def get_tournament_id(request, query_string, status):
 					status=400)
 	try:
 		tournament = Tournament.objects.get(id=tournament_id)
-		if tournament.host != request.user.id:
+		if not isinstance(request.user, AnonymousUser) and tournament.host != request.user.id:
 			raise
 		if tournament.status != status:
 			raise
@@ -310,7 +311,6 @@ def start_match_view(request):
 
 
 @swagger_auto_schema(method='post',
-	manual_parameters=[doc.JWT_TOKEN],
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		required=['tournament_id', 'score1', 'score2'],
@@ -328,7 +328,6 @@ def start_match_view(request):
 		405: doc.DOC_ERROR_METHOD_NOT_ALLOWED
 	})
 @api_view(['POST'])
-@permission_classes([IsNormalToken])
 def match_finished(request):
 	score1 = request.data.get('score1', None)
 	score2 = request.data.get('score2', None)
@@ -354,3 +353,26 @@ def match_finished(request):
 	tournament.next_match += 1
 	tournament.save()
 	return Response({'message': doc.MSG_MATCH_FINISH}, status=200)
+
+@swagger_auto_schema(method='get',
+	manual_parameters=[doc.TOURNAMENT, doc.HOST],
+	responses={
+		200: doc.DOC_PLAYER_HOST,
+		'400(0)': doc.DOC_ERROR_HOST_REQUIRED,
+		'400(1)': doc.DOC_ERROR_TRN_ID,
+		401: doc.DOC_ERROR_UNAUTHORIZED,
+		405: doc.DOC_ERROR_METHOD_NOT_ALLOWED
+	})
+@api_view(['GET'])
+def check_host_tournament(request):
+	host_id = request.query_params.get('host_id', None)
+	if host_id is None:
+		return Response({"message": doc.MSG_ERROR_REQUIRED}, status=400)
+	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
+	if isinstance(tournament, Response):
+		return tournament
+	if tournament.host != host_id:
+		return Response({"message": doc.MSG_PLAYER_NOT_HOST,
+					"data": {"is_host": False}}, status=200)
+	return Response({"message": doc.MSG_PLAYER_HOST,
+					"data": {"is_host": True}}, status=200)
