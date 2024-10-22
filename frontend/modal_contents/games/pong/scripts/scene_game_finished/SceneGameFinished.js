@@ -157,7 +157,6 @@ class pg_SceneGameFinished extends Phaser.Scene{
 			#goBackHome(){
 				stop_current_game();
 				close_modal('modal-game', reset_game);
-				//TODO
 			}
 			#continueTournament(){
 				stop_current_game();
