@@ -21,6 +21,8 @@ async function get_history_from_DB()
 			throw new Error(`${fetched_data.status}`);
 		let data = await fetched_data.json();
 		convert_dates(data.matches);
+		if (data.matches.length == 0)
+			return undefined;
 		return data.matches;
 	}
 	catch (error)
@@ -236,20 +238,26 @@ function add_element_to_history(history_elem, id)
 
 function update_history_list(tab_name)
 {
+	let nb_matches = 0;
 	if (history_list != undefined)
 	{
 		date_now = Date.now();
 		for (let i = 0; i < history_list.length; i++)
 		{
 			if (tab_name == "Pong" && history_list[i].game == "PG")
+			{
 				add_element_to_history(history_list[i], i);
+				nb_matches++;
+			}
 			else if (tab_name == "Flappy fish" && history_list[i].game == "FB")
+			{
 				add_element_to_history(history_list[i], i);
+				nb_matches++;
+			}
 		}
 	}
-			
 	const _history_list = document.getElementById("history_list");
-	if (_history_list.children.length == 0 && history_list == undefined) // display message if the history is empty
+	if ((_history_list.children.length == 0 && history_list == undefined) || nb_matches == 0) // display message if the history is empty
 	{
 		const no_history_message = document.createElement('p');
 		no_history_message.textContent = "There is no history to display yet."
