@@ -47,7 +47,7 @@ function on_click_popup_close()
  * Color of the popup while being hovered.
  */
 function create_popup(text, t_before_decay=2000,
-					t_after_hover=4000, hex_color="HEX_GREEN", hover_hex_color="HEX_GREEN_HOVER")
+					t_after_hover=4000, hex_color=HEX_GREEN, hover_hex_color=HEX_GREEN_HOVER)
 {
 	const popup_main = document.createElement('div');
 	popup_main.className = "popup-main-div";
@@ -60,7 +60,7 @@ function create_popup(text, t_before_decay=2000,
 
 	const popup_close = document.createElement('img');
 	popup_close.className = "popup-close";
-	popup_close.src = "../../../img/remove_friend.png";
+	popup_close.src = "main_srcs/img/remove_friend.png";
 	popup_close.onclick = on_click_popup_close;
 	popup_main.appendChild(popup_close);
 
