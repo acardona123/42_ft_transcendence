@@ -31,7 +31,6 @@ function disable_buttons_play() {
 	const buttons = document.querySelectorAll('.btn-play');
 	buttons.forEach(button => {
 		button.disabled = true;
-		button.removeAttribute('autofocus');
 	});
 }
 
@@ -40,7 +39,6 @@ function enable_buttons_play_event_offcanvas() {
 		const buttons = document.querySelectorAll('.btn-play');
 		buttons.forEach(button => {
 			button.disabled = false;
-			button.focus();
 		})
 	});
 
