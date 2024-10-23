@@ -41,7 +41,6 @@ function enable_buttons_play()
 	const buttons = document.querySelectorAll('.btn-play');
 	buttons.forEach(button => {
 		button.disabled = false;
-		button.focus();
 	});
 }
 
