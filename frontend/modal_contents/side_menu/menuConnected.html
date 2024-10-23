@@ -1,9 +1,18 @@
 <div id="smc-main-div" tabindex="-1">
-	<div id="smc-short-profile-div">
-		<h4 id="smc-user-name" class="user-name"></h4>
-		<div id="smc-connected-pp-div">
-			<img id="smc-connected-pp" class="userImage">
-			<span id="smc-connection-badge"></span>
+	<div>
+		<div id="smc-short-profile-div">
+			<h4 id="smc-user-name" class="user-name"></h4>
+			<div id="smc-connected-pp-div">
+				<img id="smc-connected-pp" class="userImage">
+				<span id="smc-connection-badge"></span>
+			</div>
+		</div>
+		<div id="smc-pin-div">
+			<p id="smc-pin-header">Pin</p>
+			<input id="smc-pin-text" type="password" value="5151" readonly>
+			<img id="smc-pin-eye-img" src="modal_contents/side_menu/img/pin-eye-open.png"
+				onmousedown="on_eye_pin_click_down(event)" onmouseup="on_eye_pin_click_up(event)"
+				onmouseleave="on_eye_pin_click_up(event)">
 		</div>
 	</div>
 

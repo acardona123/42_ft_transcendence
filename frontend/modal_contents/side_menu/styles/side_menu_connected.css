@@ -45,6 +45,35 @@
 	background-color: lawngreen;
 }
 
+#smc-pin-div
+{
+	display: flex;
+	width: 100%;
+}
+
+#smc-pin-header
+{
+	font-size: 2em;
+	text-align: center;
+	margin: 0px;
+}
+
+#smc-pin-text
+{
+	font-size: 2em;
+	margin-left: 10px;
+	padding: 0px;
+	border: none;
+	width: 3em;
+	text-align: center;
+}
+
+#smc-pin-eye-img
+{
+	height: 20px;
+	align-self: center;
+}
+
 #smc-buttons-div
 {
 	display: flex;
