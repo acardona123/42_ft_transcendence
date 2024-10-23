@@ -32,7 +32,6 @@ function on_click_tab_history(elem)
 {
 	if (clicked_element == elem)
 		return;
-	
 	// unload all other tabs
 	const tabs_history = document.getElementById("prof-tabs-history");
 	for (child of tabs_history.children)
