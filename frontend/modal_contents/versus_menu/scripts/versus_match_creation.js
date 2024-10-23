@@ -292,7 +292,6 @@ function initMatchVersusCreation() {
 document.addEventListener("onModalsLoaded", function()
 {
 	updateSlider("1v1MatchForm");
-	update_user_name();
 
 	// document.addEventListener('keydown', (event) => {
 	// 	if (event.key === "Escape") {

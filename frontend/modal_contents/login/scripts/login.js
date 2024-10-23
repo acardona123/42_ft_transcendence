@@ -172,11 +172,17 @@ async function auto_login_42()
 
 async function auto_login()
 {
+	// try to connect with 42 after 42 redirection
 	await auto_login_42();
+	// refresh token are set either by 42 or were still in local storage (reload)
 	const refresh_token = sessionStorage.getItem("refresh_token");
 	const access_token = sessionStorage.getItem("access_token");
+	// no 42 redirect or refresh, nobody to auto login
 	if (!refresh_token || !access_token)
+	{
+		update_ui();
 		return ;
+	}
 	try
 	{
 		await apply_login_user(refresh_token, access_token);
@@ -206,8 +212,5 @@ document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");
 	change_form_behavior_for_SPA(form, send_form_login);
-	auto_login().then(() => 
-	{
-		update_ui();
-	});
+	auto_login();
 });
