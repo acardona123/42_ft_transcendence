@@ -81,15 +81,25 @@ function error_update_user_from_back(data)
 
 async function get_user_informations()
 {
-	const url = "https://localhost:8443/api/users/update/user/";
-	let fetched_data = await fetch_with_token(url, {
+	const url = "https://localhost:8443/api/users/info/";
+
+	let fetched_data = await fetch_with_token(url, 
+	{
 		method: 'GET',
 		headers: {}
 	});
 	if (!fetched_data.ok)
-		throw new Error("Error retrieving user informations.");
+		throw new Error("Error retrieving user infos");
 	let data = await fetched_data.json();
-	return data.data;
+	data = data.data;
+	global_user_infos =
+	{
+		username : data.username,
+		profile_picture : data.profile_picture,
+		pin : data.pin,
+		is_oauth : data.is_oauth
+	};
+	return data;
 }
 
 function clear_edp_user_inputs()
@@ -101,30 +111,37 @@ function clear_edp_user_inputs()
 		edp_placeholders_user[field].value = "";
 		edp_placeholders_user[field].disabled = true;
 	}
-	get_user_informations()
-		.then((infos) => {
-			save_button.disabled = false;
-			for (field in infos)
-			{
-				edp_placeholders_user[field].value = infos[field];
-				edp_placeholders_user[field].disabled = false;
-			}
-		}).catch(() => {
-			create_popup("Error retrieving user informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		});
-	if (!global_user_infos?.is_oauth)
+}
+	
+async function edp_update_user_info()
+{
+	const save_button = document.getElementById("edp-save-informations-button");
+	try
 	{
-		get_2fa_state()
-			.then ((is_enable) => {
-				is_enable ? set_enable_2fa_button() : set_disable_2fa_button();
-				is_btn_enable = is_enable;
-			});
-		document.getElementById("edp-button-submit-pass").disabled = false;
+		let infos = await get_user_informations();
+		save_button.disabled = false;
+		for (field in edp_placeholders_user)
+		{
+			if (infos[field] == undefined)
+				continue;
+			edp_placeholders_user[field].value = infos[field];
+			edp_placeholders_user[field].disabled = false;
+		}
+		if (infos.is_oauth)
+		{
+			document.getElementById("edp-button-submit-pass").disabled = true;
+			set_oauth_2fa_button()
+		}
+		else
+		{
+			infos.is_2fa_enable ? set_enable_2fa_button() : set_disable_2fa_button();
+			is_btn_enable = infos.is_2fa_enable;
+			document.getElementById("edp-button-submit-pass").disabled = false;
+		}
 	}
-	else
+	catch(error)
 	{
-		document.getElementById("edp-button-submit-pass").disabled = true;
-		set_waiting_initial_fetch();
+		create_popup("Error retrieving user informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 

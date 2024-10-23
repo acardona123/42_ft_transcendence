@@ -63,7 +63,6 @@ function get_score(score_left, score_right, user_against)
 	mid_text.className = "prof-score-mid";
 
 	score.appendChild(mid_text);
-	console.log('update history')
 
 	const span_right = document.createElement('span');
 	span_right.className = "prof-score-right";
