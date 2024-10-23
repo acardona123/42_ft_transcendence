@@ -17,8 +17,11 @@ async function refresh_token()
 	});
 	if (!fetched_data.ok)
 	{
-		logout_user_no_back();
-		create_popup("Session expired.", 10000, 4000, HEX_RED, HEX_RED_HOVER);
+		if (is_connected())
+		{
+			logout_user_no_back();
+			create_popup("Session expired.", 10000, 4000, HEX_RED, HEX_RED_HOVER);
+		}
 		throw new Error("Session expired.");
 	}
 	let data = await fetched_data.json();
