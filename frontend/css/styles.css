@@ -69,18 +69,19 @@ body, html {
 
 .home-photo-profile {
 	position: absolute;
-	top: 0.5%;
-	right: 0.5%;
+	top: 0;
+	right: 0;
+	margin: 10px;
+	width: 15vh;
 }
 
 #homeUserImage {
 	position: relative;
-	width: 17vh;
-	height: 17vh;
-	min-width: 100px;
-	min-height: 100px;
 	cursor: pointer;
+	width: 100%;
+	object-fit: cover;
 	border-radius: 50%;
+	aspect-ratio: 1/1;
 }
 
 /* ------------------------------------------------ */
