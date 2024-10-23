@@ -37,7 +37,6 @@ function empty_globals()
 	lastReplacedElemHover = undefined;
 	friend_popup_just_popped = false;
 	data_requests = undefined;
-	clicked_element = undefined;
 	history_list = undefined;
 	
 	playerGrid = undefined;

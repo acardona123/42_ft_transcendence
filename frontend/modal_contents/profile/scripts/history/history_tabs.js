@@ -1,5 +1,3 @@
-let clicked_element = undefined;
-
 function set_border_hider(elem)
 {
 	const hider = document.createElement('div');
@@ -30,8 +28,6 @@ function load_elements(elem)
 
 function on_click_tab_history(elem)
 {
-	if (clicked_element == elem)
-		return;
 	// unload all other tabs
 	const tabs_history = document.getElementById("prof-tabs-history");
 	for (child of tabs_history.children)
@@ -41,8 +37,7 @@ function on_click_tab_history(elem)
 	}
 	unload_elements();
 	// load tab
-	clicked_element = elem;
-	load_elements(clicked_element);
+	load_elements(elem);
 
 	elem.style.backgroundColor = '#755632';
 

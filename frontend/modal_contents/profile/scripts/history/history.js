@@ -27,7 +27,6 @@ async function get_history_from_DB()
 	}
 	catch (error)
 	{
-		console.log(error)
 		create_popup("Retrieving history failed.",
 			4000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
@@ -64,7 +63,8 @@ function get_score(score_left, score_right, user_against)
 	mid_text.className = "prof-score-mid";
 
 	score.appendChild(mid_text);
-	
+	console.log('update history')
+
 	const span_right = document.createElement('span');
 	span_right.className = "prof-score-right";
 	span_right.textContent = format(score_right.toString())
