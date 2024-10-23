@@ -24,6 +24,8 @@ async function apply_login_user(refresh, access)
 		get_friend_list(),
 		create_user_infos()
 	]);
+	if (global_user_infos.is_oauth === true)
+		set_oauth_2fa_button();
 	update_ui();
 }
 

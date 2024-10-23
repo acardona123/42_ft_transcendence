@@ -104,12 +104,10 @@ function clear_edp_user_inputs()
 	get_user_informations()
 		.then((infos) => {
 			save_button.disabled = false;
-			let i = 0;
 			for (field in infos)
 			{
 				edp_placeholders_user[field].value = infos[field];
 				edp_placeholders_user[field].disabled = false;
-				i++;
 			}
 		}).catch(() => {
 			create_popup("Error retrieving user informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
@@ -118,8 +116,8 @@ function clear_edp_user_inputs()
 	{
 		get_2fa_state()
 			.then ((is_enable) => {
-				is_enable ? set_to_disable_2fa_button() : set_to_enable_2fa_button();
-				is_btn_on_enable = !is_enable;
+				is_enable ? set_enable_2fa_button() : set_disable_2fa_button();
+				is_btn_enable = is_enable;
 			});
 		document.getElementById("edp-button-submit-pass").disabled = false;
 	}
