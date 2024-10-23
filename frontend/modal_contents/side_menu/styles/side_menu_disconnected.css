@@ -1,0 +1,56 @@
+#smd-main-div
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	padding: 10px;
+}
+
+#smd-short-profile-div
+{
+	display: flex;
+	width: 100%;
+	height: fit-content;
+}
+
+#smd-user-guest
+{
+	width: 60%;
+	padding: 10px;
+	margin: 0;
+}
+
+#smd-disconnected-pp-div
+{
+	position: relative;
+	width: 40%;
+}
+
+#smd-disconnected-pp
+{
+	width: 100%;
+	position: relative;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+}
+
+#smd-buttons-div
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#smd-login-button
+{
+	position: relative;
+	width: 85%;
+}
+
+#smd-register-button
+{
+	position: relative;
+	width: 85%;
+}
