@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 	'vault',
 	'rest_framework',
 	'drf_yasg',
-	'stats'
+	'stats',
 ]
 
 MIDDLEWARE = [

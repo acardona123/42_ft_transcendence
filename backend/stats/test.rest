@@ -1,13 +1,18 @@
 ### --- List request ---
 GET /api/stats/request/ HTTP/1.1
-Host: localhost:8443
+Host: localhost:8006
 
 ### --- Send request ---
-POST /api/stats/request/send/ HTTP/1.1
-Host: localhost:8443
+POST /api/stats/private/get_data_stats/ HTTP/1.1
+Host: localhost:8006
 Content-Type: application/json
 
-{"name": "coucou"}
+{
+	"player_id1" : "1",
+	"player_id2" : "2",
+	"game" : "flappy",
+	"winner" : "2"
+}
 
 ### --- Accept request ---
 POST /api/stats/request/5/ HTTP/1.1
