@@ -1,7 +1,21 @@
-function update_side_menu()
+function reset_to_connect_state_side_menu()
 {
 	document.getElementById('menuProfile').innerHTML =
 		is_connected() ? connected_sm_html : disconnected_sm_html;
+}
+
+function on_eye_pin_click_down(event)
+{
+	event.preventDefault();
+	event.target.src = "./modal_contents/side_menu/img/pin-eye-close.png";
+	document.getElementById("smc-pin-text").type = "text";
+}
+
+function on_eye_pin_click_up(event)
+{
+	event.preventDefault();
+	event.target.src = "./modal_contents/side_menu/img/pin-eye-open.png";
+	document.getElementById("smc-pin-text").type = "password";
 }
 
 let disconnected_sm_html = undefined;

@@ -182,7 +182,9 @@ async function submit_user_form(form)
 		sessionStorage.setItem("refresh_token", data.refresh);
 		sessionStorage.setItem("access_token", data.access);
 		global_user_infos.username = data.username;
-		updateUserName();
+		global_user_infos.pin = data.pin;
+		update_user_name();
+		update_pin();
 		return ;
 	}
 	catch (error)
