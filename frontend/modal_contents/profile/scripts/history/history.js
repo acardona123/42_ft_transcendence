@@ -13,17 +13,21 @@ async function get_history_from_DB()
 	
 	try
 	{
-		let data_fetched = await fetch(url);
-		if (!data_fetched.ok)
-			throw new Error(`${data_fetched.status}`);
-		let data = await data_fetched.json();
+		let fetched_data = await fetch_with_token(url, {
+			method : 'GET',
+			headers: {}
+		});
+		if (!fetched_data.ok)
+			throw new Error(`${fetched_data.status}`);
+		let data = await fetched_data.json();
 		convert_dates(data.matches);
 		return data.matches;
 	}
 	catch (error)
 	{
+		console.log(error)
 		create_popup("Retrieving history failed.",
-			2000, 4000,
+			4000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
 	return undefined;
@@ -197,20 +201,20 @@ function get_history_elem_div(history_elem)
 	if (history_elem.game == "PG")
 	{
 		if (victory_state == "victory")
-			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_win.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/pong_background_history_img_win.png)";
 		else if (victory_state == "defeat")
-			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_loose.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/pong_background_history_img_loose.png)";
 		else
-			history_elem_div.style.backgroundImage = "url(../../../img/pong_background_history_img_tie.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/pong_background_history_img_tie.png)";
 	}
 	else if (history_elem.game == "FB")
 	{
 		if (victory_state == "victory")
-			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_win.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/flappy_background_history_win.png)";
 		else if (victory_state == "defeat")
-			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_loose.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/flappy_background_history_loose.png)";
 		else
-			history_elem_div.style.backgroundImage = "url(../../../img/flappy_background_history_tie.png)";
+			history_elem_div.style.backgroundImage = "url(/modal_contents/profile/img/flappy_background_history_tie.png)";
 	}
 	const text_victory = get_victory(victory_state);
 	const text_score = get_score(history_elem.main_player_score, history_elem.opponent_score, history_elem.opponent_username);
@@ -261,10 +265,7 @@ function update_history_list(tab_name)
 
 let history_list;
 
-document.addEventListener("onModalsLoaded", function()
+async function setup_history_matches_list()
 {
-	(async () => 
-	{
-		history_list = await get_history_from_DB();
-	})()
-});
+	history_list = await get_history_from_DB();
+}
