@@ -1,7 +1,7 @@
 from django.db import models
 
-class statistics(models.Model):
-	id = models.IntegerField
+class Statistics(models.Model):
+	player_id = models.IntegerField(null=True)
 	total_flappy_matches = models.IntegerField(default=0)
 	total_pong_matches = models.IntegerField(default=0)
 	total_flappy_victory = models.IntegerField(default=0)
@@ -16,4 +16,4 @@ class statistics(models.Model):
 		return (self.total_pong_victory / self.total_pong_matches)
 
 	def __str__(self):
-		return f"Number of victory flappy and pong ({self.total_flappy_victory}, {self.total_pong_victory}), and total matches played ({self.total_flappy_matches}, {self.total_pong_matches})"
+		return f"The id is {self.id}  Number of victory flappy and pong ({self.total_flappy_victory}, {self.total_pong_victory}), and total matches played ({self.total_flappy_matches}, {self.total_pong_matches})"

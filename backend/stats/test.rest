@@ -1,9 +1,14 @@
-### --- List request ---
-GET /api/stats/request/ HTTP/1.1
+### --- Initalize stats of a user ---
+POST /api/stats/private/create_statistics_user/ HTTP/1.1
 Host: localhost:8006
+Content-Type: application/json
 
-### --- Send request ---
-POST /api/stats/private/get_data_stats/ HTTP/1.1
+{
+	"player_id" : "2"
+}
+
+### --- retrieve data ---
+POST /api/stats/private/add_data_stats/ HTTP/1.1
 Host: localhost:8006
 Content-Type: application/json
 
@@ -13,19 +18,3 @@ Content-Type: application/json
 	"game" : "flappy",
 	"winner" : "2"
 }
-
-### --- Accept request ---
-POST /api/stats/request/5/ HTTP/1.1
-Host: localhost:8443
-
-### --- Reject request ---
-DELETE /api/stats/request/7/ HTTP/1.1
-Host: localhost:8443
-
-### --- List Friend ---
-GET /api/stats/ HTTP/1.1
-Host: localhost:8443
-
-### --- Remove Friend ---
-DELETE /api/stats/remove/9/ HTTP/1.1
-Host: localhost:8443
