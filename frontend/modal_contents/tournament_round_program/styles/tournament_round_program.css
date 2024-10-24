@@ -1,0 +1,39 @@
+#modal-tournament_round_program{
+	scroll-behavior: smooth;
+}
+
+#trp-title{
+	text-align: center;
+	width: 100%
+}
+
+#trp-main-div{
+	width:100%;
+	max-width: 100%;
+
+	text-align: center;
+}
+
+.trp-match-elem{
+	color: red;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: auto;
+	aspect-ratio: 8/1;
+	margin: 0 10%;
+}
+
+#no_round_matches_message {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.trp-waiting-player-elem{
+	color: green;
+}
+
+.trp-no-waiting-player-elem{
+	color: blue;
+}
