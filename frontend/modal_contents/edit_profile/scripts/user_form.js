@@ -122,7 +122,7 @@ async function edp_update_user_info()
 		save_button.disabled = false;
 		for (field in edp_placeholders_user)
 		{
-			if (infos[field] == undefined)
+			if (infos[field] === undefined)
 				continue;
 			edp_placeholders_user[field].value = infos[field];
 			edp_placeholders_user[field].disabled = false;
