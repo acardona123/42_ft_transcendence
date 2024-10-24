@@ -12,9 +12,16 @@ function update_pin()
 		document.getElementById("smc-pin-text").value = global_user_infos.pin;
 }
 
-function update_ui()
+function update_ui_on_log_event()
 {
 	reset_to_connect_state_side_menu();
+	update_pp();
+	update_user_name();
+	update_pin();
+}
+
+function update_side_menu()
+{
 	update_pp();
 	update_user_name();
 	update_pin();

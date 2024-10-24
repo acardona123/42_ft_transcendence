@@ -114,6 +114,7 @@ async function init_modal_edit_profile()
 	clear_edp_user_error_fields(true);
 	clear_edp_pass_error_fields();
 	await edp_update_user_info();
+	update_side_menu();
 	edp_update_profile_picture();
 }
 
