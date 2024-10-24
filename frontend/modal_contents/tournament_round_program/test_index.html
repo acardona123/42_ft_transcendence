@@ -17,8 +17,11 @@
 				<div id="modal-tournament-round-program-content" class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header" id="trp-header">
-						<h1 class="modal-title"  aria-describedby="modal title" id="trp-title">Tournament round matches</h1>
-					</div>
+						<h1 class="modal-title"  aria-describedby="modal title" id="trp-title">
+							Tournament round matches
+						</h1>
+						<button type="button" class="btn btn-start" data-bs-dismiss="modal" style="background-color: red">Close, BUTTON TO DELL</button>
+						</div>
 					<!-- Modal body -->
 					<div class="modal-body" aria-describedby="content">
 						<div id="trp-main-div">
@@ -29,17 +32,15 @@
 							<div  id ="trp-waiting-player" aria-describedby="waiting player">
 								<h2>Lonely player:</h2>
 								<div id="trp-waiting-player-desctiption"></div>
-								
 							</div>
 						</div>
 					</div>
-			
+					
 					<!-- Modal footer -->
 					<div class="modal-footer" id="trp-footer">
-						<button onclick="todo()">Lets play</button>
-					<button type="button" class="btn btn-start" data-bs-dismiss="modal">Close</button>
+						
+						<button class="button-galaxy mm-button-play btn-play" onclick="tournament_start_round()">Lets play</button>
 					</div>
-			
 				</div>
 			</div>
 		</div>
@@ -47,6 +48,9 @@
 
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="../../main_srcs/tournaments.js"></script>
+		<script src="./scripts/update_round_program_modal.js"></script>
+		<script src="./scripts/start_round_matches.js"></script>
 		<script src="./scripts/tournament_round_program.js"></script>
-	</body>
+	</body>	
 </html>
