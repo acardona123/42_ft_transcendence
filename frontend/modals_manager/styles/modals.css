@@ -17,37 +17,6 @@
 
 /* ================================================ */
 
-/* === MODAL SMALL === */
-
-/* .custom-small-dialog {
-	display: flex;
-	align-items: flex-end;
-	justify-content: center;
-
-	padding: 8px;
-	border-radius: 20px !important;
-
-	height: 40vh !important;
-	width: 50vw !important;
-
-	min-width: fit-content !important;
-
-	max-width: none !important;
-	max-height: none !important;
-
-}
-
-.custom-small-content {
-	height: 100%;
-	width: 100%;
-	padding: 10px;
-	border-radius: 10px !important;
-	overflow-clip-margin: scroll;
-	overflow-x: hidden;
-} */
-
-/* ================================================ */
-
 /* === MODAL PLAY === */
 
 #modal-play-dialog {
@@ -113,7 +82,7 @@
 
 #modal-tournament-creation-dialog {
 	height: 85vh !important;
-	width: 65vw !important;
+	width: 90vw !important;
 
 	--bs-modal-margin: 7.5vh 0 0 0;
 }
