@@ -20,13 +20,10 @@ async function apply_login_user(refresh, access)
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 
-	await Promise.all([
-		get_friend_list(),
-		create_user_infos()
-	]);
+	await create_user_infos();
 	if (global_user_infos.is_oauth === true)
 		set_oauth_2fa_button();
-	update_ui();
+	update_ui_on_log_event();
 }
 
 function empty_globals()
@@ -62,7 +59,7 @@ function logout_user_no_back()
 	if (modal_on_screen)
 		close_modal(modal_on_screen, undefined, false); // TODO: edge case game
 	empty_globals();
-	update_ui();
+	update_ui_on_log_event();
 }
 
 async function logout_user()
@@ -181,7 +178,7 @@ async function auto_login()
 	// no 42 redirect or refresh, nobody to auto login
 	if (!refresh_token || !access_token)
 	{
-		update_ui();
+		update_ui_on_log_event();
 		return ;
 	}
 	try
