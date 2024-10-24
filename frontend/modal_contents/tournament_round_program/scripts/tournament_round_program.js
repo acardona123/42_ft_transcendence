@@ -1,4 +1,4 @@
-const tournament_modal_id = "modal-tournament_round_program"
+const tournament_modal_id = "modal-tournament-round-program"
 const tournament_match_list_id = "trp-round-matches-list"
 const tournament_waiting_player_id = "trp-waiting-player-desctiption"
 
@@ -33,7 +33,7 @@ async function get_round_matches_from_DB(tournament_id)
 
 async function dummy_get_round_matches_from_DB (tournament_id){
 	if (tournament_id == 0){ //one waiting player
-		return [["player1","player2"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player5"]];
+		return [["player0123456789","player0123456789"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player5"]];
 	} else {//no player wainting during the round
 		return [["player1","player2"],["player3","player4"]];
 	}
@@ -45,19 +45,26 @@ let new_matches_list = [];
 let new_waiting_player_elem = undefined;
 let new_round_number_elem = undefined;
 
-function get_match_description(match){
-	const match_description = document.createElement('p');
-	match_description.textContent = `${match[0]} vs ${match[1]}`;
-	return match_description;
-}
-
 function add_match_to_updated_list(match){
 
 	let new_match_div = document.createElement('div');
 	new_match_div.className = "trp-match-elem"
 
-	const match_description = get_match_description(match);
-	new_match_div.appendChild(match_description);
+	const span_left = document.createElement('span');
+	span_left.className = "trp-match-player1";
+	span_left.textContent = match[0];
+	new_match_div.appendChild(span_left);
+
+	const mid_text = document.createElement('p');
+	mid_text.textContent = " vs ";
+	mid_text.className = "trp-match-mid";
+	new_match_div.appendChild(mid_text);
+
+	const span_right = document.createElement('span');
+	span_right.className = "trp-match-player2";
+	span_right.textContent = match[1];
+	new_match_div.appendChild(span_right);
+
 	new_matches_list.push(new_match_div);
 }
 

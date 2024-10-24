@@ -6,37 +6,36 @@
 		<title>test modal</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<link href="./styles/tournament_round_program.css" rel="stylesheet">
+		<link href="../../modals_manager/styles/modals.css" rel="stylesheet">
 	</head>
 	<body>
 		<button onclick="open_modal_tournament_round_program(0)">Open modal with waiter</button>
 		<button onclick="open_modal_tournament_round_program(1)">Open modal without waiter</button>
 
-		<div class="modal fade modal-dialog-overwrite-size" id="modal-tournament_round_program" tabindex="-1">
-			<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-				<div class="modal-content">
-			
+		<div class="modal" id="modal-tournament-round-program" tabindex="-1">
+			<div id="modal-tournament-round-program-dialog" class="modal-dialog modal-dialog-scrollable modal-dialog-overwrite-size">
+				<div id="modal-tournament-round-program-content" class="modal-content">
 					<!-- Modal Header -->
-					<div class="modal-header">
+					<div class="modal-header" id="trp-header">
 						<h1 class="modal-title"  aria-describedby="modal title" id="trp-title">Tournament round matches</h1>
 					</div>
-			
 					<!-- Modal body -->
 					<div class="modal-body" aria-describedby="content">
-					<div id="trp-main-div">
-						<div id = ="trp-round-matches" aria-describedby="matches">
-							<h2>Matches program:</h2>
-							<div id="trp-round-matches-list"></div>
+						<div id="trp-main-div">
+							<div id = "trp-round-matches" aria-describedby="matches">
+								<h2>Matches program:</h2>
+								<div id="trp-round-matches-list"></div>
+							</div>
+							<div  id ="trp-waiting-player" aria-describedby="waiting player">
+								<h2>Lonely player:</h2>
+								<div id="trp-waiting-player-desctiption"></div>
+								
+							</div>
 						</div>
-						<div  id ="trp-waiting-player" aria-describedby="waiting player">
-							<h2>Lonely player</h2>
-							<div id="trp-waiting-player-desctiption"></div>
-							
-						</div>
-					</div>
 					</div>
 			
 					<!-- Modal footer -->
-					<div class="modal-footer">
+					<div class="modal-footer" id="trp-footer">
 						<button onclick="todo()">Lets play</button>
 					<button type="button" class="btn btn-start" data-bs-dismiss="modal">Close</button>
 					</div>
