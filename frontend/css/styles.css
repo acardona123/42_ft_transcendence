@@ -67,23 +67,6 @@ body, html {
     border-radius: 50%;
 }
 
-.home-photo-profile {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 10px;
-	width: 15vh;
-}
-
-#homeUserImage {
-	position: relative;
-	cursor: pointer;
-	width: 100%;
-	object-fit: cover;
-	border-radius: 50%;
-	aspect-ratio: 1/1;
-}
-
 /* ------------------------------------------------ */
 
 /* PLAY MENU */
