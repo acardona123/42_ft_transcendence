@@ -235,7 +235,7 @@ def create_match(tournament, players):
 	players2.is_playing = True
 	players2.position = 2
 	players2.save()
-	url = settings.MATCHES_MICROSERVICE_URL+"/private_api/matches/new_match_verified_id/"
+	url = settings.MATCHES_MICROSERVICE_URL+"/api/private/matches/new_match_verified_id/"
 	data = {"player1": players1.user,
 			"player2": players2.user,
 			"game": tournament.game,
