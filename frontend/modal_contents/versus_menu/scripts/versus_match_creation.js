@@ -74,12 +74,13 @@ function initBoxs() {
 	});
 
 	// Set initial settings
-	BoxVSGuest.style.opacity = 0.7;
-	BoxVSPlayer.style.opacity = 0.7;
-
+	BoxVSGuest.style.opacity = 1;
 	BoxVSGuest.classList.remove('centered', 'side');
+	BoxVSGuest.classList.add('centered');
+	VSGuestPlayButton.disabled = false;
+	
+	BoxVSPlayer.style.opacity = 0.7;
 	BoxVSPlayer.classList.remove('centered', 'side');
-	VSGuestPlayButton.disabled = true;
 	VSPlayerPlayButton.disabled = true;
 	VSPlayerInputs.forEach(input => {
 		input.classList.add('cursor-default');

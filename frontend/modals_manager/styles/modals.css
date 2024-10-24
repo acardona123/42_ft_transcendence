@@ -23,6 +23,8 @@
 	height: 80vh !important;
 	width: 60vw !important;
 
+	min-width: 600px;
+	
 	--bs-modal-margin: 10vh 0 0 0;
 }
 
@@ -32,6 +34,8 @@
 
 	border-radius: 50px !important;
 	border : 7px black solid;
+
+	overflow: auto;
 }
 
 /* ================================================ */
@@ -42,6 +46,8 @@
 	height: 60vh !important;
 	width: 50vw !important;
 
+	min-width: 600px;
+	
 	--bs-modal-margin: 20vh 0 0 0;
 }
 
@@ -53,6 +59,8 @@
 
 	border-radius: 30px !important;
 	border : 4px black solid;
+
+	overflow: auto;
 }
 
 /* ================================================ */
@@ -62,6 +70,8 @@
 #modal-versus-match-creation-dialog {
 	height: 85vh !important;
 	width: 55vw !important;
+
+	min-width: 600px;
 
 	--bs-modal-margin: 7.5vh 0 0 0;
 }
@@ -74,6 +84,8 @@
 
 	border-radius: 30px !important;
 	border : 4px black solid;
+
+	overflow: auto;
 }
 
 /* ================================================ */
@@ -83,6 +95,8 @@
 #modal-tournament-creation-dialog {
 	height: 85vh !important;
 	width: 90vw !important;
+
+	min-width: 700px;
 
 	--bs-modal-margin: 7.5vh 0 0 0;
 }
@@ -95,6 +109,8 @@
 
 	border-radius: 30px !important;
 	border : 4px black solid;
+
+	overflow: auto;
 }
 
 /* ================================================ */
