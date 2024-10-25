@@ -15,7 +15,18 @@
 	--bs-modal-padding: 0;
 }
 
-/* ================================================ */
+.modal-content-borber {
+	border-radius: 50px !important;
+	border : 6px var(--violet) solid;
+	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
+}
+
+.modal-content-baground-color-dark-violet {
+	/* background-image: url('/img/test.jpg');
+    background-repeat: no-repeat;
+    background-size: cover; */
+	background-color: var(--dark-violet) !important;
+}
 
 /* === MODAL PLAY === */
 
@@ -29,13 +40,8 @@
 }
 
 #modal-play-content {
-	height: 100% !important;
-	background-color: pink !important;
-
-	border-radius: 50px !important;
-	border : 7px black solid;
-
 	overflow: auto;
+	height: 100% !important;
 }
 
 /* ================================================ */
@@ -53,14 +59,9 @@
 
 #modal-ia-match-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
 
-	border-radius: 30px !important;
-	border : 4px black solid;
-
-	overflow: auto;
 }
 
 /* ================================================ */
@@ -78,14 +79,8 @@
 
 #modal-versus-match-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
-
-	border-radius: 30px !important;
-	border : 4px black solid;
-
-	overflow: auto;
 }
 
 /* ================================================ */
@@ -103,14 +98,8 @@
 
 #modal-tournament-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
-
-	border-radius: 30px !important;
-	border : 4px black solid;
-
-	overflow: auto;
 }
 
 /* ================================================ */
