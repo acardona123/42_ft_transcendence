@@ -45,30 +45,27 @@ body, html {
 
 /* PLAY MENU */
 
-
-
-.test-button-border {
-	width: 212px;
+.menu-play-button-border {
+	min-width: 208px;
 	height: fit-content;
-	border: 6px solid var(--violet);
-	outline: 2px solid var(--dark-purple);
+	border: 4px solid var(--dark-purple);
+	outline: 2px solid var(--violet);
 	position: relative;
 	border-radius: 100px;
 }
 
-.test-button-base {
-	width: 200px; 
+.menu-play-button-base {
+	min-width: 200px; 
 	height: fit-content;
-	background-color: var(--dark-violet);
+	background-color: var(--blue);
+	/* background: radial-gradient(circle, rgba(93,2,193,1) 0%, rgba(93,2,193,1) 0%, rgba(21,2,34,1) 100%); */
 	outline: 2px solid var(--dark-purple);
-	/* position: absolute; */
 	border-radius: 100px;
 }
 
-.test-button {
+.menu-play-button {
 	height: fit-content;
-	/* position: absolute; */
-	width: 200px; 
+	min-width: 200px; 
 	transition: 0.3s;
 	border-radius: 100px;
 	font-size: 2em;
@@ -78,19 +75,19 @@ body, html {
 	border-top-color: var(--lavender);
 	border-bottom-color: var(--pink);
 	border-right-color: var(--pink);
-	background-color: var(--blue);
+	background-color: var(--violet);
 	cursor: pointer;
-	color: var(--lavender);
+	color: var(--dark-purple);
 	padding: 20px 30px;
 	transform: translateY(-20%);
 }
 
-.test-button:hover {
+.menu-play-button:hover {
 	transition: 0.3s;
 	transform: translateY(-15%);
 }
 
-.test-button:active {
+.menu-play-button:active {
 	transition: 0.3s;
 	transform: translateY(0);
 	outline: 2px solid var(--dark-purple);
@@ -104,14 +101,20 @@ body, html {
 }
 
 .modal-play-header {
+	display:flex;
+	justify-content: center;
+	align-items: center;
 	flex-shrink: 0;
-	height: 15%;
+	height: 10%;
 }
 
 .triangle-buttons-container {
 	flex-grow: 1;
 	flex-shrink: 1;
 	flex-basis: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
 }
 
 .top-triangle {
@@ -119,7 +122,6 @@ body, html {
 	height: 10%;
 	display: flex;
 	justify-content: space-around;
-	/* margin-top: 33%; */
 }
 
 .bottom-triangle {
@@ -127,7 +129,6 @@ body, html {
 	height: 10%;
 	display: flex;
 	justify-content: space-around;
-	/* margin-bottom: 33%; */
 }
 
 /* ------------------------------------------------ */

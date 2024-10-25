@@ -22,10 +22,10 @@
 }
 
 .modal-content-baground-color-dark-violet {
-	background-image: url('/img/test.jpg');
+	/* background-image: url('/img/test.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
-	/* background-color: var(--dark-violet) !important; */
+    background-size: cover; */
+	background-color: var(--dark-violet) !important;
 }
 
 /* === MODAL PLAY === */
@@ -38,6 +38,7 @@
 }
 
 #modal-play-content {
+	overflow: auto;
 	height: 100% !important;
 }
 

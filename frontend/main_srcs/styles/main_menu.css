@@ -2,6 +2,7 @@
 	--dark-purple: #150222;
 	--dark-violet: #310454;
 	--blue: #5D02C1;
+	--medium-violet: #8C01D1;
 	--pink: #BB00E0;
 	--violet: #E08CEE;
 	--lavender: #FFDBFF;
@@ -94,6 +95,6 @@
 }
 
 #home-user-image-child:hover{
-	box-shadow: inset 3px 3px 10px 2px var(--lavender), inset -3px -3px 10px 2px var(--violet),
-		3px 3px 10px 2px var(--violet), -3px -3px 10px 2px var(--lavender);
+	box-shadow: inset 3px 3px 10px 2px var(--lavender), inset -3px -3px 10px 2px var(--pink),
+		3px 3px 10px 2px var(--pink), -3px -3px 10px 2px var(--lavender);
 }
