@@ -15,38 +15,18 @@
 	--bs-modal-padding: 0;
 }
 
-/* ================================================ */
-
-/* === MODAL SMALL === */
-
-/* .custom-small-dialog {
-	display: flex;
-	align-items: flex-end;
-	justify-content: center;
-
-	padding: 8px;
-	border-radius: 20px !important;
-
-	height: 40vh !important;
-	width: 50vw !important;
-
-	min-width: fit-content !important;
-
-	max-width: none !important;
-	max-height: none !important;
-
+.modal-content-borber {
+	border-radius: 50px !important;
+	border : 6px var(--violet) solid;
+	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
 }
 
-.custom-small-content {
-	height: 100%;
-	width: 100%;
-	padding: 10px;
-	border-radius: 10px !important;
-	overflow-clip-margin: scroll;
-	overflow-x: hidden;
-} */
-
-/* ================================================ */
+.modal-content-baground-color-dark-violet {
+	background-image: url('/img/test.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+	/* background-color: var(--dark-violet) !important; */
+}
 
 /* === MODAL PLAY === */
 
@@ -59,10 +39,6 @@
 
 #modal-play-content {
 	height: 100% !important;
-	background-color: pink !important;
-
-	border-radius: 50px !important;
-	border : 7px black solid;
 }
 
 /* ================================================ */
@@ -78,12 +54,9 @@
 
 #modal-ia-match-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
 
-	border-radius: 30px !important;
-	border : 4px black solid;
 }
 
 /* ================================================ */
@@ -99,12 +72,8 @@
 
 #modal-versus-match-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
-
-	border-radius: 30px !important;
-	border : 4px black solid;
 }
 
 /* ================================================ */
@@ -120,12 +89,8 @@
 
 #modal-tournament-creation-content {
 	height: 100% !important;
-	background-color: pink !important;
 
 	padding: 10px;
-
-	border-radius: 30px !important;
-	border : 4px black solid;
 }
 
 /* ================================================ */
