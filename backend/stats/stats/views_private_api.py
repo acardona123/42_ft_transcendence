@@ -1,5 +1,5 @@
 from .models import Statistics
-from .serializer import StatisticsSerializer
+from .serializer import StatisticsSerializer, UpdateStatisticsSerializer
 # from .views import update_statistics
 from rest_framework import status
 
@@ -34,51 +34,12 @@ def create_statistics_user(request):
 
 @api_view(['POST'])
 def generate_match_data_stats(request):
-	data = request.data
-	game = data.get("game")
-	winner = data.get("winner")
-	player_id1 = data.get("player_id1")
-	player_id2 = data.get("player_id2")
-
-	if not all([game, winner, player_id1, player_id2]):
-		return Response({"message": "Missing required fields"}, status=status.HTTP_400_BAD_REQUEST)
-
-	player1_stats =	Statistics.objects.get(player_id=player_id1)
-	player2_stats =	Statistics.objects.get(player_id=player_id2)
-
-	if not player1_stats or not player2_stats:
-		return Response({"message": "ID player doesn t exist"}, status=status.HTTP_400_BAD_REQUEST)
-	update_statistics_match(player1_stats, player2_stats, game, winner)
-
-	print(player1_stats)
-	print(player2_stats)
-	return Response({"message": "Statistics updated successfully"}, status=status.HTTP_200_OK)
-
-def update_statistics_match(player1_stats, player2_stats, game, winner):
-	if game == "flappy":
-		player1_stats.total_flappy_matches += 1
-		player2_stats.total_flappy_matches += 1
-		if winner == str(player1_stats.id):
-			player1_stats.total_flappy_victory += 1
-		elif winner == str(player2_stats.id):
-			player2_stats.total_flappy_victory += 1
-	elif game == "pong":
-		player1_stats.total_pong_matches += 1
-		player2_stats.total_pong_matches += 1
-		if winner == str(player1_stats.id):
-			player1_stats.total_pong_victory += 1
-		elif winner == str(player2_stats.id):
-			player2_stats.total_pong_victory += 1
-
-	player1_stats.save()
-	player2_stats.save()
-
-
-# @api_view(['POST'])
-# def 
-
-
-# Response({"message": MSG_ERROR_USER_ID_REQUIRED}, status=400)
-
-# return Response({'message': MSG_ID_USERNAME,
-# 			'data': {'id': user.id}}, status=200)
+	print("test0")
+	serializer = UpdateStatisticsSerializer(data=request.data)
+	print("test1")
+	if serializer.is_valid():
+		print("test2")
+		serializer.save()
+		return Response({"message": "Statistics updated successfully"}, status=status.HTTP_200_OK)
+	else:
+		return Response({"message": "Data to update statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)

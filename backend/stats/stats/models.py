@@ -17,3 +17,9 @@ class Statistics(models.Model):
 
 	def __str__(self):
 		return f"The id is {self.id}  Number of victory flappy and pong ({self.total_flappy_victory}, {self.total_pong_victory}), and total matches played ({self.total_flappy_matches}, {self.total_pong_matches})"
+	
+class UpdateStatistics(models.Model):
+	player_id1 = models.IntegerField()
+	player_id2 = models.IntegerField()
+	game = models.CharField()
+	winner = models.IntegerField()

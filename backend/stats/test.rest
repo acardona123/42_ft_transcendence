@@ -4,7 +4,7 @@ Host: localhost:8006
 Content-Type: application/json
 
 {
-	"player_id" : "2"
+	"player_id" : "1"
 }
 
 ### --- retrieve data ---
