@@ -1,16 +1,30 @@
 <div class="modal" id="modal-play" tabindex="-1">
 	<div id="modal-play-dialog" class="modal-dialog modal-dialog-overwrite-size increase">
-		<div id="modal-play-content" class="modal-content main-container">
-			<div class="header">
-				<h1 id="modal-play-menu-header-text" class="header-text bold">PLAY</h1>
-			</div>
-			<div class="triangle-buttons-container">
-				<div class="top-triangle">
-					<button id="button-play-ia" type="button" class="btn btn-triangle" onclick="open_modal('modal-ia-match-creation', initMatchIACreation, undefined, true)">Solo (IA)</button>
-					<button type="button" class="btn btn-triangle" onclick="open_modal('modal-versus-match-creation', initMatchVersusCreation, undefined, true)" >1v1</button>
+		<div id="modal-play-content" class="modal-content main-container modal-content-borber modal-content-baground-color-dark-violet">
+			<div id="modal-play-main-div">
+				<div class="modal-play-header">
+					<h1 id="modal-play-menu-header-text" class="header-text bold"></h1>
 				</div>
-				<div class="bottom-triangle">
-					<button type="button" class="btn btn-triangle" onclick="open_modal('modal-tournament-creation', initTournamentCreation, undefined, true)" >Tournament</button>
+				<div class="triangle-buttons-container">
+					<div class="top-triangle">
+						<div id="button-play-ia" class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-ia-match-creation', initMatchIACreation, undefined, true)">Solo (AI)</button>
+							</div>
+						</div>
+						<div class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-versus-match-creation', initMatchVersusCreation, undefined, true)">1v1</button>
+							</div>
+						</div>
+					</div>
+					<div class="bottom-triangle">
+						<div class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-tournament-creation', initTournamentCreation, undefined, true)">Tournament</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

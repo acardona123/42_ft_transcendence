@@ -1,29 +1,34 @@
-function set_to_disable_2fa_button()
+function set_oauth_2fa_button()
 {
-	button_dfa.textContent = "Disable";
-	button_dfa.className = "btn btn-danger";
-	button_dfa.disabled = false;
+	button_dfa.disabled = true;
+	button_dfa.classList.add('edp-button-2fa-oauth');
 }
 
-function set_to_enable_2fa_button()
+function set_enable_2fa_button()
 {
-	button_dfa.textContent = "Enable";
-	button_dfa.className = "btn btn-success";
+	button_dfa.classList.remove('edp-button-2fa-oauth');
 	button_dfa.disabled = false;
+	button_dfa.checked = true;
+}
+
+function set_disable_2fa_button()
+{
+	button_dfa.classList.remove('edp-button-2fa-oauth');
+	button_dfa.disabled = false;
+	button_dfa.checked = false;
 }
 
 function toggle_2fa_button()
 {
-	if (button_dfa.textContent == "Enable")
-		set_to_disable_2fa_button();
+	if (is_btn_enable == false)
+		set_enable_2fa_button();
 	else
-		set_to_enable_2fa_button();
+		set_disable_2fa_button();
+	is_btn_enable = !is_btn_enable
 }
 
 function set_waiting_initial_fetch()
 {
-	button_dfa.textContent = "- - - -";
-	button_dfa.className = "btn btn-secondary";
 	button_dfa.disabled = true;
 }
 
@@ -89,30 +94,29 @@ async function enable_2fa(should_enable)
 
 function send_dfa_change()
 {
-	if (is_btn_on_enable)
+	if (!is_btn_enable)
 	{
 		stop_click_on_all_page = true;
+		button_dfa.disabled = true;
 		enable_2fa(true).then(() =>
 		{
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
 		});
-		button_dfa.disabled = true;
 	}
-	else if (!is_btn_on_enable)
+	else
 	{
 		stop_click_on_all_page = true;
+		button_dfa.disabled = true;
 		enable_2fa(false).then(() =>
 		{
 			stop_click_on_all_page = false;
 			button_dfa.disabled = false;
-			is_btn_on_enable = !is_btn_on_enable;
 		});
-		button_dfa.disabled = true;
 	}
 }
 
-let is_btn_on_enable = true;
+let is_btn_enable = false;
 let button_dfa = undefined;
 
 document.addEventListener("onModalsLoaded", function()

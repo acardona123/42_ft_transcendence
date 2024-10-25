@@ -27,15 +27,6 @@ function on_click_popup_close()
 	update_all_popups_pos();
 }
 
-function add_popup_to_document_modal(popup_main)
-{
-	// modal_on_screen is not defined because i'm waiting for another branch to merge
-
-	// let modal_on_screen = document.getElementById("modal-profile"); // test
-
-	document.body.appendChild(popup_main);
-}
-
 /**
  * Create a popup on the top left corner of the viewport.
  * All times are in ms.
@@ -56,7 +47,7 @@ function add_popup_to_document_modal(popup_main)
  * Color of the popup while being hovered.
  */
 function create_popup(text, t_before_decay=2000,
-					t_after_hover=4000, hex_color="HEX_GREEN", hover_hex_color="HEX_GREEN_HOVER")
+					t_after_hover=4000, hex_color=HEX_GREEN, hover_hex_color=HEX_GREEN_HOVER)
 {
 	const popup_main = document.createElement('div');
 	popup_main.className = "popup-main-div";
@@ -69,7 +60,7 @@ function create_popup(text, t_before_decay=2000,
 
 	const popup_close = document.createElement('img');
 	popup_close.className = "popup-close";
-	popup_close.src = "../../../img/remove_friend.png";
+	popup_close.src = "main_srcs/img/remove_friend.png";
 	popup_close.onclick = on_click_popup_close;
 	popup_main.appendChild(popup_close);
 
@@ -86,7 +77,7 @@ function create_popup(text, t_before_decay=2000,
 		hover_color : hover_hex_color
 	});
 	popup_handler(popup_list[popup_id], t_before_decay, t_after_hover);
-	add_popup_to_document_modal(popup_main);
+	document.body.appendChild(popup_main);
 	update_all_popups_pos();
 }
 

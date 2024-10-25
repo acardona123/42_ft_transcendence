@@ -11,7 +11,7 @@ function play_menu_setup_display_on_game()
 	else
 	{
 		header.textContent = "PLAY PONG";
-		button_ia.setAttribute('style', 'display:flex !important;')
+		button_ia.setAttribute('style', 'display:inline-block !important;')
 	}
 }
 

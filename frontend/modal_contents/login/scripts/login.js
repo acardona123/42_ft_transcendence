@@ -20,11 +20,10 @@ async function apply_login_user(refresh, access)
 	sessionStorage.setItem("refresh_token", refresh);
 	sessionStorage.setItem("access_token", access);
 
-	await Promise.all([
-		get_friend_list(),
-		create_user_infos()
-	]);
-	update_ui();
+	await create_user_infos();
+	if (global_user_infos.is_oauth === true)
+		set_oauth_2fa_button();
+	update_ui_on_log_event();
 }
 
 function empty_globals()
@@ -35,7 +34,6 @@ function empty_globals()
 	lastReplacedElemHover = undefined;
 	friend_popup_just_popped = false;
 	data_requests = undefined;
-	clicked_element = undefined;
 	history_list = undefined;
 	
 	playerGrid = undefined;
@@ -58,8 +56,10 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
+	if (modal_on_screen)
+		close_modal(modal_on_screen, undefined, false); // TODO: edge case game
 	empty_globals();
-	update_ui();
+	update_ui_on_log_event();
 }
 
 async function logout_user()
@@ -170,11 +170,17 @@ async function auto_login_42()
 
 async function auto_login()
 {
+	// try to connect with 42 after 42 redirection
 	await auto_login_42();
+	// refresh token are set either by 42 or were still in local storage (reload)
 	const refresh_token = sessionStorage.getItem("refresh_token");
 	const access_token = sessionStorage.getItem("access_token");
+	// no 42 redirect or refresh, nobody to auto login
 	if (!refresh_token || !access_token)
+	{
+		update_ui_on_log_event();
 		return ;
+	}
 	try
 	{
 		await apply_login_user(refresh_token, access_token);
@@ -204,8 +210,5 @@ document.addEventListener("onModalsLoaded", function()
 {
 	const form = document.getElementById("login-inputs-form");
 	change_form_behavior_for_SPA(form, send_form_login);
-	auto_login().then(() => 
-	{
-		update_ui();
-	});
+	auto_login();
 });

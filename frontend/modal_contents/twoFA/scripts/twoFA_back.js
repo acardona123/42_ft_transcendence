@@ -15,11 +15,8 @@ async function validate_code_setup(user_code)
 		});
 		if (fetched_data.status == 400)
 			return "invalid";
-		else if (fetched_data.status == 401)
-			return "expired";
 		else if (!fetched_data.ok)
 			throw new Error("Error validating the code.");
-		toggle_2fa_button();
 		close_modal('modal-2fa-setup', undefined, false);
 		open_modal('modal-edit-profile', init_modal_edit_profile , undefined, false);
 		return "valid";
@@ -88,12 +85,7 @@ async function send_code_to_validation(digit_inputs, is_setup)
 	}
 	else if (validation_res == "expired")
 	{
-		if (is_setup)
-		{
-			close_modal('modal-2fa-setup', undefined, false);
-			open_modal('modal-edit-profile', init_modal_edit_profile ,undefined, false);
-		}
-		else
+		if (!is_setup)
 		{
 			close_modal('modal-2fa-valid', undefined, false);
 			open_modal('modal-login', clear_login_inputs, focus_modal_login, false);
@@ -101,5 +93,5 @@ async function send_code_to_validation(digit_inputs, is_setup)
 		create_popup("The session is expired.", 10000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 	else if (is_setup)
-		is_btn_on_enable = !is_btn_on_enable;
+		is_btn_enable = true;
 }

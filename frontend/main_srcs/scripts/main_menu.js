@@ -6,11 +6,25 @@ function update_pp()
 	});
 }
 
-function update_ui() {
+function update_pin()
+{
+	if (is_connected())
+		document.getElementById("smc-pin-text").value = global_user_infos.pin;
+}
 
-	update_side_menu();
+function update_ui_on_log_event()
+{
+	reset_to_connect_state_side_menu();
 	update_pp();
 	update_user_name();
+	update_pin();
+}
+
+function update_side_menu()
+{
+	update_pp();
+	update_user_name();
+	update_pin();
 }
 
 function update_user_name() {
@@ -24,7 +38,6 @@ function disable_buttons_play() {
 	const buttons = document.querySelectorAll('.btn-play');
 	buttons.forEach(button => {
 		button.disabled = true;
-		button.removeAttribute('autofocus');
 	});
 }
 
@@ -33,7 +46,6 @@ function enable_buttons_play_event_offcanvas() {
 		const buttons = document.querySelectorAll('.btn-play');
 		buttons.forEach(button => {
 			button.disabled = false;
-			button.focus();
 		})
 	});
 

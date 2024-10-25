@@ -41,7 +41,6 @@ function enable_buttons_play()
 	const buttons = document.querySelectorAll('.btn-play');
 	buttons.forEach(button => {
 		button.disabled = false;
-		button.focus();
 	});
 }
 
@@ -99,7 +98,8 @@ async function init_modal_profile_bf()
 {
 	await Promise.all([
 		setup_friend_list(),
-		setup_friends_request_list()
+		setup_friends_request_list(),
+		setup_history_matches_list(),
 	]);
 }
 
@@ -113,6 +113,8 @@ async function init_modal_edit_profile()
 	clear_edp_user_inputs();
 	clear_edp_user_error_fields(true);
 	clear_edp_pass_error_fields();
+	await edp_update_user_info();
+	update_side_menu();
 	edp_update_profile_picture();
 }
 
@@ -285,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function()
 			document.dispatchEvent(event);
 			enable_buttons_play_event_offcanvas();
 			addFocusOutListener();
+			stop_click_on_all_page = false;
 		});
 	});
 

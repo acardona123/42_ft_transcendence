@@ -8,6 +8,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="/css/styles.css">
 		<link rel="stylesheet" href="/css/animations.css">
+		<link rel="stylesheet" href="/main_srcs/styles/main_menu.css">
 		<link rel="stylesheet" href="/modals_manager/styles/modals.css">
 		<link rel="stylesheet" href="/modal_contents/side_menu/styles/side_menu_connected.css">
 		<link rel="stylesheet" href="/modal_contents/side_menu/styles/side_menu_disconnected.css">
@@ -15,7 +16,7 @@
 		<link rel="stylesheet" href="/modal_contents/tournament_menu/styles/tournament_menu.css">
 		<link rel="stylesheet" href="/modal_contents/login/styles/styles.css">
 		<link rel="stylesheet" href="/modal_contents/register/styles/styles.css">
-		<link rel="stylesheet" href="/modal_contents/profile/styles/popup/popup.css">
+		<link rel="stylesheet" href="/main_srcs/styles/popup.css">
 		<link rel="stylesheet" href="/modal_contents/edit_profile/styles/styles.css">
 		<link rel="stylesheet" href="/modal_contents/profile/styles/structure.css">
 		<link rel="stylesheet" href="/modal_contents/profile/styles/friends/friends_list.css">
@@ -25,33 +26,37 @@
 		<link rel="stylesheet" href="/modal_contents/profile/styles/stats/stats.css">
 		<link rel="stylesheet" href="/modal_contents/twoFA/styles/twoFA_setup.css">
 		<link rel="stylesheet" href="/modal_contents/twoFA/styles/twoFA_valid.css">
-		<script src="/modal_contents/profile/scripts/popup/popup.js"></script>
+		<script src="/main_srcs/scripts/popup.js"></script>
 	</head>
 	<body>
-		<!-- MENU CANVAS -->
 		<div class="offcanvas offcanvas-end" id="menuProfile" tabindex="-1"></div>
-		<!-- +++ -->
 		<div id="modals"></div>
 
-		<div class="container-fluid text-white main-container" style="background-color: burlywood;">
-			<div class="col d-flex justify-content-center align-items-center">
-				<button id="button-play-pong" type="button" class="btn btn-lg btn-success rounded-pill btn-play" onclick="open_game_menu_pong()">
-					PLAY PONG
+		<video id="video-background" playsinline autoplay muted loop poster="/main_srcs/img/background.png"> <!-- todo change default image -->
+			<source src="/main_srcs/img/background.mp4" type="video/mp4">
+		</video>
+		<div id="main-menu">
+			<div id="mm-left-div">
+				<button class="button-galaxy mm-button-play btn-play" onclick="open_game_menu_pong()">
+					Pong
 				</button>
-				<button id="button-play-flappybird" type="button" class="btn btn-lg btn-success rounded-pill btn-play" onclick="open_game_menu_flappy_bird()">
-					PLAY FLAPPY BIRD
+			</div>
+			<div id="mm-right-div">
+				<button class="button-galaxy mm-button-play btn-play" onclick="open_game_menu_flappy_bird()">
+					Flappy Bird
 				</button>
 			</div>
 		</div>
 		<div class="home-photo-profile">
 			<a data-bs-toggle="offcanvas" href="#menuProfile" onclick="disable_buttons_play()">
-				<img id="homeUserImage" class="userImage" alt="Home User Image">
+				<img id="home-user-image" class="userImage" alt="Home User Image">
+				<div id="home-user-image-child"></div>
 			</a>
 		</div>
-		<script src="/main_srcs/main_menu.js"></script>
-		<script src="/main_srcs/shared.js"></script>
-		<script src="/main_srcs/users.js"></script>
-		<script src="/main_srcs/window_history.js"></script>
+		<script src="/main_srcs/scripts/main_menu.js"></script>
+		<script src="/main_srcs/scripts/shared.js"></script>
+		<script src="/main_srcs/scripts/users.js"></script>
+		<script src="/main_srcs/scripts/window_history.js"></script>
 		<script src="/modals_manager/scripts/game.js"></script>
 		<script src="/modals_manager/scripts/modals.js"></script>
 		<script src="/modal_contents/play_menu/scripts/play_menu.js"></script>

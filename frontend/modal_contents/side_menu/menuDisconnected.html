@@ -1,17 +1,12 @@
-<!-- <div class="offcanvas-header"> -->
-	<!-- <h1 class="offcanvas-title">Menu</h1> -->
-	<!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button> -->
-<!-- </div> -->
-
-<div class="offcanvas-body container-offcanvas" tabindex="-1">
-	<div class="sm-short-profile-div">
-		<h4>Unknow Profile</h4>
-		<img class="userImage menuUserImage" alt="Menu User Default Image" >
+<div id="smd-main-div" tabindex="-1">
+	<div id="smd-short-profile-div">
+		<h4 id="smd-user-guest">Guest</h4>
+		<div id="smd-disconnected-pp-div">
+			<img id="smd-disconnected-pp" src="img/compte-utilisateur-1.png">
+		</div>
 	</div>
-	<p>Insert a message ?</p>
-	<div id="disconnectedGroupButtons" class="btn-group-vertical gap-3" role="group">
-		<button id="loginButton" type="button" class="btn large-rounded-button bg-purple" onclick="open_modal('modal-login', clear_login_inputs, focus_modal_login, true)" >Login</button>
-		<button id="signUpButton" type="button" class="btn large-rounded-button bg-purple" onclick="open_modal('modal-register', clear_register_inputs, focus_modal_register, true)">Sign Up</button>
+	<div id="smd-buttons-div">
+		<button id="smd-login-button" type="button" class="btn btn-success" tabindex="1" onclick="open_modal('modal-login', clear_login_inputs, focus_modal_login, true);">Login</button>
+		<button id="smd-register-button" type="button" class="btn btn-success" tabindex="2" onclick="open_modal('modal-register', clear_register_inputs, focus_modal_register, true);">Register</button>
+	</div>
 </div>
-
-<!-- <script src="js/app.js"></script> -->
