@@ -41,7 +41,8 @@ async function submitIAForm(event) {
 		close_modal('modal-ia-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
-		start_pong_game(data, body.bot_level);
+		const game_parameters = data["data"][0];
+		start_pong_game(game_parameters, body.bot_level);
 	}
 	catch (error)
 	{
