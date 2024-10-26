@@ -11,16 +11,17 @@ async function get_round_matches_from_DB()
 			method: 'GET',
 			headers: {}
 		});
-		let data = await data_fetched.json();
+		let body = await data_fetched.json();
 		if (!data_fetched.ok)
-			throw new Error(`${data.get("message", "internal error")}`);
-		return data.matches;
+			throw new Error(`${body.get("message", "internal error")}`);
+		return body.data.matches;
 	}
 	catch (error)
 	{
 		create_popup(`Retrieving round matches failed: ${error.message}`,
 			2000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
+		//TODO ////////////////////////
 		//==============================================================================
 		// retour a la page d'accueil ?
 		//==============================================================================
@@ -29,19 +30,35 @@ async function get_round_matches_from_DB()
 
 }
 
-async function dummy_get_round_matches_from_DB (){
-	if (tournament_id == 0){ //one waiting player
-		return [["player0123456789","player0123456789"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player5"]];
-	} else {//no player wainting during the round
-		return [["player1","player2"],["player3","player4"]];
-	}
+// async function dummy_get_round_matches_from_DB (){
+// 	if (tournament_id == 0){ //one waiting player
+// 		return [["player0123456789","player0123456789"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player5"]];
+// 	} else {//no player wainting during the round
+// 		return [["player1","player2"],["player3","player4"]];
+// 	}
+// }
+
+
+// ==== Loading interface ====
+
+function tournament_round_display_loading_elements(){
+	let loading_text = document.createElement('p');
+	loading_text.textContent = "Loading...";
+
+	const round_matches_elem = document.getElementById(tournament_match_list_id);
+	round_matches_elem.replaceChildren(loading_text);
+
+	const waiting_player_elem = document.getElementById(tournament_waiting_player_id);
+	waiting_player_elem.replaceChildren(loading_text);
 }
 
 
+// ==== Round data generation ====
 
 let new_matches_list = [];
 let new_waiting_player_elem = undefined;
 let new_round_number_elem = undefined;
+
 
 function add_match_to_updated_list(match){
 
@@ -68,7 +85,7 @@ function add_match_to_updated_list(match){
 
 function get_waiting_player_description(match){
 	const waiting_player_description = document.createElement('p');
-	waiting_player_description.textContent = `Lucky you ${match[0]}, you have been automatically promoted to the next round ! During this one get some corn and enjoy the chaos amoung the other players...`;
+	waiting_player_description.textContent = `Lucky you ${match[0]}, you have been automatically promoted to the next round ! During this one get some corn and enjoy the chaos among the other players...`;
 	return waiting_player_description;
 }
 
@@ -93,11 +110,11 @@ function generate_no_waiting_player_elem(){
 	return new_waiting_player;
 }
 
-async function regenerate_matches_elements(){
+async function regenerate_round_elements(){
 	new_matches_list = [];
 	new_waiting_player_elem = generate_no_waiting_player_elem();
 
-	const matches_data = await dummy_get_round_matches_from_DB();
+	const matches_data = await get_round_matches_from_DB();
 
 	matches_data.forEach(match => {
 		if (match.length == 2){
@@ -121,10 +138,23 @@ function update_waiting_player_content(){
 	waiting_player_elem.replaceChildren(new_waiting_player_elem);
 }
 
-
-async function update_round_data()
+function update_round_display()
 {
-	await regenerate_matches_elements();
 	update_round_matches_content();
 	update_waiting_player_content()
+}
+
+
+// ==== round program modal start  ====
+
+async function tournament_round_program_init(){
+	tournament_round_display_loading_elements();
+	await regenerate_round_elements();
+	update_round_display();
+}
+
+
+async function was_last_round(){
+	await regenerate_round_elements();
+	return new_matches_list.length == 0;
 }
