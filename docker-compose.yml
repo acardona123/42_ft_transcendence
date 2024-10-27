@@ -21,6 +21,7 @@ services:
       - users
       - friends
       - matches
+      - tournaments
   vault:
     build: ./backend/vault
     container_name: vault
