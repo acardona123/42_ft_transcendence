@@ -6,17 +6,17 @@
 
 #login-main-content-div
 {
+	width: 100%;
 	border: thin solid var(--dark-purple);
-	border-radius: 3px;
 	display: grid;
-	padding: 50px;
+	padding: 25px;
 	padding-top: 50px;
 	padding-bottom: 25px;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
-	width: 100%;
+	border-radius: 3px;
 }
 
 #login-title-text
@@ -54,6 +54,9 @@
 
 #login-inputs-form
 {
+	width:80%;
+	margin-left: auto;
+	margin-right: auto;
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
@@ -61,6 +64,7 @@
 
 #login-42-api-div
 {
+	width: 100%;
 	margin: auto;
 }
 
@@ -98,7 +102,10 @@
 
 #login-button
 {
+	width: 80%;
 	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #line-separator-login-div
@@ -132,6 +139,13 @@
 {
 	margin-right: 0;
 	margin-left: 10px;
+}
+
+#login-button-42-api
+{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #login-secondary-content-div

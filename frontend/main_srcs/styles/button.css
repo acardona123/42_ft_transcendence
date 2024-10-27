@@ -23,6 +23,10 @@
 
 /* ----------------- login/regitser Button----------------- */
 
+.custom-border-radius {
+	border-radius: 15px !important;
+}
+
 .space-btn {
 	position:relative;
 	display: flex;
