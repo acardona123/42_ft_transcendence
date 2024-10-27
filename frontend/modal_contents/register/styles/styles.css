@@ -12,9 +12,12 @@
 	padding: 25px;
 	padding-top: 25px;
 	padding-bottom: 25px;
+	grid-template-columns: 1fr;
 	grid-template-rows: 0.1fr 1fr 0.25fr 0.1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 #register-title-text
@@ -40,6 +43,8 @@
 {
 	width: 100%;
 	margin: auto;
+	margin-top: 0;
+
 }
 
 .text-input-div
@@ -140,10 +145,12 @@
 
 #no-account-text
 {
+	border-radius: 5px;
 	border: thin solid var(--dark-purple);
 	margin: auto;
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	color: var(--dark-purple);
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }

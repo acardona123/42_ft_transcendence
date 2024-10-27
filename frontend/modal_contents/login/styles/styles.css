@@ -16,7 +16,8 @@
 	grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
-	border-radius: 3px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 #login-title-text
@@ -66,6 +67,7 @@
 {
 	width: 100%;
 	margin: auto;
+	margin-top: 0;
 }
 
 .login-text-input-div
@@ -156,12 +158,14 @@
 
 #login-no-account-text
 {
+	border-radius: 5px;
 	border: thin solid var(--dark-purple);
 	margin: auto;
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	color: var(--dark-purple);
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 .button-link-signup-login
