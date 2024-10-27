@@ -23,8 +23,7 @@ async function get_tournament_next_round_step_data(){
 			next_step.status = first_match_response.status;
 
 			let body = await first_match_response.json();
-		
-			next_step.data = body.data;
+			next_step.data = body.data[0];
 			//////////TODO: adding the bot level here
 			next_step.data["bot_level"] = -1;/////////////////
 			return (next_step);
