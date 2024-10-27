@@ -161,16 +161,17 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 		for player_id in list_participants:
 			player_stats = Statistics.objects.get(player_id=player_id)
 			player_stats.total_flappy_tournament_played += 1
+			if (player_id == winner):
+				player_stats.total_flappy_tournament_victory += 1
 			player_stats.save()
 			print(player_stats)
 			
 	def update_pong_tournament_stats(self, list_participants, winner):
-		player_stats = Statistics.objects.get(player_id=winner)
-		player_stats.total_pong_tournament_victory += 1
-		player_stats.save()
 		for player_id in list_participants:
 			player_stats = Statistics.objects.get(player_id=player_id)
 			player_stats.total_pong_tournament_played += 1
+			if (player_id == winner):
+				player_stats.total_pong_tournament_victory += 1
 			player_stats.save()
 			print(player_stats)
 			
