@@ -103,11 +103,11 @@ function get_no_waiting_player_description(){
 	return waiting_player_description;
 }
 function generate_no_waiting_player_elem(){
-	let new_waiting_player = document.createElement('div');
-	new_waiting_player.className = "trp-no-waiting-player-elem"
+	let no_waiting_player = document.createElement('div');
+	no_waiting_player.className = "trp-no-waiting-player-elem"
 	const no_waiting_player_description = get_no_waiting_player_description();
-	new_waiting_player.appendChild(no_waiting_player_description);
-	return new_waiting_player;
+	no_waiting_player.appendChild(no_waiting_player_description);
+	return no_waiting_player;
 }
 
 async function regenerate_round_elements(){
@@ -146,13 +146,6 @@ function update_round_display()
 
 
 // ==== round program modal start  ====
-
-async function tournament_round_program_init(){
-	tournament_round_display_loading_elements();
-	await regenerate_round_elements();
-	update_round_display();
-}
-
 
 async function was_last_round(){
 	await regenerate_round_elements();

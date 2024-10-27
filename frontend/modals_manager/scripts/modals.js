@@ -121,6 +121,12 @@ async function init_modal_edit_profile()
 	edp_update_profile_picture();
 }
 
+async function init_modal_tournament_round_program(){
+	tournament_round_display_loading_elements();
+	await regenerate_round_elements();
+	update_round_display();
+}
+
 async function open_modal(id_modal, init_function_bf=undefined, init_function_af=undefined, should_add_to_history=true)
 {
 	modal_on_screen = id_modal;
