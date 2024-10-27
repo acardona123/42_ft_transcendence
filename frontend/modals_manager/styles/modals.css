@@ -15,7 +15,7 @@
 	--bs-modal-padding: 0;
 }
 
-.modal-content-borber {
+.modal-content-border {
 	border-radius: 50px !important;
 	border : 6px var(--violet) solid;
 	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);

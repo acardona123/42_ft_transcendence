@@ -60,7 +60,7 @@ function clear_edp_user_error_fields(should_clear_inputs)
 {
 	for (field in edp_placeholders_user)
 	{
-		edp_placeholders_user[field].style.border = "thin solid black";
+		edp_placeholders_user[field].style.border = "thin solid var(--dark-purple)";
 		edp_placeholders_user[field].parentNode.children[2].innerHTML = "";
 		if (should_clear_inputs)
 			edp_placeholders_user[field].value = "";

@@ -24,9 +24,9 @@
 
 /* INPUT TEMPLATE */
 
-:focus {
+/* :focus {
 	outline: none;
-}
+} */
 
 .input-container {
 	position: relative;
@@ -38,14 +38,14 @@
 	/* margin: 40px 3%; */
 }
 
-input[type="text"],
+/* input[type="text"],
 input[type="password"] {
 	font: 15px/24px "Lato", Arial, sans-serif;
 	color: #333;
 	width: 100%;
 	box-sizing: border-box;
 	letter-spacing: 1px;
-}
+} */
 
 .input {
 	border: 0;

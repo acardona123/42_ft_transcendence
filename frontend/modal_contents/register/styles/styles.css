@@ -82,6 +82,7 @@
 
 .inputs-register
 {
+	color: var(--dark-purple);
 	border: thin solid var(--dark-purple);
 	width: 100%;
 	height: 30px;
