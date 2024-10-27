@@ -21,11 +21,11 @@
 	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
 }
 
-.modal-content-baground-color-dark-violet {
+.modal-content-background-color-dark-violet {
 	background-color: var(--dark-violet) !important;
 }
 
-.modal-content-baground-color-lavender {
+.modal-content-background-color-lavender {
 	background-color: var(--lavender) !important;
 }
 
