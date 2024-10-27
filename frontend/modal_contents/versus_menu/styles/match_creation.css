@@ -52,6 +52,7 @@
 .header {
 	display: flex;
 	align-items: center;
+	min-height: 50px !important;
 }
 
 .header-text {
@@ -64,7 +65,8 @@
 .btn-return {
 	position: relative;
 	/* left: 2%; */
-	/* min-width : 40px; */
+	min-width : 40px;
+	max-width: 60px;
 	/* padding: 2px; */
 	width: 6% !important;
 	height: 100% !important;
@@ -238,6 +240,8 @@
 	/* align-items: center; */
 	height: 50%;
 	width: 100%;
+	padding: 0;
+	margin: 0;
 	/* transition: all 0.3s ease-in-out; */
 
 }
@@ -247,11 +251,29 @@
 	height: 100%;
 	background-color: rgb(241, 131, 40);
 	transition: all 0.3s ease-in-out;
+	border-radius: 20px;
 	/* margin: 10px; */
 
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.box-header {
+	width: 100%;
+	height: 25%;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: space-evenly;
+	/* background-color: red; */
+	font-size: 1.5rem;
+	/* min-width: 10px; */
+}
+
+p {
+	margin: 1% 0 0 0;
 }
 
 .centered {
@@ -265,6 +287,13 @@
 	opacity: 0.7;
 }
 
+@container (min-width: 50px)
+{
+	#AddPlayerInputs {
+		flex-direction: column;
+		background-color: aquamarine;
+	}
+}
 
 #AddPlayerContainer {
 	display: flex;
@@ -299,6 +328,7 @@
 	/* width: 27.33%; */
 	width: 30%;
 	min-width: 100px;
+	background-color: red;
 	/* margin: 2% 3% 0 0; */
 	/* margin: 40px 3%; */
 }

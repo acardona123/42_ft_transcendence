@@ -116,7 +116,7 @@ function CheckAddConnectedPlayer(pseudo, pin) {
 
 async function tournament_add_player(player_data)
 {
-	const url = "/add-connected-player-in-tournament/";
+	const url = "/api/tournaments/player/";
 
 	try
 	{
@@ -126,13 +126,23 @@ async function tournament_add_player(player_data)
 			body: JSON.stringify(player_data)
 		});
 		if (!fetched_data.ok)
+		{
+			let data = await fetched_data.json();
+			console.log("error : ");
+			console.log(data);
 			throw new Error("Error while adding the player");
+		}
+
+		let data = await fetched_data.json();
+		console.log("success : ");
+		console.log(data);
 
 		clearInputFields();
-		AddCard(pseudo, 'PLAYER');
+		AddCard('PLAYER', data.data.username, data.data.player_id);
 	}
 	catch (error)
 	{
+		console.log(error);
 		document.getElementById('ErrorAddConnectedPlayer').textContent = 'Invalid connection. Please try again.';
 		document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
 	}
@@ -145,13 +155,10 @@ function OnClickAddConnectedPlayer() {
 		return;
 
 	btn.addEventListener('click', () => {
-		const pseudo = document.getElementById('ConnectedPlayerPseudo').value;
+		const username = document.getElementById('ConnectedPlayerPseudo').value;
 		const pin = document.getElementById('PlayerConnectedPin').value;
 
-		console.log(pseudo);
-		console.log(pin);
-
-		const errorMessage = CheckAddConnectedPlayer(pseudo, pin);
+		const errorMessage = CheckAddConnectedPlayer(username, pin);
 
 		if (errorMessage) {
 			document.getElementById('ErrorAddConnectedPlayer').textContent = errorMessage;
@@ -162,24 +169,14 @@ function OnClickAddConnectedPlayer() {
 			document.getElementById('PlayerConnectedPin').classList.remove('has-content');
 		}
 		else {
-			let player_data = {pseudo, pin};
+			const player_data = {
+				tournament_id,
+				username,
+				pin,
+			};
 
 			tournament_add_player(player_data);
 		}
-	});
-}
-
-function addFocusOutListener() {
-	var inputs = document.querySelectorAll('.input-container input');
-
-	inputs.forEach(function (input) {
-		input.addEventListener('focusout', function () {
-			if (input.value !== "") {
-				input.classList.add('has-content');
-			} else {
-				input.classList.remove('has-content');
-			}
-		});
 	});
 }
 
@@ -193,7 +190,7 @@ function disableFormSubmitOnEnter(id) {
 
 async function submit_tournament_creation(tournament_data)
 {
-	const url = "/create-tournament/";
+	const url = "/api/tournaments/validate/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -203,6 +200,9 @@ async function submit_tournament_creation(tournament_data)
 		});
 		if (!fetched_data.ok)
 		{
+			let data = await fetched_data.json();
+			console.log("error : ");
+			console.log(data);
 			throw new Error("Error while creating the tournament");
 		}
 
@@ -228,14 +228,16 @@ function handleTounamentFormSubmission() {
 		timeSliderValue = document.getElementById('tournamentTimeSlider').value;
 		pointsSliderValue = document.getElementById('tournamentPointsSlider').value;
 
-		const time = timeSliderValue === '310' ? '∞' : timeSliderValue;
-		const points = pointsSliderValue === '12' ? '∞' : pointsSliderValue;
+		const max_duration = timeSliderValue === '310' ? '∞' : timeSliderValue;
+		const max_score = pointsSliderValue === '12' ? '∞' : pointsSliderValue;
 
 		const tournament_data = {
-			time,
-			points,
-			number_ia,
-			number_guest,
+			tournament_id,
+			game : (global_game_modal==="FLAPPYBIRD") ? "FB" : "PG",
+			max_duration,
+			max_score,
+			nb_guest,
+			nb_ai,
 		};
 
 			submit_tournament_creation(tournament_data);
@@ -283,12 +285,52 @@ function initTournamentCreation() {
 	clearInputFields();
 
 	initPlayerGird();
+	
+	const button = document.getElementById('tournament_validate_button');
+
+	button.disabled = true;
 
 	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
 	// disableFormSubmitOnEnter('PlayerConnectedPin');
 
-	modal_play.hide();
 }
+
+async function create_tournament()
+{
+	const url = "api/tournaments/create/";
+	try
+	{
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: {},
+		});
+		if (!fetched_data.ok)
+		{
+			// console.log("error : " + await fetched_data.json());
+			throw new Error("Error while creating tournament.");
+		}
+		let data = await fetched_data.json();
+
+		console.log(data);
+		tournament_id = data.data.tournament_id;
+
+		console.log("Create tournament ! id : " + tournament_id);
+
+	}
+	catch (error)
+	{
+		console.log(error);
+	}
+}
+
+function open_tournament()
+{
+	initTournamentCreation();
+	modal_play.hide();
+	create_tournament();
+}
+
+let tournament_id = undefined;
 
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();

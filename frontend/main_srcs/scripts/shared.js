@@ -45,7 +45,7 @@ async function fetch_with_token(url, request_infos)
 	return fetched_data;
 }
 
-let stop_click_on_all_page = false;
+let stop_click_on_all_page = true;
 
 document.addEventListener("click", event =>
 {

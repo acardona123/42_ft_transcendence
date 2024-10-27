@@ -287,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function()
 			document.dispatchEvent(event);
 			enable_buttons_play_event_offcanvas();
 			addFocusOutListener();
+			stop_click_on_all_page = false;
 		});
 	});
 

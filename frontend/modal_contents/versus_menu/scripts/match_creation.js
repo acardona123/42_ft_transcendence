@@ -113,13 +113,13 @@ function clearErrorFields() {
 function addFocusOutListener() {
 	var inputs = document.querySelectorAll('.input-container input');
 
-	inputs.forEach(function(input) {
-			input.addEventListener('focusout', function() {
-				if (input.value !== "") {
-					input.classList.add('has-content');
-				} else {
-					input.classList.remove('has-content');
-				}
-			});
+	inputs.forEach(function (input) {
+		input.addEventListener('focusout', function () {
+			if (input.value !== "") {
+				input.classList.add('has-content');
+			} else {
+				input.classList.remove('has-content');
+			}
 		});
+	});
 }

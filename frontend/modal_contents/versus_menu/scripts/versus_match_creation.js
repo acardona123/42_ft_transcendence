@@ -42,7 +42,7 @@ function initBoxs() {
 	const VSPlayerInputs = document.getElementById('AddPlayerInputs').querySelectorAll('input');
 
 	// Handle focus on Box VSGuest
-	BoxVSGuest.addEventListener('click', () => {
+	BoxVSGuest.addEventListener('mouseenter', () => {
 		BoxVSGuest.classList.add('centered');
 		BoxVSGuest.classList.remove('side');
 		VSGuestPlayButton.disabled = false;
@@ -58,7 +58,7 @@ function initBoxs() {
 	});
 
 	// Handle focus on Box VSPlayer
-	BoxVSPlayer.addEventListener('click', () => {
+	BoxVSPlayer.addEventListener('mouseenter', () => {
 		BoxVSPlayer.classList.add('centered');
 		BoxVSPlayer.classList.remove('side');
 		VSPlayerPlayButton.disabled = false;
@@ -72,32 +72,15 @@ function initBoxs() {
 		clearErrorFields();
 		handleButtonsSubmit();
 	});
-	
-	// Reset if focus is lost
-	document.addEventListener('click', (e) => {
-		const sliderContainers = document.getElementById('1v1MatchForm').querySelectorAll('.slider-container');
-
-		if (!BoxVSGuest.contains(e.target) && !BoxVSPlayer.contains(e.target) && !sliderContainers[0].contains(e.target) && !sliderContainers[1].contains(e.target)){
-			BoxVSGuest.classList.remove('centered', 'side');
-			BoxVSPlayer.classList.remove('centered', 'side');
-			VSGuestPlayButton.disabled = true;
-			VSPlayerPlayButton.disabled = true;
-			VSPlayerInputs.forEach(input => {
-				input.classList.add('cursor-default');
-			});
-			clearErrorFields();
-			handleButtonsSubmit();
-		}
-	});
-	
 
 	// Set initial settings
-	BoxVSGuest.style.opacity = 0.7;
-	BoxVSPlayer.style.opacity = 0.7;
-
+	BoxVSGuest.style.opacity = 1;
 	BoxVSGuest.classList.remove('centered', 'side');
+	BoxVSGuest.classList.add('centered');
+	VSGuestPlayButton.disabled = false;
+	
+	BoxVSPlayer.style.opacity = 0.7;
 	BoxVSPlayer.classList.remove('centered', 'side');
-	VSGuestPlayButton.disabled = true;
 	VSPlayerPlayButton.disabled = true;
 	VSPlayerInputs.forEach(input => {
 		input.classList.add('cursor-default');

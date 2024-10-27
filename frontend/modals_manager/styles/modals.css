@@ -36,6 +36,8 @@
 	height: 80vh !important;
 	width: 60vw !important;
 
+	min-width: 600px;
+	
 	--bs-modal-margin: 10vh 0 0 0;
 }
 
@@ -52,6 +54,8 @@
 	height: 60vh !important;
 	width: 50vw !important;
 
+	min-width: 600px;
+	
 	--bs-modal-margin: 20vh 0 0 0;
 }
 
@@ -70,6 +74,8 @@
 	height: 85vh !important;
 	width: 55vw !important;
 
+	min-width: 600px;
+
 	--bs-modal-margin: 7.5vh 0 0 0;
 }
 
@@ -85,7 +91,9 @@
 
 #modal-tournament-creation-dialog {
 	height: 85vh !important;
-	width: 65vw !important;
+	width: 90vw !important;
+
+	min-width: 700px;
 
 	--bs-modal-margin: 7.5vh 0 0 0;
 }
