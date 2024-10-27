@@ -22,8 +22,6 @@ async function submitIAForm(event) {
 		// bot_level : 1,
 	};
 	
-	console.log(body);
-
 	const url = "/api/matches/new/me-ai/";
 
 	try
@@ -47,6 +45,7 @@ async function submitIAForm(event) {
 	catch (error)
 	{
 		console.log(error);
+		//TODO ERROR back to main menu
 	}
 }
 
