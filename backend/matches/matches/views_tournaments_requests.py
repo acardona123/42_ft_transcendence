@@ -19,7 +19,7 @@ def get_is_host_of_tournament(tournament_id, user_id):
 def post_declare_match_finished(tournament_id, score_player_1, score_player_2):
 	url =  f"{settings.TOURNAMENT_MICROSERVICE_URL}/private/tournaments/match/finish/"
 	body = {
-		"tournament_id": "tournament_id",
+		"tournament_id": tournament_id,
 		"score1": score_player_1,
 		"score2": score_player_2
 	}
