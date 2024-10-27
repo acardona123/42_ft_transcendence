@@ -164,8 +164,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True
 
 USERS_MICROSERVICE_URL = 'http://users:8002/api'
-MATCHES_MICROSERVICE_URL = 'http://localhost:8004/api'
-TOURNAMENT_MICROSERVICE_URL = 'http://localhost:8005/api'
+MATCHES_MICROSERVICE_URL = 'localhost:8004/api'
+TOURNAMENT_MICROSERVICE_URL = 'http://tournaments:8005/api'
 
 SWAGGER_SETTINGS = {
     "DEFAULT_MODEL_RENDERING": "example"
