@@ -24,6 +24,7 @@
 	margin: auto;
 	margin-top: 0;
 	font-size: 2em;
+	color: var(--dark-purple);
 }
 
 #login-title-div
@@ -122,6 +123,11 @@
 	margin-right: 10px;
 }
 
+#login-or
+{
+	color: var(--dark-purple);
+}
+
 #login-line-sep-right
 {
 	margin-right: 0;
@@ -141,6 +147,7 @@
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	color: var(--dark-purple);
 }
 
 .button-link-signup-login

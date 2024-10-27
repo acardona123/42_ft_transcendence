@@ -23,6 +23,7 @@
 	margin-top: 0;
 	padding-bottom: 50px;
 	font-size: 2em;
+	color: var(--dark-purple);
 }
 
 #register-inputs-form
@@ -106,6 +107,11 @@
 	margin-right: 10px;
 }
 
+#register-or
+{
+	color: var(--dark-purple);
+}
+
 #line-sep-right
 {
 	margin-right: 0;
@@ -125,4 +131,5 @@
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	color: var(--dark-purple);
 }
