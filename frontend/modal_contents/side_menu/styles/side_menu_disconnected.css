@@ -5,6 +5,7 @@
 	justify-content: space-between;
 	height: 100vh;
 	padding: 10px;
+	background:var(--lavender);
 }
 
 #smd-short-profile-div
@@ -35,11 +36,32 @@
 	border-radius: 50%;
 }
 
+#smd-astronaut {
+	scale: 0.5;
+	animation: rotate-astronaut 15s linear infinite;
+	animation: bounce-astronaut 5s linear infinite;
+}
+
+@keyframes bounce-astronaut {
+	0% { translate: 0% }
+	100% { translate: 75% 15% }
+}
+
+@keyframes rotate-astronaut {
+	0% {
+		rotate: 0deg;
+	}
+	100% {
+		rotate: 360deg;
+	}
+}
+
 #smd-buttons-div
 {
 	display: flex;
+	height: 100%;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 }
 
@@ -47,10 +69,16 @@
 {
 	position: relative;
 	width: 85%;
+	height: 8%;
+	font-size: 2em;
+	margin-bottom: 15%
 }
 
 #smd-register-button
 {
 	position: relative;
 	width: 85%;
+	height: 8%;
+	font-size: 2em;
+	margin-bottom: 20%
 }
