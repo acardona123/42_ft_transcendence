@@ -15,19 +15,18 @@ async function get_tournament_next_round_step_data(){
 	try {
 			let next_step = {};
 			
-			let first_match_response = await send_tournament_next_match_request();
-			if (!first_match_response.ok){
-				// if (first_match_response.status_code != 200 && first_match_response.status_code != 201){
+			let next_step_response = await send_tournament_next_match_request();
+			if (next_step_response.status != 200 && next_step_response.status != 201){
 				throw new Error("");//TODO
 			}
-			next_step.status = first_match_response.status;
-
-			let body = await first_match_response.json();
+			next_step.status = next_step_response.status;
+			let body = await next_step_response.json();
 			next_step.data = body.data[0];
 			return (next_step);
 
 	} catch {
 		create_popup("FATAL ERROR while trying to start the round. Tournament canceled", 10000, 4000, HEX_RED, HEX_RED_HOVER);
+			console.log("error")//
 		//////////////////////////////////TODO=> fatal error going back to main page
 	}
 
@@ -68,7 +67,7 @@ function start_tournament_match(match_data){
 }
 
 async function continue_tournament_round(){
-	const next_step = get_tournament_next_round_step_data();
+	const next_step = await get_tournament_next_round_step_data();
 	if (next_step.status == 200){
 		await tournament_end_round_redirection();
 	} else {

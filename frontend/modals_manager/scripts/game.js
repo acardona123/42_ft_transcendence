@@ -17,6 +17,8 @@ function start_pong_game(response_data, bot_level = -1)
 	pg_gameMode.username_player2 = response_data["opponent_username"];
 	pg_gameMode.match_id = response_data["id"];
 	pg_gameMode.bot_level = bot_level;
+	pg_gameMode.tournament_id = response_data["tournament_id"];
+
 	stop_current_game();
 	game = new Phaser.Game(pg_gameConfig);
 }

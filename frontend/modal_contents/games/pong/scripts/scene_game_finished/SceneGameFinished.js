@@ -138,10 +138,17 @@ class pg_SceneGameFinished extends Phaser.Scene{
 		}
 
 		#createQuitButton(){
-			this.#quit_button = new Button(this, "Home", pg_gameConfig.scene_game_finished.button_style);
+			this.#quit_button = new Button(this, this.#getButtonContent(), pg_gameConfig.scene_game_finished.button_style);
 			this.#positionButton();
 			this.#setButtonInteraction();
 		}
+			#getButtonContent(){
+				if (pg_gameMode.tournament_id < 0){
+					return "Quit";
+				} else {
+					return "Next";
+				}
+			}
 			#positionButton(){
 				const x = pg_gameConfig.width / 2;
 				const y = this.#match_duration.y + this.#match_duration.height / 2 +  pg_gameConfig.scene_game_finished.padding.under_match_duration;
@@ -151,15 +158,15 @@ class pg_SceneGameFinished extends Phaser.Scene{
 			#setButtonInteraction(){
 				if (pg_gameMode.tournament_id < 0)
 					this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
-					else
-				this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
+				else
+					this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
 			}
-			#goBackHome(){
-				stop_current_game();
-				close_modal('modal-game', reset_game);
-			}
-			#continueTournament(){
-				stop_current_game();
-				console.log("Continue the tournament");
-			}
+				#goBackHome(){
+					stop_current_game();
+					close_modal('modal-game', reset_game);
+				}
+				#continueTournament(){
+					stop_current_game();
+					continue_tournament_round();
+				}
 }
