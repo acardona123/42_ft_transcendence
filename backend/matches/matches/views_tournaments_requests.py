@@ -16,7 +16,7 @@ def get_is_host_of_tournament(tournament_id, user_id):
 	body_content = response.json()
 	return {'status': status, 'body': body_content}
 
-def post_declare_match_finished(tournament_id, score_player_1, score_player_2):
+def post_tournament_match_finished(tournament_id, score_player_1, score_player_2):
 	url =  f"{settings.TOURNAMENT_MICROSERVICE_URL}/private/tournaments/match/finish/"
 	body = {
 		"tournament_id": tournament_id,

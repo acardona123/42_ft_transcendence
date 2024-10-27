@@ -22,7 +22,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 from matches.views_users_requests import get_new_ai_request, get_new_guest_request, check_player_pin_ok
-from matches.views_tournaments_requests import get_is_host_of_tournament, post_declare_match_finished
+from matches.views_tournaments_requests import get_is_host_of_tournament, post_tournament_match_finished
 
 from .doc import (MSG_ERROR_UNIDENTIFIED_USER, MSG_ERROR_JSON_FORMAT, MSG_LIST_ERROR_SERIALIZER_DISPLAY, MSG_LIST_SUCCESS, DOC_LIST_MATCHES, MSG_NEW_MATCH_ERROR_MISSING_FIELD, MSG_NEW_MATCH_ERROR_WRONG_PIN, MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND, MSG_FINISH_MATCH_ERROR_NOT_ALLOWED, MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED, MSG_FINISH_MATCH_ERROR_MISSING_FIELD, MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL, JWT_TOKEN, doc_error_generation)
 
@@ -274,10 +274,13 @@ def finish_match(request, match_id):
 		match_instance = Match.objects.get(id = match_id)
 	except:
 		return JsonResponse(status = 400, data = {'message' : MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND})
-
-	match_finishable = is_match_finishable(request, match_instance)
-	if match_finishable['status'] != 200:
-		return JsonResponse(status = match_finishable['status'], data = match_finishable['data'])
+	
+	try:
+		match_finishable = is_match_finishable(request, match_instance)
+		if match_finishable['status'] != 200:
+			return JsonResponse(status = match_finishable['status'], data = match_finishable['data'])
+	except:
+		JsonResponse(status = 500, data = {"message":"Error: Authorization check failure"})
 
 	data = request.data
 	if not 'score1' in data or not 'score2' in data or not 'duration' in data :
@@ -296,7 +299,10 @@ def finish_match(request, match_id):
 		return JsonResponse(status = 400, data = {'message' : f"Error when trying to finish the match: {e}"})
 
 	if match_instance.tournament_id >= 0:
-		tournament_response = post_declare_match_finished()
-		if tournament_response.status == 200 :
-			JsonResponse(status = 500, data = {'message': MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL})
+		try:
+			tournament_response = post_tournament_match_finished(match_instance.tournament_id, match_instance.score1, match_instance.score2)
+			if tournament_response["status"] != 200:
+				raise
+		except:
+				return JsonResponse(status = 500, data = {'message': MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL})
 	return JsonResponse(status = 200, data = {'message': f"Match {match_instance.id} successfully ended"})
