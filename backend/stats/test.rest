@@ -32,4 +32,4 @@ Content-Type: application/json
 }
 
 ### --- Get user statistics ---
-POST /api/stats/ HTTP/1.1
+GET http://localhost:8006/api/stats/2 HTTP/1.1
