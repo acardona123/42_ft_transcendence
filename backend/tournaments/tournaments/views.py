@@ -222,9 +222,15 @@ def get_match_for_round(request):
 					'data': {'matches': matches}}, status=200)
 
 def create_match(tournament, players):
+	is_player2_bot = False
 	if players[0].type == Participant.UserType.BOT:
 		players1 = players[1]
 		players2 = players[0]
+		is_player2_bot = True
+	elif players[1].type == Participant.UserType.BOT:
+		players1 = players[0]
+		players2 = players[1]
+		is_player2_bot = True
 	else:
 		players1 = players[0]
 		players2 = players[1]
@@ -250,6 +256,7 @@ def create_match(tournament, players):
 		players2.save()
 		return Response({"message": doc.MSG_ERROR_MATCH}, status=500)
 	data = response.json().get('data')
+	data[0]["bot_level"] = "1" if is_player2_bot else "-1"
 	return Response({"message": doc.MSG_CREATE_MATCH, 'data': data}, status=201)
 
 def start_match(tournament):
@@ -336,6 +343,8 @@ def match_finished(request):
 	if isinstance(tournament, Response):
 		return tournament
 	players = list(tournament.participant_set.filter(match=tournament.next_match, is_eliminated=False))
+	if len(players) != 2:
+		return Response({"message": doc.MSG_ERROR_NO_PLAYER_FOUND}, status=400)
 	if not players[0].is_playing or not players[1].is_playing:
 		return Response({"message": doc.MSG_ERROR_PLAYER_NOT_PLAYING}, status=400)
 	if score1 == score2:
