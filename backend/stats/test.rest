@@ -4,11 +4,11 @@ Host: localhost:8006
 Content-Type: application/json
 
 {
-	"player_id" : "1"
+	"player_id" : "3"
 }
 
-### --- retrieve data ---
-POST /api/stats/private/add_data_stats/ HTTP/1.1
+### --- Post data Match ---
+POST /api/stats/private/post_match_data/ HTTP/1.1
 Host: localhost:8006
 Content-Type: application/json
 
@@ -18,3 +18,18 @@ Content-Type: application/json
 	"game" : "flappy",
 	"winner" : "2"
 }
+
+### --- Post data tournament ---
+
+POST /api/stats/private/post_tournament_data/ HTTP/1.1
+Host: localhost:8006
+Content-Type: application/json
+
+{
+	"list_participants" : [1, 2, 3],
+	"winner" : "2",
+	"game" : "flappy"
+}
+
+### --- Get user statistics ---
+POST /api/stats/ HTTP/1.1

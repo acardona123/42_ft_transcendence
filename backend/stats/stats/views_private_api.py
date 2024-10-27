@@ -1,10 +1,9 @@
 from .models import Statistics
-from .serializer import StatisticsSerializer, UpdateStatisticsSerializer
+from .serializer import StatisticsSerializer, UpdateMatchStatisticsSerializer, UpdateTournamentStatisticsSerializer
 # from .views import update_statistics
 from rest_framework import status
 
 
-from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -34,12 +33,32 @@ def create_statistics_user(request):
 
 @api_view(['POST'])
 def generate_match_data_stats(request):
-	print("test0")
-	serializer = UpdateStatisticsSerializer(data=request.data)
+	serializer = UpdateMatchStatisticsSerializer(data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+		return Response({"message": "Statistics  match updated successfully"}, status=status.HTTP_200_OK)
+	else:
+		return Response({"message": "Data to update match statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#function pour update les statistiques des tournois, a appeler lors de la fin d'un tournoi par le microservice tournoi
+
+'''
+{
+	"list_participants" : [1, 2, 3, 4],
+	"winner" : "2"
+}
+'''
+
+@api_view(['POST'])
+def generate_tournament_data_stats(request):
+	print("test")
+	serializer = UpdateTournamentStatisticsSerializer(data=request.data)
 	print("test1")
 	if serializer.is_valid():
 		print("test2")
 		serializer.save()
-		return Response({"message": "Statistics updated successfully"}, status=status.HTTP_200_OK)
+		return Response({"message": "Statistics tournament updated successfully"}, status=status.HTTP_200_OK)
 	else:
-		return Response({"message": "Data to update statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+		print("test3")
+		return Response({"message": "Data to update tournament statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
