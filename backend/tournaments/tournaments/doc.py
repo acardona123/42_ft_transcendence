@@ -14,6 +14,7 @@ MSG_ERROR_USERNAME = "Error while retrieving username"
 MSG_ERROR_MATCH = "Error while creating match"
 MSG_ERROR_PLAYER = "Players are already playing"
 MSG_ERROR_PLAYER_NOT_PLAYING = "Players are not playing, match can't be finished"
+MSG_ERROR_NO_PLAYER_FOUND = "No player found to play this match"
 
 MSG_TOUNAMENT_CREATED = "Tournament created, host added to the tournament"
 MSG_PLAYER_ADD = "Player added to the tournament"
@@ -174,7 +175,7 @@ DOC_ERROR_START_MATCH= openapi.Response(
 
 DOC_START_MATCH= openapi.Response(
 			description=MSG_CREATE_MATCH,
-			examples={"application/json": {"message": MSG_CREATE_MATCH, 'data': "return info send by /private_api/matches"}}
+			examples={"application/json": {"message": MSG_CREATE_MATCH, 'data': "return info send by /private_api/matches + add bot_level = 1 ou -1"}}
 	)
 
 DOC_ERROR_SCORE= openapi.Response(
