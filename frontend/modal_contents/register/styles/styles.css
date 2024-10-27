@@ -7,7 +7,7 @@
 #register-main-content-div
 {
 	width: 100%;
-	border: thin solid black;
+	border: thin solid var(--dark-purple);
 	display: grid;
 	padding: 50px;
 	padding-top: 25px;
@@ -72,7 +72,7 @@
 
 .inputs-register
 {
-	border: thin solid black;
+	border: thin solid var(--dark-purple);
 	width: 100%;
 	height: 30px;
 	border-radius: 5px;
@@ -97,7 +97,7 @@
 	margin: auto;
 	height: 1px;
 	width: 100%;
-	background-color: aliceblue;
+	background-color: var(--dark-purple);
 }
 
 #line-sep-left
@@ -120,7 +120,7 @@
 
 #no-account-text
 {
-	border: thin solid black;
+	border: thin solid var(--dark-purple);
 	margin: auto;
 	text-align: center;
 	padding-top: 20px;

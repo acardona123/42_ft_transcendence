@@ -22,11 +22,13 @@
 }
 
 .modal-content-baground-color-dark-violet {
-	/* background-image: url('/img/test.jpg');
-    background-repeat: no-repeat;
-    background-size: cover; */
 	background-color: var(--dark-violet) !important;
 }
+
+.modal-content-baground-color-lavender {
+	background-color: var(--lavender) !important;
+}
+
 
 /* === MODAL PLAY === */
 
