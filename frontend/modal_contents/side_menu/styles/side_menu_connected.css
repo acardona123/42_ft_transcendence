@@ -130,10 +130,10 @@
 	transition: 0.5s;
 }
 
-#smc-parameter-button:hover, #smc-parameter-button:focus
+#smc-parameter-button:hover
 {
-	transform: scale(1.05) rotate(180deg);
-	transition: all 0.5s;
+	transform: scale(1.05) rotate(90deg);
+	transition: all 0.7s;
 }
 
 #smc-parameter-button-image
