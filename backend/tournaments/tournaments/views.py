@@ -378,7 +378,7 @@ def check_host_tournament(request):
 	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
 	if isinstance(tournament, Response):
 		return tournament
-	if tournament.host != host_id:
+	if str(tournament.host) != host_id:
 		return Response({"message": doc.MSG_PLAYER_NOT_HOST,
 					"data": {"is_host": False}}, status=200)
 	return Response({"message": doc.MSG_PLAYER_HOST,
