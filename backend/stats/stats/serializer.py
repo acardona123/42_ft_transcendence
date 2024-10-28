@@ -24,16 +24,14 @@ def validate_a_player(player_id):
 	Raises:
    		serializers.ValidationError: If the player ID is negative or does not exist in the Statistics database.
 	'''
-	print("beginiing of validate a player")
 	if not validate_id(player_id):
-		print("raise validate a player")
 		raise serializers.ValidationError(f"The player id {player_id} doesn't exist in the db Statistics")
 	return player_id
 
 VALID_GAME_NAMES = {"flappy", "pong"}
 def	validate_game_name(game):
 	if game not in VALID_GAME_NAMES:
-		raise serializers.ValidationError("The game name doesn't exist")
+		raise serializers.ValidationError("This game name doesn't exist")
 	return game
 	
 	
@@ -42,7 +40,6 @@ class StatisticsSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Statistics
-		# fields = '__all__'
 		fields = ('player_id',)
 
 	def validate(self, data):
@@ -66,7 +63,6 @@ class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 	def update_statistics(self, player1_stats, player2_stats, game, winner):
-		print("update stats in the serializer update")
 		if game == "flappy":
 			player1_stats.total_flappy_matches += 1
 			player2_stats.total_flappy_matches += 1
@@ -82,9 +78,6 @@ class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 			elif winner == player2_stats.player_id:
 				player2_stats.total_pong_victory += 1
 
-		print(player1_stats)
-		print(player2_stats)
-
 		player1_stats.save()
 		player2_stats.save()
 
@@ -94,20 +87,18 @@ class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 		game = validated_data.get('game')
 		winner = validated_data.get('winner')
 
-		print("before get object")
-		#rajouter try ou deja call par get ??
 		try:
-			stats = Statistics.objects.get(player_id=player_id2)
+			player1_stats = Statistics.objects.get(player_id=player_id1)
+		except Statistics.DoesNotExist:
+			raise serializers.ValidationError(f"Player id {player_id1} was not found")
+		try:
+			player2_stats = Statistics.objects.get(player_id=player_id2)
 		except Statistics.DoesNotExist:
 			raise serializers.ValidationError(f"Player id {player_id2} was not found")
-
-		player1_stats = Statistics.objects.get(player_id=player_id1)
-		player2_stats = Statistics.objects.get(player_id=player_id2)
 
 		self.update_statistics(player1_stats, player2_stats, game, winner)
 	
 		return 0
-		# return player1_stats, player2_stats
 
 	def	validate_player_id1(self, player_id1):
 		return validate_a_player(player_id1)
@@ -135,7 +126,6 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 
 
 	def create(self, validated_data):
-		print("create")
 		list_participants = validated_data.get('list_participants')
 		game = validated_data.get('game')
 		winner = validated_data.get('winner')
@@ -144,21 +134,15 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 		return 0
 
 	def	validate_game(self, game):
-		print("validate_game")
 		return validate_game_name(game)
 	
 	def validate_list_participants(self, list_participants):
-		print("validate_list_participants")
 		for player_id in list_participants:
-			print(f"participant : {player_id}")
 			if not validate_id(player_id):
-				print("raise error")
 				raise serializers.ValidationError(f"Error: participant id [{player_id}] doesn't exist")
-		print("list participants is good", list_participants)
 		return list_participants
 
 	def validate(self, data):
-		print("validate")
 		if data['winner'] not in data['list_participants']:
 			raise serializers.ValidationError(f"Error: winner [{data['winner']}] is not in the list_participants ")
 		return data
@@ -178,7 +162,6 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 			if (player_id == winner):
 				player_stats.total_flappy_tournament_victory += 1
 			player_stats.save()
-			print(player_stats)
 			
 	def update_pong_tournament_stats(self, list_participants, winner):
 		for player_id in list_participants:
@@ -187,7 +170,6 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 			if (player_id == winner):
 				player_stats.total_pong_tournament_victory += 1
 			player_stats.save()
-			print(player_stats)
 			
 
 			

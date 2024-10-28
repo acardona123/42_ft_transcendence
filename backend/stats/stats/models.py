@@ -21,7 +21,7 @@ class Statistics(models.Model):
 		return (self.total_pong_victory / self.total_pong_matches)
 
 	def __str__(self):
-		return f"The id is {self.id}  Number of victory flappy and pong ({self.total_flappy_victory}, {self.total_pong_victory}), and total matches played ({self.total_flappy_matches}, {self.total_pong_matches}) and total tournament played flappy and pong ({self.total_flappy_tournament_played}, {self.total_pong_tournament_played}) and victory tournament ({self.total_flappy_tournament_victory}, {self.total_pong_tournament_victory}) "
+		return f"The id is {self.player_id}  Number of victory flappy and pong ({self.total_flappy_victory}, {self.total_pong_victory}), and total matches played ({self.total_flappy_matches}, {self.total_pong_matches}) and total tournament played flappy and pong ({self.total_flappy_tournament_played}, {self.total_pong_tournament_played}) and victory tournament ({self.total_flappy_tournament_victory}, {self.total_pong_tournament_victory}) "
 	
 class UpdateMatchStatistics(models.Model):
 	player_id1 = models.IntegerField()

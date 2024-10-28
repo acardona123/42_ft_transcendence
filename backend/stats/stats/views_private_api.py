@@ -1,6 +1,5 @@
 from .models import Statistics
 from .serializer import StatisticsSerializer, UpdateMatchStatisticsSerializer, UpdateTournamentStatisticsSerializer
-# from .views import update_statistics
 from rest_framework import status
 
 
@@ -50,7 +49,7 @@ DOC_USER_STATS_CREATED = openapi.Response(
 	responses={
 		201: DOC_USER_STATS_CREATED,
 		400: DOC_ERROR_BAD_REQUEST,
-		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
 def create_statistics_user(request):
@@ -59,7 +58,6 @@ def create_statistics_user(request):
 		serializer.save()
 		return Response({'message': "stats user created"}, status=status.HTTP_201_CREATED)
 	else:
-		print(serializer.errors)
 		return Response({'message': "stats user not created", 
 				   		'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -99,7 +97,7 @@ DOC_USER_STATS_MATCH_UPDATED = openapi.Response(
 	responses={
 		201: DOC_USER_STATS_MATCH_UPDATED,
 		400: DOC_ERROR_STATS_MATCH_NOT_UPDATED,
-		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
 def generate_match_data_stats(request):
@@ -107,17 +105,18 @@ def generate_match_data_stats(request):
 	if serializer.is_valid():
 		serializer.save()
 		return Response({"message": "Statistics  match updated successfully",
-				   		"errors": serializer.errors}
+				   		"data": serializer.errors}
 						, status=status.HTTP_200_OK)
 	else:
-		return Response({"message": "statistics match were not updated"}, status=status.HTTP_400_BAD_REQUEST)
+		return Response({"message": "statistics match were not updated",
+				   		 "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 DOC_ERROR_STATS_TOURNAMENT_NOT_UPDATED = openapi.Response(
 			description="statistics tournament of the user were not updated",
 			examples={
 				"application/json": {
-					"message": "statistics tournament of the user were not updated", 
+					"message": "statistics tournament of the users were not updated", 
 					"data": "errors"
 				}
 			}
@@ -129,6 +128,7 @@ DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
 			examples={
 				"application/json": {
 					"message": "statistics tournament updated successfully",
+					"data": "errors"
 				}
 			}
 		)
@@ -151,7 +151,7 @@ DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
 	responses={
 		201: DOC_USER_STATS_TOURNAMENT_UPDATED,
 		400: DOC_ERROR_STATS_TOURNAMENT_NOT_UPDATED,
-		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
 def generate_tournament_data_stats(request):
@@ -160,4 +160,5 @@ def generate_tournament_data_stats(request):
 		serializer.save()
 		return Response({"message": "Statistics tournament updated successfully"}, status=status.HTTP_200_OK)
 	else:
-		return Response({"message": "Data to update tournament statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+		return Response({"message": "statistics tournament of the users were not updated",
+				   		 "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

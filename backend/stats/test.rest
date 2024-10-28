@@ -4,8 +4,7 @@ Host: localhost:8006
 Content-Type: application/json
 
 {
-	"player_id" : "2",
-	"total_flappy_matches" : "6000"
+	"player_id" : "2"
 }
 
 ### --- Post data Match ---
@@ -15,9 +14,9 @@ Content-Type: application/json
 
 {
 	"player_id1" : "1",
-	"player_id2" : "9",
+	"player_id2" : "2",
 	"game" : "flappy",
-	"winner" : "9"
+	"winner" : "1"
 }
 
 ### --- Post data tournament ---
@@ -28,7 +27,7 @@ Content-Type: application/json
 
 {
 	"list_participants" : [1, 2, 3],
-	"winner" : "2",
+	"winner" : "4",
 	"game" : "flappy"
 }
 
