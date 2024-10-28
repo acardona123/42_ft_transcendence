@@ -231,7 +231,12 @@ function handleTournamentFormSubmission() {
 		}
 
 		close_modal('modal-tournament-creation', undefined, true);
-		open_modal('modal-tournament-round-program', undefined, tournament_round_program_init, false);
+
+		if (tournament_data.nb_guest > 0){
+			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
+		} else {
+			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
+		}
 	});
 }
 

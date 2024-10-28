@@ -38,7 +38,7 @@ function display_tournament_guests(){
 }
 
 function display_tournament_round_program(){
-	open_modal("modal-tournament-round-program", undefined, tournament_round_program_init, false);
+	open_modal("modal-tournament-round-program", undefined, init_modal_tournament_round_program, false);
 }
 
 function display_tournament_winner(){

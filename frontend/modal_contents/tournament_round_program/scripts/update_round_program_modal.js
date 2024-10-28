@@ -128,6 +128,7 @@ async function regenerate_round_elements(){
 
 function update_round_matches_content(){
 	const round_matches_elem = document.getElementById(tournament_match_list_id);
+	round_matches_elem.innerHTML = '';
 	new_matches_list.forEach(match => {
 		round_matches_elem.appendChild(match)
 	});
