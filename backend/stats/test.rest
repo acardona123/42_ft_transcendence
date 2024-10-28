@@ -4,7 +4,8 @@ Host: localhost:8006
 Content-Type: application/json
 
 {
-	"player_id" : "3"
+	"player_id" : "7",
+	"total_flappy_matches" : "6000"
 }
 
 ### --- Post data Match ---
@@ -14,9 +15,9 @@ Content-Type: application/json
 
 {
 	"player_id1" : "1",
-	"player_id2" : "2",
+	"player_id2" : "9",
 	"game" : "flappy",
-	"winner" : "2"
+	"winner" : "9"
 }
 
 ### --- Post data tournament ---
@@ -32,4 +33,4 @@ Content-Type: application/json
 }
 
 ### --- Get user statistics ---
-GET http://localhost:8006/api/stats/2 HTTP/1.1
+GET http://localhost:8006/api/stats/6 HTTP/1.1

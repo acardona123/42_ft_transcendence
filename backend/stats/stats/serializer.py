@@ -24,7 +24,9 @@ def validate_a_player(player_id):
 	Raises:
    		serializers.ValidationError: If the player ID is negative or does not exist in the Statistics database.
 	'''
+	print("beginiing of validate a player")
 	if not validate_id(player_id):
+		print("raise validate a player")
 		raise serializers.ValidationError(f"The player id {player_id} doesn't exist in the db Statistics")
 	return player_id
 
@@ -40,8 +42,8 @@ class StatisticsSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Statistics
-		fields = '__all__'
-		# fields = ('player_id',)
+		# fields = '__all__'
+		fields = ('player_id',)
 
 	def validate(self, data):
 		id_val = data.get('player_id')
@@ -50,6 +52,12 @@ class StatisticsSerializer(serializers.ModelSerializer):
 		if id_exists:
 			raise serializers.ValidationError("A Statistics object with this player_id already exist.")
 		return data
+
+class StatisticsPublicSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = Statistics
+		fields = '__all__'
 
 class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 
@@ -86,7 +94,13 @@ class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 		game = validated_data.get('game')
 		winner = validated_data.get('winner')
 
+		print("before get object")
 		#rajouter try ou deja call par get ??
+		try:
+			stats = Statistics.objects.get(player_id=player_id2)
+		except Statistics.DoesNotExist:
+			raise serializers.ValidationError(f"Player id {player_id2} was not found")
+
 		player1_stats = Statistics.objects.get(player_id=player_id1)
 		player2_stats = Statistics.objects.get(player_id=player_id2)
 

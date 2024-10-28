@@ -28,7 +28,8 @@ def create_statistics_user(request):
 		return Response({'message': "stats user created"}, status=status.HTTP_201_CREATED)
 	else:
 		print(serializer.errors)
-		return Response({'message': "stats user not created"}, status=status.HTTP_400_BAD_REQUEST)
+		return Response({'message': "stats user not created", 
+				   		'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -36,7 +37,9 @@ def generate_match_data_stats(request):
 	serializer = UpdateMatchStatisticsSerializer(data=request.data)
 	if serializer.is_valid():
 		serializer.save()
-		return Response({"message": "Statistics  match updated successfully"}, status=status.HTTP_200_OK)
+		return Response({"message": "Statistics  match updated successfully",
+				   		"errors": serializer.errors}
+						, status=status.HTTP_200_OK)
 	else:
 		return Response({"message": "Data to update match statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
