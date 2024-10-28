@@ -59,6 +59,10 @@ function add_guest_to_updated_list(guest_username){
 
 	new_guest_div.appendChild(guest_username_text);
 
+	new_guest_div.addEventListener('click', () => {
+        new_guest_div.classList.toggle('active');
+    });
+
 	new_guests_list.push(new_guest_div);
 }
 
