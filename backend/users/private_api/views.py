@@ -257,7 +257,10 @@ def create_ai(request):
 
 def get_random_username():
 	while True:
-		word = f"{get_random_word()}#{random.randint(0000,9999):04d}"
+		word = get_random_word()
+		if word is None:
+			word = "Guest"
+		word = f"{word}#{random.randint(0000,9999):04d}"
 		if not CustomUser.objects.filter(username=word).exists():
 			break
 	return word
