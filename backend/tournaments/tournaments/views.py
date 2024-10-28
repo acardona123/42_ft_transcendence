@@ -45,7 +45,7 @@ def create_tournament(request):
 	try:
 		tournament = Tournament.objects.create(host=request.user.id)
 		tournament.participant_set.create(user=request.user.id, type=Participant.UserType.USER)
-		return Response({"message": doc.MSG_TOUNAMENT_CREATED,
+		return Response({"message": doc.MSG_TOURNAMENT_CREATED,
 						"data": {"tournament_id": tournament.id}}, status=200)
 	except:
 		return Response({"message": doc.MSG_ERROR_CREATE_TOURNAMENT}, status=500)
@@ -99,7 +99,7 @@ class ManagePlayer(APIView):
 		response = requests.post(url=url, data={"username":username, "pin":pin})
 		response_json = response.json()
 		if response.status_code != 200 or response_json['data'].get('valid') == False:
-			return Response({"message": doc.MSG_INVALID_CREDS}, status=401)
+			return Response({"message": doc.MSG_INVALID_CRED}, status=401)
 		user_id = response_json['data'].get('user_id')
 		return add_participant(tournament, user_id, username)
 
@@ -124,9 +124,9 @@ class ManagePlayer(APIView):
 			return Response({"message": doc.MSG_INVALID_PLAYER}, status=400)
 		player = tournament.participant_set.get(id=player_id)
 		if tournament.host == player.user:
-			return Response({"message": doc.MSG_ERROR_REOMVE_HOST}, status=400)
+			return Response({"message": doc.MSG_ERROR_REMOVE_HOST}, status=400)
 		tournament.participant_set.filter(id=player_id).delete()
-		return Response({"message": doc.MSG_REVOME_PLAYER,
+		return Response({"message": doc.MSG_REMOVE_PLAYER,
 						"data": {"player_id": player_id}}, status=200)
 
 @swagger_auto_schema(method='post',
@@ -161,7 +161,7 @@ def start_tournament(request):
 							context={'nb_player': nb_players})
 	if serializer.is_valid():
 		serializer.save()
-		return Response({"message": doc.MSG_TRN_VALIDE}, status=200)
+		return Response({"message": doc.MSG_TRN_VALID}, status=200)
 	else:
 		return Response({"message": doc.MSG_ERROR_TRN,
 				"data": serializer.errors}, status=400)
