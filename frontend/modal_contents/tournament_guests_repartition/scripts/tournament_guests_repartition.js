@@ -73,7 +73,6 @@ async function regenerate_guests_elements(){
 	guests_data.forEach(guest => {
 		add_guest_to_updated_list(guest)
 	});
-
 }
 
 
@@ -87,7 +86,7 @@ function get_no_guest_instructions(){
 
 function get_guests_instructions(){
 	const guest_instructions = document.createElement('p');
-	guest_instructions.textContent = "Dear guests, here is the lists of the pseudos you'll have during this tournament. Chose which one is who's, but remember: you'll have plenty of time to fight later so stay calm.";
+	guest_instructions.textContent = "Dear guests, here is the list of the pseudos you'll have during this tournament. Chose which one is who's, but remember: you'll have plenty of time to fight later so stay calm.";
 	return guest_instructions;
 }
 
@@ -108,15 +107,10 @@ function update_guests_instructions_display(){
 
 function update_guests_lists_display(){
 	let guest_list = document.getElementById(tournament_guests_list_id);
-	if (new_guests_list.length == 0){
-		const no_guest_elem = generate_no_guest_element();
-		guest_list.replaceChildren(no_guest_elem);
-	} else {
-		guest_list.innerHTML = '';
-		new_guests_list.forEach(guest => {
-			guest_list.appendChild(guest);
-		});
-	}
+	guest_list.innerHTML = '';
+	new_guests_list.forEach(guest => {
+		guest_list.appendChild(guest);
+	});
 }
 
 
