@@ -200,5 +200,7 @@ def login_oauth(request):
 @permission_classes([IsNormalToken])
 def get_user_info(request):
 	serializer = UserInfoSerializer(request.user)
+	data = dict(serializer.data)
+	data['is_2fa_enable'] = (data['is_2fa_enable'] and TOTPDevice.objects.filter(user=request.user).first().confirmed)
 	return Response({"message": "Get user info",
-				"data": serializer.data}, status=200)
+				"data": data}, status=200)
