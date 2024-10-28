@@ -8,12 +8,47 @@
 
 #trp-header{
 	margin: 0;
-	padding: 0
+	padding: 0;
+	flex-shrink: 0;
+	align-items: center;
+	/* min-height: 100px !important; */
 }
 #trp-title{
 	text-align: center;
-	width: 100%
+	width: 95%
 }
+
+
+.trp-btn-close {
+	position: relative;
+	/* left: 2%; */
+	min-width : 40px;
+	max-width: 60px;
+	/* padding: 2px; */
+	width: 6% !important;
+	height: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	margin-right: 0.2em !important;
+	/* transform: translate(0, 0); */
+	transition: transform 0.5s !important;
+}
+
+.trp-btn-close:hover, .trp-btn-close:focus {
+	transform: scale(1.05);
+	/* transform: translate(-5%, 0); */
+	/* transition: all 0.5s; */
+}
+
+.trp-btn-close-icon {
+	position: relative;
+	width: 80%;
+	/* display: none; */
+}
+
+
+
+/* ===== body ===== */
 
 
 

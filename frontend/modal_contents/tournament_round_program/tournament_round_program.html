@@ -6,7 +6,9 @@
 				<h1 class="modal-title"  aria-describedby="modal title" id="trp-title">
 					Tournament round matches
 				</h1>
-				<button type="button" class="btn btn-start" data-bs-dismiss="modal" style="background-color: red">Close, BUTTON TO DELL</button>
+				<button type="button" tabindex="1" class="btn trp-btn-close" onclick="close_modal('modal-tournament-round-program', undefined, false)">
+					<img class="trp-btn-close-icon" src="img/cross.png" alt="Return">
+				</button>
 			</div>
 			<!-- Modal body -->
 			<div class="modal-body" aria-describedby="content">
@@ -24,7 +26,7 @@
 			</div>
 			<!-- Modal footer -->
 			<div class="modal-footer" id="trp-footer">
-				<button type="button" class="btn btn-start button-galaxy" onclick="tournament_start_round()">Lets play</button>
+				<button type="button" tabindex="2" class="btn btn-start button-galaxy" onclick="tournament_start_round()">Lets play</button>
 			</div>
 		</div>
 	</div>
