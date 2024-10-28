@@ -20,7 +20,7 @@ function clear_register_error_fields(placeholders)
 {
 	for (field in placeholders)
 	{
-		placeholders[field].previousElementSibling.children[1].style.border = "thin solid black";
+		placeholders[field].previousElementSibling.children[1].style.border = "thin solid var(--dark-purple)";
 		placeholders[field].textContent = "";
 	}
 }

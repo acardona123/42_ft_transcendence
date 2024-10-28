@@ -7,14 +7,17 @@
 #register-main-content-div
 {
 	width: 100%;
-	border: thin solid black;
+	border: thin solid var(--dark-purple);
 	display: grid;
-	padding: 50px;
+	padding: 25px;
 	padding-top: 25px;
 	padding-bottom: 25px;
+	grid-template-columns: 1fr;
 	grid-template-rows: 0.1fr 1fr 0.25fr 0.1fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 #register-title-text
@@ -23,10 +26,14 @@
 	margin-top: 0;
 	padding-bottom: 50px;
 	font-size: 2em;
+	color: var(--dark-purple);
 }
 
 #register-inputs-form
 {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
@@ -34,7 +41,10 @@
 
 #register-42-api-div
 {
+	width: 100%;
 	margin: auto;
+	margin-top: 0;
+
 }
 
 .text-input-div
@@ -72,7 +82,8 @@
 
 .inputs-register
 {
-	border: thin solid black;
+	color: var(--dark-purple);
+	border: thin solid var(--dark-purple);
 	width: 100%;
 	height: 30px;
 	border-radius: 5px;
@@ -81,7 +92,10 @@
 
 #register-button
 {
+	width: 80%;
 	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #line-separator-register-div
@@ -97,7 +111,7 @@
 	margin: auto;
 	height: 1px;
 	width: 100%;
-	background-color: aliceblue;
+	background-color: var(--dark-purple);
 }
 
 #line-sep-left
@@ -106,10 +120,22 @@
 	margin-right: 10px;
 }
 
+#register-or
+{
+	color: var(--dark-purple);
+}
+
 #line-sep-right
 {
 	margin-right: 0;
 	margin-left: 10px;
+}
+
+#register-button-42-api
+{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #secondary-content-div
@@ -120,9 +146,12 @@
 
 #no-account-text
 {
-	border: thin solid black;
+	border-radius: 5px;
+	border: thin solid var(--dark-purple);
 	margin: auto;
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	color: var(--dark-purple);
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }

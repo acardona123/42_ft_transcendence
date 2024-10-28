@@ -15,18 +15,20 @@
 	--bs-modal-padding: 0;
 }
 
-.modal-content-borber {
+.modal-content-border {
 	border-radius: 50px !important;
 	border : 6px var(--violet) solid;
 	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
 }
 
-.modal-content-baground-color-dark-violet {
-	/* background-image: url('/img/test.jpg');
-    background-repeat: no-repeat;
-    background-size: cover; */
+.modal-content-background-color-dark-violet {
 	background-color: var(--dark-violet) !important;
 }
+
+.modal-content-background-color-lavender {
+	background-color: var(--lavender) !important;
+}
+
 
 /* === MODAL PLAY === */
 
