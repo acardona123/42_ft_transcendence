@@ -18,7 +18,7 @@ def get_tournament_id(request, query_string, status):
 		tournament_id = request.query_params.get('tournament_id', None)
 	else:
 		tournament_id = request.data.get('tournament_id', None)
-	if not tournament_id:
+	if tournament_id is None:
 		return Response({"message": doc.MSG_ERROR_TOURNAMENT_ID_REQUIRED},
 					status=400)
 	try:
@@ -45,7 +45,7 @@ def create_tournament(request):
 	try:
 		tournament = Tournament.objects.create(host=request.user.id)
 		tournament.participant_set.create(user=request.user.id, type=Participant.UserType.USER)
-		return Response({"message": doc.MSG_TOUNAMENT_CREATED,
+		return Response({"message": doc.MSG_TOURNAMENT_CREATED,
 						"data": {"tournament_id": tournament.id}}, status=200)
 	except:
 		return Response({"message": doc.MSG_ERROR_CREATE_TOURNAMENT}, status=500)
@@ -89,7 +89,7 @@ class ManagePlayer(APIView):
 	def post(self, request):
 		username = request.data.get("username", None)
 		pin = request.data.get("pin", None)
-		if not username or not pin:
+		if username is None or pin is None:
 			return Response({"message": doc.MSG_ERROR_USERNAME_PIN_REQUIRED},
 						status=400)
 		tournament = get_tournament_id(request, False, Tournament.GameStatus.CREATION)
@@ -99,7 +99,7 @@ class ManagePlayer(APIView):
 		response = requests.post(url=url, data={"username":username, "pin":pin})
 		response_json = response.json()
 		if response.status_code != 200 or response_json['data'].get('valid') == False:
-			return Response({"message": doc.MSG_INVALID_CREDS}, status=401)
+			return Response({"message": doc.MSG_INVALID_CRED}, status=401)
 		user_id = response_json['data'].get('user_id')
 		return add_participant(tournament, user_id, username)
 
@@ -124,9 +124,9 @@ class ManagePlayer(APIView):
 			return Response({"message": doc.MSG_INVALID_PLAYER}, status=400)
 		player = tournament.participant_set.get(id=player_id)
 		if tournament.host == player.user:
-			return Response({"message": doc.MSG_ERROR_REOMVE_HOST}, status=400)
+			return Response({"message": doc.MSG_ERROR_REMOVE_HOST}, status=400)
 		tournament.participant_set.filter(id=player_id).delete()
-		return Response({"message": doc.MSG_REVOME_PLAYER,
+		return Response({"message": doc.MSG_REMOVE_PLAYER,
 						"data": {"player_id": player_id}}, status=200)
 
 @swagger_auto_schema(method='post',
@@ -161,7 +161,7 @@ def start_tournament(request):
 							context={'nb_player': nb_players})
 	if serializer.is_valid():
 		serializer.save()
-		return Response({"message": doc.MSG_TRN_VALIDE}, status=200)
+		return Response({"message": doc.MSG_TRN_VALID}, status=200)
 	else:
 		return Response({"message": doc.MSG_ERROR_TRN,
 				"data": serializer.errors}, status=400)
@@ -222,9 +222,15 @@ def get_match_for_round(request):
 					'data': {'matches': matches}}, status=200)
 
 def create_match(tournament, players):
+	is_player2_bot = False
 	if players[0].type == Participant.UserType.BOT:
 		players1 = players[1]
 		players2 = players[0]
+		is_player2_bot = True
+	elif players[1].type == Participant.UserType.BOT:
+		players1 = players[0]
+		players2 = players[1]
+		is_player2_bot = True
 	else:
 		players1 = players[0]
 		players2 = players[1]
@@ -250,6 +256,7 @@ def create_match(tournament, players):
 		players2.save()
 		return Response({"message": doc.MSG_ERROR_MATCH}, status=500)
 	data = response.json().get('data')
+	data[0]["bot_level"] = "1" if is_player2_bot else "-1"
 	return Response({"message": doc.MSG_CREATE_MATCH, 'data': data}, status=201)
 
 def start_match(tournament):
@@ -330,12 +337,14 @@ def start_match_view(request):
 def match_finished(request):
 	score1 = request.data.get('score1', None)
 	score2 = request.data.get('score2', None)
-	if not score1 or not score2:
+	if score1 is None or score2 is None:
 		return Response({"message": doc.MSG_ERROR_SCORE_REQUIRED}, status=400)
 	tournament = get_tournament_id(request, False, Tournament.GameStatus.STARTED)
 	if isinstance(tournament, Response):
 		return tournament
 	players = list(tournament.participant_set.filter(match=tournament.next_match, is_eliminated=False))
+	if len(players) != 2:
+		return Response({"message": doc.MSG_ERROR_NO_PLAYER_FOUND}, status=400)
 	if not players[0].is_playing or not players[1].is_playing:
 		return Response({"message": doc.MSG_ERROR_PLAYER_NOT_PLAYING}, status=400)
 	if score1 == score2:
