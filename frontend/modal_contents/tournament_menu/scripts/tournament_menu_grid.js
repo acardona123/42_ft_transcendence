@@ -82,7 +82,7 @@ function disable_tournaments_buttons() {
 		button_add_ia.disabled = false;
 	}
 
-	if (nb_cards >= 3)
+	if (get_max_values_from_form("tournament-form") <= 1 && nb_cards >= 3)
 	{
 		document.getElementById('tournament_validate_button').disabled = false;
 	}

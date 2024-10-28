@@ -97,13 +97,13 @@
 /* === MODAL TOURNAMENT CREATION === */
 
 #modal-tournament-creation-dialog {
-	height: 85vh !important;
+	height: 100vh !important;
 	width: 100% !important;
 
 	/* min-width: 700px; */
 	max-width: 1600px;
 
-	--bs-modal-margin: 7.5vh 0 7.5vh 0;
+	/* --bs-modal-margin: 5vh 0 5vh 0; */
 }
 
 #modal-tournament-creation-content {

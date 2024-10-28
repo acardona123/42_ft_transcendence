@@ -1,6 +1,6 @@
 <div class="modal" id="modal-versus-match-creation" tabindex="-1">
 	<div id="modal-versus-match-creation-dialog" class="modal-dialog modal-dialog-overwrite-size grow-top-right">
-		<div id="modal-versus-match-creation-content" class="modal-content main-container purple-bg">
+		<div id="modal-versus-match-creation-content" class="modal-content main-container modal-content-border modal-content-background-color-dark-violet">
 			<div class="header">
 				<button type="button" tabindex="1" class="btn btn-return" data-bs-dismiss="modal" onclick="return_to_modal_play('modal-versus-match-creation')">
 					<img class="btn-return-icon" src="img/fleche-gauche.png" alt="Return">
@@ -30,7 +30,24 @@
 							<p>GUEST</p>
 						</div>
 						<div id="ErrorBoxConnectionVSGuest" class="error">An error occured. Please try again.</div>
-						<button id="VSGuestPlayButton" class="btn btn-primary">PLAY</button>
+						<!-- <button id="VSGuestPlayButton" class="btn btn-primary">PLAY</button> -->
+						<button id="VSGuestPlayButton" type="submit" class="btn validate-btn">
+							PLAY
+							<div class="icon">
+							<svg
+								height="24"
+								width="24"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M0 0h24v24H0z" fill="none"></path>
+								<path
+								d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+								fill="currentColor"
+								></path>
+							</svg>
+							</div>
+						</button>
 					</div>
 					<!-- Submit User VS Player-->
 					<div id="BoxVSPlayer" class="box">
@@ -54,7 +71,24 @@
 							</div>
 								<div id="ErrorBoxConnectionVSPlayer" class="error">An error occured. Please try again.</div>
 						</div>
-						<button id="VSPlayerPlayButton" class="btn btn-primary">PLAY</button>
+						<!-- <button id="VSPlayerPlayButton" class="btn btn-primary">PLAY</button> -->
+						<button id="VSPlayerPlayButton" type="submit" class="btn validate-btn">
+							PLAY
+							<div class="icon">
+							<svg
+								height="24"
+								width="24"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M0 0h24v24H0z" fill="none"></path>
+								<path
+								d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+								fill="currentColor"
+								></path>
+							</svg>
+							</div>
+						</button>
 					</div>
 				</div>
 			</form>

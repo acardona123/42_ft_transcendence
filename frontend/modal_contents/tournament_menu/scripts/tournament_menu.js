@@ -8,12 +8,6 @@ function OnClickToggleContainerConnectedPlayer() {
 	btn.addEventListener('click', ToggleContainerConnectedPlayer);
 }
 
-// function EscapeContainerConnectedPlayer(event) {
-// 	if (event.key === 'Escape') {
-// 		ToggleContainerConnectedPlayer();
-// 	}
-// }
-
 function LoseFocusContainerConnectedPlayer(event) {
 	const toggleBtn = document.getElementById('ToggleConnectedPlayerContainer');
 	const playerContainer = document.getElementById('AddConnectedPlayerContainer');
@@ -269,6 +263,27 @@ function tournament_creation_setup_display_on_game()
 	}
 }
 
+function check_not_enough_player_tournament()
+{
+	const button = document.getElementById('tournament_validate_button');
+
+	const sliders = Array.from(document.getElementById('tournament-form').querySelectorAll('.slider'));
+
+	const countMaxValues = sliders.filter(slider => slider.value === slider.max).length;
+
+	if (countMaxValues > 1)
+	{
+		button.disabled = true;
+	}
+	else
+	{
+		if (nb_cards >= 3)
+			button.disabled = false;
+		else
+			button.disabled = true;
+	}
+}
+
 function initTournamentCreation() {
 	tournament_creation_setup_display_on_game();
 
@@ -289,9 +304,6 @@ function initTournamentCreation() {
 	const button = document.getElementById('tournament_validate_button');
 
 	button.disabled = true;
-
-	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
-	// disableFormSubmitOnEnter('PlayerConnectedPin');
 
 }
 
@@ -334,13 +346,6 @@ let tournament_id = undefined;
 
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();
-
-
-	// document.addEventListener('keydown', (event) => {
-	// 	if (event.key === "Escape") {
-	// 		returnToModalPlay("TournamentMatchCreation")
-	// 	}
-	// });
 
 	pincodeOnlyDigits('PlayerConnectedPin');
 	OnClickToggleContainerConnectedPlayer();

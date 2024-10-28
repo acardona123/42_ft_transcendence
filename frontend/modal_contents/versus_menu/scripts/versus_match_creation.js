@@ -1,14 +1,4 @@
-function checkSlidersMax() {
-	const sliders = document.getElementById('versus-match-form').querySelectorAll('.slider');
-
-	sliders.forEach((slider) => {
-		slider.addEventListener('input', () => {
-			handleButtonsSubmit();
-		});
-	});
-}
-
-function handleButtonsSubmit() {
+function disable_buttons_versus_form() {
 	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
 	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
 
@@ -78,7 +68,6 @@ function initBoxs() {
 			input.classList.add('cursor-default');
 		});
 		clearErrorFields();
-		handleButtonsSubmit();
 	});
 
 	// Handle focus on Box VSPlayer
@@ -94,7 +83,6 @@ function initBoxs() {
 		BoxVSGuest.classList.remove('centered');
 		VSGuestPlayButton.disabled = true;
 		clearErrorFields();
-		handleButtonsSubmit();
 	});
 }
 
@@ -299,8 +287,6 @@ document.addEventListener("onModalsLoaded", function()
 
 	clearErrorFields();
 	clearInputFields();
-
-	checkSlidersMax();
 
 	initBoxs();
 	reset_box_display();
