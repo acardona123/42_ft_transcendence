@@ -348,6 +348,10 @@ def match_finished(request):
 	if not players[0].is_playing or not players[1].is_playing:
 		return Response({"message": doc.MSG_ERROR_PLAYER_NOT_PLAYING}, status=400)
 	if score1 == score2:
+		players[0].is_playing = False
+		players[1].is_playing = False
+		players[0].save()
+		players[1].save()
 		return Response({'message': doc.MSG_MATCH_TIE}, status=200)
 	winner = 1 if score1 > score2 else 2
 	if players[0].position != winner:
