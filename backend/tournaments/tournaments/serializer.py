@@ -34,7 +34,7 @@ class TournamentSerializer(serializers.ModelSerializer):
 		if attrs['game'] == Tournament.GameType.FLAPPY_BIRD and attrs['nb_ai'] != 0:
 			raise serializers.ValidationError({'nb_ai': "No AI available for Flappy Bird"})
 		if attrs['max_duration'] == -1 and attrs['max_score'] == -1:
-			raise serializers.ValidationError("Impossible to set max score and duraion to infiny")
+			raise serializers.ValidationError("Impossible to set max score and duration to infinite")
 		return super().validate(attrs)
 
 	def update(self, instance, validated_data):
