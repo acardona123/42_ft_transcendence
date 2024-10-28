@@ -222,7 +222,7 @@ async function submit_tournament_creation(tournament_data)
 }
 
 function handleTounamentFormSubmission() {
-	document.getElementById('TournamentForm').addEventListener('submit', async (event) => {
+	document.getElementById('tournament-form').addEventListener('submit', async (event) => {
 		event.preventDefault();
 
 		timeSliderValue = document.getElementById('tournamentTimeSlider').value;
@@ -279,7 +279,7 @@ function initTournamentCreation() {
 	sliderPoints.value = 5;
 
 	/* Slider */
-	updateSlider("TournamentForm");
+	updateSlider("tournament-form");
 
 	/* Visual Features */
 	clearInputFields();

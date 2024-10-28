@@ -1,5 +1,5 @@
 function checkSlidersMax() {
-	const sliders = document.getElementById('1v1MatchForm').querySelectorAll('.slider');
+	const sliders = document.getElementById('versus-match-form').querySelectorAll('.slider');
 
 	sliders.forEach((slider) => {
 		slider.addEventListener('input', () => {
@@ -15,7 +15,7 @@ function handleButtonsSubmit() {
 	const BoxVSGuest = document.getElementById('BoxVSGuest');
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
 
-	const sliders = Array.from(document.getElementById('1v1MatchForm').querySelectorAll('.slider'));
+	const sliders = Array.from(document.getElementById('versus-match-form').querySelectorAll('.slider'));
 
 	const countMaxValues = sliders.filter(slider => slider.value === slider.max).length;
 
@@ -31,6 +31,30 @@ function handleButtonsSubmit() {
 		else if (BoxVSPlayer.classList.contains('centered', 'side'))
 			VSPlayerPlayButton.disabled = false;
 	}
+}
+
+function reset_box_display()
+{
+	const BoxVSGuest = document.getElementById('BoxVSGuest');
+	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
+	
+	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
+	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
+	const VSPlayerInputs = document.getElementById('add-player-inputs').querySelectorAll('input');
+
+	// Set initial settings
+	BoxVSGuest.style.opacity = 1;
+	BoxVSGuest.classList.remove('centered', 'side');
+	BoxVSGuest.classList.add('centered');
+	VSGuestPlayButton.disabled = false;
+	
+	BoxVSPlayer.style.opacity = 0.7;
+	BoxVSPlayer.classList.remove('centered', 'side');
+	BoxVSPlayer.classList.add('side');
+	VSPlayerPlayButton.disabled = true;
+	VSPlayerInputs.forEach(input => {
+		input.classList.add('cursor-default');
+	});
 }
 
 function initBoxs() {
@@ -72,19 +96,6 @@ function initBoxs() {
 		clearErrorFields();
 		handleButtonsSubmit();
 	});
-
-	// Set initial settings
-	BoxVSGuest.style.opacity = 1;
-	BoxVSGuest.classList.remove('centered', 'side');
-	BoxVSGuest.classList.add('centered');
-	VSGuestPlayButton.disabled = false;
-	
-	BoxVSPlayer.style.opacity = 0.7;
-	BoxVSPlayer.classList.remove('centered', 'side');
-	VSPlayerPlayButton.disabled = true;
-	VSPlayerInputs.forEach(input => {
-		input.classList.add('cursor-default');
-	});
 }
 
 function CheckPlayer2Data() {
@@ -116,7 +127,7 @@ function CheckPlayer2Data() {
 }
 
 function handle1v1FormSubmission() {
-	document.getElementById('1v1MatchForm').addEventListener('submit', (event) => {
+	document.getElementById('versus-match-form').addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		const timeSliderValue = document.getElementById('1v1TimeSlider').value;
@@ -264,17 +275,19 @@ function initMatchVersusCreation() {
 	sliderTime.value = 45;
 	sliderPoints.value = 5;
 
-	updateSlider("1v1MatchForm");
+	updateSlider("versus-match-form");
 
 	clearErrorFields();
 	clearInputFields();
+
+	reset_box_display();
 
 	modal_play.hide();
 }
 
 document.addEventListener("onModalsLoaded", function()
 {
-	updateSlider("1v1MatchForm");
+	updateSlider("versus-match-form");
 
 	// document.addEventListener('keydown', (event) => {
 	// 	if (event.key === "Escape") {
@@ -290,6 +303,7 @@ document.addEventListener("onModalsLoaded", function()
 	checkSlidersMax();
 
 	initBoxs();
+	reset_box_display();
 
 	handle1v1FormSubmission();
 });

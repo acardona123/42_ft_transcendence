@@ -34,12 +34,11 @@
 
 #modal-play-dialog {
 	height: 80vh !important;
-	width: 60vw !important;
+	width: 100% !important;
 
-	min-width: 500px;
-	max-width: none;
+	max-width: 800px;
 	
-	--bs-modal-margin: 10vh 0 0 0;
+	--bs-modal-margin: 10vh 0 10vh 0;
 }
 
 #modal-play-content {
@@ -54,15 +53,18 @@
 
 #modal-ia-match-creation-dialog {
 	height: 60vh !important;
-	width: 50vw !important;
+	width: 100% !important;
 
-	min-width: 600px;
+	/* min-width: 600px; */
+	max-width: 800px;
 	
-	--bs-modal-margin: 20vh 0 0 0;
+	--bs-modal-margin: 20vh 0 20vh 0;
 }
 
 #modal-ia-match-creation-content {
 	height: 100% !important;
+
+	overflow: auto;
 
 	padding: 10px;
 
@@ -74,15 +76,18 @@
 
 #modal-versus-match-creation-dialog {
 	height: 85vh !important;
-	width: 55vw !important;
+	width: 100% !important;
 
-	min-width: 600px;
+	/* min-width: 600px; */
+	max-width: 900px;
 
-	--bs-modal-margin: 7.5vh 0 0 0;
+	--bs-modal-margin: 7.5vh 0 7.5vh 0;
 }
 
 #modal-versus-match-creation-content {
 	height: 100% !important;
+
+	overflow: auto;
 
 	padding: 10px;
 }
@@ -93,15 +98,18 @@
 
 #modal-tournament-creation-dialog {
 	height: 85vh !important;
-	width: 90vw !important;
+	width: 100% !important;
 
-	min-width: 700px;
+	/* min-width: 700px; */
+	max-width: 1600px;
 
-	--bs-modal-margin: 7.5vh 0 0 0;
+	--bs-modal-margin: 7.5vh 0 7.5vh 0;
 }
 
 #modal-tournament-creation-content {
 	height: 100% !important;
+
+	overflow: auto;
 
 	padding: 10px;
 }
