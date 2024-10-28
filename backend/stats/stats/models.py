@@ -4,7 +4,7 @@ from django.db import models
 class Statistics(models.Model):
 	use_in_migrations = True
 
-	player_id = models.IntegerField(null=True) #rajouter le unique peut etre
+	player_id = models.IntegerField(null=True, unique=True)
 	total_flappy_matches = models.IntegerField(default=0)
 	total_pong_matches = models.IntegerField(default=0)
 	total_flappy_victory = models.IntegerField(default=0)
