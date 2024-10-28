@@ -39,7 +39,7 @@ function initBoxs() {
 	
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
 	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
-	const VSPlayerInputs = document.getElementById('AddPlayerInputs').querySelectorAll('input');
+	const VSPlayerInputs = document.getElementById('add-player-inputs').querySelectorAll('input');
 
 	// Handle focus on Box VSGuest
 	BoxVSGuest.addEventListener('mouseenter', () => {

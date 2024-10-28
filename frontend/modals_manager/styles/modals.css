@@ -34,7 +34,8 @@
 	height: 80vh !important;
 	width: 60vw !important;
 
-	min-width: 600px;
+	min-width: 500px;
+	max-width: none;
 	
 	--bs-modal-margin: 10vh 0 0 0;
 }
@@ -42,6 +43,7 @@
 #modal-play-content {
 	overflow: auto;
 	height: 100% !important;
+	width: 100% !important;
 }
 
 /* ================================================ */
