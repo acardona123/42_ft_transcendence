@@ -18,7 +18,7 @@ def get_tournament_id(request, query_string, status):
 		tournament_id = request.query_params.get('tournament_id', None)
 	else:
 		tournament_id = request.data.get('tournament_id', None)
-	if not tournament_id:
+	if tournament_id is None:
 		return Response({"message": doc.MSG_ERROR_TOURNAMENT_ID_REQUIRED},
 					status=400)
 	try:
@@ -89,7 +89,7 @@ class ManagePlayer(APIView):
 	def post(self, request):
 		username = request.data.get("username", None)
 		pin = request.data.get("pin", None)
-		if not username or not pin:
+		if username is None or pin is None:
 			return Response({"message": doc.MSG_ERROR_USERNAME_PIN_REQUIRED},
 						status=400)
 		tournament = get_tournament_id(request, False, Tournament.GameStatus.CREATION)
@@ -337,7 +337,7 @@ def start_match_view(request):
 def match_finished(request):
 	score1 = request.data.get('score1', None)
 	score2 = request.data.get('score2', None)
-	if not score1 or not score2:
+	if score1 is None or score2 is None:
 		return Response({"message": doc.MSG_ERROR_SCORE_REQUIRED}, status=400)
 	tournament = get_tournament_id(request, False, Tournament.GameStatus.STARTED)
 	if isinstance(tournament, Response):
