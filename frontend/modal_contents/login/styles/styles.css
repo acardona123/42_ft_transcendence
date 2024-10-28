@@ -6,17 +6,18 @@
 
 #login-main-content-div
 {
-	border: thin solid black;
-	border-radius: 3px;
+	width: 100%;
+	border: thin solid var(--dark-purple);
 	display: grid;
-	padding: 50px;
+	padding: 25px;
 	padding-top: 50px;
 	padding-bottom: 25px;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
 	grid-column-gap: 0px;
 	grid-row-gap: 0px;
-	width: 100%;
+	border-radius: 5px;
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 #login-title-text
@@ -24,6 +25,7 @@
 	margin: auto;
 	margin-top: 0;
 	font-size: 2em;
+	color: var(--dark-purple);
 }
 
 #login-title-div
@@ -53,6 +55,9 @@
 
 #login-inputs-form
 {
+	width:80%;
+	margin-left: auto;
+	margin-right: auto;
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
@@ -60,7 +65,9 @@
 
 #login-42-api-div
 {
+	width: 100%;
 	margin: auto;
+	margin-top: 0;
 }
 
 .login-text-input-div
@@ -87,7 +94,8 @@
 
 .inputs-login
 {
-	border: thin solid black;
+	border: thin solid var(--dark-purple);
+	color: var(--dark-purple);
 	width: 100%;
 	height: 30px;
 	border-radius: 5px;
@@ -97,7 +105,10 @@
 
 #login-button
 {
+	width: 80%;
 	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #line-separator-login-div
@@ -113,7 +124,7 @@
 	margin: auto;
 	height: 1px;
 	width: 100%;
-	background-color: aliceblue;
+	background-color: var(--dark-purple);
 }
 
 #login-line-sep-left
@@ -122,10 +133,22 @@
 	margin-right: 10px;
 }
 
+#login-or
+{
+	color: var(--dark-purple);
+}
+
 #login-line-sep-right
 {
 	margin-right: 0;
 	margin-left: 10px;
+}
+
+#login-button-42-api
+{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #login-secondary-content-div
@@ -136,11 +159,14 @@
 
 #login-no-account-text
 {
-	border: thin solid black;
+	border-radius: 5px;
+	border: thin solid var(--dark-purple);
 	margin: auto;
 	text-align: center;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	color: var(--dark-purple);
+	box-shadow: 2px 2px 7px 1px var(--dark-violet), -2px -2px 7px 1px var(--dark-violet);
 }
 
 .button-link-signup-login

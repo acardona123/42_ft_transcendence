@@ -2,7 +2,7 @@ function clear_edp_pass_error_fields()
 {
 	for (field in edp_placeholders_pass)
 	{
-		edp_placeholders_pass[field].style.border = "thin solid black";
+		edp_placeholders_pass[field].style.border = "thin solid var(--dark-purple)";
 		edp_placeholders_pass[field].value = "";
 		edp_placeholders_pass[field].parentNode.children[2].innerHTML = "";
 	}
