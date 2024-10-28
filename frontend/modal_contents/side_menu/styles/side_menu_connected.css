@@ -104,6 +104,7 @@
 	width: 85%;
 	height: 8%;
 	min-height: 45px;
+	min-width: 170px;
 	font-size: 2em;
 	margin-bottom: 15%;
 }
@@ -114,6 +115,7 @@
 	width: 85%;
 	height: 8%;
 	min-height: 45px;
+	min-width: 170px;
 	font-size: 2em;
 	margin-bottom: 20%;
 }
