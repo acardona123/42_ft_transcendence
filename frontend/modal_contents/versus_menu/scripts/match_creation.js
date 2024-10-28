@@ -1,6 +1,6 @@
 function calcValue(slider) {
 	let valuePercentage = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-	slider.style.background = 'linear-gradient(to right, var(--violet) ' + valuePercentage + '%, var(--blue) ' + valuePercentage + '%)';
+	slider.style.background = 'linear-gradient(to right, var(--violet) ' + valuePercentage + '%, var(--dark-violet) ' + valuePercentage + '%)';
 }
 
 function get_max_values_from_form(id)

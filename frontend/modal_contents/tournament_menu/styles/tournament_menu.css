@@ -83,7 +83,10 @@
 
 	align-items: center;
 
-	background-color: #b56d9b;
+	/* background-color: #b56d9b; */
+	background-color: var(--violet);
+
+	border-radius: 20px;
 
 	width: 100%;
 	height: 100%;
@@ -97,7 +100,7 @@
 	justify-content: space-evenly;
 	align-items: center;
 
-	background-color: #a1caff;
+	/* background-color: var(--violet); */
 	/* height: 43vh; */
 
 	width: 20%;
@@ -113,12 +116,17 @@
 	height: 100%;
 	width: 65%;
 
+	border-radius: 20px;
+
+	padding-left: 10px;
+	padding-right: 10px;
+
 	place-items: center;
 	place-content: center;
 	/* max-width: 600px; */
 	/* margin: 20px auto; */
 	position: relative;
-	background-color: #39da46;
+	/* background-color: var(--violet); */
 }
 
 .player-card {

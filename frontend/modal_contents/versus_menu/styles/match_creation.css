@@ -129,7 +129,8 @@
 .slider-label {
 	font-size: 20px;
 	margin-right: 2vh;
-	color: var(--dark-purple);
+	color: var(--lavender);
+	/* color: white; */
 }
 
 .slider {
@@ -185,8 +186,8 @@
 	font-size: 20px;
 	border-radius: 5px;
 
-	background-color: var(--violet);;
-	color: var(--lavender);
+	background-color: var(--violet);
+	color: var(--dark-purple);
 
 	width: 8vw;
 	min-width: fit-content;
@@ -233,7 +234,7 @@
 	width: 40%;
 	height: 100%;
 	/* background-color: rgb(241, 131, 40); */
-	background-color: #af5fbd;
+	background-color: var(--dark-lavender);
 	transition: all 0.3s ease-in-out;
 	border-radius: 20px;
 	/* margin: 10px; */
@@ -308,15 +309,14 @@
 	}
 }
 
-#VSPlayerPlayButton, #VSGuestPlayButton {
+#VSPlayerPlayButton,z {
 	margin: auto;
 }
 
  /* INPUT TEMPLATE */
  
- /* :focus{outline: none;} */
  
-.input-container {
+ .input-container {
 	position: relative;
 	float: left;
 	/* width: 27.33%; */
@@ -334,6 +334,8 @@
 	box-sizing: border-box;
 	letter-spacing: 1px;
 }
+
+.input-container input:focus{outline: none;}
 
 .input {
 	border: 0;
