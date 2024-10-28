@@ -15,11 +15,19 @@
 	align-items: flex-start;
 }
 
+#edp-picture-div
+{
+	position: relative;
+	margin-right: 20px;
+	min-width: 100px;
+}
+
 #edp-input-fields-div
 {
 	display: flex;
 	flex-direction: column;
 	width: 250px;
+	min-width: 250px;
 }
 
 #edp-picture-img
@@ -37,9 +45,9 @@
 	transition: filter 0.1s;
 	cursor: pointer;
 	z-index: 1;
-	position: relative;
-	top: 35px;
-	right: 33px;
+	position: absolute;
+	top: 70px;
+	right: 0px;
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
@@ -60,6 +68,9 @@
 
 #edp-save-informations-button
 {
+	width: 40%;
+	height: 30%;
+	margin: auto;
 	margin-top: 10px;
 }
 
@@ -99,6 +110,13 @@
 #edp-input-confirm-password
 {
 	margin-bottom: 10px;
+}
+
+#edp-button-submit-pass
+{
+	width: 40%;
+	height: 30%;
+	margin: auto;
 }
 
 .edp-2fa-edit-collapse-class-div

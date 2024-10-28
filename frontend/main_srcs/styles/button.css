@@ -21,7 +21,7 @@
 	box-shadow: 3px 3px 15px 3px var(--violet), -3px -3px 15px 3px var(--lavender);
 }
 
-/* ----------------- login/regitser Button----------------- */
+/* ----------------- login/register Button----------------- */
 
 .custom-border-radius {
 	border-radius: 15px !important;
@@ -83,6 +83,22 @@
 .space-btn:active {
 	background-origin: border-box;
 	background-clip: content-box, border-box;
+	animation: none;
+}
+
+.space-btn:disabled {
+	animation: none;
+	background-image: linear-gradient(var(--dark-purple), var(--dark-purple)),
+	  linear-gradient(
+		gray, gray
+	  );
+}
+
+.space-btn:disabled #space-stars::after{
+	animation: none;
+}
+
+.space-btn:disabled #space-stars::before{
 	animation: none;
 }
 
