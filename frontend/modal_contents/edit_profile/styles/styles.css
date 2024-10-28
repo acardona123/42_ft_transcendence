@@ -72,8 +72,15 @@
 
 .edp-input-class
 {
+	font-size: 1em;
 	border-radius: 5px;
 	color: var(--dark-purple);
+}
+
+.edp-input-password-class
+{
+	font-family: Lato, Arial, sans-serif;
+	letter-spacing: 1px;
 }
 
 #edp-password-edit-text
