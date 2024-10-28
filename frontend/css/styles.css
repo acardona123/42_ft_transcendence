@@ -115,6 +115,9 @@ body, html {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+
+	min-width: 550px;
+	min-height: 500px;
 }
 
 .top-triangle {

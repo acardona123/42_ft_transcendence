@@ -52,7 +52,7 @@
 .header {
 	display: flex;
 	align-items: center;
-	min-height: 50px !important;
+	min-height: 100px !important;
 }
 
 .header-text {
@@ -133,7 +133,7 @@
 	width: 100%;
 	min-width: 200px;
 	height: 1.5vh;
-	min-height: 8px;
+	min-height: 12px;
 	background-color: #ebe9e7;
 	outline: none;
 	border-radius: 5px;
@@ -149,6 +149,8 @@
 	appearance: none;
 	width: 2.2vh;
 	height: 2.2vh;
+	min-width: 20px;
+	min-height: 20px;
 	background-color: green;
 	border: 1px solid rgb(1, 98, 1);
 	border-radius: 50%;
@@ -284,7 +286,7 @@ p {
 
 .side {
 	width: 30%;
-	opacity: 0.7;
+	opacity: 0.7 !important;
 }
 
 #add-player-container {
@@ -414,4 +416,10 @@ input[type="text" ], input[type="password"] {
 	font-size: 14px;
 	display: none;
 	margin-top: 2vh;
+}
+
+
+#versus-match-form {
+	min-width: 800px;
+	min-height: 650px;
 }
