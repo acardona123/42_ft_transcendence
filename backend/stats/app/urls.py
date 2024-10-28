@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from stats.views_public_api import get_user_stats
 
 schema_view = get_schema_view(
 	openapi.Info(
@@ -33,7 +34,8 @@ urlpatterns = [
 	path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 	path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 	path("admin/", admin.site.urls),
-	path("api/stats/", include("stats.urls")),
+	path("api/stats/", get_user_stats),
+	path("api/private/stats/", include("stats.urls")),
 ]
 
 # mettre private dant les urls d'api prive api/private/stats et pour le seul appel public mettre juste api/stats
