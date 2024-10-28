@@ -7,21 +7,53 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-#creation des donnee des la creation du user et ensuite update pour les autres?
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
-#microservice match doit m'envoyer les donnees d'un match lorsqu'il est fini
-'''
-{
-	"player_id1" : "1",
-	"player_id2" : "2",
-	"game" : "flappy",
-	"winner" : "2" et si egalite mettre -1
-}
-match me post ces donnes 
-'''
+DOC_ERROR_METHOD_NOT_ALLOWED = openapi.Response(
+			description="Method Not Allowed",
+			examples={
+				"application/json": {
+					"detail": "Method \"PUT\" not allowed."
+					}
+			}
+		)
+
+DOC_ERROR_BAD_REQUEST = openapi.Response(
+			description="stats user not created",
+			examples={
+				"application/json": {
+					"message": "stats user not created", 
+					"data": "errors"
+				}
+			}
+		)
+
+DOC_USER_STATS_CREATED = openapi.Response(
+			description="stats user created",
+			examples={
+				"application/json": {
+					"message": "stats user created",
+				}
+			}
+		)
+
+@swagger_auto_schema(
+	method='post',
+	operation_description = "Create the User statistics in the data base",
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties={
+			'player_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="1"),
+		}
+	),
+	responses={
+		201: DOC_USER_STATS_CREATED,
+		400: DOC_ERROR_BAD_REQUEST,
+		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 def create_statistics_user(request):
-	print(request.data)
 	serializer = StatisticsSerializer(data=request.data)
 	if serializer.is_valid():
 		serializer.save()
@@ -29,9 +61,46 @@ def create_statistics_user(request):
 	else:
 		print(serializer.errors)
 		return Response({'message': "stats user not created", 
-				   		'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+				   		'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
+DOC_ERROR_STATS_MATCH_NOT_UPDATED = openapi.Response(
+			description="statistics match of the user were not updated",
+			examples={
+				"application/json": {
+					"message": "statistics match of the user were not updated", 
+					"data": "errors"
+				}
+			}
+		)
+
+
+DOC_USER_STATS_MATCH_UPDATED = openapi.Response(
+			description="statistics match updated successfully",
+			examples={
+				"application/json": {
+					"message": "statistics match updated successfully",
+				}
+			}
+		)
+
+@swagger_auto_schema(
+	method='post',
+	operation_description = "Updat User statistics related to the matches in the data base",
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties={
+			'player_1': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="1"),
+			'player_2': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2"),
+			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="flappy"),
+			'winner': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2")
+		}
+	),
+	responses={
+		201: DOC_USER_STATS_MATCH_UPDATED,
+		400: DOC_ERROR_STATS_MATCH_NOT_UPDATED,
+		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 def generate_match_data_stats(request):
 	serializer = UpdateMatchStatisticsSerializer(data=request.data)
@@ -41,27 +110,54 @@ def generate_match_data_stats(request):
 				   		"errors": serializer.errors}
 						, status=status.HTTP_200_OK)
 	else:
-		return Response({"message": "Data to update match statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+		return Response({"message": "statistics match were not updated"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#function pour update les statistiques des tournois, a appeler lors de la fin d'un tournoi par le microservice tournoi
+DOC_ERROR_STATS_TOURNAMENT_NOT_UPDATED = openapi.Response(
+			description="statistics tournament of the user were not updated",
+			examples={
+				"application/json": {
+					"message": "statistics tournament of the user were not updated", 
+					"data": "errors"
+				}
+			}
+		)
 
-'''
-{
-	"list_participants" : [1, 2, 3, 4],
-	"winner" : "2"
-}
-'''
 
+DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
+			description="statistics tournament updated successfully",
+			examples={
+				"application/json": {
+					"message": "statistics tournament updated successfully",
+				}
+			}
+		)
+
+@swagger_auto_schema(
+	method='post',
+	operation_description = "Update Users statistics related to the tournaments in the data base",
+	request_body=openapi.Schema(
+		type=openapi.TYPE_OBJECT,
+		properties={
+			'list_participants': openapi.Schema(
+			type=openapi.TYPE_ARRAY,
+			description='input',
+			items=openapi.Items(type=openapi.TYPE_INTEGER),
+			example=[1, 2, 3]),
+			'winner': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2"),		'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="flappy"),
+			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="pong"),
+		}
+	),
+	responses={
+		201: DOC_USER_STATS_TOURNAMENT_UPDATED,
+		400: DOC_ERROR_STATS_TOURNAMENT_NOT_UPDATED,
+		# 405: DOC_ERROR_METHOD_NOT_ALLOWED,
+	})
 @api_view(['POST'])
 def generate_tournament_data_stats(request):
-	print("test")
 	serializer = UpdateTournamentStatisticsSerializer(data=request.data)
-	print("test1")
 	if serializer.is_valid():
-		print("test2")
 		serializer.save()
 		return Response({"message": "Statistics tournament updated successfully"}, status=status.HTTP_200_OK)
 	else:
-		print("test3")
 		return Response({"message": "Data to update tournament statistics are incorrect"}, status=status.HTTP_400_BAD_REQUEST)
