@@ -2,13 +2,13 @@ MSG_ERROR_TOURNAMENT_ID_REQUIRED = "The field 'tournament_id' is required"
 MSG_ERROR_USERNAME_PIN_REQUIRED = "The fields 'username' and 'pin' are required"
 MSG_ERROR_SCORE_REQUIRED = "The fields 'score1' and 'score2' are required"
 MSG_ERROR_PLAYER_REQUIRED = "The field 'player_id' is required"
-MSG_INVALID_CREDS = "Incorrect username or pin"
+MSG_INVALID_CRED = "Incorrect username or pin"
 MSG_INVALID_PLAYER = "Invalid player id"
 MSG_ERROR_INVALID_TOURNAMENT_ID = "Invalid tournament id"
 MSG_ERROR_CREATE_TOURNAMENT = "Fail to create tournament"
 MSG_ERROR_PLAYER_TRN = 'Player already in the tournament'
 MSG_ERROR_PLAYER_TRN_FAIL = "Failed to add the player to the tournament"
-MSG_ERROR_REOMVE_HOST = "Impossible to remove host from the tournament"
+MSG_ERROR_REMOVE_HOST = "Impossible to remove host from the tournament"
 MSG_ERROR_TRN = "Error while updating tournaments settings"
 MSG_ERROR_USERNAME = "Error while retrieving username"
 MSG_ERROR_MATCH = "Error while creating match"
@@ -16,10 +16,10 @@ MSG_ERROR_PLAYER = "Players are already playing"
 MSG_ERROR_PLAYER_NOT_PLAYING = "Players are not playing, match can't be finished"
 MSG_ERROR_NO_PLAYER_FOUND = "No player found to play this match"
 
-MSG_TOUNAMENT_CREATED = "Tournament created, host added to the tournament"
+MSG_TOURNAMENT_CREATED = "Tournament created, host added to the tournament"
 MSG_PLAYER_ADD = "Player added to the tournament"
-MSG_REVOME_PLAYER = "Player removed from the tournament"
-MSG_TRN_VALIDE = "Tournament info validated"
+MSG_REMOVE_PLAYER = "Player removed from the tournament"
+MSG_TRN_VALID = "Tournament info validated"
 MSG_GUEST_USERNAME = 'Guests username'
 MSG_MATCH = "Matches in a round"
 MSG_CREATE_MATCH = "Match created"
@@ -71,9 +71,9 @@ TOURNAMENT = openapi.Parameter('tournament_id', openapi.IN_QUERY,
 							type=openapi.TYPE_STRING)
 
 DOC_CREATE_TRN = openapi.Response(
-			description=MSG_TOUNAMENT_CREATED,
+			description=MSG_TOURNAMENT_CREATED,
 			examples={
-				"application/json": {"message": MSG_TOUNAMENT_CREATED,
+				"application/json": {"message": MSG_TOURNAMENT_CREATED,
 					"data": {"tournament_id": 89}}
 			}
 		)
@@ -84,7 +84,7 @@ DOC_ERROR_CREATE_TRN = openapi.Response(
 		)
 
 DOC_ERROR_USERNAME_PIN = openapi.Response(
-			description=MSG_ERROR_USERNAME_PIN_REQUIRED+' or '+MSG_INVALID_CREDS,
+			description=MSG_ERROR_USERNAME_PIN_REQUIRED+' or '+MSG_INVALID_CRED,
 			examples={"application/json": {"message": MSG_ERROR_USERNAME_PIN_REQUIRED}}
 		)
 
@@ -116,19 +116,19 @@ DOC_ERROR_PLAYER_REQUIRED = openapi.Response(
 		)
 
 DOC_ERROR_REMOVE_HOST = openapi.Response(
-			description=MSG_ERROR_REOMVE_HOST,
-			examples={"application/json": {"message": MSG_ERROR_REOMVE_HOST}}
+			description=MSG_ERROR_REMOVE_HOST,
+			examples={"application/json": {"message": MSG_ERROR_REMOVE_HOST}}
 		)
 
 DOC_REMOVE_PLAYER = openapi.Response(
-			description=MSG_REVOME_PLAYER,
-			examples={"application/json": {"message": MSG_REVOME_PLAYER,
+			description=MSG_REMOVE_PLAYER,
+			examples={"application/json": {"message": MSG_REMOVE_PLAYER,
 						"data": {"player_id": 45}}}
 		)
 
 DOC_TRN_VALIDATE = openapi.Response(
-			description=MSG_TRN_VALIDE,
-			examples={"application/json": {"message": MSG_TRN_VALIDE}}
+			description=MSG_TRN_VALID,
+			examples={"application/json": {"message": MSG_TRN_VALID}}
 		)
 
 DOC_ERROR_TRN_VALID = openapi.Response(
