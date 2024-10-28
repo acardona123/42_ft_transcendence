@@ -7,6 +7,8 @@ function stop_current_game(){
 		custom_event = undefined;
 	}
 
+	let game_div = document.getElementById("phaser_game")
+	game_div.innerHTML = "";
 }
 
 function start_pong_game(response_data, bot_level = -1)
