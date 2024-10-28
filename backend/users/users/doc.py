@@ -9,6 +9,7 @@ MSG_ERROR_2FA_IS_DISABLE = "User have 2fa disable"
 MSG_ERROR_OAUTH_LOGIN = "Unauthorized to login with API 42"
 MSG_ERROR_OAUTH_INFO = "Unauthorized to retreive info with API 42"
 MSG_ERROR_UPDATE_PASSWORD_OAUTH = "Impossible to update password with 42 API"
+MSG_ERROR_UPDATE_2FA_OAUTH = "Impossible to update 2fa with 42 API"
 MSG_ERROR_UPDATE_PASSWORD = "Error occured while updating password"
 MSG_ERROR_UPDATE_USER_INFO = "Error occured while updating user info"
 MSG_ERROR_CREATING_USER_OAUTH = "Invalid data to create new user with 42 API"
@@ -186,7 +187,7 @@ DOC_2FA_VALID = openapi.Response(
 			}
 		)
 
-JWT_TOKEN = openapi.Parameter('Authentication : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
+JWT_TOKEN = openapi.Parameter('Authorization : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
 
 DOC_ERROR_WRONG_2FA_STATUS = openapi.Response(
 			description=MSG_ERROR_WRONG_2FA_STATUS,

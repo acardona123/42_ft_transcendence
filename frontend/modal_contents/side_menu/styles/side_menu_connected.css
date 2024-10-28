@@ -1,0 +1,141 @@
+#smc-main-div
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	padding: 10px;
+	background:var(--lavender);
+	min-height: 425px;
+}
+
+#smc-short-profile-div
+{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	height: fit-content;
+}
+
+#smc-user-info-div {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	/* align-items: ; */
+}
+
+#smc-user-name
+{
+	width: 60%;
+	padding: 10px;
+	margin: 0;
+	font-size: 2em;
+	color: var(--dark-purple);
+}
+
+#smc-connected-pp-div
+{
+	position: relative;
+	width: 40%;
+}
+
+#smc-connected-pp
+{
+	width: 100%;
+	position: relative;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+#smc-connection-badge
+{
+	position: absolute;
+	bottom: 0%;
+	left: 0%;
+	padding: 10% 10%;
+	border-radius: 50%;
+	background-color: lawngreen;
+}
+
+#smc-pin-div
+{
+	display: flex;
+	width: 100%;
+}
+
+#smc-pin-header
+{
+	font-size: 2em;
+	text-align: center;
+	margin: 0px;
+	color: var(--dark-purple);
+}
+
+#smc-pin-text
+{
+	font-size: 2em;
+	padding: 0px;
+	border: none;
+	width: 3em;
+	text-align: center;
+	background-color: var(--lavender);
+	color: var(--dark-purple);
+}
+
+#smc-pin-eye-img
+{
+	height: 20px;
+	align-self: center;
+}
+
+#smc-buttons-div
+{
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#smc-profile-button
+{
+	position: relative;
+	width: 85%;
+	height: 8%;
+	min-height: 45px;
+	font-size: 2em;
+	margin-bottom: 15%;
+}
+
+#smc-logout-button
+{
+	position: relative;
+	width: 85%;
+	height: 8%;
+	min-height: 45px;
+	font-size: 2em;
+	margin-bottom: 20%;
+}
+
+#smc-parameter-button
+{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 15%;
+	padding: 0;
+	transition: 0.5s;
+}
+
+#smc-parameter-button:hover
+{
+	transform: scale(1.05) rotate(90deg);
+	transition: all 0.7s;
+}
+
+#smc-parameter-button-image
+{
+	position: relative;
+	width: 100%;
+}

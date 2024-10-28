@@ -1,0 +1,52 @@
+.popup-main-div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 15px;
+
+	width: 33%;
+	height: max-content;
+	overflow: hidden;
+	border-radius: 7px;
+	border: 3px solid rgba(240, 248, 255, 0.5);
+	z-index: 2000;
+	
+	animation: popup_disapear_anim 0.3s ease-in;
+	animation-play-state: paused;
+	animation-iteration-count: 1;
+
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+}
+
+.popup-text {
+	margin: 0;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 1em;
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.popup-close {
+	cursor: pointer;
+	margin: auto;
+	margin-right: 5px;
+	width: 15px;
+	height: 15px;
+	max-height: 50%;
+	max-width: 50%;
+}
+
+.popup-close:hover {
+	transition: transform 0.3s;
+	transform: scale(1.05);
+}
+
+@keyframes popup_disapear_anim {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}

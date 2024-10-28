@@ -1,0 +1,32 @@
+<div class="modal" id="modal-play" tabindex="-1">
+	<div id="modal-play-dialog" class="modal-dialog modal-dialog-overwrite-size increase">
+		<div id="modal-play-content" class="modal-content main-container modal-content-border modal-content-background-color-dark-violet">
+			<div id="modal-play-main-div">
+				<div class="modal-play-header">
+					<h1 id="modal-play-menu-header-text" class="header-text bold"></h1>
+				</div>
+				<div class="triangle-buttons-container">
+					<div class="top-triangle">
+						<div id="button-play-ia" class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-ia-match-creation', initMatchIACreation, undefined, true)">Solo (AI)</button>
+							</div>
+						</div>
+						<div class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-versus-match-creation', initMatchVersusCreation, undefined, true)">1v1</button>
+							</div>
+						</div>
+					</div>
+					<div class="bottom-triangle">
+						<div class="menu-play-button-border">
+							<div class="menu-play-button-base">
+								<button class="menu-play-button" onclick="open_modal('modal-tournament-creation', open_tournament, undefined, true)">Tournament</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

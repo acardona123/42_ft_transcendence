@@ -1,0 +1,62 @@
+<div class="modal" id="modal-register" tabindex="-1">
+	<div class="modal-dialog modal-dialog-overwrite-size slide-right" id="modal-register-dialog" >
+		<div class="modal-content modal-content-background-color-lavender" id="modal-register-content">
+			<div id="register-main-div">
+				<div id="register-main-content-div">
+					<h1 id="register-title-text">Transcendence</h1>
+					<form id="register-inputs-form">
+						<div class="text-input-div">
+							<span class="register-text-span">Username *</span>
+							<input id="input-register-username" class="inputs-register" name="username" required>
+						</div>
+						<span class="register-on-error-span" id="register-on-error-username"></span>
+						<div class="text-input-div">
+							<span class="register-text-span">Email</span>
+							<input id="input-register-email" class="inputs-register" name="email">
+						</div>
+						<span class="register-on-error-span" id="register-on-error-email"></span>
+						<div class="text-input-div">
+							<span class="register-text-span">Phone number</span>
+							<input id="input-register-phone" class="inputs-register" name="phone">
+						</div>
+						<span class="register-on-error-span" id="register-on-error-phone"></span>
+						<div class="text-input-div">
+							<span class="register-text-span">Password *</span>
+							<input id="input-register-password" class="inputs-register" name="password" type="password" required>
+						</div>
+						<span class="register-on-error-span" id="register-on-error-password"></span>
+						<div class="text-input-div">
+							<span class="register-text-span">Confirm Password *</span>
+							<input id="input-register-confirm_pass" class="inputs-register" name="confirm_pass" type="password" required>
+						</div>
+						<span class="register-on-error-span" id="register-on-error-confirm_pass"></span>
+						<button id="register-button" type="submit" class="space-btn custom-border-radius">
+							<strong id="space-text">Register</strong>
+							<div id="space-container-stars" class="custom-border-radius">
+								<div id="space-stars" class="custom-border-radius"></div>
+							</div>
+						</button>
+						<!-- <button id="register-button" class="btn btn-primary">Register</button> -->
+					</form>
+					<div id="line-separator-register-div">
+						<div id="line-sep-left" class="line-sep"></div>
+						<div id="register-or">OR</div>
+						<div id="line-sep-right" class="line-sep"></div>
+					</div>
+					<div id="register-42-api-div">
+						<button id="register-button-42-api" type="button" class="space-btn custom-border-radius" onclick="login_with_42()">
+							<strong id="space-text">Login with 42</strong>
+							<div id="space-container-stars" class="custom-border-radius">
+								<div id="space-stars" class="custom-border-radius"></div>
+							</div>
+						</button>
+					</div>
+				</div>
+				<div id="secondary-content-div">
+					<p id="no-account-text">
+						Already have an account? <u class="button-link-signup-login" onclick="on_click_sign_up_to_login()">Log in</u></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

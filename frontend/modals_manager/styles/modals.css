@@ -1,0 +1,253 @@
+#modals
+{
+	position: absolute;
+	height: 100vh !important;
+	/* display: none; */
+}
+
+.modal {
+	--bs-modal-width : 100% !important;
+}
+
+.modal-dialog-overwrite-size
+{
+	--bs-modal-margin: 0;
+	--bs-modal-padding: 0;
+}
+
+.modal-content-border {
+	border-radius: 50px !important;
+	border : 6px var(--violet) solid;
+	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
+}
+
+.modal-content-background-color-dark-violet {
+	background-color: var(--dark-violet) !important;
+}
+
+.modal-content-background-color-lavender {
+	background-color: var(--lavender) !important;
+}
+
+
+/* === MODAL PLAY === */
+
+#modal-play-dialog {
+	height: 80vh !important;
+	width: 100% !important;
+
+	max-width: 800px;
+	
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-play-content {
+	overflow: auto;
+	height: 100% !important;
+	width: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL IA MATCH CREATION === */
+
+#modal-ia-match-creation-dialog {
+	height: 60vh !important;
+	width: 100% !important;
+
+	/* min-width: 600px; */
+	max-width: 800px;
+	
+	--bs-modal-margin: 20vh 0 20vh 0;
+}
+
+#modal-ia-match-creation-content {
+	height: 100% !important;
+
+	overflow: auto;
+
+	padding: 10px;
+
+}
+
+/* ================================================ */
+
+/* === MODAL VERSUS MATCH CREATION === */
+
+#modal-versus-match-creation-dialog {
+	height: 85vh !important;
+	width: 100% !important;
+
+	/* min-width: 600px; */
+	max-width: 900px;
+
+	--bs-modal-margin: 7.5vh 0 7.5vh 0;
+}
+
+#modal-versus-match-creation-content {
+	height: 100% !important;
+
+	overflow: auto;
+
+	padding: 10px;
+}
+
+/* ================================================ */
+
+/* === MODAL TOURNAMENT CREATION === */
+
+#modal-tournament-creation-dialog {
+	height: 85vh !important;
+	width: 100% !important;
+
+	/* min-width: 700px; */
+	max-width: 1600px;
+
+	--bs-modal-margin: 7.5vh 0 7.5vh 0;
+}
+
+#modal-tournament-creation-content {
+	height: 100% !important;
+
+	overflow: auto;
+
+	padding: 10px;
+}
+
+/* ================================================ */
+
+/* === MODAL GAME === */
+
+#modal-game-dialog
+{
+	height: 100vh !important;
+	width: 100vw !important;
+	--bs-modal-margin: 0 0 0 0;
+
+	overflow: hidden !important;
+}
+
+
+#modal-game-content
+{
+	height: 100% !important;
+}
+
+/* ================================================ */
+
+/* === MODAL LOGIN === */
+
+#modal-login-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
+}
+
+#modal-login-content
+{
+	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/* ================================================ */
+
+/* === MODAL register === */
+
+#modal-register-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
+}
+
+#modal-register-content
+{
+	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/* ================================================ */
+
+/* === MODAL edit profile === */
+
+#modal-edit-profile-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
+}
+
+#modal-edit-profile-content
+{
+	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/* ================================================ */
+
+/* === MODAL profile === */
+
+#modal-profile-dialog
+{
+	max-width: none;
+	height: 80vh;
+	width: 60vw;
+	--bs-modal-margin: 10vh 0 10vh 0;
+}
+
+#modal-profile-content
+{
+	height: 100% !important;
+	width: 100% !important;
+	overflow: auto;
+}
+
+/* ================================================ */
+
+/* === MODAL 2fa setup === */
+
+#modal-2fa-setup-dialog
+{
+	max-width: none;
+	height: 60vh;
+	width: fit-content;
+	--bs-modal-margin: 20vh 0 20vh 0;
+}
+
+#modal-2fa-setup-content
+{
+	height: 100% !important;
+	width: fit-content !important;
+}
+
+/* ================================================ */
+
+/* === MODAL 2fa valid === */
+
+#modal-2fa-valid-dialog
+{
+	max-width: none;
+	height: 20vh;
+	width: fit-content;
+	--bs-modal-margin: 40vh 0 40vh 0;
+}
+
+#modal-2fa-valid-content
+{
+	height: 100% !important;
+	width: fit-content !important;
+	overflow: auto;
+	min-height: 150px;
+}
+
+/* ================================================ */

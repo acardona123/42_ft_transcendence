@@ -1,0 +1,38 @@
+<div id="smc-main-div" class="offcanvas-body" tabindex="-1">
+	<div>
+		<div id="smc-short-profile-div">
+			<div id="smc-user-info-div">
+				<h4 id="smc-user-name" class="user-name"></h4>
+				<div id="smc-pin-div">
+					<p id="smc-pin-header">Pin</p>
+					<input id="smc-pin-text" type="password" readonly>
+					<img id="smc-pin-eye-img" src="modal_contents/side_menu/img/pin-eye-open.png"
+						onmousedown="on_eye_pin_click_down(event)" onmouseup="on_eye_pin_click_up(event)"
+						onmouseleave="on_eye_pin_click_up(event)">
+				</div>
+			</div>
+			<div id="smc-connected-pp-div">
+				<img id="smc-connected-pp" class="userImage">
+				<span id="smc-connection-badge"></span>
+			</div>
+		</div>
+	</div>
+
+	<div id="smc-buttons-div">
+		<button id="smc-profile-button" type="button" class="space-btn" tabindex="1" data-bs-dismiss="offcanvas" onclick="open_modal('modal-profile', init_modal_profile_bf, init_modal_profile_af, true)">
+			<strong id="space-text">Profile</strong>
+			<div id="space-container-stars">
+				<div id="space-stars"></div>
+			</div>
+		</button>
+		<button id="smc-logout-button" type="button" class="space-btn" tabindex="2" onclick="logout_user()">
+			<strong id="space-text">Logout</strong>
+			<div id="space-container-stars">
+				<div id="space-stars"></div>
+			</div>
+		</button>
+	</div>
+	<button id="smc-parameter-button" class="btn" tabindex="3" data-bs-dismiss="offcanvas" onclick="open_modal('modal-edit-profile', init_modal_edit_profile, undefined, true)">
+		<img id="smc-parameter-button-image" src="img/engrenage.png" alt="Parameter">
+	</button>
+</div>

@@ -1,78 +1,227 @@
 <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Index</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="/css/styles.css">
+		<link rel="stylesheet" href="/css/animations.css">
+		<link rel="stylesheet" href="/main_srcs/styles/main_menu.css">
+		<link rel="stylesheet" href="/main_srcs/styles/button.css">
+		<link rel="stylesheet" href="/modals_manager/styles/modals.css">
+		<link rel="stylesheet" href="/modal_contents/side_menu/styles/side_menu_connected.css">
+		<link rel="stylesheet" href="/modal_contents/side_menu/styles/side_menu_disconnected.css">
+		<link rel="stylesheet" href="/modal_contents/versus_menu/styles/match_creation.css">
+		<link rel="stylesheet" href="/modal_contents/tournament_menu/styles/tournament_menu.css">
+		<link rel="stylesheet" href="/modal_contents/login/styles/styles.css">
+		<link rel="stylesheet" href="/modal_contents/register/styles/styles.css">
+		<link rel="stylesheet" href="/main_srcs/styles/popup.css">
+		<link rel="stylesheet" href="/modal_contents/edit_profile/styles/styles.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/structure.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/friends/friends_list.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/friends/friends_add_button.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/friends/friends_requests.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/history/history.css">
+		<link rel="stylesheet" href="/modal_contents/profile/styles/stats/stats.css">
+		<link rel="stylesheet" href="/modal_contents/twoFA/styles/twoFA_setup.css">
+		<link rel="stylesheet" href="/modal_contents/twoFA/styles/twoFA_valid.css">
+		<script src="/main_srcs/scripts/popup.js"></script>
+	</head>
+	<body>
+		<div class="offcanvas offcanvas-end" id="menuProfile" data-bs-scroll="true" tabindex="-1"></div>
+		<div id="modals"></div>
 
-<head>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/structure.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_list.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_add_button.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/friends/friends_requests.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/history/history.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/stats/stats.css">
-	<link rel="stylesheet" type="text/css" href="./srcs/styles/popup/popup.css">
-	<script src="./srcs/scripts/popup/popup.js"></script>
-</head>
-
-<body style="background-color: #795833">
-	<h1 class="font" style="text-align: center;">PROFILE</h1>
-	<div class="notif-main-div"></div>
-	<div class="container global-container"> <!-- remove the container class for modal ?-->
-		<div class="sec-friends" id="sec_friend">
-			<div class="friend-title" id="friend-title">
-				<h1 class="friend-text-title">FRIENDS</h1>
-				<img class="button-add-friend" id="add_friend_button" src="./img/add_friend.png" tabindex="0">
+		<video id="video-background" playsinline autoplay muted loop poster="/main_srcs/img/background.png">
+			<source src="/main_srcs/img/background.mp4" type="video/mp4">
+		</video>
+		<div id="main-menu">
+			<div id="mm-left-div">
+				<button class="button-galaxy mm-button-play btn-play" onclick="open_game_menu_pong()">
+					Pong
+				</button>
 			</div>
-			<div class="friends-list" id="friends-list"></div>
-			<div>
-				<h1 class="font" style="text-align: center;">REQUESTS</h1>
+			<div id="mm-right-div">
+				<button class="button-galaxy mm-button-play btn-play" onclick="open_game_menu_flappy_bird()">
+					Flappy Bird
+				</button>
 			</div>
-			<div class="req-container" id="req_container"></div>
-			<script src="./srcs/scripts/friends/friends_requests.js"></script>
-			<script src="./srcs/scripts/friends/friends_list.js"></script>
-			<script src="./srcs/scripts/friends/friends_add_button.js"></script>
 		</div>
-
-		<div class="sec-friends-line">
-			<div class="line-vertical"></div>
+		<div class="home-photo-profile">
+			<a data-bs-toggle="offcanvas" href="#menuProfile" onclick="disable_buttons_play()">
+				<img id="home-user-image" class="userImage" alt="Home User Image">
+				<div id="home-user-image-child"></div>
+			</a>
 		</div>
+		<script src="/main_srcs/scripts/main_menu.js"></script>
+		<script src="/main_srcs/scripts/shared.js"></script>
+		<script src="/main_srcs/scripts/users.js"></script>
+		<script src="/main_srcs/scripts/window_history.js"></script>
+		<script src="/modals_manager/scripts/game.js"></script>
+		<script src="/modals_manager/scripts/modals.js"></script>
+		<script src="/modal_contents/play_menu/scripts/play_menu.js"></script>
+		<script src="/modal_contents/versus_menu/scripts/match_creation.js"></script>
+		<script src="/modal_contents/solo_ai_menu/scripts/ia_match_creation.js"></script>
+		<script src="/modal_contents/versus_menu/scripts/versus_match_creation.js"></script>
+		<script src="/modal_contents/tournament_menu/scripts/tournament_menu.js"></script>
+		<script src="/modal_contents/tournament_menu/scripts/tournament_menu_grid.js"></script>
+		<script src="/modal_contents/edit_profile/scripts/user_form.js"></script>
+		<script src="/modal_contents/edit_profile/scripts/pass_form.js"></script>
+		<script src="/modal_contents/edit_profile/scripts/picture_form.js"></script>
+		<script src="/modal_contents/edit_profile/scripts/button_2fa.js"></script>
+		<script src="/modal_contents/login/scripts/login.js"></script>
+		<script src="/modal_contents/login/scripts/inputs.js"></script>
+		<script src="/modal_contents/register/scripts/register.js"></script>
+		<script src="/modal_contents/profile/scripts/friends/friends_requests.js"></script>
+		<script src="/modal_contents/profile/scripts/friends/friends_list.js"></script>
+		<script src="/modal_contents/profile/scripts/friends/friends_add_button.js"></script>
+		<script src="/modal_contents/profile/scripts/stats/stats.js"></script>
+		<script src="/modal_contents/profile/scripts/history/history.js"></script>
+		<script src="/modal_contents/profile/scripts/history/history_tabs.js"></script>
+		<script src="/modal_contents/twoFA/scripts/twoFA_front.js"></script>
+		<script src="/modal_contents/twoFA/scripts/twoFA_back.js"></script>
+		<script src="/modal_contents/side_menu/scripts/side_menu.js"></script>
 
-		<div class="glob-right-sec-div">
-			<div class="sec-stats">
-				<h1 class="font" style="text-align: center;">STATS</h1>
-				<div class="stats-div">
-					<div class="stats-pong-div" id="stats_pong_div">
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
+		<div aria-label="game js" >
+			<div aria-label="Shared between games">
+				<script src="/modal_contents/games/shared/scripts/phaser.min.js"></script>
+				<script src="/modal_contents/games/shared/scripts/tools.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/AbstractVerticallyScaledTileSprite.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/Button.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/EntitledTimeDisplay.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/Icon.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/SceneTexture.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/Texture.js"></script>
+				<script src="/modal_contents/games/shared/scripts/scene_objects/TimeDisplay.js"></script>
+			</div>
+			<div aria-label="Pong">
+				<div aria-label="utils for all scenes">
+					<script src="/modal_contents/games/pong/scripts/gamemode.js"></script>
+					<script src="/modal_contents/games/pong/scripts/tools.js"></script>
+				</div>
+				<div aria-label="scene boot">
+					<script src="/modal_contents/games/pong/scripts/scene_boot/SceneBoot.js"></script>
+				</div>
+				<div aria-label="scene pause">
+					<div aria-label="objects">
+						<script src="modal_contents/games/pong/scripts/scene_pause/objects/PauseBackground.js"></script>
 					</div>
-					<div class="vertical-stats-line"></div>
-					<div class="stats-flappy-div" id="stats_flappy_div">
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
-						<div class="stats-container-div"></div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/pong/scripts/scene_pause/ScenePause.js"></script>
 					</div>
-					<script src="./srcs/scripts/stats/stats.js"></script>
 				</div>
+				<div aria-label="scene menu">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/pong/scripts/scene_menu/objects/MenuBackground.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_menu/objects/PlayerDescriptionPanel.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_menu/objects/BotDescriptionPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/pong/scripts/scene_menu/SceneMenu.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene play">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/pong/scripts/scene_play/objects/Ball.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_play/objects/Paddle.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_play/objects/AlignedText.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_play/objects/Score.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_play/objects/PlayBackground.js"></script>
+						<div aria-label="borders">
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/borders/AbstractBorder.js"></script>
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/borders/DeathBorder.js"></script>
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/borders/BounceBorder.js"></script>
+						</div>
+						<div aria-label="clock">
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/clock/AbstractClock.js"></script>
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/clock/Timer.js"></script>
+							<script src="/modal_contents/games/pong/scripts/scene_play/objects/clock/Chronometer.js"></script>
+						</div>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/pong/scripts/scene_play/ScenePlay.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene game finished">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/pong/scripts/scene_game_finished/objects/Confetti.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+						<script src="/modal_contents/games/pong/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/pong/scripts/scene_game_finished/SceneGameFinished.js"></script>
+					</div>
+				</div>
+				<script src="/modal_contents/games/pong/scripts/game_config.js"></script>
+				<script src="/modal_contents/games/pong/scripts/textures_config.js"></script>
 			</div>
-
-			<div class="sec-stats-line">
-				<div class="line-horizontal"></div>
-			</div>
-
-			<div class="sec-history">
-				<h1 class="font" style="text-align: center">HISTORY</h1>
-				<div class="tabs-history">
-					<p class="tab-text" onclick="on_click_tab_history(this)">Pong</p>
-					<p class="tab-text" onclick="on_click_tab_history(this)">Flappy fish</p>
+			<div aria-label="flappy bird">
+				<div aria-label="utils for all scenes">
+					<script src="/modal_contents/games/flappy_bird/scripts/gamemode.js"></script>
+					<script src="/modal_contents/games/flappy_bird/scripts/tools.js"></script>
 				</div>
-				<div class="history-scroll">
-					<div id="history_list"></div>
+				<div aria-label="SceneBoot">
+					<script src="/modal_contents/games/flappy_bird/scripts/scene_boot/SceneBoot.js"></script>
 				</div>
-				<script src="./srcs/scripts/history/history.js"></script>
-				<script src="./srcs/scripts/history/history_tabs.js"></script>
+				<div aria-label="scene pause">
+					<div aria-label="objects">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_pause/objects/PauseBackground.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="modal_contents/games/flappy_bird/scripts/scene_pause/ScenePause.js"></script>
+					</div>
+				</div>
+				<div aria-label="SceneMenu">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuBackground.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuGround.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_menu/objects/MenuCeiling.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_menu/objects/PlayerDescription.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_menu/SceneMenu.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene_play">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PipePair.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PipePairsPool.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/Player.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayGround.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayCeiling.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayBackground.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/StartingLine.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/game_objects/PlayerExplosion.js"></script>
+					</div>
+					<div aria-label="Textboard">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/AbstractClock.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/Timer.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/clock/Chronometer.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/AlignedText.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/ScoreText.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/scores/Score.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/textboard/Textboard.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_play/ScenePlay.js"></script>
+					</div>
+				</div>
+				<div aria-label="scene game finished">
+					<div aria-label="objects">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/Confetti.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedCeiling.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/GameFinishedGround.js"></script>
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+					</div>
+					<div aria-label="scene">
+						<script src="/modal_contents/games/flappy_bird/scripts/scene_game_finished/SceneGameFinished.js"></script>
+					</div>
+				</div>
+				<script src="/modal_contents/games/flappy_bird/scripts/game_config.js"></script>
+				<script src="/modal_contents/games/flappy_bird/scripts/textures_config.js"></script>
 			</div>
 		</div>
-	</div>
-</body>
+	</body>
+</html>

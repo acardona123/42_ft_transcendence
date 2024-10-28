@@ -1,0 +1,79 @@
+:root {
+	--dark-purple: #150222;
+	--dark-violet: #310454;
+	--blue: #5D02C1;
+	--medium-violet: #8C01D1;
+	--pink: #BB00E0;
+	--violet: #E08CEE;
+	--lavender: #FFDBFF;
+}
+
+#video-background {
+	object-fit: cover;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -2;
+}
+
+#main-menu {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+}
+
+.mm-button-play {
+	width: 25vw;
+	min-width: fit-content;
+	font-size: 3vw;
+	container-type: inline-size;
+}
+
+@media screen and (min-width: 1350px)
+{
+	.mm-button-play
+	{
+		width: 335.5px;
+		font-size: 40.4905px;
+	}
+}
+
+.home-photo-profile {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 25px;
+	width: 20vh;
+	transition: 0.25s;
+}
+
+#home-user-image {
+	position: relative;
+	cursor: pointer;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+	border: 2px solid var(--lavender);
+}
+
+#home-user-image-child {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-shadow: inset 3px 3px 10px 2px var(--lavender), inset -3px -3px 10px 2px var(--lavender),
+		3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
+	border-radius: 50%;
+	top: 0;
+	left: 0;
+	transition: 0.5s;
+}
+
+#home-user-image-child:hover{
+	box-shadow: inset 3px 3px 10px 2px var(--lavender), inset -3px -3px 10px 2px var(--pink),
+		3px 3px 10px 2px var(--pink), -3px -3px 10px 2px var(--lavender);
+}

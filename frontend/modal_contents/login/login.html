@@ -1,0 +1,50 @@
+<div class="modal" id="modal-login" tabindex="-1">
+	<div class="modal-dialog modal-dialog-overwrite-size slide-left" id="modal-login-dialog">
+		<div class="modal-content modal-content-background-color-lavender" id="modal-login-content">
+			<div id="login-main-div">
+				<div id="login-main-content-div">
+					<div id="login-title-div">
+						<h1 id="login-title-text">Transcendence</h1>
+						<div id="login-on-error-input-div">
+							<p id="login-on-error-input-text">This is long really long random a random text</p>
+						</div>
+					</div>
+					<form id="login-inputs-form">
+
+						<div class="login-text-input-div">
+							<span class="login-text-span">Username *</span>
+							<input id="input-login-username" class="inputs-login" name="username" required>
+						</div>
+						<div class="login-text-input-div">
+							<span class="login-text-span">Password *</span>
+							<input id="login-input-pass-username" class="inputs-login" name="password" type="password" required>
+						</div>
+						<button id="login-button" type="submit" class="space-btn custom-border-radius">
+							<strong id="space-text">Login</strong>
+							<div id="space-container-stars" class="custom-border-radius">
+								<div id="space-stars" class="custom-border-radius"></div>
+							</div>
+						</button>
+					</form>
+					<div id="line-separator-login-div">
+						<div id="login-line-sep-left" class="login-line-sep"></div>
+						<div id="login-or">OR</div>
+						<div id="login-line-sep-right" class="login-line-sep"></div>
+					</div>
+					<div id="login-42-api-div">
+						<button id="login-button-42-api" type="button" class="space-btn custom-border-radius" onclick="login_with_42()">
+							<strong id="space-text">Login with 42</strong>
+							<div id="space-container-stars" class="custom-border-radius">
+								<div id="space-stars" class="custom-border-radius"></div>
+							</div>
+						</button>
+					</div>
+				</div>
+				<div id="login-secondary-content-div">
+					<p id="login-no-account-text">
+						Don't have an account? <u class="button-link-signup-login" onclick="on_click_login_to_sign_up()">Sign up</u></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

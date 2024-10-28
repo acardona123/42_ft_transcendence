@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgoeHACDX6AAgIOgAAwMDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREREAAAABBERERFAAABBERERERQAAEFEERMxFAAARERBEzEUAABEREEREzQAAEFEERETNAAAQREREREUAABBEiIiIRQAAEEiIiIiFAAAQSIiIiIUAABBIiIiIhQAAEEiIiIiFAAAQRIiIiEUAAAEEREREUAAAABEREREAADwDwAA4AcAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAOAHAADwDwAA" rel="icon" type="image/x-icon">
+	<title>Custom flappy_bird</title>
+
+	<base href="../../../modal_contents/games/">
+
+	<!-- Shared between games -->
+	<script src="shared/scripts/phaser.min.js"></script>
+	<script src="shared/scripts/tools.js"></script>
+	<script src="shared/scripts/scene_objects/AbstractVerticallyScaledTileSprite.js"></script>
+	<script src="shared/scripts/scene_objects/Button.js"></script>
+	<script src="shared/scripts/scene_objects/EntitledTimeDisplay.js"></script>
+	<script src="shared/scripts/scene_objects/Icon.js"></script>
+	<script src="shared/scripts/scene_objects/SceneTexture.js"></script>
+	<script src="shared/scripts/scene_objects/Texture.js"></script>
+	<script src="shared/scripts/scene_objects/TimeDisplay.js"></script>
+
+	<!-- utils for all scenes -->
+	<script src="flappy_bird/scripts/gamemode.js"></script>
+	<script src="flappy_bird/scripts/tools.js"></script>
+
+	<!-- SceneBoot -->
+	<script src="flappy_bird/scripts/scene_boot/SceneBoot.js"></script>
+
+	<!-- SceneMenu -->
+		<!-- objects -->
+	<script src="flappy_bird/scripts/scene_menu/objects/MenuBackground.js"></script>
+	<script src="flappy_bird/scripts/scene_menu/objects/MenuGround.js"></script>
+	<script src="flappy_bird/scripts/scene_menu/objects/MenuCeiling.js"></script>
+	<script src="flappy_bird/scripts/scene_menu/objects/PlayerDescription.js"></script>
+		<!-- scene -->
+	<script src="flappy_bird/scripts/scene_menu/SceneMenu.js"></script>
+
+	<!-- scene_play -->
+		<!-- objects -->
+	<script src="flappy_bird/scripts/scene_play/game_objects/PipePair.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/PipePairsPool.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/Player.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/PlayGround.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/PlayCeiling.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/PlayBackground.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/StartingLine.js"></script>
+	<script src="flappy_bird/scripts/scene_play/game_objects/PlayerExplosion.js"></script>
+		<!-- Textboard -->
+	<script src="flappy_bird/scripts/scene_play/textboard/clock/AbstractClock.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/clock/Timer.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/clock/Chronometer.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/scores/AlignedText.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/scores/ScoreText.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/scores/Score.js"></script>
+	<script src="flappy_bird/scripts/scene_play/textboard/Textboard.js"></script>
+		<!-- scene -->
+		<script src="flappy_bird/scripts/scene_play/ScenePlay.js"></script>
+
+	<!-- scene game finished -->
+		<!-- objects -->
+		<script src="flappy_bird/scripts/scene_game_finished/objects/Confetti.js"></script>
+		<script src="flappy_bird/scripts/scene_game_finished/objects/GameFinishedCeiling.js"></script>
+		<script src="flappy_bird/scripts/scene_game_finished/objects/GameFinishedBackground.js"></script>
+		<script src="flappy_bird/scripts/scene_game_finished/objects/GameFinishedGround.js"></script>
+		<script src="flappy_bird/scripts/scene_game_finished/objects/PlayerRecapPanel.js"></script>
+		<!-- scene -->
+	<script src="flappy_bird/scripts/scene_game_finished/SceneGameFinished.js"></script>
+
+	
+	<script src="flappy_bird/scripts/game_config.js"></script>
+	<script src="flappy_bird/scripts/textures_config.js"></script>
+
+	<script src="shared/scripts/start_game.js"></script>
+
+</head>
+<body>
+	<p>flappy_bird</p>
+	<div id="phaser_flappy_bird_game" style="width:60vw; height: 60vh"></div>
+	<p>after flappy_bird</p>
+</body>
+</html>

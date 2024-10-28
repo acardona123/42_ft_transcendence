@@ -1,0 +1,90 @@
+<div class="modal" id="modal-edit-profile" tabindex="-1">
+	<div class="modal-dialog modal-dialog-overwrite-size slide-right" id="modal-edit-profile-dialog">
+		<div class="modal-content modal-content-background-color-lavender" id="modal-edit-profile-content">
+			<h1 id="edp-main-title">Edit profile</h1>
+			<div id="edp-main-div">
+				<div id="edp-picture-div">
+					<img id="edp-picture-img">
+					<img id="edp-picture-edit-img" src="modal_contents/edit_profile/img/edit_button.png">
+					<input type="file" id="edp-picture-file-input" accept="image/png, image/jpg, image/jpeg" hidden>
+				</div>
+				<div id="edp-input-fields-div">
+					<hr>
+					<p id="edp-informations-edit-text" data-bs-toggle="collapse"
+						data-bs-target="#edp-information-edit-collapse-div" aria-expanded="true">
+						<u>Edit informations</u>
+					</p>
+					<div class="collapse show" id="edp-information-edit-collapse-div">
+						<form id="edp-form-user">
+							<div class="edp-input-div">
+								<p id="edp-text-username" style="margin: 0">Username</p>
+								<input class="edp-input-class" id="edp-input-username" name="username"
+									placeholder="Username" required>
+								<span class="edp-error-text"></span>
+							</div>
+							<div class="edp-input-div">
+								<p id="edp-text-email" style="margin: 0">Email</p>
+								<input class="edp-input-class" id="edp-input-email" name="email" placeholder="Email">
+								<span class="edp-error-text"></span>
+							</div>
+							<div class="edp-input-div">
+								<p id="edp-text-phone" style="margin: 0">Phone number</p>
+								<input class="edp-input-class" id="edp-input-phone" name="phone"
+									placeholder="Phone number">
+								<span class="edp-error-text"></span>
+							</div>
+							<div class="edp-input-div">
+								<p id="edp-text-pin" style="margin: 0">Pin code</p>
+								<input class="edp-input-class" id="edp-input-pin" name="pin" maxlength="4" required>
+								<span class="edp-error-text"></span>
+							</div>
+							<button id="edp-save-informations-button" class="btn btn-primary"
+								type="submit">Save</button>
+						</form>
+					</div>
+					<hr>
+					<p id="edp-password-edit-text" data-bs-toggle="collapse"
+						data-bs-target="#edp-password-edit-collapse-div" aria-expanded="false">
+						<u>Edit password</u>
+					</p>
+					<div class="collapse" id="edp-password-edit-collapse-div">
+						<form id="edp-form-password">
+							<div class="edp-input-div">
+								<p id="edp-text-cur-pass" style="margin: 0">Current password</p>
+								<input class="edp-input-class" id="edp-input-cur-password" type="password"
+									name="cur_pass" required>
+								<span class="edp-error-text"></span>
+							</div>
+							<div class="edp-input-div">
+								<p id="edp-text-new-pass" style="margin: 0">New password</p>
+								<input class="edp-input-class" id="edp-input-new-password" type="password"
+									name="new_pass" required>
+								<span class="edp-error-text"></span>
+							</div>
+							<div class="edp-input-div">
+								<p id="edp-text-confirm-pass" style="margin: 0">Confirm password</p>
+								<input class="edp-input-class" id="edp-input-confirm-password" type="password"
+									name="conf_pass" required>
+								<span class="edp-error-text"></span>
+							</div>
+							<button id="edp-button-submit-pass" class="btn btn-primary">Save</button>
+						</form>
+					</div>
+					<hr>
+					<p id="edp-2fa-edit-text" data-bs-toggle="collapse" data-bs-target="#edp-2fa-edit-collapse-div"
+						aria-expanded="false">
+						<u>Edit two factor auth</u>
+					</p>
+					<div id="edp-2fa-edit-collapse-div" class="edp-2fa-edit-collapse-class-div collapse">
+						<p id="edp-2fa-button-text">Google authentificator</p>
+						<label id="edp-switch">
+							<input type="checkbox" id="edp-button-2fa">
+							<div id="edp-slider"></div>
+						</label>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

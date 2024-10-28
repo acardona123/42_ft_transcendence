@@ -1,0 +1,327 @@
+@hostname = localhost
+@port = 8443
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyOTcxMzQ1MSwiaWF0IjoxNzI5NjI3MDUxLCJqdGkiOiI4MmIxN2ViMGZhYjQ0NDkwYjhlMTNjOGE5MjkzNTMxNiIsInVzZXJfaWQiOjYsInNjb3BlIjoibm9ybWFsIiwidXNlcm5hbWUiOiJoZXkifQ.z2Mi6lvofIktvJOLpSGUD121kTW-8Yb_hGIAty9IVwA
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5NjI3MzUxLCJpYXQiOjE3Mjk2MjcwNTEsImp0aSI6Ijg4ZDJiMTJkYWUyMjRiYWQ4NTUyZWM1YmZjZmZmZmQ0IiwidXNlcl9pZCI6Niwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.XKwYD7jaAkSxXtnj6XB9l2ReC6yKRkiQY9bLxp3IKQg
+
+
+
+### --- test display hello ---
+GET /api/matches/test/hello HTTP/1.1
+Host: {{host}}
+
+### --- test create matches ---
+GET /api/matches/test/create_bunk  HTTP/1.1
+Host: {{host}}
+
+### --- test finish all matches ---
+GET /api/matches/test/finish_all  HTTP/1.1
+Host: {{host}}
+
+### --- test delete all matches ---
+GET /api/matches/test/delete_all  HTTP/1.1
+Host: {{host}}
+
+
+
+
+
+### --- List matches ---
+GET /api/matches/ HTTP/1.1
+Host: {{host}}
+Authorization: Bearer {{access_token}}
+
+
+
+
+
+
+### --- new match verified users id ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+
+### --- Error: missing player1 ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	# "player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: missing player2  ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	# "player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: missing game  ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	# "game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: missing score  ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	# "max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: missing duration ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	# "max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: missing tournament_id  ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21
+	# "tournament_id": -1
+}
+
+### --- Error: wrong format player ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": "abc",
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: wrong format game ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": 12,
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: wrong format score ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": "",
+	"max_duration": 21,
+	"tournament_id": -1
+}
+### --- Error: wrong format duration ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": "21m",
+	"tournament_id": -1
+}
+### --- Error: wrong format tournament_id ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "PG",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": "abc"
+}
+### --- Error: game acronyme ---
+POST /private_api/matches/new_match_verified_id/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"player1": 7,
+	"player2": 2,
+	"game": "abc",
+	"max_score": 42,
+	"max_duration": 21,
+	"tournament_id": "abc"
+}
+
+
+
+
+### --- new match player ---
+POST /api/matches/new/me-player/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	"player2_username": "toto",
+	"player2_pin": "1234",
+	"max_score": 10,
+	"max_duration": 60,
+	"tournament_id": -1
+}
+
+
+
+### --- new match ai ---
+POST /api/matches/new/me-ai/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	"max_score": 10,
+	"max_duration": 60,
+	"tournament_id": -1
+}
+### --- Error: new match ai missing field---
+POST /api/matches/new/me-ai/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	# "max_score": 10,
+	"max_duration": 60,
+	"tournament_id": -1
+}
+### --- Error: new match ai ---
+POST /api/matches/new/me-ai/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	"max_score": 10,
+	# "max_duration": 60,
+	"tournament_id": -1
+}
+
+
+
+
+
+
+### --- new match guest ---
+POST /api/matches/new/me-guest/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	"max_score": 10,
+	"max_duration": 60,
+	"tournament_id": -1
+}
+### --- Error: new match guest missing field---
+POST /api/matches/new/me-guest/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"game": "PG",
+	"max_score": 10,
+	# "max_duration": 60,
+	"tournament_id": -1
+}
+
+
+
+
+
+
+### --- finish match ---
+POST /api/matches/finish/39/ HTTP/1.1
+Host: {{host}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{access_token}}
+
+{
+	"score1": 5,
+	"score2": 10,
+	"duration": 19
+}

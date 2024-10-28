@@ -1,0 +1,47 @@
+services:
+  tournaments_dev:
+    build: .
+    container_name: tournaments_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8005'"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=tournaments_db_dev
+    volumes:
+      - .:/usr/src/app/django
+    ports:
+      - "8005:8005"
+    networks:
+      - website-network
+      - tournaments-network
+    depends_on:
+      tournaments_db_dev:
+        condition: service_healthy
+
+  tournaments_db_dev:
+    build: ./postgre
+    container_name: tournaments_db_dev
+    restart: always
+    volumes:
+      - tournaments_db:/var/lib/postgresql/data/
+    networks:
+      - tournaments-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  tournaments_db:
+
+networks:
+  website-network:
+    name: website_network
+  tournaments-network:
+    name: tournaments_network
