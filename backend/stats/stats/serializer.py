@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import Statistics, UpdateMatchStatistics
 
+flappy = "FB"
+pong = "PG"
+
 def validate_id(id):
 	'''
 	Check if the id is not negative
@@ -28,7 +31,7 @@ def validate_a_player(player_id):
 		raise serializers.ValidationError(f"The player id {player_id} doesn't exist in the db Statistics")
 	return player_id
 
-VALID_GAME_NAMES = {"flappy", "pong"}
+VALID_GAME_NAMES = {flappy, pong}
 def	validate_game_name(game):
 	if game not in VALID_GAME_NAMES:
 		raise serializers.ValidationError("This game name doesn't exist")
@@ -63,14 +66,14 @@ class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 	def update_statistics(self, player1_stats, player2_stats, game, winner):
-		if game == "flappy":
+		if game == flappy:
 			player1_stats.total_flappy_matches += 1
 			player2_stats.total_flappy_matches += 1
 			if winner == player1_stats.player_id:
 				player1_stats.total_flappy_victory += 1
 			elif winner == player2_stats.player_id:
 				player2_stats.total_flappy_victory += 1
-		elif game == "pong":
+		elif game == pong:
 			player1_stats.total_pong_matches += 1
 			player2_stats.total_pong_matches += 1
 			if winner == player1_stats.player_id:
@@ -148,7 +151,7 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 		return data
 
 	def update_tournament_stats(self, list_participants, winner, game):
-		if game == "flappy":
+		if game == flappy:
 			self.update_flappy_tournament_stats(list_participants, winner)
 		else:
 			self.update_pong_tournament_stats(list_participants, winner)

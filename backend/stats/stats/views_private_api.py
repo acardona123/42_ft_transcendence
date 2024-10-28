@@ -90,7 +90,7 @@ DOC_USER_STATS_MATCH_UPDATED = openapi.Response(
 		properties={
 			'player_1': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="1"),
 			'player_2': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2"),
-			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="flappy"),
+			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="FB"),
 			'winner': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2")
 		}
 	),
@@ -144,8 +144,8 @@ DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
 			description='input',
 			items=openapi.Items(type=openapi.TYPE_INTEGER),
 			example=[1, 2, 3]),
-			'winner': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2"),		'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="flappy"),
-			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="pong"),
+			'winner': openapi.Schema(type=openapi.TYPE_INTEGER, description='input', example="2"),
+			'game': openapi.Schema(type=openapi.TYPE_STRING, description='input', example="PG"),
 		}
 	),
 	responses={
