@@ -37,5 +37,3 @@ urlpatterns = [
 	path("api/stats/", get_user_stats),
 	path("api/private/stats/", include("stats.urls")),
 ]
-
-# mettre private dant les urls d'api prive api/private/stats et pour le seul appel public mettre juste api/stats
