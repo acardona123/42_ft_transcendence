@@ -23,6 +23,10 @@
 	height: 10%;
 }
 
+#history_list {
+	margin: 4px;
+}
+
 .prof-history-elem-div {
 	margin-bottom: 4px;
 	
