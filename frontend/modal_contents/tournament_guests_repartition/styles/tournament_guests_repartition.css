@@ -8,7 +8,8 @@
 
 #tgr-header{
 	margin: 0;
-	padding: 0
+	padding: 0;
+	align-items: center;
 }
 #tgr-title{
 	text-align: center;
@@ -36,6 +37,8 @@
 
 #tgr-instructions {
 	text-align: center;
+	width: 100%;
+	padding: 0 25%;
 }
 
 #tgr-guests-list{
