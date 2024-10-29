@@ -45,6 +45,7 @@ MSG_FINISH_MATCH_ERROR_NOT_ALLOWED = 'a match can be declared as finished only b
 MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED = 'the match was already finished'
 MSG_FINISH_MATCH_ERROR_MISSING_FIELD = 'missing "score1" or "score2" or "duration" field to successfully end a match'
 MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL = 'No tournament response to the end of the match'
+MSG_FINISH_MATCH_ERROR_STATS_FAIL = 'No stats response at the end of the match'
 
 JWT_TOKEN = openapi.Parameter('Authentication : Bearer XXX',openapi.IN_HEADER,description="jwt access token", type=openapi.IN_HEADER, required=True)
 
