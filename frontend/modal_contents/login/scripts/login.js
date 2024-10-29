@@ -40,7 +40,7 @@ function empty_globals()
 	playerCards = undefined;
 	btnAddGuestPlayer = undefined;
 	btnAddConnectedPlayer = undefined;
-	ToggleConnectedPlayerContainer = undefined;
+	tournament_button_toggle_add_player_container = undefined;
 	buttonAddIA = undefined;
 	debugOutput = undefined;
 	

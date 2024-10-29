@@ -2,7 +2,7 @@ let playerGrid;
 let tournament_cards;
 let btnAddGuestPlayer;
 let btnAddConnectedPlayer;
-let ToggleConnectedPlayerContainer;
+let tournament_button_toggle_add_player_container;
 let button_add_ia;
 
 const rows_number = 4;
@@ -25,34 +25,35 @@ function updateGrid() {
 		let index = idCol + row;
 
 		const card = tournament_cards[index];
-		card.classList.remove('player_card', 'guest_card', 'ai_card');
+		card.classList.remove('player-card', 'guest-card', 'ai-card');
 		if (i < nb_player)
 		{
 			card.textContent = player_list[i].username;
 			card.classList.add('show');
-			card.classList.add('player_card');
-			card.style.backgroundColor = '#007bff';
+			if (i == 0)
+				card.classList.add('host-card');
+			else
+			card.classList.add('player-card');
 		}
 		else if (i < nb_player + nb_guest)
 		{
 			card.textContent = 'GUEST';
 			card.classList.add('show');
-			card.classList.add('guest_card');
-			card.style.backgroundColor = '#ffc107';
+			card.classList.add('guest-card');
 		}
 		else if (i < nb_player + nb_guest + nb_ai)
 		{
 			card.textContent = 'AI';
 			card.classList.add('show');
-			card.classList.add('ai_card');
-			card.style.backgroundColor = '#28a745';
+			card.classList.add('ai-card');
 		}
 
 		if (i !== 0) {
-			const deleteButton = document.createElement('button');
-			deleteButton.textContent = 'X';
-			deleteButton.classList.add('delete-button');
-			card.appendChild(deleteButton);
+			const delete_card = document.createElement('img');
+			delete_card.className = "card-delete-button";
+			delete_card.src = "main_srcs/img/remove_friend.png";
+			delete_card.onclick = on_click_delete_card;
+			card.appendChild(delete_card);
 		}
 	}
 
@@ -71,12 +72,12 @@ function updateGrid() {
 
 function disable_tournaments_buttons() {
 	if (nb_cards >= max_cards) {
-		ToggleConnectedPlayerContainer.disabled = true;
+		tournament_button_toggle_add_player_container.disabled = true;
 		btnAddConnectedPlayer.disabled = true;
 		btnAddGuestPlayer.disabled = true;
 		button_add_ia.disabled = true;
 	} else {
-		ToggleConnectedPlayerContainer.disabled = false;
+		tournament_button_toggle_add_player_container.disabled = false;
 		btnAddConnectedPlayer.disabled = false;
 		btnAddGuestPlayer.disabled = false;
 		button_add_ia.disabled = false;
@@ -97,7 +98,7 @@ function CheckAddCard(name, type)
 	if (nb_cards < max_cards)
 	{
 		if (type === 'PLAYER' && player_list.find(item => item.username === name)) {
-				return "Player already exists.";
+				return "Player is already in the tournament.";
 		}
 		else
 			return "";
@@ -198,26 +199,22 @@ const cardNumberToPos = (cardNumber) => {
 	return array_card_pos_to_number.indexOf(cardNumber);
 }
 
-function eventDeleteCard() {
-
-	playerGrid.addEventListener('click', (event) => {
-		if (event.target.classList.contains('delete-button')) {
-			event.preventDefault();
-			const card = event.target.parentElement;
-			if (card.classList.contains('player_card'))
-			{
-				deleteCard(card, 'PLAYER');
-			}
-			else if (card.classList.contains('guest_card'))
-			{
-				deleteCard(card, 'GUEST');
-			}
-			else if (card.classList.contains('ai_card'))
-			{
-				deleteCard(card, 'AI');
-			}
-		}
-	});
+function on_click_delete_card(event)
+{
+	event.preventDefault();
+	const card = event.target.parentElement;
+	if (card.classList.contains('player-card'))
+	{
+		deleteCard(card, 'PLAYER');
+	}
+	else if (card.classList.contains('guest-card'))
+	{
+		deleteCard(card, 'GUEST');
+	}
+	else if (card.classList.contains('ai-card'))
+	{
+		deleteCard(card, 'AI');
+	}
 }
 
 function eventAddGuestPlayer() {
@@ -245,10 +242,10 @@ function initPlayerGird() {
 
 	/* Set var */
 	playerGrid = document.getElementById('PlayerGrid');
-	tournament_cards = Array.from(playerGrid.getElementsByClassName('player-card'));
-	btnAddGuestPlayer = document.getElementById('ButtonAddGuestPlayer');
-	btnAddConnectedPlayer = document.getElementById('ButtonAddConnectedPlayer');
-	ToggleConnectedPlayerContainer = document.getElementById('ToggleConnectedPlayerContainer');
+	tournament_cards = Array.from(playerGrid.getElementsByClassName('tournament-card'));
+	btnAddGuestPlayer = document.getElementById('tournament-button-add-guest');
+	btnAddConnectedPlayer = document.getElementById('tournament_button_add_player');
+	tournament_button_toggle_add_player_container = document.getElementById('tournament-button-toggle-add-player-container');
 	button_add_ia = document.getElementById('button_add_ia');
 
 	nb_cards = 1;

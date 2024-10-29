@@ -25,28 +25,32 @@
 					<!-- Grid Player List -->
 					<div id="PlayerGrid">
 						<!-- Initial placeholder cards -->
-						<div class="player-card user-name show">Player 1</div>
-						<div class="player-card">Player 5</div>
-						<div class="player-card">Player 9</div>
-						<div class="player-card">Player 13</div>
-						<div class="player-card">Player 2</div>
-						<div class="player-card">Player 6</div>
-						<div class="player-card">Player 10</div>
-						<div class="player-card">Player 14</div>
-						<div class="player-card">Player 3</div>
-						<div class="player-card">Player 7</div>
-						<div class="player-card">Player 11</div>
-						<div class="player-card">Player 15</div>
-						<div class="player-card">Player 4</div>
-						<div class="player-card">Player 8</div>
-						<div class="player-card">Player 12</div>
-						<div class="player-card">Player 16</div>
+						<div class="tournament-card user-name show">Player 1</div>
+						<div class="tournament-card">Player 5</div>
+						<div class="tournament-card">Player 9</div>
+						<div class="tournament-card">Player 13</div>
+						<div class="tournament-card">Player 2</div>
+						<div class="tournament-card">Player 6</div>
+						<div class="tournament-card">Player 10</div>
+						<div class="tournament-card">Player 14</div>
+						<div class="tournament-card">Player 3</div>
+						<div class="tournament-card">Player 7</div>
+						<div class="tournament-card">Player 11</div>
+						<div class="tournament-card">Player 15</div>
+						<div class="tournament-card">Player 4</div>
+						<div class="tournament-card">Player 8</div>
+						<div class="tournament-card">Player 12</div>
+						<div class="tournament-card">Player 16</div>
 					</div>
 
 					<div id="TournamentButtonsContainer">
-						<button id="ButtonAddGuestPlayer" class="btn btn-form" type="button">Add Guest</button>
-						<button id="ToggleConnectedPlayerContainer" class="btn btn-form" type="button">Connect Player 2</button>
-						<div id="AddConnectedPlayerContainer">
+						<button id="tournament-button-add-guest" class="tournament-add-btn" type="button">
+							<span id="tournament-add-guest-span" class="button_top">Add Guest</span>
+						</button>
+						<button id="tournament-button-toggle-add-player-container" class="tournament-add-btn" type="button">
+							<span id="tournament-container-add-player-span" class="button_top">Add Player</span>
+						</button>
+						<div id="tournament-add-player-container">
 							<div id="AddConntectedPlayerContent">
 								<div id="ConnectedPlayerInputContainer" class="input-container">
 									<input id="ConnectedPlayerPseudo" class="input" type="text" placeholder=""
@@ -54,22 +58,27 @@
 									<label for="ConnectedPlayerPseudo">Pseudo</label>
 									<span class="focus-border"></span>
 								</div>
-								<div id="PlayerConnectedPinContainer" class="input-container">
-									<input id="PlayerConnectedPin" class="input" type="password" placeholder=""
+								<div id="tournament-player-pin-container" class="input-container">
+									<input id="tournament-player-pin-input" class="input" type="password" placeholder=""
 										maxlength="4" pattern="[0-9]*" inputmode="numeric">
-									<label for="PlayerConnectedPin">Pin</label>
+									<label for="tournament-player-pin-input">Pin</label>
 									<span class="focus-border"></span>
 								</div>
-								<button id="ButtonAddConnectedPlayer" class="btn btn-form" type="button">✓</button>
+								<button id="tournament_button_add_player" class="tournament-add-btn" type="button">
+									<span id="tournament-add-player-span" class="button_top">✓</span>
+								</button>
 							</div>
-							<div id="ErrorAddConnectedPlayer" class="error">Invalid connection. Please try again.</div>
+							<div id="tournament-add-player-error-div" class="error-div">
+								<p class="error-div-text">This is long really long random a random text</p>
+							</div>
 						</div>
-						<button id="button_add_ia" class="btn btn-form" >Add IA</button>
+						<button id="button_add_ia" class="tournament-add-btn" type="button">
+							<span id="tournament-add-ai-span" class="button_top" >Add IA</span>
+						</button>
 					</div>
 				</div>
 
 				<!-- Submit Button -->
-				<!-- <button id="tournament_validate_button" type="submit" class="btn btn-form submit-btn-form">Create Match</button> -->
 				<button id="tournament_validate_button" type="submit" class="btn validate-btn">
 					PLAY
 					<div class="icon">
@@ -87,7 +96,6 @@
 					</svg>
 					</div>
 				</button>
-				 
 			</form>
 		</div>
 	</div>

@@ -29,7 +29,7 @@ function invalidForm(id)
 		});
 
 		values.forEach((value) => {
-			value.style.backgroundColor = "red";
+			value.style.backgroundColor = "var(--rose-error)";
 		});
 	}
 	else

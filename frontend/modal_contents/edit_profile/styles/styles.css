@@ -86,7 +86,7 @@
 .edp-error-text
 {
 	font-size: small;
-	color: red;
+	color: var(--rose-error);
 }
 
 #edp-input-confirm-password

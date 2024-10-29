@@ -152,8 +152,8 @@
 .slider::-webkit-slider-thumb 
 {
 	appearance: none;
-	width: 2.2vh;
-	height: 2.2vh;
+	width: 2.4vh;
+	height: 2.4vh;
 	min-width: 20px;
 	min-height: 20px;
 	background-color: var(--violet);
@@ -165,8 +165,8 @@
 .slider::-moz-range-thumb {
 	
 	appearance: none;
-	width: 2.2vh;
-	height: 2.2vh;
+	width: 2.4vh;
+	height: 2.4vh;
 	background-color: var(--violet);
 	border: 1px solid var(--medium-violet);
 	border-radius: 50%;
@@ -194,26 +194,6 @@
 	min-height: 40px;
 	height: 4vh;
 	padding: 0 1vh;
-}
-
-.btn-form {
-	background-color: green !important;
-	color: #fff;
-	border: 2px solid rgb(0, 38, 0) !important;
-	border: none;
-	border-radius: 15px;
-	padding: 1vh 2vh;
-	cursor: pointer;
-}
-
-.btn-form:hover, .btn-form:focus, .btn-form:active {
-	background-color: rgb(0, 159, 0) !important;
-	border: 2px solid rgb(0, 69, 0) !important;
-	color: #fff;
-	
-	transform: scale(1.05);
-	/* transition: all 0.5s; */
-	/* color: black !important; */
 }
 
 #BoxsContainer {
@@ -309,14 +289,13 @@
 	}
 }
 
-#VSPlayerPlayButton,z {
+#VSPlayerPlayButton {
 	margin: auto;
 }
 
  /* INPUT TEMPLATE */
- 
- 
- .input-container {
+
+.input-container {
 	position: relative;
 	float: left;
 	/* width: 27.33%; */
@@ -329,18 +308,22 @@
 
 .input-container input[type="text" ], .input-container input[type="password"] {
 	font: 15px/24px "Lato", Arial, sans-serif;
-	color: #333;
+	/* color: #333; */
+	color: var(--dark-purple);
 	width: 100%;
 	box-sizing: border-box;
 	letter-spacing: 1px;
 }
 
-.input-container input:focus{outline: none;}
+.input-container input:focus {
+	outline: none;
+}
 
 .input {
 	border: 0;
 	padding: 4px 0;
-	border-bottom: 1px solid #ccc;
+	/* border-bottom: 1px solid #ccc; */
+	border-bottom: 1px solid var(--blue);
 	background-color: transparent;
 }
 
@@ -351,7 +334,8 @@
 	left: 50%;
 	width: 0;
 	height: 2px;
-	background-color: #3399FF;
+	/* background-color: #3399FF; */
+	background-color: var(--lavender);
 	transition: 0.4s;
 }
 
@@ -366,7 +350,8 @@
 	left: 0;
 	width: 100%;
 	top: 9px;
-	color: #aaa;
+	/* color: #aaa; */
+	color: var(--dark-violet);
 	transition: 0.3s;
 	pointer-events: none;
 	letter-spacing: 0.5px;
@@ -376,11 +361,16 @@
 }
 
 .input:focus ~ label, .has-content.input ~ label {
-	top: -16px; font-size: 12px; color: #3399FF; transition: 0.3s;
+	top: -16px;
+	font-size: 12px;
+	/* color: #3399FF; */
+	color: var(--lavender);
+	transition: 0.3s;
 }
 
-#InputPinContainer {
-	width: 10%;
+#versus-pin-container {
+	width: 15%;
+	min-width: 60px !important;
 }
 
 .cursor-default {
@@ -401,7 +391,7 @@
 
 
 .error {
-	color: red;
+	color: var(--rose-error);
 	font-size: 14px;
 	display: none;
 	margin-top: 2vh;

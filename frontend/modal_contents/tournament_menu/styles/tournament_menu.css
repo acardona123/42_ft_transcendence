@@ -1,17 +1,19 @@
-#AddConnectedPlayerContainer {
+#tournament-add-player-container {
 	display: none;
-	/* display: block; */
-	/* display: flex; */
 	position: absolute;
 	flex-direction: column;
-	/* justify-content: space-between; */
 	align-items: center;
+	justify-content: center;
 	margin-top: 2vh;
-	background-color: wheat;
+	/* background-color: var(--dark-lavender); */
+	background-color: var(--dark-lavender);
 	padding: 1vh;
 	border-radius: 10px;
+	border: 2px var(--dark-purple) solid;
+	border-bottom: 4px var(--dark-purple) solid;
+	height: 13%;
 	width: fit-content;
-	/* min-width: 500px; */
+	min-width: 250px;
 }
 
 #AddConntectedPlayerContent {
@@ -22,23 +24,75 @@
 	width: 100%;
 }
 
-#toggleConnectedPlayerContainer,
-#toggleGuestPlayerContainer {
+#tournament-button-toggle-add-player-container {
 	z-index: 1;
 }
 
-#addGuestPlayerContainer {
-	/* width: 1%; */
-	/* background-color: #0056b3; */
+#tournament-player-pin-container {
+	width: 15% !important;
+	min-width: 50px !important;
 }
 
-#playerConnectedPinContainer {
-	width: 10%;
+/* ------------------------------- */
+
+#tournament-add-guest-span {
+	background: var(--lavender);
 }
 
-.submit-btn-form {
-	margin-top: 2vh;
+.guest-card {
+	background-color: var(--lavender) !important;
 }
+
+#tournament-container-add-player-span {
+	background: var(--violet);
+}
+
+.host-card {
+	background-color: var(--violet) !important;
+}
+
+.player-card {
+	background-color: var(--violet) !important;
+}
+
+#tournament-add-ai-span {
+	background: var(--dark-lavender);
+}
+
+.ai-card {
+	background-color: var(--dark-lavender) !important;
+}
+
+#tournament_button_add_player {
+	width: 20% !important;
+}
+
+#tournament-add-player-span {
+	padding: 0;
+}
+
+/* ================================= */
+/* 
+#tournament-add-player-container .input-container input[type="text" ], .input-container input[type="password"] {
+	color: var(--dark-purple);
+}
+
+#tournament-add-player-container .input {
+	border-bottom: 1px solid var(--blue);
+}
+
+
+#tournament-add-player-container .input ~ .focus-border {
+	background-color: var(--lavender);
+}
+
+#tournament-add-player-container .input ~ label {
+	color: var(--dark-violet);
+}
+
+#tournament-add-player-container .input:focus ~ label, .has-content.input ~ label {
+	color: var(--lavender);
+} */
 
 /* ================================= */
 
@@ -54,7 +108,7 @@
 	}
 }
 
-#AddConnectedPlayerContainer.appear {
+#tournament-add-player-container.appear {
 	animation: sliderFromAbove 0.5s ease-in-out;
 }
 
@@ -70,7 +124,7 @@
 	}
 }
 
-#AddConnectedPlayerContainer.disappear {
+#tournament-add-player-container.disappear {
 	animation: reverseSliderFromAbove 0.5s ease-in-out;
 }
 
@@ -129,7 +183,7 @@
 	/* background-color: var(--violet); */
 }
 
-.player-card {
+.tournament-card {
 	background-color: #fff;
 	border: 1px solid #ddd;
 
@@ -137,10 +191,12 @@
 	align-items: center;
 	justify-content: center;
 
-	height: 100%;
+	height: 150%;
 	width: 100%;
 
-	border: 1px solid #c82333;
+	/* border: 1px solid #c82333; */
+	border: 2px var(--dark-purple) solid;
+	border-bottom: 4px var(--dark-purple) solid;
 
 	/* padding: 10%; */
 	/* text-align: center; */
@@ -150,33 +206,31 @@
 	border-radius: 8px;
 	opacity: 0;
 	position: relative;
+	font-weight: bold;
 }
 
-.player-card.show {
+.tournament-card.show {
 	opacity: 1;
 }
 
-.player-card:hover {
+.tournament-card:hover {
 	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 	transition: box-shadow 0.3s ease;
 }
 
-.delete-button {
-	position: absolute;
-	/* top: 5px; */
-	right: 5px;
-	background-color: #dc3545;
-	color: white;
-	border: none;
-	border-radius: 50%;
-	/* padding: 5px 10px; */
+
+.card-delete-button {
 	cursor: pointer;
-	font-size: 14px;
+	position: absolute;
 	width: 20px;
+	height: 20px;
+	top: 10px;
+	right: 10px;
 }
 
-.delete-button:hover {
-	background-color: #c82333;
+.card-delete-button:hover {
+	transition: transform 0.3s;
+	transform: scale(1.05);
 }
 
 /* Debug output styles */
@@ -197,4 +251,9 @@
 #tournament-form {
 	min-width: 1000px;
 	min-height: 700px;
+}
+
+#tournament_validate_button {
+	width: 10%;
+	justify-content: center;
 }

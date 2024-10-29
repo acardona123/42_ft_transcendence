@@ -90,25 +90,26 @@ function CheckPlayer2Data() {
 
 	const pseudo = document.getElementById('player2Pseudo').value;
 	const pin = document.getElementById('player2Pin').value;
-	const errorBox = document.getElementById('ErrorBoxConnectionVSPlayer');
+	const error_div = document.getElementById('versus-error-div');
+	const error_div_text = error_div.children[0];
 
 
 	if (pseudo.length === 0)
 	{
-		errorBox.textContent = 'Pseudo is required.';
-		errorBox.style.display = 'block';
+		error_div_text.textContent = 'Pseudo is required.';
+		error_div.style.display = 'initial';
 		return false;
 	}
 	else if (pin.length === 0)
 	{
-		errorBox.textContent = 'Pin code is required.';
-		errorBox.style.display = 'block';
+		error_div_text.textContent = 'Pin code is required.';
+		error_div.style.display = 'initial';
 		return false;
 	}
 	else if (pin.length !== 4 || isNaN(pin))
 	{
-		errorBox.textContent = 'Pin code must be 4 digits.';
-		errorBox.style.display = 'block';
+		error_div_text.textContent = 'Pin code must be 4 digits.';
+		error_div.style.display = 'initial';
 		return false;
 	}
 	return true;
@@ -160,8 +161,6 @@ function handle1v1FormSubmission() {
 }
 
 async function submit1v1Guest(matchData) {
-	const errorBoxVSGuest = document.getElementById('ErrorBoxConnectionVSGuest');
-
 	const url = "/api/matches/new/me-guest/";
 	try
 	{
@@ -172,15 +171,10 @@ async function submit1v1Guest(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
-			console.log(await fetched_data.json());//
-			errorBoxVSGuest.textContent = 'Error connecting to server.';
-			errorBoxVSGuest.style.display = 'block';
+			create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 			throw new Error("Error while creating match.");
 		}
 		let data = await fetched_data.json();
-
-		errorBoxVSGuest.textContent = '';
-		errorBoxVSGuest.style.display = 'none';
 		
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
@@ -192,13 +186,12 @@ async function submit1v1Guest(matchData) {
 	}
 	catch (error)
 	{
-		errorBoxVSGuest.style.display = 'block';
 		console.log(error);
 	}
 }
 
 async function submit1v1Player(matchData) {
-	const errorBoxVSPlayer = document.getElementById('ErrorBoxConnectionVSPlayer');
+	const error_div = document.getElementById('versus-error-div');
 
 	const url = "/api/matches/new/me-player/";
 
@@ -211,14 +204,21 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
-			console.log(await fetched_data.json());//
-			errorBoxVSPlayer.textContent = 'Error connecting to server.';
-			throw new Error("Error while creating match.");
+			if (fetched_data.status === 400)
+			{
+				error_div.children[0].textContent = "Incorrect username or pin";
+				error_div.style.display = "initial";
+				throw new Error("Error while creating match.");
+			}
+			else
+			{
+				error_div.style.display = "none";
+				create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+			}
 		}
 		let data = await fetched_data.json();
 
-		errorBoxVSPlayer.textContent = '';
-		errorBoxVSPlayer.style.display = 'none';
+		error_div.style.display = 'none';
 		
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
@@ -230,7 +230,6 @@ async function submit1v1Player(matchData) {
 	}
 	catch (error)
 	{
-		errorBoxVSPlayer.style.display = 'block';
 		console.log(error);
 	}
 }
@@ -276,12 +275,6 @@ function initMatchVersusCreation() {
 document.addEventListener("onModalsLoaded", function()
 {
 	updateSlider("versus-match-form");
-
-	// document.addEventListener('keydown', (event) => {
-	// 	if (event.key === "Escape") {
-	// 		close_modal('modal-versus-match-creation', return_to_modal_play);
-	// 	}
-	// });
 
 	pincodeOnlyDigits('player2Pin');
 

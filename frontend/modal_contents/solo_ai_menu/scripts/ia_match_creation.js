@@ -34,7 +34,10 @@ async function submitIAForm(event) {
 			body: JSON.stringify(body),
 		});
 		if (!fetched_data.ok)
+		{
+			create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 			throw new Error("Error while creating match.");
+		}
 
 		let data = await fetched_data.json();
 

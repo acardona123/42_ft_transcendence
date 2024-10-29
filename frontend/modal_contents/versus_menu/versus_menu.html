@@ -29,8 +29,6 @@
 							<p>VS</p>
 							<p>GUEST</p>
 						</div>
-						<div id="ErrorBoxConnectionVSGuest" class="error">An error occured. Please try again.</div>
-						<!-- <button id="VSGuestPlayButton" class="btn btn-primary">PLAY</button> -->
 						<button id="VSGuestPlayButton" type="submit" class="btn validate-btn">
 							PLAY
 							<div class="icon">
@@ -63,13 +61,15 @@
 									<label for="player2Pseudo">Pseudo</label>
 									<span class="focus-border"></span>
 								</div>
-								<div id="InputPinContainer" class="input-container">
+								<div id="versus-pin-container" class="input-container">
 									<input id="player2Pin" class="input" type="password" placeholder="" maxlength="4" pattern="[0-9]*" inputmode="numeric">
 									<label for="player2Pin">Pin</label>
 									<span class="focus-border"></span>
 								</div>
 							</div>
-								<div id="ErrorBoxConnectionVSPlayer" class="error">An error occured. Please try again.</div>
+							<div id="versus-error-div" class="error-div">
+								<p class="error-div-text">This is long really long random a random text</p>
+							</div>
 						</div>
 						<!-- <button id="VSPlayerPlayButton" class="btn btn-primary">PLAY</button> -->
 						<button id="VSPlayerPlayButton" type="submit" class="btn validate-btn">
