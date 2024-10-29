@@ -42,7 +42,7 @@ async function submitIAForm(event) {
 		open_modal('modal-game', undefined, undefined, false);
 
 		const game_parameters = data["data"][0];
-		start_pong_game(game_parameters, body.bot_level);
+		await start_pong_game(game_parameters, body.bot_level);
 	}
 	catch (error)
 	{

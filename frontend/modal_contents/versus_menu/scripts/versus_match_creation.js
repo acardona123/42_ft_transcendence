@@ -180,9 +180,9 @@ async function submit1v1Guest(matchData) {
 
 		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(game_parameters);
+			await start_flappybird_game(game_parameters);
 		else
-			start_pong_game(game_parameters);
+			await start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
@@ -225,9 +225,9 @@ async function submit1v1Player(matchData) {
 
 		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(game_parameters);
+			await start_flappybird_game(game_parameters);
 		else
-			start_pong_game(game_parameters);
+			await start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
