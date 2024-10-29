@@ -127,8 +127,7 @@ DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
 			description="statistics tournament updated successfully",
 			examples={
 				"application/json": {
-					"message": "statistics tournament updated successfully",
-					"data": "errors"
+					"message": "statistics tournament updated successfully"
 				}
 			}
 		)
