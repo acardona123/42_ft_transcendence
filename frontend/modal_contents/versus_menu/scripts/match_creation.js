@@ -1,35 +1,56 @@
 function calcValue(slider) {
 	let valuePercentage = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-	slider.style.background = 'linear-gradient(to right, green ' + valuePercentage + '%, #ebe9e7 ' + valuePercentage + '%)';
+	slider.style.background = 'linear-gradient(to right, var(--violet) ' + valuePercentage + '%, var(--dark-violet) ' + valuePercentage + '%)';
 }
 
-function invalidForm(id)
+function get_max_values_from_form(id)
 {
 	const form = document.getElementById(id);
 	const formElements = form.querySelectorAll('input, select, textarea');
 	const elements = Array.from(formElements);
 
-	const countMaxValues = elements.filter((element) => element.value == element.max && element.type == "range").length;
+	const count = elements.filter((element) => element.value == element.max && element.type == "range").length;
+
+	return count;
+}
+
+function invalidForm(id)
+{
+	const form = document.getElementById(id);
+
+	const max_values = get_max_values_from_form(id);
 
 	const btns = form.querySelectorAll("button[type='submit']");
 	const values = form.querySelectorAll('.slider-value');
 
-	if (countMaxValues > 1) {
+	if (max_values > 1) {
 		btns.forEach((btn) => {
 		btn.disabled = true;
 		});
 
 		values.forEach((value) => {
-			value.style.backgroundColor = "red";
+			value.style.backgroundColor = "var(--rose-error)";
 		});
 	}
-	else {
-		btns.forEach((btn) => {
-		btn.disabled = false;
-		});
+	else
+	{
+		if (id === "versus-match-form")
+		{
+			disable_buttons_versus_form();
+		}
+		else if (id === "tournament-form")
+		{
+			check_not_enough_player_tournament();
+		}
+		else
+		{
+			btns.forEach((btn) => {
+				btn.disabled = false;
+			});
+		}
 
 		values.forEach((value) => {
-			value.style.backgroundColor = "green";
+			value.style.backgroundColor = "var(--violet)";
 		});
 	}
 }

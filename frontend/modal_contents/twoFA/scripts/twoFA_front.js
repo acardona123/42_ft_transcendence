@@ -40,7 +40,7 @@ function animate_on_error(digit_inputs)
 	for (input of digit_inputs)
 	{
 		input.style.border = "2px solid red";
-		input.style.color = "red";
+		input.style.color = "var(--rose-error)";
 	}
 }
 
