@@ -262,13 +262,17 @@ def create_match(tournament, players):
 def start_match(tournament):
 	match_id = tournament.next_match
 	if match_id > tournament.max_match:
-		dispatch_player(tournament)
+		error = dispatch_player(tournament)
+		if error is not None:
+			return error
 		return Response({"message": doc.MSG_ROUND_FINISH,
 				'data': {"round": "finish"}}, status=200)
 	players = list(tournament.participant_set.filter(match=match_id, is_eliminated=False))
 	if len(players) == 1:
 		if match_id == tournament.max_match:
-			dispatch_player(tournament)
+			error = dispatch_player(tournament)
+			if error is not None:
+				return error
 			return Response({"message": doc.MSG_ROUND_FINISH,
 					'data': {"round": "finish"}}, status=200)
 		else:
