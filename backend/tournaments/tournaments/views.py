@@ -25,7 +25,10 @@ def get_tournament_id(request, query_string, status):
 		tournament = Tournament.objects.get(id=tournament_id)
 		if not isinstance(request.user, AnonymousUser) and tournament.host != request.user.id:
 			raise
-		if tournament.status != status:
+		if isinstance(status, list):
+			if not tournament.status in status:
+				raise
+		elif tournament.status != status:
 			raise
 		return tournament
 	except:
@@ -204,7 +207,7 @@ def guest_list(request):
 @api_view(['GET'])
 @permission_classes([IsNormalToken])
 def get_match_for_round(request):
-	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
+	tournament = get_tournament_id(request, True, [Tournament.GameStatus.STARTED, Tournament.GameStatus.FINISHED])
 	if isinstance(tournament, Response):
 		return tournament
 	players = list(tournament.participant_set.filter(is_eliminated=False))
