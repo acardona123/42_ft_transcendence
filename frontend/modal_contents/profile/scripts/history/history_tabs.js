@@ -3,7 +3,7 @@ function set_border_hider(elem)
 	const hider = document.createElement('div');
 	const border_size = 5;
 
-	hider.style.backgroundColor = '#755632';
+	hider.style.backgroundColor = 'var(--violet)';
 	hider.style.position = 'absolute';
 	hider.style.zIndex = "1";
 	
@@ -32,14 +32,14 @@ function on_click_tab_history(elem)
 	const tabs_history = document.getElementById("prof-tabs-history");
 	for (child of tabs_history.children)
 	{
-		child.style.backgroundColor = '#795833';
+		child.style.backgroundColor = 'var(--violet)';
 		child.childNodes[1]?.remove();
 	}
 	unload_elements();
 	// load tab
 	load_elements(elem);
 
-	elem.style.backgroundColor = '#755632';
+	elem.style.backgroundColor = 'var(--violet)';
 
 	// remove border bottom
 	set_border_hider(elem);

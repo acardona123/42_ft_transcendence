@@ -3,7 +3,6 @@
 	border-radius: 3px;
 }
 
-
 /* ===== Header ===== */
 
 #trp-header{
@@ -13,10 +12,10 @@
 	align-items: center;
 }
 #trp-title{
+	color: var(--dark-purple);
 	text-align: center;
 	width: 95%
 }
-
 
 .trp-btn-close {
 	position: relative;
@@ -45,17 +44,13 @@
 	/* display: none; */
 }
 
-
-
 /* ===== body ===== */
-
-
-
 
 #trp-main-div{
 	width:100%;
 	max-width: 100%;
 	height: 100%;
+	min-width: 420px;
 
 	text-align: center;
 }
@@ -64,14 +59,16 @@
 	margin-bottom: 0.5em;
 }
 
-
 /* ===== Matches program ===== */
-
 
 #trp-match-instructions{
 	width: 100%;
 	padding: 0 25%;
 	margin: 0;
+}
+
+#trp-round-matches{
+	color: var(--dark-purple);
 }
 
 #trp-round-matches-list{
@@ -84,6 +81,7 @@
     width: 100%;
 
 	font-size: 1.2em;
+	color: var(--dark-purple);
 }
 
 .trp-match-elem{
@@ -99,7 +97,7 @@
 	border: solid 1px;
 	border-radius: 1em;
 
-	color: black;
+	color: var(--dark-purple);
 }
 
 .trp-match-player1, .trp-match-player2{
@@ -111,7 +109,6 @@
 .trp-match-player1 {
 	width: 45%;
 	text-align: right;
-
 }
 
 .trp-match-mid {
@@ -126,10 +123,10 @@
 	text-align: left;
 }
 
-
 /* ===== Waiting player ===== */
 
 #trp-waiting-player{
+	color: var(--dark-purple);
 	margin-top: 1em;
 	padding: 0 25%;
 }
@@ -141,7 +138,6 @@
 .trp-no-waiting-player-elem{
 	color: blue;
 }
-
 
 /* ===== Footer ===== */
 

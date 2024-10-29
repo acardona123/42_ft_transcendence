@@ -108,6 +108,15 @@ DOC_ERROR_CREATING_USER = openapi.Response(
 			}
 		)
 
+DOC_ERROR_CREATING_USER_1 = openapi.Response(
+			description="failed to created user in database",
+			examples={
+				"application/json": {
+					"message": MSG_ERROR_CREATING_USER
+				}
+			}
+		)
+
 DOC_ERROR_LOGIN_FAILED = openapi.Response(
 			description="failed to login with credentials",
 			examples={
