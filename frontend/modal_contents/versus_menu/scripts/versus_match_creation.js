@@ -171,7 +171,6 @@ async function submit1v1Guest(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
-			create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 			throw new Error("Error while creating match.");
 		}
 		let data = await fetched_data.json();
@@ -179,14 +178,15 @@ async function submit1v1Guest(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(data);
+			start_flappybird_game(game_parameters);
 		else
-			start_pong_game(data);
+			start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 
@@ -208,12 +208,12 @@ async function submit1v1Player(matchData) {
 			{
 				error_div.children[0].textContent = "Incorrect username or pin";
 				error_div.style.display = "initial";
-				throw new Error("Error while creating match.");
+				return ;
 			}
 			else
 			{
 				error_div.style.display = "none";
-				create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+				throw new Error("Error while creating match.");
 			}
 		}
 		let data = await fetched_data.json();
@@ -223,14 +223,15 @@ async function submit1v1Player(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(data);
+			start_flappybird_game(game_parameters);
 		else
-			start_pong_game(data);
+			start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 

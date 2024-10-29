@@ -140,18 +140,16 @@ async function tournament_add_player(player_data)
 			{
 				error_div.children[0].textContent = "Incorrect username or pin";
 				error_div.style.display = "initial";
-				throw new Error("Error while adding the player.");
+				return ;
 			}
 			else
 			{
 				error_div.style.display = "none";
-				create_popup("Error while adding the player.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+				throw new Error();
 			}
 		}
 
 		let data = await fetched_data.json();
-		// console.log("success : ");
-		// console.log(data);
 
 		clearInputFields();
 		error_div.style.display = "none";
@@ -159,7 +157,7 @@ async function tournament_add_player(player_data)
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error while adding the player.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 
@@ -203,6 +201,7 @@ function disableFormSubmitOnEnter(id) {
 	});
 }
 
+
 async function submit_tournament_creation(tournament_data)
 {
 	const url = "/api/tournaments/validate/";
@@ -215,30 +214,25 @@ async function submit_tournament_creation(tournament_data)
 		});
 		if (!fetched_data.ok)
 		{
-			// let data = await fetched_data.json();
-			// console.log("error : ");
-			// console.log(data);
-			create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-			
 			throw new Error("Error while creating the tournament");
 		}
 
-		let data = await fetched_data.json();
-
-		// console.log(data);
-		// console.log("create Tournament");
-
 		close_modal('modal-tournament-creation', undefined, false);
-		open_modal('modal-game', undefined, undefined, false);
 
+		if (tournament_data.nb_guest > 0){
+			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
+		} else {
+			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
+		}
 	}
 	catch (error)
 	{
+		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		console.log(error);
 	}
 }
 
-function handleTounamentFormSubmission() {
+function handleTournamentFormSubmission() {
 	document.getElementById('tournament-form').addEventListener('submit', async (event) => {
 		event.preventDefault();
 
@@ -329,7 +323,7 @@ function initTournamentCreation() {
 
 async function create_tournament()
 {
-	const url = "api/tournaments/create/";
+	const url = "/api/tournaments/create/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -338,23 +332,20 @@ async function create_tournament()
 		});
 		if (!fetched_data.ok)
 		{
-			// console.log("error : " + await fetched_data.json());
-			create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-			close_modal('modal-tournament-creation', undefined, false);
 			throw new Error("Error while creating tournament.");
 
 		}
-		let data = await fetched_data.json();
+		let body = await fetched_data.json();
 
-		// console.log(data);
-		tournament_id = data.data.tournament_id;
-
-		// console.log("Create tournament ! id : " + tournament_id);
+		tournament_id = body.data.tournament_id;
 
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		close_modal('modal-tournament-creation', undefined, false);
+		// console.log(error);
+		//TODO fatal error
 	}
 }
 
@@ -364,8 +355,6 @@ function open_tournament()
 	modal_play.hide();
 	create_tournament();
 }
-
-let tournament_id = undefined;
 
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();
@@ -379,6 +368,6 @@ document.addEventListener("onModalsLoaded", () => {
 	eventAddIA();
 	window.addEventListener("resize", set_position_tournament_add_player_container);
 
-	handleTounamentFormSubmission();
+	handleTournamentFormSubmission();
 
 });

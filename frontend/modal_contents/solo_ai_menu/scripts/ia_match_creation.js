@@ -22,8 +22,6 @@ async function submitIAForm(event) {
 		// bot_level : 1,
 	};
 	
-	console.log(body);
-
 	const url = "/api/matches/new/me-ai/";
 
 	try
@@ -35,7 +33,6 @@ async function submitIAForm(event) {
 		});
 		if (!fetched_data.ok)
 		{
-			create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 			throw new Error("Error while creating match.");
 		}
 
@@ -44,11 +41,14 @@ async function submitIAForm(event) {
 		close_modal('modal-ia-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
-		start_pong_game(data, body.bot_level);
+		const game_parameters = data["data"][0];
+		start_pong_game(game_parameters, body.bot_level);
 	}
 	catch (error)
 	{
-		console.log(error);
+		// console.log(error);
+		//TODO ERROR back to main menu
+		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 

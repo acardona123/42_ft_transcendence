@@ -1,0 +1,33 @@
+<div class="modal" id="modal-tournament-round-program" tabindex="-1">
+	<div id="modal-tournament-round-program-dialog" class="modal-dialog modal-dialog-scrollable modal-dialog-overwrite-size">
+		<div id="modal-tournament-round-program-content" class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header" id="trp-header">
+				<h1 class="modal-title"  aria-describedby="modal title" id="trp-title">
+					Tournament round matches
+				</h1>
+				<button type="button" tabindex="1" class="btn trp-btn-close" onclick="close_modal('modal-tournament-round-program', undefined, false)">
+					<img class="trp-btn-close-icon" src="img/cross.png" alt="Return">
+				</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body" aria-describedby="content">
+				<div id="trp-main-div">
+					<div id = "trp-round-matches" aria-describedby="matches">
+						<h2>Matches program:</h2>
+						<p id="trp-match-instructions">Bots are equally good (or bad), so matches between them results in random victory</p>
+						<div id="trp-round-matches-list"></div>
+					</div>
+					<div  id ="trp-waiting-player" aria-describedby="waiting player">
+						<h2>Lonely player:</h2>
+						<div id="trp-waiting-player-desctiption"></div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" id="trp-footer">
+				<button type="button" tabindex="2" class="btn btn-start button-galaxy" onclick="tournament_start_round()">Lets play</button>
+			</div>
+		</div>
+	</div>
+</div>

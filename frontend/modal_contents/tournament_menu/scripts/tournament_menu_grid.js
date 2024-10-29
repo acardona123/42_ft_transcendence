@@ -147,14 +147,14 @@ async function tournament_delete_player(index_card)
 		if (!fetched_data.ok)
 		{
 			let data = await fetched_data.json();
-			console.log("error : ");
-			console.log(data);
+			// console.log("error : ");
+			// console.log(data);
 			throw new Error("Error with deleting player");
 		}
 
 		let data = await fetched_data.json();
-		console.log("success : ");
-		console.log(data);
+		// console.log("success : ");
+		// console.log(data);
 
 		--nb_player;
 		player_list.splice(index_card, 1);
@@ -162,7 +162,7 @@ async function tournament_delete_player(index_card)
 	catch (error)
 	{
 		++nb_cards;
-		console.log(error);
+		// console.log(error);
 	}
 }
 

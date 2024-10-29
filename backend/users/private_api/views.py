@@ -15,6 +15,8 @@ MSG_ERROR_USERNAME_REQUIRED = "The field 'username' is required"
 MSG_ERROR_USER_ID_ONLY_INTEGERS = "The field 'users_id' must contain only integer"
 MSG_ERROR_USER_NOT_FOUND = "Error user not found"
 MSG_ERROR_USERNAME_PIN_REQUIRED = "The field 'username' and 'pin' is required"
+MSG_ERROR_AI_CREATED = "Error while creating AI"
+MSG_ERROR_GUEST_CREATED = "Error while creating Guest"
 
 MSG_ID_USERNAME = "Id associated with username"
 MSG_ID_USERNAME_INFO = "Id associated with username, picture and online status"
@@ -83,12 +85,26 @@ DOC_AI_CREATED = openapi.Response(
 			}
 		)
 
+DOC_ERROR_AI_CREATED = openapi.Response(
+			description=MSG_ERROR_AI_CREATED,
+			examples={
+				"application/json": {"message": MSG_ERROR_AI_CREATED}
+			}
+		)
+
 DOC_GUEST_CREATED = openapi.Response(
 			description=MSG_GUEST_CREATED,
 			examples={
 				"application/json": {"message": MSG_GUEST_CREATED,
 					"data": {"id" : '45',
 						"username": 'Guest#1563'}}
+			}
+		)
+
+DOC_ERROR_GUEST_CREATED = openapi.Response(
+			description=MSG_ERROR_GUEST_CREATED,
+			examples={
+				"application/json": {"message": MSG_ERROR_GUEST_CREATED}
 			}
 		)
 
@@ -245,12 +261,15 @@ def get_random_ai_username():
 @swagger_auto_schema(method='post',
 	responses={
 		200: DOC_AI_CREATED,
+		500: DOC_ERROR_AI_CREATED,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
 def create_ai(request):
 	username = get_random_ai_username()
 	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.BOT)
+	if user is None:
+		return Response({"message": MSG_ERROR_AI_CREATED}, status=500)
 	return Response({"message": MSG_AI_CREATED,
 					"data": {"id" : user.id,
 							"username": user.username}}, status=200)
@@ -268,12 +287,15 @@ def get_random_username():
 @swagger_auto_schema(method='post',
 	responses={
 		200: DOC_GUEST_CREATED,
+		500: DOC_ERROR_GUEST_CREATED,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
 @api_view(['POST'])
 def create_guest(request):
 	username = get_random_username()
 	user = CustomUser.objects.create_user(username, password=None, type=CustomUser.UserType.GUEST)
+	if user is None:
+		return Response({"message": MSG_ERROR_GUEST_CREATED}, status=500)
 	return Response({"message": MSG_GUEST_CREATED,
 					"data": {"id" : user.id,
 							"username": user.username}}, status=200)

@@ -1,0 +1,47 @@
+services:
+  stats_dev:
+    build: .
+    container_name: stats_dev
+    command: "bash -c 'cd django; python3 ./manage.py makemigrations && python3 ./manage.py migrate && python3 ./manage.py runserver 0.0.0.0:8006'"
+    restart: always
+    environment:
+      - VAULT_DATABASE_NAME=stats_db_dev
+    volumes:
+      - .:/usr/src/app/django
+    ports:
+      - "8006:8006"
+    networks:
+      - website-network
+      - stats-network
+    depends_on:
+      stats_db_dev:
+        condition: service_healthy
+
+  stats_db_dev:
+    build: ./postgre
+    container_name: stats_db_dev
+    restart: always
+    volumes:
+      - stats_db:/var/lib/postgresql/data/
+    networks:
+      - stats-network
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_ROLE=${DB_ROLE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  stats_db:
+
+networks:
+  website-network:
+    name: website_network
+  stats-network:
+    name: stats_network
