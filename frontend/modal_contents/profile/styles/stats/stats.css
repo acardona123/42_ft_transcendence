@@ -13,7 +13,7 @@
 }
 
 .prof-stats-div::-webkit-scrollbar-thumb {
-	background: rgba(172, 172, 172, 0.5);
+	background: var(--medium-violet);
 	border-radius: 8px;
 	padding: 10px;
 }
@@ -26,8 +26,8 @@
 	bottom: 40px;
 	height: 320px;
 	border-radius: 10px;
-	border: 2px solid #1b1b1b;
-	background-color: #1b1b1b;
+	border: 2px solid var(--lavender);
+	background-color: var(--lavender);
 }
 
 .prof-stats-pong-div {
@@ -41,7 +41,8 @@
 }
 
 .prof-stats-container-div {
-	border: 4px solid #684b2b;
+	background-color: var(--violet);
+	border: 4px solid var(--lavender);
 	display: flex;
 	border-radius: 20px;
 	margin: 2%;
@@ -56,7 +57,7 @@
 	container-type: inline-size;
 	display: flex;
 	flex-direction: column;
-	background-color: #dbc1ac;
+	background-color: var(--pink);
 	border-radius: 10px 0 0 10px;
 	width: 40%;
 }
@@ -70,7 +71,7 @@
 }
 
 .prof-stats-container-right {
-	background-color: #ece0d1;
+	background-color: var(--violet);
 	border-radius: 0 10px 10px 0;
 	width: 60%;
 	display: flex;
@@ -95,6 +96,7 @@
 	margin-left: auto;
 	margin-top: 0;
 	margin-bottom: 0;
+	color: var(--dark-purple);
 }
 
 .prof-stats-stat-text {

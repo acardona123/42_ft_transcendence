@@ -199,9 +199,9 @@
 
 #modal-profile-dialog
 {
-	max-width: none;
 	height: 80vh;
-	width: 60vw;
+	width: 100%;
+	max-width: 800px;
 	--bs-modal-margin: 10vh 0 10vh 0;
 }
 
