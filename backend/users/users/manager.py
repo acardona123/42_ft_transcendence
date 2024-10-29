@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
+import requests
 
 class CustomUserManager(BaseUserManager):
 	use_in_migrations = True
@@ -24,10 +25,11 @@ class CustomUserManager(BaseUserManager):
 				user.create_profil_picture(url=image_url)
 			else:
 				user.pin = None
+			self.create_stats_for_user(user.id)
 			user.save()
 		except Exception as error:
-			print(error)
 			self.model.objects.filter(username=username).delete()
+			return None
 		return user
 
 	def create_user(self, username, password=None, **extra_fields):
@@ -45,3 +47,9 @@ class CustomUserManager(BaseUserManager):
 			raise ValueError('Superuser must have is_superuser=True.')
 
 		return self._create_user(username, password, **extra_fields)
+	
+	def create_stats_for_user(self, user_id):
+		url = "http://stats:8006/api/private/stats/create_statistics_user/"
+		response =requests.post(url=url, json={"player_id": user_id})
+		# if response.status_code != 201:
+		raise

@@ -37,6 +37,8 @@ class UserSerializer(serializers.ModelSerializer):
 		password = validated_data.pop('password', None)
 		username = validated_data.pop('username', None)
 		user = CustomUser.objects.create_user(username, password, **validated_data)
+		if user is None:
+			raise serializers.ValidationError({"message": "Error while creating user"})
 		return user
 
 class OauthUserSerializer(serializers.ModelSerializer):
@@ -80,6 +82,8 @@ class OauthUserSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		username = validated_data.pop('username', None)
 		user = CustomUser.objects.create_user(username, **validated_data)
+		if user is None:
+			raise serializers.ValidationError({"message": "Error while creating user"})
 		return user
 	
 class UpdatePasswordSerializer(serializers.ModelSerializer):
