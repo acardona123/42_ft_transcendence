@@ -51,5 +51,5 @@ class CustomUserManager(BaseUserManager):
 	def create_stats_for_user(self, user_id):
 		url = "http://stats:8006/api/private/stats/create_statistics_user/"
 		response =requests.post(url=url, json={"player_id": user_id})
-		# if response.status_code != 201:
-		raise
+		if response.status_code != 201:
+			raise

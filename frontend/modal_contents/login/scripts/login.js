@@ -164,6 +164,7 @@ async function auto_login_42()
 	}
 	catch (error)
 	{
+		create_popup("Error while login in.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
