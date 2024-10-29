@@ -10,6 +10,8 @@ class fb_Score extends Phaser.GameObjects.Container{
 	#icon;
 	#text;
 
+	#death_count;
+
 	constructor(scene, player_index_symbol, icon_scene_texture, flip_texture = false, width = fb_gameConfig.width / 3, height = fb_gameConfig.scene_play.textboard.height, icon_size = fb_gameConfig.scene_play.textboard.icon_size, icon_padding = fb_gameConfig.scene_play.textboard.icon_padding){
 		super(scene);
 		this.height = height;
@@ -22,6 +24,7 @@ class fb_Score extends Phaser.GameObjects.Container{
 		this.#icon_size = icon_size;
 		this.#icon_padding = icon_padding;
 		this.#texture_flipped = flip_texture;
+		this.#death_count = 0;
 
 		this.#addComponents();
 		this.#resizeComponents();
@@ -93,6 +96,7 @@ class fb_Score extends Phaser.GameObjects.Container{
 	}
 
 	updatePlayerDied(){
+		this.#death_count += 1;
 		if (areLivesLimited()){
 			this.#text.losePoints(1)
 		} else {
@@ -102,5 +106,9 @@ class fb_Score extends Phaser.GameObjects.Container{
 
 	getScoreValue(){
 		return (this.#text.getScore());
+	}
+
+	getDeathCount(){
+		return (this.#death_count);
 	}
 }
