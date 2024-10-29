@@ -1,12 +1,14 @@
 #smc-main-div
 {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 	height: 100vh;
 	padding: 10px;
 	background:var(--lavender);
 	min-height: 425px;
+}
+
+#smc-top-div
+{
+	height: 20%;
 }
 
 #smc-short-profile-div
@@ -14,14 +16,12 @@
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-	height: fit-content;
 }
 
 #smc-user-info-div {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
-	/* align-items: ; */
 }
 
 #smc-user-name
@@ -92,18 +92,19 @@
 #smc-buttons-div
 {
 	display: flex;
-	height: 100%;
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: center;
+	height: 30%;
 }
 
 #smc-profile-button
 {
 	position: relative;
 	width: 85%;
-	height: 8%;
+	height: 22%;
 	min-height: 45px;
+	min-width: 170px;
 	font-size: 2em;
 	margin-bottom: 15%;
 }
@@ -112,8 +113,9 @@
 {
 	position: relative;
 	width: 85%;
-	height: 8%;
+	height: 22%;
 	min-height: 45px;
+	min-width: 170px;
 	font-size: 2em;
 	margin-bottom: 20%;
 }

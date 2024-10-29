@@ -90,6 +90,12 @@
 	font-size: 0.8em;
 }
 
+.inputs-password-register
+{
+	font-family: Lato, Arial, sans-serif;
+	letter-spacing: 1px;
+}
+
 #register-button
 {
 	width: 80%;

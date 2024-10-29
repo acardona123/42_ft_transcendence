@@ -214,20 +214,40 @@
 
 /* ================================================ */
 
+/* === MODAL edit profile ===
+
+#modal-edit-profile-dialog
+{
+	height: 80vh;
+	width: 100%;
+	--bs-modal-margin: 10vh 0 10vh 0;
+	max-width: 500px;
+}
+
+#modal-edit-profile-content
+{
+	height: 100% !important;
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+} */
 /* === MODAL 2fa setup === */
 
 #modal-2fa-setup-dialog
 {
-	max-width: none;
 	height: 60vh;
-	width: fit-content;
+	width: 100%;
 	--bs-modal-margin: 20vh 0 20vh 0;
+	max-width: 500px;
 }
 
 #modal-2fa-setup-content
 {
 	height: 100% !important;
-	width: fit-content !important;
+	overflow: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	/* width: fit-content !important; */
 }
 
 /* ================================================ */

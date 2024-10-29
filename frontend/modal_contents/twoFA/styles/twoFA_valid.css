@@ -42,6 +42,7 @@
 	font-size: 1.5em;
 	margin: 0;
 	margin-bottom: 10px;
+	color: var(--dark-purple);
 }
 
 .tfav-input-digit-div
@@ -67,11 +68,11 @@
 	padding-top: 10px;
 	padding-left: 3px;
 
-	border: 2px solid black;
+	border: 2px solid var(--dark-purple);
 	border-radius: 3px;
 }
 
 .tfav-input-digit:focus
 {
-	border: 3px solid black;
+	border: 3px solid var(--dark-purple);
 }
