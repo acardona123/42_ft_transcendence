@@ -9,6 +9,9 @@ let modal_edit_profile = undefined;
 let modal_profile = undefined;
 let modal_2fa_setup = undefined;
 let modal_2fa_valid = undefined;
+let modal_tournament_round_program = undefined;
+let modal_tournament_guests_repartition = undefined;
+
 
 let modal_on_screen = undefined;
 
@@ -27,11 +30,16 @@ function init_modals()
 	modal_profile = new bootstrap.Modal(document.getElementById('modal-profile'), {backdrop : "static", keyboard : false});
 	modal_2fa_setup = new bootstrap.Modal(document.getElementById('modal-2fa-setup'), {backdrop : "static", keyboard : false});
 	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'), {backdrop : "static", keyboard : false});
+	modal_tournament_round_program = new bootstrap.Modal(document.getElementById("modal-tournament-round-program"), {backdrop : "static", keyboard : false});
+	modal_tournament_guests_repartition = new bootstrap.Modal(document.getElementById("modal-tournament-guests-repartition"), {backdrop : "static", keyboard : false});
 	
+
 	document.addEventListener("hidePrevented.bs.modal", (event) => 
 	{
 		event.preventDefault();
-		if (event.target.id !== 'modal-game')
+		if (event.target.id !== 'modal-game' 
+			&& event.target.id != 'modal-tournament-round-program'
+			&& event.target.id != 'modal-tournament-guests-repartition')
 			close_modal(event.target.id, undefined, true);
 	});
 }
@@ -118,7 +126,19 @@ async function init_modal_edit_profile()
 	edp_update_profile_picture();
 }
 
-async function open_modal(id_modal, init_function_bf, init_function_af, should_add_to_history=true)
+async function init_modal_tournament_round_program(){
+	tournament_round_display_loading_elements();
+	await regenerate_round_elements();
+	update_round_display();
+}
+
+async function init_modal_tournament_guests_repartition(){
+	tournament_guests_repartition_loading_elements();
+	await regenerate_guests_elements();
+	update_guests_display();
+}
+
+async function open_modal(id_modal, init_function_bf=undefined, init_function_af=undefined, should_add_to_history=true)
 {
 	modal_on_screen = id_modal;
 
@@ -159,6 +179,12 @@ async function open_modal(id_modal, init_function_bf, init_function_af, should_a
 			break;
 		case "modal-2fa-valid":
 			modal_2fa_valid.show();
+			break;
+		case "modal-tournament-round-program":
+			modal_tournament_round_program.show();
+			break;
+		case "modal-tournament-guests-repartition":
+			modal_tournament_guests_repartition.show();
 			break;
 		default:
 			console.log("Error : this is not a id for modal.");
@@ -220,6 +246,12 @@ function close_modal(id_modal, init_function_af, should_add_to_history=true)
 		case "modal-2fa-valid":
 			modal_2fa_valid.hide();
 			break;
+		case "modal-tournament-round-program":
+			modal_tournament_round_program.hide();
+			break;
+		case "modal-tournament-guests-repartition":
+			modal_tournament_guests_repartition.hide();
+			break;
 		default:
 			return;
 	}
@@ -238,7 +270,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -250,10 +282,12 @@ async function get_modals_html()
 			fetch('modal_contents/edit_profile/edit_profile.html'),
 			fetch('modal_contents/profile/profile.html'),
 			fetch('modal_contents/twoFA/twoFA_setup.html'),
-			fetch('modal_contents/twoFA/twoFA_valid.html')
+			fetch('modal_contents/twoFA/twoFA_valid.html'),
+			fetch('modal_contents/tournament_round_program/tournament_round_program.html'),
+			fetch('modal_contents/tournament_guests_repartition/tournament_guests_repartition.html'),
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -265,9 +299,11 @@ async function get_modals_html()
 			edit_profile.text(),
 			profile.text(),
 			twoFA_setup.text(),
-			twoFA_valid.text()
+			twoFA_valid.text(),
+			tournament_round_program.text(),
+			tournament_guests_repartition.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + game + edit_profile + profile + twoFA_setup + twoFA_valid;
+		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + game + edit_profile + profile + twoFA_setup + twoFA_valid + tournament_round_program + tournament_guests_repartition;
 	}
 	catch (error)
 	{

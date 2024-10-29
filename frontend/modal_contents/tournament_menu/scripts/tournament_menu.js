@@ -116,7 +116,7 @@ function CheckAddConnectedPlayer(pseudo, pin) {
 
 async function tournament_add_player(player_data)
 {
-	const url = "/api/tournaments/player/";
+	const url = "https://localhost:8443/api/tournaments/player/";
 
 	try
 	{
@@ -134,8 +134,6 @@ async function tournament_add_player(player_data)
 		}
 
 		let data = await fetched_data.json();
-		console.log("success : ");
-		console.log(data);
 
 		clearInputFields();
 		AddCard('PLAYER', data.data.username, data.data.player_id);
@@ -190,38 +188,19 @@ function disableFormSubmitOnEnter(id) {
 
 async function submit_tournament_creation(tournament_data)
 {
-	const url = "/api/tournaments/validate/";
-	try
+	const url = "https://localhost:8443/api/tournaments/validate/";
+	let fetched_data = await fetch_with_token(url, {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json'},
+		body: JSON.stringify(tournament_data),
+	});
+	if (!fetched_data.ok)
 	{
-		let fetched_data = await fetch_with_token(url, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(tournament_data),
-		});
-		if (!fetched_data.ok)
-		{
-			let data = await fetched_data.json();
-			console.log("error : ");
-			console.log(data);
-			throw new Error("Error while creating the tournament");
-		}
-
-		let data = await fetched_data.json();
-
-		console.log(data);
-		console.log("create Tournament");
-
-		close_modal('modal-tournament-creation', undefined, false);
-		open_modal('modal-game', undefined, undefined, false);
-
-	}
-	catch (error)
-	{
-		console.log(error);
+		throw new Error("Error while creating the tournament");
 	}
 }
 
-function handleTounamentFormSubmission() {
+function handleTournamentFormSubmission() {
 	document.getElementById('tournament-form').addEventListener('submit', async (event) => {
 		event.preventDefault();
 
@@ -240,10 +219,24 @@ function handleTounamentFormSubmission() {
 			nb_ai,
 		};
 
-			submit_tournament_creation(tournament_data);
+		try {
+			await submit_tournament_creation(tournament_data);
 
-		console.log(tournament_data);
+		} catch (error) {
+			console.log(error);
+			//TODO: FATAL ERROR: /////////////////////////////
+			close_modal('modal-tournament-creation', undefined, true);
+			create_popup("Error creating the tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+			return;
+		}
 
+		close_modal('modal-tournament-creation', undefined, true);
+
+		if (tournament_data.nb_guest > 0){
+			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
+		} else {
+			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
+		}
 	});
 }
 
@@ -297,7 +290,7 @@ function initTournamentCreation() {
 
 async function create_tournament()
 {
-	const url = "api/tournaments/create/";
+	const url = "https://localhost:8443/api/tournaments/create/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -309,17 +302,14 @@ async function create_tournament()
 			// console.log("error : " + await fetched_data.json());
 			throw new Error("Error while creating tournament.");
 		}
-		let data = await fetched_data.json();
+		let body = await fetched_data.json();
 
-		console.log(data);
-		tournament_id = data.data.tournament_id;
-
-		console.log("Create tournament ! id : " + tournament_id);
-
+		tournament_id = body.data.tournament_id;
 	}
 	catch (error)
 	{
 		console.log(error);
+		//TODO fatal error
 	}
 }
 
@@ -329,8 +319,6 @@ function open_tournament()
 	modal_play.hide();
 	create_tournament();
 }
-
-let tournament_id = undefined;
 
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();
@@ -351,6 +339,6 @@ document.addEventListener("onModalsLoaded", () => {
 	eventAddGuestPlayer();
 	eventAddIA();
 
-	handleTounamentFormSubmission();
+	handleTournamentFormSubmission();
 
 });

@@ -271,3 +271,41 @@
 }
 
 /* ================================================ */
+
+/* MODAL TOURNAMENT ROUND */
+
+#modal-tournament-round-program-dialog {
+	height: 80vh !important;
+	width: 60vw !important;
+	max-width: none !important;
+	/* margin: 0; */
+
+	--bs-modal-margin: 0vh 0 0 0 !important;
+
+	/* overflow: hidden !important; */
+}
+
+#modal-tournament-round-program-content {
+	height: 100% !important;
+	width: 100% !important;
+}
+
+/* ================================================ */
+
+/* MODAL TOURNAMENT ROUND */
+
+#modal-tournament-guests-repartition-dialog {
+	height: 80vh !important;
+	width: 60vw !important;
+	max-width: none !important;
+	/* margin: 0; */
+
+	--bs-modal-margin: 0vh 0 0 0 !important;
+
+	/* overflow: hidden !important; */
+}
+
+#modal-tournament-guests-repartition-content {
+	height: 100% !important;
+	width: 100% !important;
+}

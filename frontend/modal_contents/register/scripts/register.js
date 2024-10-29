@@ -37,11 +37,17 @@ function on_error_form_register(data)
 		non_field_errors: document.getElementById("register-on-error-password")
 	}
 	clear_register_error_fields(placeholders);
+	let has_error = false;
 	for (field in data)
 	{
+		has_error = true;
 		placeholders[field].previousElementSibling.children[1].style.border = "thin solid red";
 		for (message of data[field])
 			placeholders[field].innerHTML += message + "<br />";
+	}
+	if (!has_error)
+	{
+		create_popup("Error signing up.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 

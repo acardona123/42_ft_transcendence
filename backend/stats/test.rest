@@ -1,0 +1,37 @@
+### --- Initalize stats of a user ---
+POST /api/private/stats/create_statistics_user/ HTTP/1.1
+Host: localhost:8006
+Content-Type: application/json
+
+{
+	"player_id" : "3"
+}
+
+### --- Post data Match ---
+POST /api/private/stats/post_match_data/ HTTP/1.1
+Host: localhost:8006
+Content-Type: application/json
+
+{
+	"player_id1" : "1",
+	"player_id2" : "2",
+	"game" : "FB",
+	"winner" : "1"
+}
+
+### --- Post data tournament ---
+
+POST /api/private/stats/post_tournament_data/ HTTP/1.1
+Host: localhost:8006
+Content-Type: application/json
+
+{
+	"list_participants" : [1, 2, 3],
+	"winner" : "3",
+	"game" : "FB"
+}
+
+### --- Get user statistics ---
+GET https://localhost:8443/api/stats/1 HTTP/1.1
+
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwMTI4MDQ5LCJpYXQiOjE3MzAxMjc3NDksImp0aSI6IjUwNWYyY2JiM2ZhMzRlNzdiYmMwNjRlNTFkNzUyZjhkIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNvdWNvdSJ9.OjCoJv-RTlpk7dDab3vFBzbVqavZtzPe3hVOzofdt2U

@@ -1,6 +1,7 @@
 include:
   - ./backend/users/docker-compose.yml
   - ./backend/friends/docker-compose.yml
+  - ./backend/stats/docker-compose.yml
   - ./backend/matches/docker-compose.yml
   - ./backend/tournaments/docker-compose.yml
 
@@ -20,7 +21,9 @@ services:
     depends_on:
       - users
       - friends
+      - stats
       - matches
+      - tournaments
   vault:
     build: ./backend/vault
     container_name: vault

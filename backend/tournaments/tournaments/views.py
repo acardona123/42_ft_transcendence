@@ -25,7 +25,10 @@ def get_tournament_id(request, query_string, status):
 		tournament = Tournament.objects.get(id=tournament_id)
 		if not isinstance(request.user, AnonymousUser) and tournament.host != request.user.id:
 			raise
-		if tournament.status != status:
+		if isinstance(status, list):
+			if not tournament.status in status:
+				raise
+		elif tournament.status != status:
 			raise
 		return tournament
 	except:
@@ -204,7 +207,7 @@ def guest_list(request):
 @api_view(['GET'])
 @permission_classes([IsNormalToken])
 def get_match_for_round(request):
-	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
+	tournament = get_tournament_id(request, True, [Tournament.GameStatus.STARTED, Tournament.GameStatus.FINISHED])
 	if isinstance(tournament, Response):
 		return tournament
 	players = list(tournament.participant_set.filter(is_eliminated=False))
@@ -262,13 +265,17 @@ def create_match(tournament, players):
 def start_match(tournament):
 	match_id = tournament.next_match
 	if match_id > tournament.max_match:
-		dispatch_player(tournament)
+		error = dispatch_player(tournament)
+		if error is not None:
+			return error
 		return Response({"message": doc.MSG_ROUND_FINISH,
 				'data': {"round": "finish"}}, status=200)
 	players = list(tournament.participant_set.filter(match=match_id, is_eliminated=False))
 	if len(players) == 1:
 		if match_id == tournament.max_match:
-			dispatch_player(tournament)
+			error = dispatch_player(tournament)
+			if error is not None:
+				return error
 			return Response({"message": doc.MSG_ROUND_FINISH,
 					'data': {"round": "finish"}}, status=200)
 		else:
@@ -348,6 +355,10 @@ def match_finished(request):
 	if not players[0].is_playing or not players[1].is_playing:
 		return Response({"message": doc.MSG_ERROR_PLAYER_NOT_PLAYING}, status=400)
 	if score1 == score2:
+		players[0].is_playing = False
+		players[1].is_playing = False
+		players[0].save()
+		players[1].save()
 		return Response({'message': doc.MSG_MATCH_TIE}, status=200)
 	winner = 1 if score1 > score2 else 2
 	if players[0].position != winner:
@@ -378,7 +389,7 @@ def check_host_tournament(request):
 	tournament = get_tournament_id(request, True, Tournament.GameStatus.STARTED)
 	if isinstance(tournament, Response):
 		return tournament
-	if tournament.host != host_id:
+	if str(tournament.host) != host_id:
 		return Response({"message": doc.MSG_PLAYER_NOT_HOST,
 					"data": {"is_host": False}}, status=200)
 	return Response({"message": doc.MSG_PLAYER_HOST,

@@ -197,10 +197,11 @@ async function submit1v1Guest(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(data);
+			start_flappybird_game(game_parameters);
 		else
-			start_pong_game(data);
+			start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
@@ -235,10 +236,11 @@ async function submit1v1Player(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
-			start_flappybird_game(data);
+			start_flappybird_game(game_parameters);
 		else
-			start_pong_game(data);
+			start_pong_game(game_parameters);
 	}
 	catch (error)
 	{
