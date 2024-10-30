@@ -184,19 +184,30 @@ function get_date_time(elem_date, game_duration)
 	return text_date_time;
 }
 
-function get_victory_state(main_player_score, opponent_score)
+function get_victory_state(main_player_score, opponent_score, game)
 {
-	if (main_player_score > opponent_score)
+	if (game =- "PG")
+	{
+		if (main_player_score > opponent_score)
+			return "victory";
+		else if (main_player_score == opponent_score)
+			return "tie";
+		return "defeat";
+	}
+	else
+	{
+		if (main_player_score > opponent_score)
+			return "defeat";
+		else if (main_player_score == opponent_score)
+			return "tie";
 		return "victory";
-	else if (main_player_score == opponent_score)
-		return "tie";
-	return "defeat";
+	}
 }
 
 function get_history_elem_div(history_elem)
 {
 	const history_elem_div = document.createElement("div");
-	let victory_state = get_victory_state(history_elem.main_player_score, history_elem.opponent_score);
+	let victory_state = get_victory_state(history_elem.main_player_score, history_elem.opponent_score, history_elem.game);
 
 	history_elem_div.className = "prof-history-elem-div";
 	if (history_elem.game == "PG")
