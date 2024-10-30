@@ -85,6 +85,7 @@ class ManagePlayer(APIView):
 			201: doc.DOC_PLAYER_TRN,
 			'400(0)': doc.DOC_ERROR_USERNAME_PIN,
 			'400(1)': doc.DOC_ERROR_TRN_ID,
+			403: doc.DOC_ERROR_USERNAME_PIN_CONNECTION,
 			401: doc.DOC_ERROR_UNAUTHORIZED,
 			405: doc.DOC_ERROR_METHOD_NOT_ALLOWED,
 			500: doc.DOC_ERROR_ADD_PLAYER
@@ -102,7 +103,7 @@ class ManagePlayer(APIView):
 		response = requests.post(url=url, data={"username":username, "pin":pin})
 		response_json = response.json()
 		if response.status_code != 200 or response_json['data'].get('valid') == False:
-			return Response({"message": doc.MSG_INVALID_CRED}, status=401)
+			return Response({"message": doc.MSG_INVALID_CRED}, status=403)
 		user_id = response_json['data'].get('user_id')
 		return add_participant(tournament, user_id, username)
 

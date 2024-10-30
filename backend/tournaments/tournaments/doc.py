@@ -84,8 +84,13 @@ DOC_ERROR_CREATE_TRN = openapi.Response(
 		)
 
 DOC_ERROR_USERNAME_PIN = openapi.Response(
-			description=MSG_ERROR_USERNAME_PIN_REQUIRED+' or '+MSG_INVALID_CRED,
+			description=MSG_ERROR_USERNAME_PIN_REQUIRED,
 			examples={"application/json": {"message": MSG_ERROR_USERNAME_PIN_REQUIRED}}
+		)
+
+DOC_ERROR_USERNAME_PIN_CONNECTION = openapi.Response(
+			description=MSG_INVALID_CRED,
+			examples={"application/json": {"message": MSG_INVALID_CRED}}
 		)
 
 DOC_ERROR_TRN_ID = openapi.Response(
