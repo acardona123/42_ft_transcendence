@@ -123,7 +123,6 @@ class UserManagment(TestCase):
 			"username" : "quentin1"
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
-		print(reverse('signup'))
 		self.assertEqual(response.status_code, 400)
 		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'email': [ErrorDetail(string='Enter a valid email address.', code='invalid')]}})
 

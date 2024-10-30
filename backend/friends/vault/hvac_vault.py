@@ -90,7 +90,6 @@ def rotate_cred(client, name):
 	)
 
 def create_cred(client, name):
-	print('create cred database')
 	credentials = client.secrets.database.generate_credentials(
 		name=name+'-role'
 	)

@@ -187,11 +187,11 @@ def new_match_against_guest(request):
 		),
 	responses = {
 		200: "see the response 200 of private_api/matches/new_match_verified_id/",
-		403: doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
+		'403 (0)': doc_error_generation("unidentified user", MSG_ERROR_UNIDENTIFIED_USER),
+		'403 (1)': doc_error_generation("wrong pin", MSG_NEW_MATCH_ERROR_WRONG_PIN),
 		'400 (0)': doc_error_generation("json body", MSG_ERROR_JSON_FORMAT),
 		'400 (1)': doc_error_generation("missing field", MSG_NEW_MATCH_ERROR_MISSING_FIELD),
 		'400/401/404/...': 'all the error returns of user/api/users/ ??????????check player pin ?????????????????',
-		'400 (2)': doc_error_generation("wrong pin", MSG_NEW_MATCH_ERROR_WRONG_PIN),
 		'400/500': "see all the error messages of private_api/matches/new_match_verified_id/" ,
 	})
 @api_view(['POST'])
@@ -211,7 +211,7 @@ def new_match_against_player(request):
 	if check_second_player['status'] != 200:
 		return JsonResponse(status = check_second_player['status'], data = check_second_player['body'], safe=False)
 	if check_second_player['body']['data'].get('valid') != True:
-		return JsonResponse(status =  400, data = {'message' : MSG_NEW_MATCH_ERROR_WRONG_PIN})
+		return JsonResponse(status =  403, data = {'message' : MSG_NEW_MATCH_ERROR_WRONG_PIN})
 	player2_id = check_second_player['body']['data'].get('user_id')
 	
 	new_match_request_data = generate_request_data_with_players(request, user_id, player2_id)

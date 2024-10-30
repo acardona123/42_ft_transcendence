@@ -249,7 +249,7 @@ async function submit1v1Player(matchData) {
 			document.getElementById('versus-player-validate-button').disabled = false;
 			document.getElementById('versus-player-validate-button').classList.remove('loading');
 
-			if (fetched_data.status === 400)
+			if (fetched_data.status === 403)
 			{
 				error_div.children[0].textContent = "Incorrect username or pin";
 				error_div.style.display = "initial";

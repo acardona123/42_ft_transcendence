@@ -5,6 +5,11 @@ class CustomUserManager(BaseUserManager):
 	use_in_migrations = True
 
 	def _create_user(self, username, password=None, **extra_fields):
+		if len(username) > 15:
+			if '#' in username:
+				username = username.split("#", 1)
+				len_cut = 15 - len(username[1]) - 1
+				username = username[0][0: len_cut] + "#" + username[1]
 		image_url = extra_fields.pop('profilepicture', None)
 		if image_url != None:
 			image_url = image_url.get('oauth_profile_picture')
