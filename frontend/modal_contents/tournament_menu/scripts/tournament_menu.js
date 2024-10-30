@@ -218,9 +218,13 @@ async function submit_tournament_validation(tournament_data)
 		} else {
 			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
 		}
+
+		stop_click_on_all_page = false;
 	}
 	catch (error)
 	{
+		stop_click_on_all_page = false;
+
 		document.getElementById('tournament_validate_button').disabled = false;
 		document.getElementById('tournament_validate_button').classList.remove('loading');
 
@@ -250,6 +254,9 @@ function handleTournamentFormSubmission() {
 
 		document.getElementById('tournament_validate_button').classList.add('loading');
 		document.getElementById('tournament_validate_button').disabled = true;
+
+		stop_click_on_all_page = true;
+
 		submit_tournament_validation(tournament_data);
 	});
 }

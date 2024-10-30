@@ -171,6 +171,7 @@ async function auto_login_42()
 
 async function auto_login()
 {
+	stop_click_on_all_page = true;
 	// try to connect with 42 after 42 redirection
 	await auto_login_42();
 	// refresh token are set either by 42 or were still in local storage (reload)
@@ -179,6 +180,7 @@ async function auto_login()
 	// no 42 redirect or refresh, nobody to auto login
 	if (!refresh_token || !access_token)
 	{
+		stop_click_on_all_page = false;
 		update_ui_on_log_event();
 		return ;
 	}
@@ -190,6 +192,7 @@ async function auto_login()
 	{
 		// nothing to do on error, this is a intended silent error
 	}
+	stop_click_on_all_page = false;
 }
 
 async function login_with_42()

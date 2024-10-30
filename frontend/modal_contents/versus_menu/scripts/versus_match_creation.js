@@ -167,11 +167,14 @@ function handle1v1FormSubmission() {
 				bot_level : -1,
 			};
 
+
 			document.getElementById('versus-guest-validate-button').disabled = true;
 			document.getElementById('versus-guest-validate-button').classList.remove('loading');
 
 			document.getElementById('versus-player-validate-button').disabled = true;
 			document.getElementById('versus-player-validate-button').classList.add('loading');
+
+			stop_click_on_all_page = true;
 
 			submit1v1Player(matchData);
 		}
@@ -196,9 +199,11 @@ async function submit1v1Guest(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		stop_click_on_all_page = false;
+
 		document.getElementById('versus-guest-validate-button').disabled = false;
 		document.getElementById('versus-guest-validate-button').classList.remove('loading');
-	
+
 		document.getElementById('versus-player-validate-button').disabled = false;
 		document.getElementById('versus-player-validate-button').classList.remove('loading');
 
@@ -210,6 +215,8 @@ async function submit1v1Guest(matchData) {
 	}
 	catch (error)
 	{
+		stop_click_on_all_page = false;
+
 		document.getElementById('versus-guest-validate-button').disabled = false;
 		document.getElementById('versus-guest-validate-button').classList.remove('loading');
 
@@ -234,6 +241,8 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
+			stop_click_on_all_page = false;
+
 			document.getElementById('versus-guest-validate-button').disabled = false;
 			document.getElementById('versus-guest-validate-button').classList.remove('loading');
 
@@ -258,6 +267,8 @@ async function submit1v1Player(matchData) {
 		
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
+
+		stop_click_on_all_page = false;
 
 		document.getElementById('versus-guest-validate-button').disabled = false;
 		document.getElementById('versus-guest-validate-button').classList.remove('loading');

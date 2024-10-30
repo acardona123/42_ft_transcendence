@@ -24,6 +24,8 @@ async function submitIAForm(event) {
 	document.getElementById('ia_validate_button').disabled = true;
 	document.getElementById('ia_validate_button').classList.add('loading');
 
+	stop_click_on_all_page = true;
+
 	const url = "/api/matches/new/me-ai/";
 
 	try
@@ -43,6 +45,8 @@ async function submitIAForm(event) {
 		close_modal('modal-ia-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		stop_click_on_all_page = false;
+
 		document.getElementById('ia_validate_button').disabled = false;
 		document.getElementById('ia_validate_button').classList.remove('loading');
 
@@ -53,6 +57,8 @@ async function submitIAForm(event) {
 	{
 		// console.log(error);
 		//TODO ERROR back to main menu
+		stop_click_on_all_page = false;
+
 		document.getElementById('ia_validate_button').disabled = false;
 		document.getElementById('ia_validate_button').classList.remove('loading');
 
