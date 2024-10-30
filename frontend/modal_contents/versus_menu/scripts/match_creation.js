@@ -123,11 +123,10 @@ function clearInputFields() {
 }
 
 function clearErrorFields() {
-	var errorFlieds = document.querySelectorAll('.error');
+	var error_divs = document.querySelectorAll('.error-div');
 
-	errorFlieds.forEach(errorField => {
-		errorField.textContent = '';
-		errorField.style.display = 'none';
+	error_divs.forEach(error_div => {
+		error_div.style.display = 'none';
 	});
 }
 
