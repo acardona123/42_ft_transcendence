@@ -42,7 +42,7 @@ class pg_BotDescriptionPanel extends Phaser.GameObjects.Container{
 			}
 
 			#createTextUsername(){
-				this.#text_bot_name = this.#createTextObject("Botzilla");
+				this.#text_bot_name = this.#createTextObject(pg_gameMode.username_player2);
 			}
 
 			#createTextBotLevel(){
