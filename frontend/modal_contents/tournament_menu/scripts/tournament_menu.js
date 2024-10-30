@@ -193,16 +193,7 @@ function OnClickAddConnectedPlayer() {
 	});
 }
 
-function disableFormSubmitOnEnter(id) {
-	document.getElementById(id).addEventListener('keydown', function (event) {
-		if (event.key === 'Enter') {
-			event.preventDefault();  // Prevent the form from submitting
-		}
-	});
-}
-
-
-async function submit_tournament_creation(tournament_data)
+async function submit_tournament_validation(tournament_data)
 {
 	const url = "/api/tournaments/validate/";
 	try
@@ -219,6 +210,9 @@ async function submit_tournament_creation(tournament_data)
 
 		close_modal('modal-tournament-creation', undefined, false);
 
+		document.getElementById('tournament_validate_button').disabled = false;
+		document.getElementById('tournament_validate_button').classList.remove('loading');
+
 		if (tournament_data.nb_guest > 0){
 			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
 		} else {
@@ -227,6 +221,9 @@ async function submit_tournament_creation(tournament_data)
 	}
 	catch (error)
 	{
+		document.getElementById('tournament_validate_button').disabled = false;
+		document.getElementById('tournament_validate_button').classList.remove('loading');
+
 		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		console.log(error);
 	}
@@ -251,7 +248,9 @@ function handleTournamentFormSubmission() {
 			nb_ai,
 		};
 
-		submit_tournament_creation(tournament_data);
+		document.getElementById('tournament_validate_button').classList.add('loading');
+		document.getElementById('tournament_validate_button').disabled = true;
+		submit_tournament_validation(tournament_data);
 	});
 }
 
@@ -298,7 +297,7 @@ function check_not_enough_player_tournament()
 	}
 }
 
-function initTournamentCreation() {
+function init_tournament_menu() {
 	tournament_creation_setup_display_on_game();
 
 	const sliderTime = document.getElementById('tournamentTimeSlider');
@@ -316,6 +315,7 @@ function initTournamentCreation() {
 	initPlayerGird();
 	
 	document.getElementById('tournament_validate_button').disabled = true;
+	document.getElementById('tournament_validate_button').classList.remove('loading');
 
 	document.getElementById('tournament-add-player-error-div').style.display = 'none';
 
@@ -351,13 +351,13 @@ async function create_tournament()
 
 function open_tournament()
 {
-	initTournamentCreation();
+	init_tournament_menu();
 	modal_play.hide();
 	create_tournament();
 }
 
 document.addEventListener("onModalsLoaded", () => {
-	initTournamentCreation();
+	init_tournament_menu();
 
 	pincodeOnlyDigits('tournament-player-pin-input');
 	OnClickToggleContainerConnectedPlayer();

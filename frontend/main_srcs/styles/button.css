@@ -178,7 +178,7 @@
 
 /* 
 
-<button id="IAsubmitButton" type="submit" class="btn validate-btn">
+<button id="ia_validate_button" type="submit" class="btn validate-btn">
 	PLAY
 	<div class="icon">
 	<svg
@@ -260,6 +260,18 @@
 
 .validate-btn:disabled {
 	color: var(--lavender);
+}
+
+.validate-btn.loading {
+	opacity: 1 !important;
+}
+
+.validate-btn.loading .icon {
+	width: calc(100% - 0.6em);
+}
+
+.validate-btn.loading .icon svg {
+	transform: translateX(0.1em);
 }
 
 /* ============================ */

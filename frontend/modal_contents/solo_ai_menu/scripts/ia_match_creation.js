@@ -19,9 +19,11 @@ async function submitIAForm(event) {
 		max_duration,
 		tournament_id : -1,
 		bot_level : 1,
-		// bot_level : 1,
 	};
-	
+
+	document.getElementById('ia_validate_button').disabled = true;
+	document.getElementById('ia_validate_button').classList.add('loading');
+
 	const url = "/api/matches/new/me-ai/";
 
 	try
@@ -41,6 +43,9 @@ async function submitIAForm(event) {
 		close_modal('modal-ia-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		document.getElementById('ia_validate_button').disabled = false;
+		document.getElementById('ia_validate_button').classList.remove('loading');
+
 		const game_parameters = data["data"][0];
 		await start_pong_game(game_parameters, body.bot_level);
 	}
@@ -48,6 +53,9 @@ async function submitIAForm(event) {
 	{
 		// console.log(error);
 		//TODO ERROR back to main menu
+		document.getElementById('ia_validate_button').disabled = false;
+		document.getElementById('ia_validate_button').classList.remove('loading');
+
 		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
@@ -62,17 +70,14 @@ function initMatchIACreation() {
 	
 	updateSlider("IAMatchForm");
 
+	document.getElementById('ia_validate_button').disabled = false;
+	document.getElementById('ia_validate_button').classList.remove('loading');
+
 	modal_play.hide();
 }
 
 document.addEventListener("onModalsLoaded", () => {
 	initMatchIACreation();
-
-	// document.addEventListener('keydown', (event) => {
-	// 	if (event.key === "Escape") {
-	// 		close_modal('modal-ia-match-creation', return_to_modal_play);
-	// 	}
-	// });
 
 	handleIAFormSubmission();
 });

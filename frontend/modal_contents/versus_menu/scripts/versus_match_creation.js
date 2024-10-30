@@ -1,6 +1,6 @@
 function disable_buttons_versus_form() {
-	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
-	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
+	const versus_guest_button = document.getElementById('versus-guest-validate-button');
+	const versus_player_button = document.getElementById('versus-player-validate-button');
 
 	const BoxVSGuest = document.getElementById('BoxVSGuest');
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
@@ -11,37 +11,37 @@ function disable_buttons_versus_form() {
 
 	if (countMaxValues > 1)
 	{
-		VSGuestPlayButton.disabled = true;
-		VSPlayerPlayButton.disabled = true;
+		versus_guest_button.disabled = true;
+		versus_player_button.disabled = true;
 	}
 	else
 	{
 		if (BoxVSGuest.classList.contains('centered', 'side'))
-			VSGuestPlayButton.disabled = false;
+			versus_guest_button.disabled = false;
 		else if (BoxVSPlayer.classList.contains('centered', 'side'))
-			VSPlayerPlayButton.disabled = false;
+			versus_player_button.disabled = false;
 	}
 }
 
 function reset_box_display()
 {
 	const BoxVSGuest = document.getElementById('BoxVSGuest');
-	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
+	const versus_guest_button = document.getElementById('versus-guest-validate-button');
 	
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
-	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
+	const versus_player_button = document.getElementById('versus-player-validate-button');
 	const VSPlayerInputs = document.getElementById('add-player-inputs').querySelectorAll('input');
 
 	// Set initial settings
 	BoxVSGuest.style.opacity = 1;
 	BoxVSGuest.classList.remove('centered', 'side');
 	BoxVSGuest.classList.add('centered');
-	VSGuestPlayButton.disabled = false;
+	versus_guest_button.disabled = false;
 	
 	BoxVSPlayer.style.opacity = 0.7;
 	BoxVSPlayer.classList.remove('centered', 'side');
 	BoxVSPlayer.classList.add('side');
-	VSPlayerPlayButton.disabled = true;
+	versus_player_button.disabled = true;
 	VSPlayerInputs.forEach(input => {
 		input.classList.add('cursor-default');
 	});
@@ -49,21 +49,27 @@ function reset_box_display()
 
 function initBoxs() {
 	const BoxVSGuest = document.getElementById('BoxVSGuest');
-	const VSGuestPlayButton = document.getElementById('VSGuestPlayButton');
+	const versus_guest_button = document.getElementById('versus-guest-validate-button');
 	
 	const BoxVSPlayer = document.getElementById('BoxVSPlayer');
-	const VSPlayerPlayButton = document.getElementById('VSPlayerPlayButton');
+	const versus_player_button = document.getElementById('versus-player-validate-button');
 	const VSPlayerInputs = document.getElementById('add-player-inputs').querySelectorAll('input');
+
+	versus_guest_button.disabled = false;
+	versus_guest_button.classList.remove('loading');
+
+	versus_player_button.disabled = false;
+	versus_player_button.classList.remove('loading');
 
 	// Handle focus on Box VSGuest
 	BoxVSGuest.addEventListener('mouseenter', () => {
 		BoxVSGuest.classList.add('centered');
 		BoxVSGuest.classList.remove('side');
-		VSGuestPlayButton.disabled = false;
+		versus_guest_button.disabled = false;
 
 		BoxVSPlayer.classList.add('side');
 		BoxVSPlayer.classList.remove('centered');
-		VSPlayerPlayButton.disabled = true;
+		versus_player_button.disabled = true;
 		VSPlayerInputs.forEach(input => {
 			input.classList.add('cursor-default');
 		});
@@ -74,14 +80,14 @@ function initBoxs() {
 	BoxVSPlayer.addEventListener('mouseenter', () => {
 		BoxVSPlayer.classList.add('centered');
 		BoxVSPlayer.classList.remove('side');
-		VSPlayerPlayButton.disabled = false;
+		versus_player_button.disabled = false;
 		VSPlayerInputs.forEach(input => {
 			input.classList.remove('cursor-default');
 		});
 
 		BoxVSGuest.classList.add('side');
 		BoxVSGuest.classList.remove('centered');
-		VSGuestPlayButton.disabled = true;
+		versus_guest_button.disabled = true;
 		clearErrorFields();
 	});
 }
@@ -125,7 +131,7 @@ function handle1v1FormSubmission() {
 		const max_duration = timeSliderValue === '310' ? '-1' : timeSliderValue;
 		const max_score = pointsSliderValue === '12' ? '-1' : pointsSliderValue;
 
-		if (event.submitter.id === 'VSGuestPlayButton')
+		if (event.submitter.id === 'versus-guest-validate-button')
 		{
 			const matchData = {
 				game : (global_game_modal==="FLAPPYBIRD") ? "FB" : "PG",
@@ -135,9 +141,15 @@ function handle1v1FormSubmission() {
 				bot_level : -1,
 			};
 
+			document.getElementById('versus-guest-validate-button').disabled = true;
+			document.getElementById('versus-guest-validate-button').classList.add('loading');
+
+			document.getElementById('versus-player-validate-button').disabled = true;
+			document.getElementById('versus-player-validate-button').classList.remove('loading');
+
 			submit1v1Guest(matchData);
 		}
-		else if (event.submitter.id === 'VSPlayerPlayButton')
+		else if (event.submitter.id === 'versus-player-validate-button')
 		{
 			if (CheckPlayer2Data() === false)
 				return ;
@@ -154,6 +166,12 @@ function handle1v1FormSubmission() {
 				tournament_id : -1,
 				bot_level : -1,
 			};
+
+			document.getElementById('versus-guest-validate-button').disabled = true;
+			document.getElementById('versus-guest-validate-button').classList.remove('loading');
+
+			document.getElementById('versus-player-validate-button').disabled = true;
+			document.getElementById('versus-player-validate-button').classList.add('loading');
 
 			submit1v1Player(matchData);
 		}
@@ -178,6 +196,12 @@ async function submit1v1Guest(matchData) {
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
 
+		document.getElementById('versus-guest-validate-button').disabled = false;
+		document.getElementById('versus-guest-validate-button').classList.remove('loading');
+	
+		document.getElementById('versus-player-validate-button').disabled = false;
+		document.getElementById('versus-player-validate-button').classList.remove('loading');
+
 		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")
 			await start_flappybird_game(game_parameters);
@@ -186,6 +210,12 @@ async function submit1v1Guest(matchData) {
 	}
 	catch (error)
 	{
+		document.getElementById('versus-guest-validate-button').disabled = false;
+		document.getElementById('versus-guest-validate-button').classList.remove('loading');
+
+		document.getElementById('versus-player-validate-button').disabled = false;
+		document.getElementById('versus-player-validate-button').classList.remove('loading');
+
 		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
@@ -204,6 +234,12 @@ async function submit1v1Player(matchData) {
 		});
 		if (!fetched_data.ok)
 		{
+			document.getElementById('versus-guest-validate-button').disabled = false;
+			document.getElementById('versus-guest-validate-button').classList.remove('loading');
+
+			document.getElementById('versus-player-validate-button').disabled = false;
+			document.getElementById('versus-player-validate-button').classList.remove('loading');
+
 			if (fetched_data.status === 400)
 			{
 				error_div.children[0].textContent = "Incorrect username or pin";
@@ -222,6 +258,12 @@ async function submit1v1Player(matchData) {
 		
 		close_modal('modal-versus-match-creation', undefined, false);
 		open_modal('modal-game', undefined, undefined, false);
+
+		document.getElementById('versus-guest-validate-button').disabled = false;
+		document.getElementById('versus-guest-validate-button').classList.remove('loading');
+
+		document.getElementById('versus-player-validate-button').disabled = false;
+		document.getElementById('versus-player-validate-button').classList.remove('loading');
 
 		const game_parameters = data["data"][0];
 		if (global_game_modal === "FLAPPYBIRD")

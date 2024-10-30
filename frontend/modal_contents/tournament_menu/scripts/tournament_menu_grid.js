@@ -262,4 +262,5 @@ function initPlayerGird() {
 	}
 
 	updateGrid();
+	disable_tournaments_buttons();
 }

@@ -60,6 +60,7 @@
 	text-align: center;
 	font-size: 3em;
 	color: var(--lavender);
+	white-space: nowrap;
 }
 
 .btn-return {
@@ -289,8 +290,8 @@
 	}
 }
 
-#VSPlayerPlayButton {
-	margin: auto;
+#versus-player-validate-button {
+	margin-bottom: auto;
 }
 
  /* INPUT TEMPLATE */
