@@ -64,6 +64,7 @@ const pg_gameConfig = {
 
 	scene_play: {
 		name: "pg_scene_play",
+		side_bounce_acceleration: false,
 		player: {
 			max_speed: pg_resize(1000),
 			paddle_length: pg_resize(300),

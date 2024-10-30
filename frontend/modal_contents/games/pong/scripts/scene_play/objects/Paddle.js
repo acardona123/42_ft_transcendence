@@ -28,14 +28,6 @@ class pg_Paddle extends Phaser.GameObjects.Graphics {
 		this.body.setBounce(0);
 	}
 
-	getMiddleX(){
-		return (this.x + this.middle_offset_x);
-	}
-
-	getMiddleY(){
-		return (this.y + this.middle_offset_y);
-	}
-
 	#buildRoundedRectangle(middleX, middleY)
 	{
 		const ratio_radius_width = 3 / 4;
@@ -87,7 +79,6 @@ class pg_Paddle extends Phaser.GameObjects.Graphics {
 		this.y  = y - this.middle_offset_y;
 	}
 
-	
 	getCenterPositionX(){
 		return this.x + this.middle_offset_x;
 	}
