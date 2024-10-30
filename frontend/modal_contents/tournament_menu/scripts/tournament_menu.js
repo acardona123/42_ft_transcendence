@@ -240,8 +240,8 @@ function handleTournamentFormSubmission() {
 		timeSliderValue = document.getElementById('tournamentTimeSlider').value;
 		pointsSliderValue = document.getElementById('tournamentPointsSlider').value;
 
-		const max_duration = timeSliderValue === '310' ? '∞' : timeSliderValue;
-		const max_score = pointsSliderValue === '12' ? '∞' : pointsSliderValue;
+		const max_duration = timeSliderValue === '310' ? '-1' : timeSliderValue;
+		const max_score = pointsSliderValue === '12' ? '-1' : pointsSliderValue;
 
 		const tournament_data = {
 			tournament_id,

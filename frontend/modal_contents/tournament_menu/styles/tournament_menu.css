@@ -11,9 +11,10 @@
 	border-radius: 10px;
 	border: 2px var(--dark-purple) solid;
 	border-bottom: 4px var(--dark-purple) solid;
-	height: 13%;
 	width: fit-content;
 	min-width: 250px;
+	height: 13%;
+	min-height: 100px;
 }
 
 #AddConntectedPlayerContent {
