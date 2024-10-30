@@ -57,12 +57,12 @@ async function tournament_end_round_redirection(){
 
 }
 
-function start_tournament_match(match_data){
+async function start_tournament_match(match_data){
 	if (match_data["game"] === "PG"){
 		const bot_level = match_data["bot_level"];
-		start_pong_game(match_data, bot_level);
+		await start_pong_game(match_data, bot_level);
 	} else {
-		start_flappybird_game(match_data);
+		await start_flappybird_game(match_data);
 	}
 }
 

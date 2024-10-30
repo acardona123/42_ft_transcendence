@@ -21,6 +21,12 @@
 	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
 }
 
+.modal-content-border-game {
+	border-radius: 25px !important;
+	border : 6px var(--violet) solid;
+	box-shadow: 3px 3px 10px 2px var(--lavender), -3px -3px 10px 2px var(--lavender);
+}
+
 .modal-content-background-color-dark-violet {
 	background-color: var(--dark-violet) !important;
 }
@@ -97,13 +103,13 @@
 /* === MODAL TOURNAMENT CREATION === */
 
 #modal-tournament-creation-dialog {
-	height: 85vh !important;
+	height: 100vh !important;
 	width: 100% !important;
 
 	/* min-width: 700px; */
 	max-width: 1600px;
 
-	--bs-modal-margin: 7.5vh 0 7.5vh 0;
+	/* --bs-modal-margin: 5vh 0 5vh 0; */
 }
 
 #modal-tournament-creation-content {
@@ -120,17 +126,18 @@
 
 #modal-game-dialog
 {
-	height: 100vh !important;
-	width: 100vw !important;
-	--bs-modal-margin: 0 0 0 0;
-
-	overflow: hidden !important;
+	height: 80vh;
+	width: 80vw;
+	--bs-modal-margin: 10vh 10vh 10vh 10vh;
+	max-width: none;
 }
 
 
 #modal-game-content
 {
+	padding: 1%;
 	height: 100% !important;
+	width: 100% !important;
 }
 
 /* ================================================ */
@@ -199,9 +206,9 @@
 
 #modal-profile-dialog
 {
-	max-width: none;
 	height: 80vh;
-	width: 60vw;
+	width: 100%;
+	max-width: 800px;
 	--bs-modal-margin: 10vh 0 10vh 0;
 }
 
@@ -214,20 +221,20 @@
 
 /* ================================================ */
 
-/* === MODAL 2fa setup === */
-
 #modal-2fa-setup-dialog
 {
-	max-width: none;
 	height: 60vh;
-	width: fit-content;
+	width: 100%;
 	--bs-modal-margin: 20vh 0 20vh 0;
+	max-width: 500px;
 }
 
 #modal-2fa-setup-content
 {
 	height: 100% !important;
-	width: fit-content !important;
+	overflow: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 /* ================================================ */
@@ -255,14 +262,12 @@
 /* MODAL TOURNAMENT ROUND */
 
 #modal-tournament-round-program-dialog {
-	height: 80vh !important;
-	width: 60vw !important;
-	max-width: none !important;
-	/* margin: 0; */
+	height: 80vh;
+	width: 100%;
+	max-width: 550px;
 
-	--bs-modal-margin: 0vh 0 0 0 !important;
+	--bs-modal-margin: 10vh 0 10vh 0;
 
-	/* overflow: hidden !important; */
 }
 
 #modal-tournament-round-program-content {
@@ -272,17 +277,17 @@
 
 /* ================================================ */
 
-/* MODAL TOURNAMENT ROUND */
+/* MODAL TOURNAMENT GUEST */
 
 #modal-tournament-guests-repartition-dialog {
-	height: 80vh !important;
-	width: 60vw !important;
-	max-width: none !important;
-	/* margin: 0; */
+	height: 80vh;
+	width: 100%;
+	max-width: 500px;
 
-	--bs-modal-margin: 0vh 0 0 0 !important;
+	--bs-modal-margin: 10vh 0 10vh 0;
+	--bs-modal-header-border-color: var(--lavender);
+	--bs-modal-footer-border-color: var(--lavender);
 
-	/* overflow: hidden !important; */
 }
 
 #modal-tournament-guests-repartition-content {

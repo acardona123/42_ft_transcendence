@@ -110,7 +110,7 @@ function set_confim_remove(target)
 	const cancel_trash = document.createElement('img');
 
 	confirm_trash.src = "modal_contents/profile/img/confirm_remove_friend.png";
-	cancel_trash.src = "modal_contents/profile/img/remove_friend.png";
+	cancel_trash.src = "main_srcs/img/remove_friend.png";
 	confirm_trash.className = "prof-confirm-remove-friend";
 	cancel_trash.className = "prof-confirm-remove-friend";
 	confirm_trash.onclick = remove_friend;
@@ -295,6 +295,7 @@ function update_friend_list_front()
 		const empty_text = document.createElement('p');
 		empty_text.textContent = "There is no friend to display yet."
 		empty_text.style.textAlign = "center";
+		empty_text.style.color = "var(--lavender)";
 		friends_list.appendChild(empty_text);
 		return ;
 	}

@@ -64,14 +64,15 @@ const pg_gameConfig = {
 
 	scene_play: {
 		name: "pg_scene_play",
+		side_bounce_acceleration: false,
 		player: {
 			max_speed: pg_resize(1000),
 			paddle_length: pg_resize(300),
 			paddle_width: pg_resize(60),
 			distance_to_border: pg_resize(100),
 			color:{
-				left: 0xFF0000,
-				right: 0xFF
+				left: 0xBB00E0,
+				right: 0xE08CEE
 			},
 			alpha:{
 				left: 1,
@@ -101,9 +102,9 @@ const pg_gameConfig = {
 			bounce_coefficient: 1.1,
 		},
 		border: {
-			color: 0x6666ff,
+			color: 0,
 			alpha: 0.5,
-			thickness: pg_resize(50) 
+			thickness: Math.min(1, pg_resize(5)) 
 		},
 		score: {
 			font: '"Goudy Bookletter 1911", Times, serif',
@@ -121,11 +122,11 @@ const pg_gameConfig = {
 			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
 		},
 		depths: {
-			background: 5,
-			bounce_border: 4,
-			death_border: 3,
-			score: 1,
-			clock: 1,
+			background: -5,
+			bounce_border: -4,
+			death_border: -3,
+			score: -1,
+			clock: -1,
 			paddles:0,
 			balls: 0
 		}

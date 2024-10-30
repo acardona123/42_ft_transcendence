@@ -177,7 +177,7 @@ function get_date_time(elem_date, game_duration)
 	date.onmouseleave = hover_date_since_leave;
 
 	const time = document.createElement('p');
-	time.textContent = convert_sec_to_duration(game_duration);
+	time.textContent = "Lasted " + convert_sec_to_duration(game_duration);
 	time.className = "prof-time-text";
 	text_date_time.appendChild(date);
 	text_date_time.appendChild(time);
@@ -262,6 +262,7 @@ function update_history_list(tab_name)
 		no_history_message.textContent = "There is no history to display yet."
 		no_history_message.style.textAlign = "center";
 		no_history_message.style.marginTop = "10px";
+		no_history_message.style.color = "var(--dark-purple)";
 		_history_list.appendChild(no_history_message);
 	}
 	else if (_history_list.children.length != 0) // remove last element margin bottom

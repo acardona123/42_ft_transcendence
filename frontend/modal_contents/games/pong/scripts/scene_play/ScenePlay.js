@@ -15,7 +15,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	//physic groups
 	#balls;
 	#paddles;
-	#bounce_borders;
 	#death_borders;
 
 	//bot_calculous
@@ -62,7 +61,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	#createGroups(){
 		this.#balls = this.physics.add.group();
 		this.#paddles = this.physics.add.group();
-		this.#bounce_borders = this.physics.add.group();
 		this.#death_borders = this.physics.add.group();
 	}
 
@@ -72,12 +70,7 @@ class pg_ScenePlay extends Phaser.Scene{
 
 	#createBorders(){
 		this.#borders = {};
-		this.#createBounceBorders();
 		this.#createDeathBorders();
-	}
-	#createBounceBorders(){
-		this.#borders.top = new pg_BounceBorder(this, border_side.TOP);
-		this.#borders.bottom = new pg_BounceBorder(this, border_side.BOTTOM);
 	}
 	#createDeathBorders(){
 		this.#borders.right = new pg_DeathBorder(this, border_side.RIGHT);
@@ -164,6 +157,8 @@ class pg_ScenePlay extends Phaser.Scene{
 				t_last_action: 0,
 				t_next_calculous: 0,
 				pending: false,
+				y_min: pg_gameConfig.scene_play.player.paddle_length / 2,
+				y_max: pg_gameConfig.height - pg_gameConfig.scene_play.player.paddle_length / 2,
 			};
 		}
 	}
@@ -171,9 +166,7 @@ class pg_ScenePlay extends Phaser.Scene{
 
 	#createInteractions(){
 		this.#createBallPaddleCollision();
-		this.#createPlayerBordersCollisions();
 		this.#createBallDeathBorderCollision();
-		this.#createBallBounceBorderCollision();
 		this.#createPlayersControls();
 		this.#createPauseControl();
 		this.#limitControlsToTheScene();
@@ -195,26 +188,36 @@ class pg_ScenePlay extends Phaser.Scene{
 			#setPaddleToBallBounceReaction(paddle){
 				if (paddle.orientation === "left"){
 					paddle.BounceBall = (ball, paddle) => {
-						if (ball.x < paddle.getMiddleX()){
-							ball.velocityY *= -1;
+						const ball_hitbox_virtual_radius = pg_gameConfig.scene_play.side_bounce_acceleration ? ball.radius /2 : ball.radius;
+						if (ball.x - ball_hitbox_virtual_radius < paddle.getCenterPositionX()){
+							const abs_vel = Math.abs(ball.velocityY);
+							if (ball.y > paddle.getCenterPositionY() + paddle.length / 2)
+								ball.velocityY = abs_vel;
+							else
+								ball.velocityY = -abs_vel;
 							return;
 						}
 						const normal_angle = 0;
 						const contact_point = ball.y;
-						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getCenterPositionY());
 						const bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
 						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
 						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
 					}
 				} else if (paddle.orientation === "right"){
 					paddle.BounceBall = (ball, paddle) => {
-						if (ball.x > paddle.getMiddleX()){
-							ball.velocityY *= -1;
+							const ball_hitbox_virtual_radius = pg_gameConfig.scene_play.side_bounce_acceleration ? ball.radius /2 : ball.radius;
+						if (ball.x + ball_hitbox_virtual_radius > paddle.getCenterPositionX()){
+							const abs_vel = Math.abs(ball.velocityY);
+							if (ball.y > paddle.getCenterPositionY() + paddle.length / 2)
+								ball.velocityY = abs_vel;
+							else
+								ball.velocityY = -abs_vel;
 							return;
 						}
 						const normal_angle = 180;
 						const contact_point = ball.y;
-						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleY());
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getCenterPositionY());
 						const bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
 						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
 						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
@@ -222,13 +225,18 @@ class pg_ScenePlay extends Phaser.Scene{
 
 				} else if (paddle.orientation === "top"){
 					paddle.BounceBall = (ball, paddle) => {
-						if (ball.y < paddle.getMiddleY()){
-							ball.velocityX *= -1;
+						const ball_hitbox_virtual_radius = pg_gameConfig.scene_play.side_bounce_acceleration ? ball.radius /2 : ball.radius;
+						if (ball.y - ball_hitbox_virtual_radius < paddle.getCenterPositionY()){
+							const abs_vel = Math.abs(ball.velocityX);
+							if (ball.x > paddle.getCenterPositionX() + paddle.length / 2)
+								ball.velocityX = abs_vel;
+							else
+								ball.velocityX = -abs_vel;
 							return;
 						}
 						const normal_angle = 270;
 						const contact_point = ball.x;
-						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getCenterPositionX());
 						const bounce_angle = normal_angle + relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
 						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
 						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
@@ -236,13 +244,18 @@ class pg_ScenePlay extends Phaser.Scene{
 					}
 				} else{ //paddle.orientation === "bottom"
 					paddle.BounceBall = (ball, paddle) => {
-						if (ball.y > paddle.getMiddleY()){
-							ball.velocityX *= -1;
+						const ball_hitbox_virtual_radius = pg_gameConfig.scene_play.side_bounce_acceleration ? ball.radius /2 : ball.radius;
+						if (ball.y + ball_hitbox_virtual_radius > paddle.getCenterPositionY()){
+							const abs_vel = Math.abs(ball.velocityX);
+							if (ball.x > paddle.getCenterPositionX() + paddle.length / 2)
+								ball.velocityX = abs_vel;
+							else
+								ball.velocityX = -abs_vel;
 							return;
 						}
 						const normal_angle = 90;
 						const contact_point = ball.x;
-						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getMiddleX());
+						const relative_contact = this.#calculateRelativeContact(paddle, contact_point, paddle.getCenterPositionX());
 						const bounce_angle = normal_angle - relative_contact * pg_gameConfig.scene_play.ball.max_bounce_angle;
 						const new_velocity = ball.body.velocity.length() * pg_gameConfig.scene_play.ball.bounce_coefficient;
 						this.physics.velocityFromAngle(bounce_angle, new_velocity, ball.body.velocity);
@@ -328,17 +341,10 @@ class pg_ScenePlay extends Phaser.Scene{
 			#calculousBotPositionWithAI(){
 				let targeted_y;
 				const impact_point_y = this.#calculousGetImpactPoint();
-				// TODO: random position for now
 				targeted_y = impact_point_y - pg_gameConfig.scene_play.player.paddle_length / 2 + Math.random() * (pg_gameConfig.scene_play.player.paddle_length);
+				targeted_y = clamp(targeted_y, this.#bot.y_min, this.#bot.y_max);
 				return targeted_y;
 			}
-
-
-
-	#createPlayerBordersCollisions()
-	{
-		// this.physics.add.collider(this.#paddles, this.#bounce_borders);
-	}
 
 	#createBallDeathBorderCollision(){
 		this.physics.add.collider(this.#balls, this.#death_borders, (ball, border) => {
@@ -352,10 +358,6 @@ class pg_ScenePlay extends Phaser.Scene{
 			}
 			this.#newRound();
 		});
-	}
-
-	#createBallBounceBorderCollision(){
-		this.physics.add.collider(this.#balls, this.#bounce_borders);
 	}
 
 	#calculateRelativeContact(paddle, contact_point, middle_point){
@@ -534,11 +536,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	addToPaddlesGroup(object)
 	{
 		this.#paddles.add(object)
-	}
-
-	addToBounceBordersGroup(object)
-	{
-		this.#bounce_borders.add(object)
 	}
 
 	addToDeathBordersGroup(object)

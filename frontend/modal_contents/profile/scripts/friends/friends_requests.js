@@ -237,6 +237,7 @@ function update_requests_list_front()
 		const empty_text = document.createElement('p');
 		empty_text.textContent = "There is no friend request yet.";
 		empty_text.style.textAlign = "center";
+		empty_text.style.color = "var(--lavender)";
 		container.appendChild(empty_text);
 		return;
 	}

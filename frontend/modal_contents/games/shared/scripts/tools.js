@@ -19,3 +19,7 @@ function init_custom_event(){
 	custom_event = new Phaser.Events.EventEmitter();
 }
 const event_stop_game = "stop_game"
+
+function clamp(number, min, max){
+	return (Math.min(max, Math.max(number, min)));
+}

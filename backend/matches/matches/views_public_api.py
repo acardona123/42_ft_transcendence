@@ -23,8 +23,9 @@ from drf_yasg import openapi
 
 from matches.views_users_requests import get_new_ai_request, get_new_guest_request, check_player_pin_ok
 from matches.views_tournaments_requests import get_is_host_of_tournament, post_tournament_match_finished
+from matches.view_stats_requests import post_match_finished_stats
 
-from .doc import (MSG_ERROR_UNIDENTIFIED_USER, MSG_ERROR_JSON_FORMAT, MSG_LIST_ERROR_SERIALIZER_DISPLAY, MSG_LIST_SUCCESS, DOC_LIST_MATCHES, MSG_NEW_MATCH_ERROR_MISSING_FIELD, MSG_NEW_MATCH_ERROR_WRONG_PIN, MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND, MSG_FINISH_MATCH_ERROR_NOT_ALLOWED, MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED, MSG_FINISH_MATCH_ERROR_MISSING_FIELD, MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL, JWT_TOKEN, doc_error_generation)
+from .doc import (MSG_ERROR_UNIDENTIFIED_USER, MSG_ERROR_JSON_FORMAT, MSG_LIST_ERROR_SERIALIZER_DISPLAY, MSG_LIST_SUCCESS, DOC_LIST_MATCHES, MSG_NEW_MATCH_ERROR_MISSING_FIELD, MSG_NEW_MATCH_ERROR_WRONG_PIN, MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND, MSG_FINISH_MATCH_ERROR_NOT_ALLOWED, MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED, MSG_FINISH_MATCH_ERROR_MISSING_FIELD, MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL, MSG_FINISH_MATCH_ERROR_STATS_FAIL, JWT_TOKEN, doc_error_generation)
 
 
 
@@ -241,6 +242,22 @@ def is_match_finishable(request, match_instance):
 		return {'status': 403, 'data': {'message' : MSG_FINISH_MATCH_ERROR_ALREADY_FINISHED}}
 	return {'status': 200}
 
+def get_winner(user1, user2, score1, score2, game):
+	if game == "PG":
+		if (score1 > score2):
+			return user1
+		elif (score1 < score2):
+			return user2
+		else:
+			return -1
+	else:
+		if (score1 < score2):
+			return user1
+		elif (score1 > score2):
+			return user2
+		else:
+			return -1
+
 @swagger_auto_schema(
 	method='post',
 	operation_description = "finish a match and saving its scores and duration",
@@ -266,6 +283,7 @@ def is_match_finishable(request, match_instance):
 		'403 (1)': doc_error_generation("user not allowed to finish the match", MSG_FINISH_MATCH_ERROR_NOT_ALLOWED),
 		'400/401/404/...': 'all errors from tournaments/private_api/is_host/{tournament_id}/{user_id}',
 		500: doc_error_generation("tournament failed to acknowledge the end of the match", MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL),
+		500: doc_error_generation("stats failed to acknowledge the end of the match", MSG_FINISH_MATCH_ERROR_STATS_FAIL),
 	})
 @api_view(['POST'])
 @permission_classes([IsNormalToken])
@@ -274,20 +292,19 @@ def finish_match(request, match_id):
 		match_instance = Match.objects.get(id = match_id)
 	except:
 		return JsonResponse(status = 400, data = {'message' : MSG_FINISH_MATCH_ERROR_ID_NOT_FOUND})
-	
 	try:
 		match_finishable = is_match_finishable(request, match_instance)
 		if match_finishable['status'] != 200:
 			return JsonResponse(status = match_finishable['status'], data = match_finishable['data'])
 	except:
 		JsonResponse(status = 500, data = {"message":"Error: Authorization check failure"})
-
 	data = request.data
 	if not 'score1' in data or not 'score2' in data or not 'duration' in data :
 		return JsonResponse(status = 400, data = {'message' : MSG_FINISH_MATCH_ERROR_MISSING_FIELD})
 	request_score1 = data.get('score1')
 	request_score2 = data.get('score2')
 	request_duration = data.get('duration')
+
 
 	try:
 		match_instance.score1 = request_score1
@@ -305,4 +322,13 @@ def finish_match(request, match_id):
 				raise
 		except:
 				return JsonResponse(status = 500, data = {'message': MSG_FINISH_MATCH_ERROR_TOURNAMENT_FAIL})
+	
+	try:
+		winner = get_winner( match_instance.user1, match_instance.user2, match_instance.score1, match_instance.score2, match_instance.game)
+		stats_match_response = post_match_finished_stats(match_instance.user1, match_instance.user2, match_instance.game, winner)
+		if stats_match_response["status"] != 200:
+			raise
+	except:
+			return JsonResponse(status = 500, data = {'message': MSG_FINISH_MATCH_ERROR_STATS_FAIL})
+
 	return JsonResponse(status = 200, data = {'message': f"Match {match_instance.id} successfully ended"})

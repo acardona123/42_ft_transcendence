@@ -1,6 +1,6 @@
 
 function OnClickToggleContainerConnectedPlayer() {
-	const btn = document.getElementById('ToggleConnectedPlayerContainer');
+	const btn = document.getElementById('tournament-button-toggle-add-player-container');
 
 	if (!btn)
 		return;
@@ -8,46 +8,47 @@ function OnClickToggleContainerConnectedPlayer() {
 	btn.addEventListener('click', ToggleContainerConnectedPlayer);
 }
 
-// function EscapeContainerConnectedPlayer(event) {
-// 	if (event.key === 'Escape') {
-// 		ToggleContainerConnectedPlayer();
-// 	}
-// }
-
 function LoseFocusContainerConnectedPlayer(event) {
-	const toggleBtn = document.getElementById('ToggleConnectedPlayerContainer');
-	const playerContainer = document.getElementById('AddConnectedPlayerContainer');
+	const toggleBtn = document.getElementById('tournament-button-toggle-add-player-container');
+	const playerContainer = document.getElementById('tournament-add-player-container');
 
 	if (!toggleBtn.contains(event.target) && !playerContainer.contains(event.target)) {
 		ToggleContainerConnectedPlayer();
 	}
 }
 
+function set_position_tournament_add_player_container()
+{
+	const container_add_player = document.getElementById('tournament-add-player-container');
+
+	container_add_player.style.top = document.getElementById('tournament-button-toggle-add-player-container').offsetTop + document.getElementById('tournament-button-toggle-add-player-container').offsetHeight / 3 + 'px';
+	// container_add_player.style.left = document.getElementById('tournament-button-toggle-add-player-container').offsetLeft + 'px';
+
+}
 
 function ToggleContainerConnectedPlayer() {
-	const AddConnectedPlayerContainer = document.getElementById('AddConnectedPlayerContainer');
+	const container_add_player = document.getElementById('tournament-add-player-container');
 
-	if (!AddConnectedPlayerContainer)
+	if (!container_add_player)
 		return;
 
-	if (AddConnectedPlayerContainer.style.display === 'none' || AddConnectedPlayerContainer.style.display === '') {
-		AddConnectedPlayerContainer.style.display = 'flex';
+	if (container_add_player.style.display === 'none' || container_add_player.style.display === '') {
+		container_add_player.style.display = 'flex';
 
 		/* Position */
-		AddConnectedPlayerContainer.style.top = document.getElementById('ToggleConnectedPlayerContainer').offsetTop + document.getElementById('ToggleConnectedPlayerContainer').offsetHeight + 'px';
-		// AddConnectedPlayerContainer.style.left = document.getElementById('ToggleConnectedPlayerContainer').offsetLeft + 'px';
+		set_position_tournament_add_player_container();
 
 		/* Animation */
-		AddConnectedPlayerContainer.style.zIndex = '2';
-		AddConnectedPlayerContainer.classList.remove('disappear');
-		AddConnectedPlayerContainer.classList.add('appear');
+		container_add_player.style.zIndex = '2';
+		container_add_player.classList.remove('disappear');
+		container_add_player.classList.add('appear');
 
 		/* Set escape event */
 		// document.addEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.addEventListener('click', LoseFocusContainerConnectedPlayer);
 
 
-		AddConnectedPlayerContainer.addEventListener('animationend', function () {
+		container_add_player.addEventListener('animationend', function () {
 
 			/* Focus on the input */
 			document.getElementById('ConnectedPlayerPseudo').focus();
@@ -55,25 +56,27 @@ function ToggleContainerConnectedPlayer() {
 	}
 	else {
 		/* Animation */
-		AddConnectedPlayerContainer.style.zIndex = '0';
-		AddConnectedPlayerContainer.classList.remove('appear');
-		AddConnectedPlayerContainer.classList.add('disappear');
+		container_add_player.style.zIndex = '0';
+		container_add_player.classList.remove('appear');
+		container_add_player.classList.add('disappear');
 
 		/* Remove escape event */
 		// document.removeEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.removeEventListener('click', LoseFocusContainerConnectedPlayer);
 
 		/* Focus on the button */
-		document.getElementById('ToggleConnectedPlayerContainer').focus();
+		document.getElementById('tournament-button-toggle-add-player-container').focus();
 
-		AddConnectedPlayerContainer.addEventListener('animationend', function () {
-			AddConnectedPlayerContainer.style.display = 'none';
+		container_add_player.addEventListener('animationend', function () {
+			container_add_player.style.display = 'none';
+
+			document.getElementById('tournament-add-player-error-div').style.display = 'none';
 
 			/* Clear input */
-			AddConnectedPlayerContainer.getElementsByTagName('input')[0].value = '';
-			AddConnectedPlayerContainer.getElementsByTagName('input')[0].classList.remove('has-content');
-			AddConnectedPlayerContainer.getElementsByTagName('input')[1].value = '';
-			AddConnectedPlayerContainer.getElementsByTagName('input')[1].classList.remove('has-content');
+			container_add_player.getElementsByTagName('input')[0].value = '';
+			container_add_player.getElementsByTagName('input')[0].classList.remove('has-content');
+			container_add_player.getElementsByTagName('input')[1].value = '';
+			container_add_player.getElementsByTagName('input')[1].classList.remove('has-content');
 		}, { once: true });
 	}
 }
@@ -81,7 +84,7 @@ function ToggleContainerConnectedPlayer() {
 // -----------------------------------------------------------------------------------------------
 
 function OnEnterInputConnectedPlayer() {
-	const inputs = document.getElementById('AddConnectedPlayerContainer').getElementsByTagName('input');
+	const inputs = document.getElementById('tournament-add-player-container').getElementsByTagName('input');
 
 	if (!inputs)
 		return;
@@ -90,7 +93,7 @@ function OnEnterInputConnectedPlayer() {
 		inputs[i].addEventListener('keydown', function (event) {
 			if (event.key === 'Enter') {
 				event.preventDefault();
-				document.getElementById('ButtonAddConnectedPlayer').click();
+				document.getElementById('tournament_button_add_player').click();
 			}
 		});
 	}
@@ -116,7 +119,9 @@ function CheckAddConnectedPlayer(pseudo, pin) {
 
 async function tournament_add_player(player_data)
 {
-	const url = "https://localhost:8443/api/tournaments/player/";
+	const error_div = document.getElementById('tournament-add-player-error-div');
+
+	const url = "/api/tournaments/player/";
 
 	try
 	{
@@ -127,44 +132,54 @@ async function tournament_add_player(player_data)
 		});
 		if (!fetched_data.ok)
 		{
-			let data = await fetched_data.json();
-			console.log("error : ");
-			console.log(data);
-			throw new Error("Error while adding the player");
+			// let data = await fetched_data.json();
+			// console.log("error : ");
+			// console.log(data);
+			// console.log(fetched_data.status);
+			if (fetched_data.status === 401)
+			{
+				error_div.children[0].textContent = "Incorrect username or pin";
+				error_div.style.display = "initial";
+				return ;
+			}
+			else
+			{
+				error_div.style.display = "none";
+				throw new Error();
+			}
 		}
 
 		let data = await fetched_data.json();
 
 		clearInputFields();
+		error_div.style.display = "none";
 		AddCard('PLAYER', data.data.username, data.data.player_id);
 	}
 	catch (error)
 	{
-		console.log(error);
-		document.getElementById('ErrorAddConnectedPlayer').textContent = 'Invalid connection. Please try again.';
-		document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
+		create_popup("Error while adding the player.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 
 function OnClickAddConnectedPlayer() {
-	btn = document.getElementById('ButtonAddConnectedPlayer');
+	btn = document.getElementById('tournament_button_add_player');
 
 	if (!btn)
 		return;
 
 	btn.addEventListener('click', () => {
 		const username = document.getElementById('ConnectedPlayerPseudo').value;
-		const pin = document.getElementById('PlayerConnectedPin').value;
+		const pin = document.getElementById('tournament-player-pin-input').value;
 
 		const errorMessage = CheckAddConnectedPlayer(username, pin);
 
 		if (errorMessage) {
-			document.getElementById('ErrorAddConnectedPlayer').textContent = errorMessage;
-			document.getElementById('ErrorAddConnectedPlayer').style.display = 'block';
+			document.getElementById('tournament-add-player-error-div').children[0].textContent = errorMessage;
+			document.getElementById('tournament-add-player-error-div').style.display = 'initial';
 
 			/* Clear input */
-			document.getElementById('PlayerConnectedPin').value = '';
-			document.getElementById('PlayerConnectedPin').classList.remove('has-content');
+			document.getElementById('tournament-player-pin-input').value = '';
+			document.getElementById('tournament-player-pin-input').classList.remove('has-content');
 		}
 		else {
 			const player_data = {
@@ -186,17 +201,34 @@ function disableFormSubmitOnEnter(id) {
 	});
 }
 
+
 async function submit_tournament_creation(tournament_data)
 {
-	const url = "https://localhost:8443/api/tournaments/validate/";
-	let fetched_data = await fetch_with_token(url, {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify(tournament_data),
-	});
-	if (!fetched_data.ok)
+	const url = "/api/tournaments/validate/";
+	try
 	{
-		throw new Error("Error while creating the tournament");
+		let fetched_data = await fetch_with_token(url, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(tournament_data),
+		});
+		if (!fetched_data.ok)
+		{
+			throw new Error("Error while creating the tournament");
+		}
+
+		close_modal('modal-tournament-creation', undefined, false);
+
+		if (tournament_data.nb_guest > 0){
+			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
+		} else {
+			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
+		}
+	}
+	catch (error)
+	{
+		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		console.log(error);
 	}
 }
 
@@ -219,24 +251,7 @@ function handleTournamentFormSubmission() {
 			nb_ai,
 		};
 
-		try {
-			await submit_tournament_creation(tournament_data);
-
-		} catch (error) {
-			console.log(error);
-			//TODO: FATAL ERROR: /////////////////////////////
-			close_modal('modal-tournament-creation', undefined, true);
-			create_popup("Error creating the tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-			return;
-		}
-
-		close_modal('modal-tournament-creation', undefined, true);
-
-		if (tournament_data.nb_guest > 0){
-			open_modal('modal-tournament-guests-repartition', undefined, init_modal_tournament_guests_repartition, false);
-		} else {
-			open_modal('modal-tournament-round-program', undefined, init_modal_tournament_round_program, false);
-		}
+		submit_tournament_creation(tournament_data);
 	});
 }
 
@@ -258,7 +273,28 @@ function tournament_creation_setup_display_on_game()
 		header.textContent = "CREATE A PONG TOURNAMENT";
 		slider_label.textContent = "Points:";
 		button_ia.disable = false;
-		button_ia.style.display = 'flex';
+		button_ia.style.display = 'block';
+	}
+}
+
+function check_not_enough_player_tournament()
+{
+	const button = document.getElementById('tournament_validate_button');
+
+	const sliders = Array.from(document.getElementById('tournament-form').querySelectorAll('.slider'));
+
+	const countMaxValues = sliders.filter(slider => slider.value === slider.max).length;
+
+	if (countMaxValues > 1)
+	{
+		button.disabled = true;
+	}
+	else
+	{
+		if (nb_cards >= 3)
+			button.disabled = false;
+		else
+			button.disabled = true;
 	}
 }
 
@@ -279,18 +315,15 @@ function initTournamentCreation() {
 
 	initPlayerGird();
 	
-	const button = document.getElementById('tournament_validate_button');
+	document.getElementById('tournament_validate_button').disabled = true;
 
-	button.disabled = true;
-
-	// disableFormSubmitOnEnter('ConnectedPlayerPseudo');
-	// disableFormSubmitOnEnter('PlayerConnectedPin');
+	document.getElementById('tournament-add-player-error-div').style.display = 'none';
 
 }
 
 async function create_tournament()
 {
-	const url = "https://localhost:8443/api/tournaments/create/";
+	const url = "/api/tournaments/create/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -299,16 +332,19 @@ async function create_tournament()
 		});
 		if (!fetched_data.ok)
 		{
-			// console.log("error : " + await fetched_data.json());
 			throw new Error("Error while creating tournament.");
+
 		}
 		let body = await fetched_data.json();
 
 		tournament_id = body.data.tournament_id;
+
 	}
 	catch (error)
 	{
-		console.log(error);
+		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		close_modal('modal-tournament-creation', undefined, false);
+		// console.log(error);
 		//TODO fatal error
 	}
 }
@@ -323,21 +359,14 @@ function open_tournament()
 document.addEventListener("onModalsLoaded", () => {
 	initTournamentCreation();
 
-
-	// document.addEventListener('keydown', (event) => {
-	// 	if (event.key === "Escape") {
-	// 		returnToModalPlay("TournamentMatchCreation")
-	// 	}
-	// });
-
-	pincodeOnlyDigits('PlayerConnectedPin');
+	pincodeOnlyDigits('tournament-player-pin-input');
 	OnClickToggleContainerConnectedPlayer();
 	OnEnterInputConnectedPlayer();
 	OnClickAddConnectedPlayer();
 
-	eventDeleteCard();
 	eventAddGuestPlayer();
 	eventAddIA();
+	window.addEventListener("resize", set_position_tournament_add_player_container);
 
 	handleTournamentFormSubmission();
 

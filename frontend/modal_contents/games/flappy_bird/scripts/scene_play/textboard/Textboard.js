@@ -100,6 +100,14 @@ class fb_Textboard extends Phaser.GameObjects.Container{
 				return (this.#score_player2.getScoreValue());
 			}
 		}
+		
+		getPlayerDeathCount(player_index_symbol){
+			if (player_index_symbol === player_index.PLAYER1){
+				return (this.#score_player1.getDeathCount());
+			} else {
+				return (this.#score_player2.getDeathCount());
+			}
+		}
 
 		doesPlayerHasRemainingLife(player_index_symbol){
 			if (areLivesLimited()){

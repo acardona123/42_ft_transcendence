@@ -21,7 +21,7 @@
 	box-shadow: 3px 3px 15px 3px var(--violet), -3px -3px 15px 3px var(--lavender);
 }
 
-/* ----------------- login/regitser Button----------------- */
+/* ----------------- login/register Button----------------- */
 
 .custom-border-radius {
 	border-radius: 15px !important;
@@ -83,6 +83,22 @@
 .space-btn:active {
 	background-origin: border-box;
 	background-clip: content-box, border-box;
+	animation: none;
+}
+
+.space-btn:disabled {
+	animation: none;
+	background-image: linear-gradient(var(--dark-purple), var(--dark-purple)),
+	  linear-gradient(
+		gray, gray
+	  );
+}
+
+.space-btn:disabled #space-stars::after{
+	animation: none;
+}
+
+.space-btn:disabled #space-stars::before{
 	animation: none;
 }
 
@@ -156,4 +172,138 @@
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+/* ============================ */
+
+/* 
+
+<button id="IAsubmitButton" type="submit" class="btn validate-btn">
+	PLAY
+	<div class="icon">
+	<svg
+		height="24"
+		width="24"
+		viewBox="0 0 24 24"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path d="M0 0h24v24H0z" fill="none"></path>
+		<path
+		d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+		fill="currentColor"
+		></path>
+	</svg>
+	</div>
+</button>
+
+*/
+
+.validate-btn {
+	background: #a370f0;
+	background: var(--violet);
+	/* color: white; */
+	color: var(--lavender);
+	font-family: inherit;
+	padding: 0.35em;
+	padding-left: 1.2em;
+	font-size: 17px;
+	font-weight: 500;
+	border-radius: 0.9em;
+	border: none;
+	letter-spacing: 0.05em;
+	display: flex;
+	align-items: center;
+	/* box-shadow: inset 0 0 1.6em -0.6em #714da6; */
+	box-shadow: inset 0 0 1.6em -0.6em var(--lavender);
+	overflow: hidden;
+	position: relative;
+	height: 2.8em;
+	padding-right: 3.3em;
+	cursor: pointer;
+}
+
+.validate-btn .icon {
+	/* background: white; */
+	background: var(--lavender);
+	margin-left: 1em;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 2.2em;
+	width: 2.2em;
+	border-radius: 0.7em;
+	/* box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9; */
+	box-shadow: 0.1em 0.1em 0.6em 0.2em var(--violet);
+	right: 0.3em;
+	transition: all 0.3s;
+}
+
+.validate-btn:hover .icon, .validate-btn:focus .icon  {
+	width: calc(100% - 0.6em);
+}
+
+.validate-btn .icon svg {
+	width: 1.1em;
+	transition: transform 0.3s;
+	/* color: #7b52b9; */
+	color: var(--violet);
+}
+
+.validate-btn:hover .icon svg, .validate-btn:focus .icon svg {
+	transform: translateX(0.1em);
+}
+
+.validate-btn:active .icon {
+	transform: scale(0.95);
+}
+
+.validate-btn:disabled {
+	color: var(--lavender);
+}
+
+/* ============================ */
+
+/* From Uiverse.io by Voxybuns */
+
+/* Variables */
+.tournament-add-btn {
+	--button_radius: 0.75em;
+	--button_color: #e8e8e8;
+	--button_outline_color: #000000;
+	padding: 0;
+	font-size: 17px;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	border-radius: var(--button_radius);
+	background: var(--button_outline_color);
+	width: 100% !important;
+}
+  
+.button_top {
+	display: block;
+	box-sizing: border-box;
+	border: 2px solid var(--button_outline_color);
+	border-radius: var(--button_radius);
+	padding: 0.75em 1.5em;
+	background: var(--button_color);
+	color: var(--button_outline_color);
+	transform: translateY(-0.2em);
+	transition: transform 0.1s ease;
+}
+
+.tournament-add-btn:hover .button_top {
+	/* Pull the button upwards when hovered */
+	transform: translateY(-0.33em);
+}
+
+.tournament-add-btn:disabled {
+    pointer-events: none;
+    opacity: 0.65;
+}
+
+.tournament-add-btn:active .button_top {
+	/* Push the button downwards when pressed */
+	transform: translateY(0);
 }

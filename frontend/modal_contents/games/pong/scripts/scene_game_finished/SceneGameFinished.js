@@ -157,16 +157,16 @@ class pg_SceneGameFinished extends Phaser.Scene{
 			}
 			#setButtonInteraction(){
 				if (pg_gameMode.tournament_id < 0)
-					this.#quit_button.on('pointerdown', () => {this.#goBackHome();});
+					this.#quit_button.on('pointerdown', async () => {await this.#goBackHome();});
 				else
-					this.#quit_button.on('pointerdown', () => {this.#continueTournament();});
+					this.#quit_button.on('pointerdown', async () => {await this.#continueTournament();});
 			}
-				#goBackHome(){
-					stop_current_game();
+				async #goBackHome(){
+					await stop_current_game();
 					close_modal('modal-game', reset_game, false);
 				}
-				#continueTournament(){
-					stop_current_game();
+				async #continueTournament(){
+					await stop_current_game();
 					continue_tournament_round();
 				}
 }
