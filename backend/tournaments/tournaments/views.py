@@ -360,7 +360,10 @@ def match_finished(request):
 		players[0].save()
 		players[1].save()
 		return Response({'message': doc.MSG_MATCH_TIE}, status=200)
-	winner = 1 if score1 > score2 else 2
+	if tournament.game == Tournament.GameType.PONG:
+		winner = 1 if score1 > score2 else 2
+	else:
+		winner = 1 if score1 < score2 else 2
 	if players[0].position != winner:
 		players[0].is_eliminated = True
 	else:
