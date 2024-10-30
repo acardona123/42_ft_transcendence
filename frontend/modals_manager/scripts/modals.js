@@ -108,6 +108,7 @@ async function init_modal_profile_bf()
 		setup_friend_list(),
 		setup_friends_request_list(),
 		setup_history_matches_list(),
+		update_statistics()
 	]);
 }
 
