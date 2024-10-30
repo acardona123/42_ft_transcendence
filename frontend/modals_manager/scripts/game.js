@@ -22,7 +22,11 @@ async function start_pong_game(response_data, bot_level = -1)
 	pg_gameMode.tournament_id = response_data["tournament_id"];
 
 	await stop_current_game();
-	game = new Phaser.Game(pg_gameConfig);
+	try {
+		game = new Phaser.Game(pg_gameConfig);
+	} catch {
+		close_modal('modal-game', reset_game, false);
+	}
 }
 
 async function start_flappybird_game(response_data)
@@ -35,7 +39,11 @@ async function start_flappybird_game(response_data)
 	fb_gameMode.tournament_id = response_data["tournament_id"];
 
 	await stop_current_game();
-	game = new Phaser.Game(fb_gameConfig);
+	try {
+		game = new Phaser.Game(fb_gameConfig);
+	} catch {
+		close_modal('modal-game', reset_game, false);
+	}
 }
 
 async function reset_game()
