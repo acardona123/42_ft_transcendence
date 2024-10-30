@@ -71,8 +71,8 @@ const pg_gameConfig = {
 			paddle_width: pg_resize(60),
 			distance_to_border: pg_resize(100),
 			color:{
-				left: 0xFF0000,
-				right: 0xFF
+				left: 0xBB00E0,
+				right: 0xE08CEE
 			},
 			alpha:{
 				left: 1,
