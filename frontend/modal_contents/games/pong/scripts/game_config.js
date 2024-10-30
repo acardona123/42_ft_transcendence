@@ -121,11 +121,11 @@ const pg_gameConfig = {
 			control : {key_name: "ESCAPE", key_code: Phaser.Input.Keyboard.KeyCodes.ESC}
 		},
 		depths: {
-			background: 5,
-			bounce_border: 4,
-			death_border: 3,
-			score: 1,
-			clock: 1,
+			background: -5,
+			bounce_border: -4,
+			death_border: -3,
+			score: -1,
+			clock: -1,
 			paddles:0,
 			balls: 0
 		}
