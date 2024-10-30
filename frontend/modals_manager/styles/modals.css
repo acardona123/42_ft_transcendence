@@ -267,7 +267,8 @@
 	max-width: 550px;
 
 	--bs-modal-margin: 10vh 0 10vh 0;
-
+	--bs-modal-header-border-color: var(--lavender);
+	--bs-modal-footer-border-color: var(--lavender);
 }
 
 #modal-tournament-round-program-content {
@@ -287,10 +288,27 @@
 	--bs-modal-margin: 10vh 0 10vh 0;
 	--bs-modal-header-border-color: var(--lavender);
 	--bs-modal-footer-border-color: var(--lavender);
-
 }
 
 #modal-tournament-guests-repartition-content {
+	height: 100% !important;
+	width: 100% !important;
+}
+
+/* ================================================ */
+
+/* MODAL TOURNAMENT TOP1 */
+
+#modal-tournament-top1-dialog {
+	height: 80vh;
+	width: 100%;
+	max-width: 500px;
+
+	--bs-modal-margin: 10vh 0 10vh 0;
+	--bs-modal-header-border-color: var(--lavender);
+}
+
+#modal-tournament-top1-content {
 	height: 100% !important;
 	width: 100% !important;
 }

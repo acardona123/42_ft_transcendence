@@ -12,7 +12,7 @@
 	align-items: center;
 }
 #trp-title{
-	color: var(--dark-purple);
+	color: var(--lavender);
 	text-align: center;
 	width: 95%
 }
@@ -27,7 +27,7 @@
 	height: 100% !important;
 	padding: 0 !important;
 	margin: 0 !important;
-	margin-right: 0.2em !important;
+	margin-right: 1em !important;
 	/* transform: translate(0, 0); */
 	transition: transform 0.5s !important;
 }
@@ -68,7 +68,7 @@
 }
 
 #trp-round-matches{
-	color: var(--dark-purple);
+	color: var(--lavender);
 }
 
 #trp-round-matches-list{
@@ -81,7 +81,7 @@
     width: 100%;
 
 	font-size: 1.2em;
-	color: var(--dark-purple);
+	color: var(--lavender);
 }
 
 .trp-match-elem{
@@ -97,7 +97,7 @@
 	border: solid 1px;
 	border-radius: 1em;
 
-	color: var(--dark-purple);
+	color: var(--lavender);
 }
 
 .trp-match-player1, .trp-match-player2{
@@ -123,20 +123,40 @@
 	text-align: left;
 }
 
+.trp-alone-elem{
+	display: flex;
+	align-items: center;	
+
+	height: 2.5em;
+	min-width: 15em;
+	max-width: 100vw;
+	margin: 1% auto;
+
+	border: solid 1px;
+	border-radius: 1em;
+
+	color: var(--lavender);
+}
+
+.trp-alone-player {
+	width: 45%;
+	margin: auto;
+}
+
 /* ===== Waiting player ===== */
 
 #trp-waiting-player{
-	color: var(--dark-purple);
+	color: var(--lavender);
 	margin-top: 1em;
-	padding: 0 25%;
+	padding: 0 25% 1px 25%;
 }
 
 .trp-waiting-player-elem{
-	color: green;
+	color: var(--pink);
 }
 
 .trp-no-waiting-player-elem{
-	color: blue;
+	color: var(--pink);
 }
 
 /* ===== Footer ===== */
@@ -146,4 +166,5 @@
 	padding: 0;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
 }

@@ -1,0 +1,83 @@
+#modal-tournament-top1{
+	scroll-behavior: smooth;
+	border-radius: 3px;
+}
+
+/* ===== Header ===== */
+
+#tt1-header{
+	margin: 0;
+	padding: 0;
+	flex-shrink: 0;
+	align-items: center;
+}
+#tt1-title{
+	color: var(--lavender);
+	text-align: center;
+	width: 95%
+}
+
+.tt1-btn-close {
+	position: relative;
+	/* left: 2%; */
+	min-width : 40px;
+	max-width: 60px;
+	/* padding: 2px; */
+	width: 6% !important;
+	height: 100% !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	margin-right: 1em !important;
+	/* transform: translate(0, 0); */
+	transition: transform 0.5s !important;
+}
+
+.tt1-btn-close:hover, .tt1-btn-close:focus {
+	transform: scale(1.05);
+	/* transform: translate(-5%, 0); */
+	/* transition: all 0.5s; */
+}
+
+.tt1-btn-close-icon {
+	position: relative;
+	width: 80%;
+	/* display: none; */
+}
+
+/* ===== body ===== */
+
+#tt1-main-div{
+	width:100%;
+	max-width: 100%;
+	height: 100%;
+	min-width: 420px;
+
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: var(--lavender);
+}
+#tt1-img-win img{
+	width: 60%;
+	object-fit: cover;
+}
+
+#tt1-text-win{
+	font-size: 3em;
+	margin: 0;
+}
+
+#tt1-text-win p{
+	margin-bottom: 0;
+}
+
+/* ===== Footer ===== */
+
+#tt1-footer {
+	margin: 0;
+	padding: 0;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}

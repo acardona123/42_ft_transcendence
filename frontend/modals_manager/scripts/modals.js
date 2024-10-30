@@ -11,6 +11,7 @@ let modal_2fa_setup = undefined;
 let modal_2fa_valid = undefined;
 let modal_tournament_round_program = undefined;
 let modal_tournament_guests_repartition = undefined;
+let modal_tournament_top1 = undefined;
 
 
 let modal_on_screen = undefined;
@@ -32,6 +33,7 @@ function init_modals()
 	modal_2fa_valid = new bootstrap.Modal(document.getElementById('modal-2fa-valid'), {backdrop : "static", keyboard : false});
 	modal_tournament_round_program = new bootstrap.Modal(document.getElementById("modal-tournament-round-program"), {backdrop : "static", keyboard : false});
 	modal_tournament_guests_repartition = new bootstrap.Modal(document.getElementById("modal-tournament-guests-repartition"), {backdrop : "static", keyboard : false});
+	modal_tournament_top1 = new bootstrap.Modal(document.getElementById("modal-tournament-top1"), {backdrop : "static", keyboard : false});
 	
 
 	document.addEventListener("hidePrevented.bs.modal", (event) => 
@@ -139,6 +141,12 @@ async function init_modal_tournament_guests_repartition(){
 	update_guests_display();
 }
 
+async function init_modal_tournament_top1(){
+	tournament_top1_loading_elements();
+	let top1 = await get_top1();
+	update_top1(top1);
+}
+
 async function open_modal(id_modal, init_function_bf=undefined, init_function_af=undefined, should_add_to_history=true)
 {
 	modal_on_screen = id_modal;
@@ -186,6 +194,9 @@ async function open_modal(id_modal, init_function_bf=undefined, init_function_af
 			break;
 		case "modal-tournament-guests-repartition":
 			modal_tournament_guests_repartition.show();
+			break;
+		case "modal-tournament-top1":
+			modal_tournament_top1.show();
 			break;
 		default:
 			console.log("Error : this is not a id for modal.");
@@ -253,6 +264,9 @@ function close_modal(id_modal, init_function_af, should_add_to_history=true)
 		case "modal-tournament-guests-repartition":
 			modal_tournament_guests_repartition.hide();
 			break;
+		case "modal-tournament-top1":
+			modal_tournament_top1.hide();
+			break;
 		default:
 			return;
 	}
@@ -271,7 +285,7 @@ async function get_modals_html()
 {
 	try
 	{
-		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition] =
+		let [play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition, tournament_top1] =
 		await Promise.all([
 			fetch('modal_contents/play_menu/play_menu.html'),
 			fetch('modal_contents/login/login.html'),
@@ -286,9 +300,10 @@ async function get_modals_html()
 			fetch('modal_contents/twoFA/twoFA_valid.html'),
 			fetch('modal_contents/tournament_round_program/tournament_round_program.html'),
 			fetch('modal_contents/tournament_guests_repartition/tournament_guests_repartition.html'),
+			fetch('modal_contents/tournament_top1/tournament_top1.html'),
 		]);
 		
-		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition] =
+		[play_menu, login, register, solo_ai_menu, versus_menu, tournament_menu, game, edit_profile, profile, twoFA_setup, twoFA_valid, tournament_round_program, tournament_guests_repartition, tournament_top1] =
 		await Promise.all([
 			play_menu.text(),
 			login.text(),
@@ -302,9 +317,10 @@ async function get_modals_html()
 			twoFA_setup.text(),
 			twoFA_valid.text(),
 			tournament_round_program.text(),
-			tournament_guests_repartition.text()
+			tournament_guests_repartition.text(),
+			tournament_top1.text()
 		]);
-		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + game + edit_profile + profile + twoFA_setup + twoFA_valid + tournament_round_program + tournament_guests_repartition;
+		return play_menu + login + register + solo_ai_menu + versus_menu + tournament_menu + game + edit_profile + profile + twoFA_setup + twoFA_valid + tournament_round_program + tournament_guests_repartition + tournament_top1;
 	}
 	catch (error)
 	{
