@@ -42,8 +42,7 @@ function display_tournament_round_program(){
 }
 
 function display_tournament_winner(){
-	//TODO openning the tournament top 1 modal here 
-		create_popup("tournament end, wiiiiiiiiiiin", 10000, 4000, HEX_GREEN, HEX_GREEN);
+	open_modal("modal-tournament-top1", undefined, init_modal_tournament_top1, false);
 }
 
 async function tournament_end_round_redirection(){

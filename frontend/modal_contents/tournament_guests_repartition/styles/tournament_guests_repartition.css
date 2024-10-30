@@ -1,7 +1,6 @@
 #modal-tournament-guests-repartition{
 	scroll-behavior: smooth;
 	border-radius: 3px;
-	min-width: 488px;
 }
 
 /* ===== Header ===== */
@@ -20,6 +19,7 @@
 #tgr-main-div{
 	width:100%;
 	max-width: 100%;
+	min-width: 488px;
 	height: 100%;
 
 	text-align: center;
