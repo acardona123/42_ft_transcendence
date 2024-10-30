@@ -101,9 +101,9 @@ const pg_gameConfig = {
 			bounce_coefficient: 1.1,
 		},
 		border: {
-			color: 0x6666ff,
+			color: 0,
 			alpha: 0.5,
-			thickness: pg_resize(50) 
+			thickness: Math.min(1, pg_resize(5)) 
 		},
 		score: {
 			font: '"Goudy Bookletter 1911", Times, serif',

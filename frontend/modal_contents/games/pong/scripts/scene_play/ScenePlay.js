@@ -15,7 +15,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	//physic groups
 	#balls;
 	#paddles;
-	#bounce_borders;
 	#death_borders;
 
 	//bot_calculous
@@ -62,7 +61,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	#createGroups(){
 		this.#balls = this.physics.add.group();
 		this.#paddles = this.physics.add.group();
-		this.#bounce_borders = this.physics.add.group();
 		this.#death_borders = this.physics.add.group();
 	}
 
@@ -72,12 +70,7 @@ class pg_ScenePlay extends Phaser.Scene{
 
 	#createBorders(){
 		this.#borders = {};
-		this.#createBounceBorders();
 		this.#createDeathBorders();
-	}
-	#createBounceBorders(){
-		this.#borders.top = new pg_BounceBorder(this, border_side.TOP);
-		this.#borders.bottom = new pg_BounceBorder(this, border_side.BOTTOM);
 	}
 	#createDeathBorders(){
 		this.#borders.right = new pg_DeathBorder(this, border_side.RIGHT);
@@ -171,9 +164,7 @@ class pg_ScenePlay extends Phaser.Scene{
 
 	#createInteractions(){
 		this.#createBallPaddleCollision();
-		this.#createPlayerBordersCollisions();
 		this.#createBallDeathBorderCollision();
-		this.#createBallBounceBorderCollision();
 		this.#createPlayersControls();
 		this.#createPauseControl();
 		this.#limitControlsToTheScene();
@@ -333,13 +324,6 @@ class pg_ScenePlay extends Phaser.Scene{
 				return targeted_y;
 			}
 
-
-
-	#createPlayerBordersCollisions()
-	{
-		// this.physics.add.collider(this.#paddles, this.#bounce_borders);
-	}
-
 	#createBallDeathBorderCollision(){
 		this.physics.add.collider(this.#balls, this.#death_borders, (ball, border) => {
 			ball.destroy();
@@ -352,10 +336,6 @@ class pg_ScenePlay extends Phaser.Scene{
 			}
 			this.#newRound();
 		});
-	}
-
-	#createBallBounceBorderCollision(){
-		this.physics.add.collider(this.#balls, this.#bounce_borders);
 	}
 
 	#calculateRelativeContact(paddle, contact_point, middle_point){
@@ -534,11 +514,6 @@ class pg_ScenePlay extends Phaser.Scene{
 	addToPaddlesGroup(object)
 	{
 		this.#paddles.add(object)
-	}
-
-	addToBounceBordersGroup(object)
-	{
-		this.#bounce_borders.add(object)
 	}
 
 	addToDeathBordersGroup(object)
