@@ -44,20 +44,21 @@ class StatisticsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Statistics
 		fields = ('player_id',)
+		extra_kwargs = {'player_id' : {'required': True}}
 
-	def validate(self, data):
-		id_val = data.get('player_id')
+	def validate_player_id(self, player_id):
+		id_val = player_id
 		validate_id(id_val)
 		id_exists = Statistics.objects.filter(player_id=id_val).exists()
 		if id_exists:
 			raise serializers.ValidationError("A Statistics object with this player_id already exist.")
-		return data
+		return player_id
 
 class StatisticsPublicSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Statistics
-		fields = '__all__'
+		exclude = ['id', 'player_id']
 
 class UpdateMatchStatisticsSerializer(serializers.ModelSerializer):
 
@@ -157,8 +158,8 @@ class UpdateTournamentStatisticsSerializer(serializers.Serializer):
 			self.update_pong_tournament_stats(list_participants, winner)
 	
 	def update_flappy_tournament_stats(self, list_participants, winner):
-		player_stats = Statistics.objects.get(player_id=winner)
-		player_stats.total_flappy_tournament_victory += 1
+		# player_stats = Statistics.objects.get(player_id=winner)
+		# player_stats.total_flappy_tournament_victory += 1
 		for player_id in list_participants:
 			player_stats = Statistics.objects.get(player_id=player_id)
 			player_stats.total_flappy_tournament_played += 1

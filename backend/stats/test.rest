@@ -32,6 +32,5 @@ Content-Type: application/json
 }
 
 ### --- Get user statistics ---
-GET https://localhost:8443/api/stats/1 HTTP/1.1
-
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwMTI4MDQ5LCJpYXQiOjE3MzAxMjc3NDksImp0aSI6IjUwNWYyY2JiM2ZhMzRlNzdiYmMwNjRlNTFkNzUyZjhkIiwidXNlcl9pZCI6Miwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImNvdWNvdSJ9.OjCoJv-RTlpk7dDab3vFBzbVqavZtzPe3hVOzofdt2U
+GET https://localhost:8443/api/stats/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwMjkyNDc4LCJpYXQiOjE3MzAyOTIxNzgsImp0aSI6IjYyZjExMDMxNmExNjRlMjg4MGY0YzE5NmQ4NDE2MDc5IiwidXNlcl9pZCI6NCwic2NvcGUiOiJub3JtYWwiLCJ1c2VybmFtZSI6ImhleSJ9.T3q-Y9f-bGi4ucVjjSLBrVcDB6haPBrIkcbSuxfhWSw
