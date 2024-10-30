@@ -95,7 +95,7 @@ DOC_USER_STATS_MATCH_UPDATED = openapi.Response(
 		}
 	),
 	responses={
-		201: DOC_USER_STATS_MATCH_UPDATED,
+		200: DOC_USER_STATS_MATCH_UPDATED,
 		400: DOC_ERROR_STATS_MATCH_NOT_UPDATED,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
@@ -104,8 +104,7 @@ def generate_match_data_stats(request):
 	serializer = UpdateMatchStatisticsSerializer(data=request.data)
 	if serializer.is_valid():
 		serializer.save()
-		return Response({"message": "Statistics  match updated successfully",
-				   		"data": serializer.errors}
+		return Response({"message": "Statistics  match updated successfully"}
 						, status=status.HTTP_200_OK)
 	else:
 		return Response({"message": "statistics match were not updated",
@@ -148,7 +147,7 @@ DOC_USER_STATS_TOURNAMENT_UPDATED = openapi.Response(
 		}
 	),
 	responses={
-		201: DOC_USER_STATS_TOURNAMENT_UPDATED,
+		200: DOC_USER_STATS_TOURNAMENT_UPDATED,
 		400: DOC_ERROR_STATS_TOURNAMENT_NOT_UPDATED,
 		405: DOC_ERROR_METHOD_NOT_ALLOWED,
 	})
