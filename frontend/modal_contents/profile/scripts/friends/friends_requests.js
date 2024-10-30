@@ -69,7 +69,13 @@ async function send_friend_request()
 			body: body
 		});
 		if (!fetched_data.ok)
-			throw new Error(`${fetched_data.status}`);
+		{
+			let data = await fetched_data.json();
+			if (data.message == "Invalid username")
+				throw "Invalid username.";
+			else
+				throw "Friend request failed.";
+		}
 		let data = await fetched_data.json();
 		data = data.data;
 		if (data.hasOwnProperty('remove_friend_request'))
@@ -79,7 +85,7 @@ async function send_friend_request()
 	}
 	catch (error)
 	{
-		create_popup("Friend request failed.",
+		create_popup(error,
 			4000, 4000,
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 	}
