@@ -79,7 +79,9 @@
 	left: 0;
 	right: 0;
 	margin: auto;
-	width: 25%;
+	width: 30%;
+	border: 1px solid var(--dark-purple);
+	border-radius: 50%;
 }
 
 .prof-friend-online-dot:hover {

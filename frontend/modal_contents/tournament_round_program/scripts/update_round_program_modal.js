@@ -83,6 +83,18 @@ function add_match_to_updated_list(match){
 	new_matches_list.push(new_match_div);
 }
 
+function single_waiting_player(match)
+{
+	let new_match_div = document.createElement('div');
+	new_match_div.className = "trp-alone-elem"
+
+	const span_left = document.createElement('span');
+	span_left.className = "trp-alone-player";
+	span_left.textContent = match[0];
+	new_match_div.appendChild(span_left);
+	return new_match_div;
+}
+
 function get_waiting_player_description(match){
 	const waiting_player_description = document.createElement('p');
 	waiting_player_description.textContent = `Lucky you ${match[0]}, you have been automatically promoted to the next round ! During this one get some corn and enjoy the chaos among the other players...`;
@@ -93,6 +105,7 @@ function add_a_waiting_player(match){
 	let new_waiting_player = document.createElement('div');
 	new_waiting_player.className = "trp-waiting-player-elem"
 	const waiting_player_description = get_waiting_player_description(match);
+	new_waiting_player.appendChild(single_waiting_player(match));
 	new_waiting_player.appendChild(waiting_player_description);
 	new_waiting_player_elem = new_waiting_player;
 }
@@ -150,5 +163,6 @@ function update_round_display()
 
 async function was_last_round(){
 	await regenerate_round_elements();
+	console.log(new_matches_list.length)
 	return new_matches_list.length == 0;
 }
