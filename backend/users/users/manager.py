@@ -6,13 +6,10 @@ class CustomUserManager(BaseUserManager):
 
 	def _create_user(self, username, password=None, **extra_fields):
 		if len(username) > 15:
-			print(username)
 			if '#' in username:
 				username = username.split("#", 1)
 				len_cut = 15 - len(username[1]) - 1
-				print(len_cut)
 				username = username[0][0: len_cut] + "#" + username[1]
-				print(username)
 		image_url = extra_fields.pop('profilepicture', None)
 		if image_url != None:
 			image_url = image_url.get('oauth_profile_picture')

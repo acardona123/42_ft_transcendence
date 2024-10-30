@@ -234,7 +234,6 @@ def send_friend_request(request):
 		return Response({'message': MSG_ERROR_NO_USERNAME_BODY}, status=400)
 	
 	receiver_id = get_id(receiver_name)
-	print(receiver_id)
 	if receiver_id == None:
 		return Response({'message': MSG_ERROR_INVALID_USERNAME}, status=400)
 	receiver_id = int(receiver_id)
