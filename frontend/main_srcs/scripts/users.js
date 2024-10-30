@@ -23,13 +23,13 @@ async function get_profil_picture()
 		});
 		let data = await fetched_data.json();
 		if (!fetched_data.ok)
-			throw new Error("Error retrieving profil picture.");
+			throw new Error("Error retrieving profile picture.");
 		data = data.data;
 		return data;
 	}
 	catch (error)
 	{
-		create_popup("Error retrieving profil picture.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error retrieving profile picture.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return DEFAULT_PP_PATH;
 	}
 }

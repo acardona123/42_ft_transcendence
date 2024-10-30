@@ -189,6 +189,11 @@ class fb_SceneGameFinished extends Phaser.Scene{
 				}
 				async #continueTournament(){
 					await stop_current_game();
-					continue_tournament_round();
+					try {
+						continue_tournament_round();
+					} catch {
+						alert("Sorry but it was impossible to continue the round. The tournament has been canceled.");
+						close_modal('modal-game', reset_game, false);
+					}
 				}
 }

@@ -1,43 +1,19 @@
 const tournament_match_list_id = "trp-round-matches-list"
 const tournament_waiting_player_id = "trp-waiting-player-desctiption"
 
-async function get_round_matches_from_DB()
+async function get_round_matches_from_DB() //can throw
 {
 	const url = `https://localhost:8443/api/tournaments/round/?tournament_id=${tournament_id}`;
 
-	try
-	{
-		let data_fetched = await fetch_with_token(url, {
-			method: 'GET',
-			headers: {}
-		});
-		let body = await data_fetched.json();
-		if (!data_fetched.ok)
-			throw new Error(`${body.get("message", "internal error")}`);
-		return body.data.matches;
-	}
-	catch (error)
-	{
-		create_popup(`Retrieving round matches failed: ${error.message}`,
-			2000, 4000,
-			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
-		//TODO ////////////////////////
-		//==============================================================================
-		// retour a la page d'accueil ?
-		//==============================================================================
-	}
-	return undefined;
-
+	let data_fetched = await fetch_with_token(url, {
+		method: 'GET',
+		headers: {}
+	});
+	let body = await data_fetched.json();
+	if (!data_fetched.ok)
+		throw Error;
+	return body.data.matches;
 }
-
-// async function dummy_get_round_matches_from_DB (){
-// 	if (tournament_id == 0){ //one waiting player
-// 		return [["player0123456789","player0123456789"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player3","player4"],["player5"]];
-// 	} else {//no player wainting during the round
-// 		return [["player1","player2"],["player3","player4"]];
-// 	}
-// }
-
 
 // ==== Loading interface ====
 
@@ -123,11 +99,11 @@ function generate_no_waiting_player_elem(){
 	return no_waiting_player;
 }
 
-async function regenerate_round_elements(){
+async function regenerate_round_elements(){ //can throw
 	new_matches_list = [];
 	new_waiting_player_elem = generate_no_waiting_player_elem();
 
-	const matches_data = await get_round_matches_from_DB();
+	const matches_data = await get_round_matches_from_DB(); //can throw
 
 	matches_data.forEach(match => {
 		if (match.length == 2){
@@ -155,14 +131,13 @@ function update_waiting_player_content(){
 function update_round_display()
 {
 	update_round_matches_content();
-	update_waiting_player_content()
+	update_waiting_player_content();
 }
 
 
 // ==== round program modal start  ====
 
-async function was_last_round(){
-	await regenerate_round_elements();
-	console.log(new_matches_list.length)
+async function was_last_round(){ //can throw
+	await regenerate_round_elements(); //can throw
 	return new_matches_list.length == 0;
 }

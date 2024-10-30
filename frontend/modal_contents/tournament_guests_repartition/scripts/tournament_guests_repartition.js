@@ -5,8 +5,8 @@ async function get_guests_list_from_DB()
 {
 	const url = `https://localhost:8443/api/tournaments/guests/?tournament_id=${tournament_id}`;
 
-	try
-	{
+	try {
+		throw Error;
 		let data_fetched = await fetch_with_token(url, {
 			method: 'GET',
 			headers: {}
@@ -14,21 +14,13 @@ async function get_guests_list_from_DB()
 		let body = await data_fetched.json();
 
 		if (!data_fetched.ok)
-			throw new Error(`${body.get("message", "internal error")}`);
+			throw Error;
 		return body.data;
 	}
-	catch (error)
-	{
-		create_popup(`Retrieving round matches failed: ${error.message}`,
-			2000, 4000,
-			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
-		//TODO ////////////////////////
-		//==============================================================================
-		// retour a la page d'accueil ?
-		//==============================================================================
-		return undefined;
+	catch {
+		alert("Sorry but we failed to retrieve the guests list for this tournament.\nTherefore you'll have to deduce them from the matches list of the first round displayed after this step.\nA guest name is build like this:\n{random word}#{random number}.\n\nIf you want to you will also have the possibility to cancel the tournament during this same step by clicking on the top right corner cross")
+		return [];
 	}
-
 }
 
 

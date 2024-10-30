@@ -55,14 +55,12 @@ async function submitIAForm(event) {
 	}
 	catch (error)
 	{
-		// console.log(error);
-		//TODO ERROR back to main menu
 		stop_click_on_all_page = false;
 
 		document.getElementById('ia_validate_button').disabled = false;
 		document.getElementById('ia_validate_button').classList.remove('loading');
 
-		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		alert("Error while creating match, feel free to retry or exit the window.")
 	}
 }
 
@@ -84,6 +82,5 @@ function initMatchIACreation() {
 
 document.addEventListener("onModalsLoaded", () => {
 	initMatchIACreation();
-
 	handleIAFormSubmission();
 });

@@ -1,6 +1,7 @@
 let tournament_id = undefined;
 
-async function send_tournament_next_match_request(){
+
+async function send_tournament_next_match_request(){ //can throw
 	const url = "https://localhost:8443/api/tournaments/match/start/";
 	const body_content = {"tournament_id": tournament_id};
 	let fetched_data = await fetch_with_token(url, {
@@ -11,30 +12,17 @@ async function send_tournament_next_match_request(){
 	return (fetched_data);
 }	
 
-async function get_tournament_next_round_step_data(){
-	try {
-			let next_step = {};
-			
-			let next_step_response = await send_tournament_next_match_request();
-			if (next_step_response.status != 200 && next_step_response.status != 201){
-				throw new Error("");//TODO
-			}
-			next_step.status = next_step_response.status;
-			let body = await next_step_response.json();
-			next_step.data = body.data[0];
-			return (next_step);
-
-	} catch {
-		create_popup("FATAL ERROR while trying to start the round. Tournament canceled", 10000, 4000, HEX_RED, HEX_RED_HOVER);
-			console.log("error")//
-		//////////////////////////////////TODO=> fatal error going back to main page
+async function get_tournament_next_round_step_data(){ //can throw
+	
+	let next_step_response = await send_tournament_next_match_request(); //can throw
+	if (next_step_response.status != 200 && next_step_response.status != 201){
+		throw Error;
 	}
-
-}
-
-
-function display_tournament_guests(){
-
+	let next_step = {};
+	next_step.status = next_step_response.status;
+	let body = await next_step_response.json();
+	next_step.data = body.data[0];
+	return (next_step);
 }
 
 function display_tournament_round_program(){
@@ -46,14 +34,19 @@ function display_tournament_winner(){
 }
 
 async function tournament_end_round_redirection(){
-	const go_to_tournament_winner_modal = await was_last_round();
+	let go_to_tournament_winner_modal;
+	try {
+		go_to_tournament_winner_modal = await was_last_round();  //can throw
+	} catch {
+		close_modal('modal-game', reset_game, false);
+		alert("Sorry but it was impossible to continue the round. The tournament has been canceled.");
+	}
 	close_modal('modal-game', reset_game, false);
 	if (go_to_tournament_winner_modal) {
 		display_tournament_winner();
 	} else {
 		display_tournament_round_program();
 	}
-
 }
 
 async function start_tournament_match(match_data){
@@ -65,8 +58,8 @@ async function start_tournament_match(match_data){
 	}
 }
 
-async function continue_tournament_round(){
-	const next_step = await get_tournament_next_round_step_data();
+async function continue_tournament_round(){ //can throw
+	const next_step = await get_tournament_next_round_step_data(); //can throw
 	if (next_step.status == 200){
 		await tournament_end_round_redirection();
 	} else {

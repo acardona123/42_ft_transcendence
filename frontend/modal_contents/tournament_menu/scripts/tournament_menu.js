@@ -345,10 +345,8 @@ async function create_tournament()
 	}
 	catch (error)
 	{
-		create_popup("Error while creating tournament.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		alert("Sorry there has been an error while creating tournament.\nPlease retry and, if the problem is persistent, reload the page")
 		close_modal('modal-tournament-creation', undefined, false);
-		// console.log(error);
-		//TODO fatal error
 	}
 }
 

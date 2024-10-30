@@ -130,9 +130,14 @@ async function init_modal_edit_profile()
 }
 
 async function init_modal_tournament_round_program(){
-	tournament_round_display_loading_elements();
-	await regenerate_round_elements();
-	update_round_display();
+	try {
+		tournament_round_display_loading_elements();
+		await regenerate_round_elements();
+		update_round_display();
+	} catch {
+		close_modal("modal-tournament-round-program", undefined, false);
+		alert("Sorry but it was impossible to load the next round data. The tournament has been canceled.");
+	}
 }
 
 async function init_modal_tournament_guests_repartition(){

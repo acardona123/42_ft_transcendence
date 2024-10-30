@@ -514,11 +514,7 @@ class pg_ScenePlay extends Phaser.Scene{
 			}
 			catch (error)
 			{
-
-				create_popup("Error while trying to save the match results. Match cancelled", 10000, 4000, HEX_RED, HEX_RED_HOVER)
-				// =====================================================================================
-				// retour a la page d'accueil ????
-				// =====================================================================================
+				await exit_match_save_fail(match_results);
 			}
 		}
 		#launchEndScene(){
