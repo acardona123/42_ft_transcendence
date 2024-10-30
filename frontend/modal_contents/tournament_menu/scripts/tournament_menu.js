@@ -132,11 +132,7 @@ async function tournament_add_player(player_data)
 		});
 		if (!fetched_data.ok)
 		{
-			// let data = await fetched_data.json();
-			// console.log("error : ");
-			// console.log(data);
-			// console.log(fetched_data.status);
-			if (fetched_data.status === 401)
+			if (fetched_data.status === 403)
 			{
 				error_div.children[0].textContent = "Incorrect username or pin";
 				error_div.style.display = "initial";
