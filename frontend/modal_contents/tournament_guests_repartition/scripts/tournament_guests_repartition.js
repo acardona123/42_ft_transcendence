@@ -6,7 +6,6 @@ async function get_guests_list_from_DB()
 	const url = `https://localhost:8443/api/tournaments/guests/?tournament_id=${tournament_id}`;
 
 	try {
-		throw Error;
 		let data_fetched = await fetch_with_token(url, {
 			method: 'GET',
 			headers: {}

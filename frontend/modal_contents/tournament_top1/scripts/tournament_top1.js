@@ -21,9 +21,7 @@ async function get_top1()
 	}
 	catch (error)
 	{
-		create_popup(`Retrieving round matches failed: ${error.message}`,
-			4000, 4000,
-			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
+		alert("Failed to display the tournament winner but it is the winner of the last match that have been played, congratulations !")
 		close_modal("modal-tournament-top1", undefined, false);
 		return undefined;
 	}

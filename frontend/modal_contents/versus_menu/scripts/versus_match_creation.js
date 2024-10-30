@@ -223,7 +223,7 @@ async function submit1v1Guest(matchData) {
 		document.getElementById('versus-player-validate-button').disabled = false;
 		document.getElementById('versus-player-validate-button').classList.remove('loading');
 
-		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		alert("Error while creating match, you can try again or go back to the menu.")
 	}
 }
 
@@ -284,7 +284,7 @@ async function submit1v1Player(matchData) {
 	}
 	catch (error)
 	{
-		create_popup("Error while creating match.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		alert("Error while creating match, you can try again or go back to the menu.")
 	}
 }
 
