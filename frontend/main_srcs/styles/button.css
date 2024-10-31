@@ -1,7 +1,6 @@
 /* ----------------- Galaxy Button----------------- */
 
 .button-galaxy {
-	white-space: nowrap;
 	padding: 15px 32px;
 	color: var(--lavender);
 	border: none;

@@ -74,6 +74,7 @@
 
 #smc-pin-text
 {
+	font: small-caption;
 	font-size: 2em;
 	padding: 0px;
 	border: none;
