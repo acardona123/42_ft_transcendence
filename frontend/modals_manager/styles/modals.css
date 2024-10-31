@@ -126,8 +126,9 @@
 
 #modal-game-dialog
 {
-	height: 80vh;
+	height: 80vh !important;
 	width: 80vw;
+	min-height: 100px !important;
 	--bs-modal-margin: 10vh 10vh 10vh 10vh;
 	max-width: none;
 }
