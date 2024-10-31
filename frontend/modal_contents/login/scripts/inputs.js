@@ -17,6 +17,7 @@ function clear_register_inputs()
 		input.value = '';
 		on_input_write_when_filled(true, input);
 	}
+	clear_register_error_fields();
 }
 
 function set_input_position(elem)

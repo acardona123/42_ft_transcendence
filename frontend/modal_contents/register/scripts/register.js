@@ -16,8 +16,17 @@ function format_value_for_back(body)
 	return body;
 }
 
-function clear_register_error_fields(placeholders)
+function clear_register_error_fields()
 {
+	const placeholders = 
+	{
+		username: document.getElementById("register-on-error-username"),
+		email: document.getElementById("register-on-error-email"),
+		phone: document.getElementById("register-on-error-phone"),
+		password: document.getElementById("register-on-error-password"),
+		password2: document.getElementById("register-on-error-confirm_pass"),
+		non_field_errors: document.getElementById("register-on-error-password")
+	}
 	for (field in placeholders)
 	{
 		placeholders[field].previousElementSibling.children[1].style.border = "thin solid var(--dark-purple)";
@@ -36,7 +45,7 @@ function on_error_form_register(data)
 		password2: document.getElementById("register-on-error-confirm_pass"),
 		non_field_errors: document.getElementById("register-on-error-password")
 	}
-	clear_register_error_fields(placeholders);
+	clear_register_error_fields();
 	let has_error = false;
 	for (field in data)
 	{
@@ -60,7 +69,7 @@ async function send_form_register(form)
 		email: form["email"].value,
 		phone: form["phone"].value,
 	});
-	const url = "/api/users/signup/";
+	const url = "https://localhost:8443/api/users/signup/";
 	try
 	{
 		let fetched_data = await fetch(url, {
