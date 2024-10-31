@@ -6,13 +6,13 @@
 	min-height: 25px;
 }
 
-.prof-friends-list::-webkit-scrollbar {
+::-webkit-scrollbar {
 	width: 8px;
-	height: 8px;
+	background: transparent;
 }
 
-.prof-friends-list::-webkit-scrollbar-thumb {
-	background: var(--medium-violet); /* todo */
+::-webkit-scrollbar-thumb {
+	background: var(--medium-violet);
 	border-radius: 8px;
 }
 
