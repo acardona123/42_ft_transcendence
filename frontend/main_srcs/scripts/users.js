@@ -1,11 +1,6 @@
 const defaultUserImage = 'img/compte-utilisateur-1.png';
 
-let global_user_infos = undefined; 
-// {
-// 	profile_picture: defaultUserImage,
-// 	username: "coucou"
-// };
-// TODO change user to undefined
+let global_user_infos = undefined;
 
 function is_connected()
 {
