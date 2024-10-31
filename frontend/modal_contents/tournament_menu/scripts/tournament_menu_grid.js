@@ -51,7 +51,7 @@ function updateGrid() {
 		if (i !== 0) {
 			const delete_card = document.createElement('img');
 			delete_card.className = "card-delete-button";
-			delete_card.src = "main_srcs/img/remove_friend.png";
+			delete_card.src = "/img/cross_black.png";
 			delete_card.onclick = on_click_delete_card;
 			card.appendChild(delete_card);
 		}

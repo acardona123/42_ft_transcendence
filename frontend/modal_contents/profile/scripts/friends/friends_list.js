@@ -110,7 +110,7 @@ function set_confim_remove(target)
 	const cancel_trash = document.createElement('img');
 
 	confirm_trash.src = "modal_contents/profile/img/confirm_remove_friend.png";
-	cancel_trash.src = "main_srcs/img/remove_friend.png";
+	cancel_trash.src = "/img/cross_black.png";
 	confirm_trash.className = "prof-confirm-remove-friend";
 	cancel_trash.className = "prof-confirm-remove-friend";
 	confirm_trash.onclick = remove_friend;

@@ -60,7 +60,7 @@ function create_popup(text, t_before_decay=2000,
 
 	const popup_close = document.createElement('img');
 	popup_close.className = "popup-close";
-	popup_close.src = "main_srcs/img/remove_friend.png";
+	popup_close.src = "/img/cross_black.png";
 	popup_close.onclick = on_click_popup_close;
 	popup_main.appendChild(popup_close);
 

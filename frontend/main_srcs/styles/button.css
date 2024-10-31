@@ -1,7 +1,6 @@
 /* ----------------- Galaxy Button----------------- */
 
 .button-galaxy {
-	white-space: nowrap;
 	padding: 15px 32px;
 	color: var(--lavender);
 	border: none;
@@ -68,7 +67,6 @@
 
 #space-text {
 	z-index: 2;
-	font-family: "Avalors Personal Use";
 	font-size: 1em;
 	letter-spacing: 5px;
 	color: var(--lavender);
@@ -203,7 +201,6 @@
 	background: var(--violet);
 	/* color: white; */
 	color: var(--lavender);
-	font-family: inherit;
 	padding: 0.35em;
 	padding-left: 1.2em;
 	font-size: 17px;

@@ -29,7 +29,7 @@
 }
 
 .mm-button-play {
-	width: 25vw;
+	width: 30vw;
 	min-width: fit-content;
 	font-size: 3vw;
 	container-type: inline-size;
@@ -39,7 +39,7 @@
 {
 	.mm-button-play
 	{
-		width: 335.5px;
+		width: 405px;
 		font-size: 40.4905px;
 	}
 }

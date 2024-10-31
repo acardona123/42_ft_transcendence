@@ -47,6 +47,7 @@
 
 	width: 60%;
 	overflow: hidden;
+	font-size: 0.8em;
 }
 
 .prof-score-left {
@@ -58,8 +59,6 @@
 	text-align: right;
 
 	text-shadow: 1px 1px 1px var(--dark-purple);
-	font-size: 15px;
-	font-weight: bolder;
 }
 
 .prof-score-mid {
@@ -71,8 +70,6 @@
 	text-align: center;
 
 	text-shadow: 1px 1px 1px var(--dark-purple);
-	font-size: 15px;
-	font-weight: bolder;
 }
 
 .prof-score-right {
@@ -81,8 +78,6 @@
 	text-align: left;
 
 	text-shadow: 1px 1px 1px var(--dark-purple);
-	font-size: 15px;
-	font-weight: bolder;
 }
 
 .prof-date-duration-div {
@@ -95,8 +90,7 @@
 	margin: 0px;
 	width: 20%;
 	text-shadow: 1px 1px 1px var(--dark-purple);
-	font-size: 15px;
-	font-weight: bold;
+	font-size: 0.8em;
 	overflow: hidden;
 }
 
