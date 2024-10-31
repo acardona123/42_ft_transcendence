@@ -196,7 +196,7 @@ async function submit1v1Guest(matchData) {
 		}
 		let data = await fetched_data.json();
 		
-		close_modal('modal-versus-match-creation', undefined, false);
+		close_modal('modal-versus-match-creation', undefined, true);
 		open_modal('modal-game', undefined, undefined, false);
 
 		stop_click_on_all_page = false;
@@ -266,7 +266,7 @@ async function submit1v1Player(matchData) {
 
 		error_div.style.display = 'none';
 		
-		close_modal('modal-versus-match-creation', undefined, false);
+		close_modal('modal-versus-match-creation', undefined, true);
 		open_modal('modal-game', undefined, undefined, false);
 
 		stop_click_on_all_page = false;

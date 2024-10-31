@@ -200,7 +200,7 @@ async function submit_tournament_validation(tournament_data)
 			throw new Error("Error while creating the tournament");
 		}
 
-		close_modal('modal-tournament-creation', undefined, false);
+		close_modal('modal-tournament-creation', undefined, true);
 
 		document.getElementById('tournament_validate_button').disabled = false;
 		document.getElementById('tournament_validate_button').classList.remove('loading');
@@ -343,7 +343,7 @@ async function create_tournament()
 	{
 		create_popup("Error while creating tournament. Try again.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		alert("Sorry there has been an error while creating tournament.\nPlease retry and, if the problem is persistent, reload the page");
-		close_modal('modal-tournament-creation', undefined, false);
+		close_modal('modal-tournament-creation', undefined, true);
 	}
 }
 

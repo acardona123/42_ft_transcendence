@@ -42,7 +42,7 @@ async function submitIAForm(event) {
 
 		let data = await fetched_data.json();
 
-		close_modal('modal-ia-match-creation', undefined, false);
+		close_modal('modal-ia-match-creation', undefined, true);
 		open_modal('modal-game', undefined, undefined, false);
 
 		stop_click_on_all_page = false;
