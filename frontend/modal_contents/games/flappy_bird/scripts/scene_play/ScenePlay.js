@@ -24,11 +24,13 @@ class fb_ScenePlay extends Phaser.Scene{
 	#pipes_pair_horizontal_distance;
 	#new_pipes_pair_trigger;
 	#game_started;
+	#game_finished;
 
 
 	constructor(){
 		super(fb_gameConfig.scene_play.name);
 		this.#game_started = false;
+		this.#game_finished = false;
 	}
 	
 	init(loaded_boot_textures){
@@ -308,6 +310,10 @@ class fb_ScenePlay extends Phaser.Scene{
 		}
 
 		async #finishParty(){
+			if (this.#game_finished){
+				return;
+			}
+			this.#game_finished = true;
 			this.scene.pause();
 			await this.#sendMatchResults();
 			this.#launchEndScene();
