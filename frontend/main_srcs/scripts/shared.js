@@ -1,7 +1,7 @@
 const HEX_RED = "#FF000080";
 const HEX_RED_HOVER = "#FF0000C0";
 const HEX_GREEN = "#00FF0080";
-const HEX_GREEN_HOVER = "HEX_GREEN_HOVER";
+const HEX_GREEN_HOVER = "#00FF00C0";
 
 async function refresh_token()
 {

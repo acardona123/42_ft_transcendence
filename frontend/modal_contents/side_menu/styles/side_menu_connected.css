@@ -22,11 +22,15 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	width: 60%;
 }
 
 #smc-user-name
 {
-	width: 60%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
 	padding: 10px;
 	margin: 0;
 	font-size: 2em;
