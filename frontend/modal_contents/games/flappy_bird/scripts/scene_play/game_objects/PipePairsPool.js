@@ -27,7 +27,7 @@ class fb_PipePairsPool {
 			pipePair.reactivate(targeted_spacer_height, offset_to_middle, x)
 			return (pipePair);
 		} else {
-			console.log("Warning: a new pipePair had to be added to the pool, maybe consider increasing its initial size");
+			console.warn("Warning: a new pipePair had to be added to the pool, maybe consider increasing its initial size");
 			return (new fb_PipePair(this.#scene, this.#pipe_group, this.#pipe_textures, targeted_spacer_height, offset_to_middle, x));
 		}
 	}

@@ -204,7 +204,7 @@ async function open_modal(id_modal, init_function_bf=undefined, init_function_af
 			modal_tournament_top1.show();
 			break;
 		default:
-			console.log("Error : this is not a id for modal.");
+			console.error("Error : this is not a id for modal.");
 			return;
 	}
 	disable_buttons_play();
@@ -329,7 +329,8 @@ async function get_modals_html()
 	}
 	catch (error)
 	{
-		console.log("Error retrieving static modal code.");
+		alert("Error retrieving static modal code. Please reload the page a few time and, try again later");
+		console.error("Error retrieving static modal code.");
 		return "";
 	}
 }

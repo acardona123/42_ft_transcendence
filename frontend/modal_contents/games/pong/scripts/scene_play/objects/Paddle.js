@@ -4,7 +4,7 @@ class pg_Paddle extends Phaser.GameObjects.Graphics {
 		
 		const possibleDirections = ["top", "left", "right", "bottom"];
 		if (!possibleDirections.includes(orientation)){
-			console.log("Error: trying to set a paddle with the wrong orientation");
+			console.error("Error: trying to set a paddle with the wrong orientation");
 			throw new Error('Wrong paddle orientation');
 		}
 

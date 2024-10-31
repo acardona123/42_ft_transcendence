@@ -107,7 +107,6 @@ async function update_statistics()
 	}
 	catch (error)
 	{
-		console.log(error);
 		create_popup("Error while retrieving stats.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }

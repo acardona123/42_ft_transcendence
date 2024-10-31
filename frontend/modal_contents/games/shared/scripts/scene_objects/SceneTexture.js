@@ -31,7 +31,7 @@ class SceneTexture{
 		this.#images_loaded = true;
 	}
 	#implicitPreloadOnScene(){
-		console.log(`Warning: implicit texture preload for ${this.name}`);
+		console.warn(`Warning: implicit texture preload for ${this.name}`);
 		this.preloadOnScene();
 	}
 
@@ -55,7 +55,7 @@ class SceneTexture{
 		}
 	}
 	#implicitCreateAnimationOnScene(){
-		console.log("Warning: animation creation for ${this.name}");
+		console.warn(`Warning: implicit animation creation for ${this.name}`);
 		this.createAnimationOnScene();
 	}
 
