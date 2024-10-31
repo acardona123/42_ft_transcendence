@@ -129,11 +129,11 @@
 
 #edp-2fa-button-text
 {
-	height: 38px;
-	line-height: 38px;
-	margin: 0;
+	margin: auto 0;
 	margin-right: 10px;
 	color: var(--dark-purple);
+	font-size: 0.8em;
+	white-space: nowrap;
 }
 
 #edp-button-2fa {
