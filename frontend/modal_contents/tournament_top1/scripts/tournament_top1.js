@@ -7,7 +7,7 @@ function tournament_top1_loading_elements()
 
 async function get_top1()
 {
-	const url = `https://localhost:8443/api/tournaments/round/?tournament_id=${tournament_id}`;
+	const url = `/api/tournaments/round/?tournament_id=${tournament_id}`;
 	try
 	{
 		let data_fetched = await fetch_with_token(url, {

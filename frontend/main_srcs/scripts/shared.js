@@ -5,7 +5,7 @@ const HEX_GREEN_HOVER = "HEX_GREEN_HOVER";
 
 async function refresh_token()
 {
-	const url = "https://localhost:8443/api/users/token/refresh/";
+	const url = "/api/users/token/refresh/";
 	const body = JSON.stringify({
 		refresh : sessionStorage.getItem("refresh_token")
 	});

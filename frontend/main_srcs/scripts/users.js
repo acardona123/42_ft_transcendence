@@ -14,7 +14,7 @@ function is_connected()
 
 async function get_profil_picture()
 {
-	const url = "https://localhost:8443/api/users/update/picture/";
+	const url = "/api/users/update/picture/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -36,7 +36,7 @@ async function get_profil_picture()
 
 async function create_user_infos()
 {
-	const url = "https://localhost:8443/api/users/info/";
+	const url = "/api/users/info/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, 

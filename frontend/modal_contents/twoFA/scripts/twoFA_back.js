@@ -1,6 +1,6 @@
 async function validate_code_setup(user_code)
 {
-	const url = "https://localhost:8443/api/users/update/2fa/validation/";
+	const url = "/api/users/update/2fa/validation/";
 	const body = JSON.stringify ({
 		token : user_code
 	});
@@ -30,7 +30,7 @@ async function validate_code_setup(user_code)
 
 async function validate_code_valid(user_code)
 {
-	const url = "https://localhost:8443/api/users/login/2fa/";
+	const url = "/api/users/login/2fa/";
 	const body = JSON.stringify ({
 		token : user_code
 	});

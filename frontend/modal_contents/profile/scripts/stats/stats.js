@@ -89,7 +89,7 @@ async function update_statistics()
 {
 	try
 	{
-		const url = "https://localhost:8443/api/stats/";
+		const url = "/api/stats/";
 		let fetched_data = await fetch_with_token(url, {
 			method: 'GET',
 			headers: {}

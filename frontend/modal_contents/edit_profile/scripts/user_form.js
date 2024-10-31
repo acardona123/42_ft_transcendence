@@ -81,7 +81,7 @@ function error_update_user_from_back(data)
 
 async function get_user_informations()
 {
-	const url = "https://localhost:8443/api/users/info/";
+	const url = "/api/users/info/";
 
 	let fetched_data = await fetch_with_token(url, 
 	{
@@ -175,7 +175,7 @@ async function submit_user_form(form)
 		pin : form["pin"].value,
 		refresh : sessionStorage.getItem("refresh_token")
 	}));
-	const url = "https://localhost:8443/api/users/update/user/";
+	const url = "/api/users/update/user/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
