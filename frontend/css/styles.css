@@ -5,26 +5,6 @@ body, html {
 	overflow: hidden;
 }
 
-* {
-	/* border: thin solid red; */
-}
-
-.debug {
-	border: thin solid black !important;
-}
-
-.debug-r {
-	border: thin solid red !important;
-}
-
-.debug-g {
-	border: thin solid green !important;
-}
-
-.debug-b {
-	border: thin solid blue !important;
-}
-
 .main-container {
     display: flex;
     flex-direction: column;
