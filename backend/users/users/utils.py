@@ -102,7 +102,7 @@ def generate_qr_code(data):
 	qr.add_data(data)
 	qr.make(fit=True)
 
-	img = qr.make_image(fill_color="black", back_color="white", image_factory=StyledPilImage, module_drawer=CircleModuleDrawer(), color_mask=RadialGradiantColorMask(), embeded_image_path="qrcode_star.png")#todo change image for qrcode
+	img = qr.make_image(fill_color="black", back_color="white", image_factory=StyledPilImage, module_drawer=CircleModuleDrawer(), color_mask=RadialGradiantColorMask(), embeded_image_path="qrcode_star.png")
 	buffer = io.BytesIO()
 	img.save(buffer, "PNG")
 	buffer.seek(0)
