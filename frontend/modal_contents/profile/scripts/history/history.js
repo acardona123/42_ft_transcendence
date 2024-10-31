@@ -9,7 +9,7 @@ function convert_dates(matches)
 
 async function get_history_from_DB()
 {
-	const url = "https://localhost:8443/api/matches/";
+	const url = "/api/matches/";
 	
 	try
 	{
