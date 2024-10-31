@@ -60,6 +60,7 @@ async function submitIAForm(event) {
 		document.getElementById('ia_validate_button').disabled = false;
 		document.getElementById('ia_validate_button').classList.remove('loading');
 
+		create_popup("Error while creating match. Try again.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		alert("Error while creating match, feel free to retry or exit the window.")
 	}
 }
