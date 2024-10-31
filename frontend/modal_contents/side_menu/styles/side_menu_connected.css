@@ -81,6 +81,7 @@
 	text-align: center;
 	background-color: var(--lavender);
 	color: var(--dark-purple);
+	outline: none;
 }
 
 #smc-pin-eye-img

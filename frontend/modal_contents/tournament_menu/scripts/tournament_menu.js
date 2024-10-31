@@ -43,8 +43,6 @@ function ToggleContainerConnectedPlayer() {
 		container_add_player.classList.remove('disappear');
 		container_add_player.classList.add('appear');
 
-		/* Set escape event */
-		// document.addEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.addEventListener('click', LoseFocusContainerConnectedPlayer);
 
 
@@ -60,8 +58,6 @@ function ToggleContainerConnectedPlayer() {
 		container_add_player.classList.remove('appear');
 		container_add_player.classList.add('disappear');
 
-		/* Remove escape event */
-		// document.removeEventListener('keydown', EscapeContainerConnectedPlayer);
 		document.removeEventListener('click', LoseFocusContainerConnectedPlayer);
 
 		/* Focus on the button */

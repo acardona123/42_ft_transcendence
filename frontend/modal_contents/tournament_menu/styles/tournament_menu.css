@@ -72,31 +72,6 @@
 	padding: 0;
 }
 
-/* ================================= */
-/* 
-#tournament-add-player-container .input-container input[type="text" ], .input-container input[type="password"] {
-	color: var(--dark-purple);
-}
-
-#tournament-add-player-container .input {
-	border-bottom: 1px solid var(--blue);
-}
-
-
-#tournament-add-player-container .input ~ .focus-border {
-	background-color: var(--lavender);
-}
-
-#tournament-add-player-container .input ~ label {
-	color: var(--dark-violet);
-}
-
-#tournament-add-player-container .input:focus ~ label, .has-content.input ~ label {
-	color: var(--lavender);
-} */
-
-/* ================================= */
-
 @keyframes sliderFromAbove {
 	from {
 		opacity: 0;
@@ -257,4 +232,8 @@
 #tournament_validate_button {
 	width: 10%;
 	justify-content: center;
+}
+
+#tournament-top-slider-container {
+	margin-top: 0;
 }

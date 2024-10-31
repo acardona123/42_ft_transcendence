@@ -39,7 +39,9 @@ function init_modals()
 	document.addEventListener("hidePrevented.bs.modal", (event) => 
 	{
 		event.preventDefault();
-		if (event.target.id !== 'modal-game' 
+		if (event.key === "Escape")
+			return ;
+		if (event.target.id !== 'modal-game'
 			&& event.target.id != 'modal-tournament-round-program'
 			&& event.target.id != 'modal-tournament-guests-repartition')
 			close_modal(event.target.id, undefined, true);
