@@ -54,7 +54,7 @@ async function reset_game()
 
 async function exit_match_save_fail(match_results){
 	await stop_current_game();
-	const alert_text = `Error while trying to save the match results. Match ${pg_gameMode.tournament_id >= 0 ? "and tournament":""} cancelled.\n\nHere are your match results nonetheless:\nGame duration: ${match_results.duration}\nScores:\n  ${pg_gameMode.username_player1}: ${match_results.score1} deaths\n  ${pg_gameMode.username_player2}: ${match_results.score2}`;
+	const alert_text = `Error while trying to save the match results. Match ${pg_gameMode.tournament_id >= 0 ? "and tournament":""} cancelled.\n\nHere are your match results nonetheless:\nGame duration: ${Math.floor(match_results.duration * 10) / 10} sec\nScores:\n  ${pg_gameMode.username_player1}: ${match_results.score1} death(s)\n  ${pg_gameMode.username_player2}: ${match_results.score2} death(s)`;
 	close_modal('modal-game', reset_game, false);
 	alert(alert_text);
 }
