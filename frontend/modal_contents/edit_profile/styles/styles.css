@@ -88,12 +88,6 @@
 	color: var(--dark-purple);
 }
 
-.edp-input-password-class
-{
-	font-family: Lato, Arial, sans-serif;
-	letter-spacing: 1px;
-}
-
 #edp-password-edit-text
 {
 	cursor: pointer;
