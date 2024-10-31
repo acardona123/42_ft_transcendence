@@ -7,28 +7,6 @@ function is_connected()
 	return global_user_infos !== undefined;
 }
 
-async function get_profil_picture()
-{
-	const url = "/api/users/update/picture/";
-	try
-	{
-		let fetched_data = await fetch_with_token(url, {
-			method: 'GET',
-			headers: {}
-		});
-		let data = await fetched_data.json();
-		if (!fetched_data.ok)
-			throw new Error("Error retrieving profile picture.");
-		data = data.data;
-		return data;
-	}
-	catch (error)
-	{
-		create_popup("Error retrieving profile picture.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		return DEFAULT_PP_PATH;
-	}
-}
-
 async function create_user_infos()
 {
 	const url = "/api/users/info/";
