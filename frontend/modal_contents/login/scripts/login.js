@@ -56,8 +56,10 @@ function logout_user_no_back()
 	sessionStorage.removeItem("refresh_token");
 	sessionStorage.removeItem("access_token");
 	global_user_infos = undefined;
-	if (modal_on_screen)
-		close_modal(modal_on_screen, undefined, false); // TODO: edge case game
+	if (modal_on_screen){
+		stop_current_game();
+		close_modal(modal_on_screen, undefined, false);
+	}
 	empty_globals();
 	update_ui_on_log_event();
 }

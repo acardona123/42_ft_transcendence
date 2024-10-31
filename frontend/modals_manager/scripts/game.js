@@ -2,11 +2,13 @@ let game = null;
 
 async function stop_current_game(){
 	if (game != null){
-		await game.destroy(false);
+		try {
+			await game.destroy(false);
+		} catch {
+		}
 		game = null;
 		custom_event = null;
 	}
-
 	let game_div = document.getElementById("phaser_game")
 	game_div.innerHTML = "";
 }
