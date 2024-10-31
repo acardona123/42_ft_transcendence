@@ -148,7 +148,7 @@ async function remove_friend(event)
 	const pseudo_to_remove = elem.parentNode.parentNode.childNodes[1].textContent;
 	const id_to_remove = friend_list_data.find(o => o.username === pseudo_to_remove).id;
 
-	const url = "https://localhost:8443/api/friends/remove/" + id_to_remove + "/";
+	const url = "/api/friends/remove/" + id_to_remove + "/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -248,7 +248,7 @@ function sort_by_online_alpha(data)
 
 async function get_friend_list()
 {
-	const url = "https://localhost:8443/api/friends/";
+	const url = "/api/friends/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {

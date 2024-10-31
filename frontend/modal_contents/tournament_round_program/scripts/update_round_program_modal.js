@@ -3,7 +3,7 @@ const tournament_waiting_player_id = "trp-waiting-player-desctiption"
 
 async function get_round_matches_from_DB() //can throw
 {
-	const url = `https://localhost:8443/api/tournaments/round/?tournament_id=${tournament_id}`;
+	const url = `/api/tournaments/round/?tournament_id=${tournament_id}`;
 
 	let data_fetched = await fetch_with_token(url, {
 		method: 'GET',

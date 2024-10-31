@@ -64,7 +64,7 @@ function logout_user_no_back()
 
 async function logout_user()
 {
-	const url = "https://localhost:8443/api/users/logout/";
+	const url = "/api/users/logout/";
 	const body = JSON.stringify({
 		refresh : sessionStorage.getItem("refresh_token")
 	});
@@ -98,7 +98,7 @@ function on_error_form_login(message)
 async function send_form_login(form)
 {
 	form.children[2].disabled = true;
-	const url = "https://localhost:8443/api/users/login/";
+	const url = "/api/users/login/";
 	const body = {
 		username: form["username"].value,
 		password: form["password"].value,
@@ -147,7 +147,7 @@ async function auto_login_42()
 	if (!code || !state)
 		return;
 	window.history.replaceState({}, document.title, '/');
-	const url = "https://localhost:8443/api/users/login/api42/" + "?" + new URLSearchParams({
+	const url = "/api/users/login/api42/" + "?" + new URLSearchParams({
 		code: code,
 		state: state,
 	}).toString();

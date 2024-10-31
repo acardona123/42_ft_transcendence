@@ -40,7 +40,7 @@ function is_valid_file()
 
 async function send_picture_to_back(form_data)
 {
-	const url = "https://localhost:8443/api/users/update/picture/";
+	const url = "/api/users/update/picture/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {

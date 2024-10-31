@@ -1,11 +1,6 @@
 const defaultUserImage = 'img/compte-utilisateur-1.png';
 
-let global_user_infos = undefined; 
-// {
-// 	profile_picture: defaultUserImage,
-// 	username: "coucou"
-// };
-// TODO change user to undefined
+let global_user_infos = undefined;
 
 function is_connected()
 {
@@ -14,7 +9,7 @@ function is_connected()
 
 async function get_profil_picture()
 {
-	const url = "https://localhost:8443/api/users/update/picture/";
+	const url = "/api/users/update/picture/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -36,7 +31,7 @@ async function get_profil_picture()
 
 async function create_user_infos()
 {
-	const url = "https://localhost:8443/api/users/info/";
+	const url = "/api/users/info/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, 

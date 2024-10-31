@@ -32,7 +32,7 @@ async function submit_pass_form(form)
 		password : form["new_pass"].value,
 		password2 : form["conf_pass"].value
 	});
-	const url = "https://localhost:8443/api/users/update/password/";
+	const url = "/api/users/update/password/";
 
 	try
 	{

@@ -57,7 +57,7 @@ function send_request_lead_to_friendship(data, status)
 async function send_friend_request()
 {
 	const input_zone = document.getElementById("add_friend_pseudo_input");
-	const url = "https://localhost:8443/api/friends/request/send/";
+	const url = "/api/friends/request/send/";
 	if (input_zone.value.length == 0)
 		return ;
 	const body = JSON.stringify({name: input_zone.value});
@@ -128,7 +128,7 @@ async function accept_friend_req(event)
 {
 	const accepted_pseudo = event.target.previousSibling.textContent;
 	const accepted_id = data_requests.find(o => o.username === accepted_pseudo)?.id;
-	const url = "https://localhost:8443/api/friends/request/" + accepted_id + "/";
+	const url = "/api/friends/request/" + accepted_id + "/";
 
 	try
 	{
@@ -165,7 +165,7 @@ async function reject_friend_req(event)
 {
 	const rejected_pseudo = event.target.parentNode.children[0].textContent;
 	const rejected_id = data_requests.find(o => o.username === rejected_pseudo)?.id;
-	const url = "https://localhost:8443/api/friends/request/" + rejected_id + "/";
+	const url = "/api/friends/request/" + rejected_id + "/";
 
 	try
 	{
@@ -256,7 +256,7 @@ function update_requests_list_front()
 
 async function get_data_from_database()
 {
-	const url = "https://localhost:8443/api/friends/request/";
+	const url = "/api/friends/request/";
 	try {
 		let fetched_data = await fetch_with_token(url, {
 			method: 'GET',

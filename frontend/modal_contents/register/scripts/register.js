@@ -60,7 +60,7 @@ async function send_form_register(form)
 		email: form["email"].value,
 		phone: form["phone"].value,
 	});
-	const url = "https://localhost:8443/api/users/signup/";
+	const url = "/api/users/signup/";
 	try
 	{
 		let fetched_data = await fetch(url, {

@@ -42,7 +42,7 @@ function open_2fa_setup_page(data)
 
 async function get_2fa_state()
 {
-	const url = "https://localhost:8443/api/users/update/2fa/";
+	const url = "/api/users/update/2fa/";
 	try
 	{
 		let fetched_data = await fetch_with_token(url, {
@@ -64,7 +64,7 @@ async function get_2fa_state()
 
 async function enable_2fa(should_enable)
 {
-	const url = "https://localhost:8443/api/users/update/2fa/";
+	const url = "/api/users/update/2fa/";
 	const body = {
 		"2fa_status" : (should_enable ? "on" : "off")
 	};

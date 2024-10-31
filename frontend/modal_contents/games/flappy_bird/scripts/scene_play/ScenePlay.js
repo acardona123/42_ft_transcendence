@@ -313,7 +313,7 @@ class fb_ScenePlay extends Phaser.Scene{
 			this.#launchEndScene();
 		}
 			async #sendMatchResults(){
-				const url = "https://localhost:8443/api/matches/finish/" + fb_gameMode.match_id + "/";
+				const url = "/api/matches/finish/" + fb_gameMode.match_id + "/";
 				const match_results = {
 					"score1": this.#textboard.getPlayerDeathCount(player_index.PLAYER1),
 					"score2": this.#textboard.getPlayerDeathCount(player_index.PLAYER2),
