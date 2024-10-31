@@ -9,7 +9,7 @@ function convert_dates(matches)
 
 async function get_history_from_DB()
 {
-	const url = "/api/matches/";
+	const url = "https://localhost:8443/api/matches/";
 	
 	try
 	{
@@ -186,7 +186,7 @@ function get_date_time(elem_date, game_duration)
 
 function get_victory_state(main_player_score, opponent_score, game)
 {
-	if (game =- "PG")
+	if (game == "PG")
 	{
 		if (main_player_score > opponent_score)
 			return "victory";
