@@ -11,8 +11,9 @@ class TimeDisplay extends Phaser.GameObjects.Text {
 		if (time_s <= 0){
 			updated_clock_text = this.#formatTimeText(0, 0);
 		} else {
-			const min = Math.floor(time_s / 60)
-			const sec =  Math.ceil(time_s % 60);
+			time_s = Math.ceil(time_s);
+			const min = Math.floor(time_s / 60);
+			const sec =  Math.floor(time_s % 60);
 			updated_clock_text = this.#formatTimeText(sec, min);
 		}
 		this.setText(updated_clock_text);
