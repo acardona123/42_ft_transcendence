@@ -5,7 +5,7 @@
 	right: 0;
 	left: 15px;
 
-	width: 33%;
+	width: fit-content;
 	height: max-content;
 	overflow: hidden;
 	border-radius: 7px;
@@ -28,6 +28,7 @@
 	font-size: 1em;
 	width: 100%;
 	overflow: hidden;
+	white-space: nowrap;
 }
 
 .popup-close {
