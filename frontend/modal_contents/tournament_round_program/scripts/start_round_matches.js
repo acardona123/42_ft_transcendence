@@ -29,7 +29,7 @@ async function tournament_start_round(){
 		}
 	} catch {
 		alert("Sorry but it was impossible to start the round. The tournament has been canceled.");
-		close_modal('modal-tournament-round-program', undefined, undefined, false);
+		close_modal('modal-tournament-round-program', undefined, false);
 	}
 
 }
