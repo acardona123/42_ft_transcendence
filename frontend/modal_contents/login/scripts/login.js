@@ -43,12 +43,18 @@ function empty_globals()
 	tournament_button_toggle_add_player_container = undefined;
 	buttonAddIA = undefined;
 	debugOutput = undefined;
+
+	new_guests_list = [];
+	new_matches_list = [];
+	new_waiting_player_elem = undefined;
+	new_round_number_elem = undefined;
 	
 	cardsNumber = 1;
 	IANumber = 0;
 	guestNumber = 0;
 	playerNumber = 1;
 	playerList = [];
+	tournament_id = undefined;
 }
 
 function logout_user_no_back()
