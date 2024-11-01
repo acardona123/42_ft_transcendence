@@ -1,5 +1,5 @@
 const tournament_match_list_id = "trp-round-matches-list"
-const tournament_waiting_player_id = "trp-waiting-player-desctiption"
+const tournament_waiting_player_id = "trp-waiting-player-description"
 
 async function get_round_matches_from_DB() //can throw
 {

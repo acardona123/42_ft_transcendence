@@ -17,7 +17,7 @@
 	min-height: 120px;
 }
 
-#AddConntectedPlayerContent {
+#AddConnectedPlayerContent {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

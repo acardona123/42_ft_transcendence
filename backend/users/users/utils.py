@@ -65,11 +65,11 @@ class TemporaryToken(AccessToken):
 	lifetime = TEMPORARY_ACCESS_TOKEN_LIFETIME
 
 def get_temp_tokens_for_user(user):
-	acces_token = TemporaryToken.for_user(user)
-	acces_token["scope"] = "temporary"
-	acces_token["username"] = user.username
+	access_token = TemporaryToken.for_user(user)
+	access_token["scope"] = "temporary"
+	access_token["username"] = user.username
 	return {
-		'access': str(acces_token),
+		'access': str(access_token),
 	}
 
 def get_tokens_for_user(user):

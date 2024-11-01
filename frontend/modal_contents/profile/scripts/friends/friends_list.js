@@ -2,9 +2,9 @@ const PATH_ONLINE_DOT = "modal_contents/profile/img/online.png";
 const PATH_OFFLINE_DOT = "modal_contents/profile/img/offline.png";
 const PATH_INACTIVE_DOT = "modal_contents/profile/img/inactive.png";
 
-function getFriendProfilPic(picture) {
+function getFriendProfilePic(picture) {
 	const profil_pic = document.createElement("img");
-	profil_pic.className = "prof-profil-pic";
+	profil_pic.className = "prof-profile-pic";
 	profil_pic.src = picture;
 	return profil_pic;
 }
@@ -102,7 +102,7 @@ function remove_friend_leave(event)
 
 let clicked_once = false;
 
-function set_confim_remove(target)
+function set_confirm_remove(target)
 {
 	target.style.display = "none";
 
@@ -139,7 +139,7 @@ async function remove_friend(event)
 	}
 	if (!clicked_once)
 	{
-		set_confim_remove(event.currentTarget);
+		set_confirm_remove(event.currentTarget);
 		clicked_once = true;
 		return ;
 	}
@@ -203,7 +203,7 @@ function remove_friend_array(username_to_remove)
 function add_friend_front(pseudo, online_status, picture)
 {
 	const newElement = getFriendDiv();
-	newElement.appendChild(getFriendProfilPic(picture));
+	newElement.appendChild(getFriendProfilePic(picture));
 	newElement.appendChild(getFriendPseudo(pseudo));
 	newElement.appendChild(getFriendOnline(online_status));
 	return newElement;

@@ -79,7 +79,7 @@ function error_update_user_from_back(data)
 	}
 }
 
-async function get_user_informations()
+async function get_user_information()
 {
 	const url = "/api/users/info/";
 
@@ -104,7 +104,7 @@ async function get_user_informations()
 
 function clear_edp_user_inputs()
 {
-	const save_button = document.getElementById("edp-save-informations-button");
+	const save_button = document.getElementById("edp-save-information-button");
 	save_button.disabled = true;
 	for (field in edp_placeholders_user)
 	{
@@ -115,10 +115,10 @@ function clear_edp_user_inputs()
 	
 async function edp_update_user_info()
 {
-	const save_button = document.getElementById("edp-save-informations-button");
+	const save_button = document.getElementById("edp-save-information-button");
 	try
 	{
-		let infos = await get_user_informations();
+		let infos = await get_user_information();
 		save_button.disabled = false;
 		for (field in edp_placeholders_user)
 		{
@@ -141,7 +141,7 @@ async function edp_update_user_info()
 	}
 	catch(error)
 	{
-		create_popup("Error retrieving user informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error retrieving user information.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 	}
 }
 
@@ -184,7 +184,7 @@ async function submit_user_form(form)
 			body: body
 		});
 		if (!fetched_data.ok && fetched_data.status != 400)
-			throw new Error("Error while updating informations.");
+			throw new Error("Error while updating information.");
 		let data = await fetched_data.json();
 		data = data.data;
 		if (fetched_data.status == 400)
@@ -193,7 +193,7 @@ async function submit_user_form(form)
 			return ;
 		}
 		clear_edp_user_error_fields(false);
-		create_popup("Informations updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
+		create_popup("Information updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
 		sessionStorage.setItem("refresh_token", data.refresh);
 		sessionStorage.setItem("access_token", data.access);
 		global_user_infos.username = data.username;
@@ -204,7 +204,7 @@ async function submit_user_form(form)
 	}
 	catch (error)
 	{
-		create_popup("Error while updating informations.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+		create_popup("Error while updating information.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
 		return ;
 	}
 }
@@ -241,7 +241,7 @@ document.addEventListener("onModalsLoaded", function()
 
 	change_form_behavior_for_SPA(form_user, submit_user_form);
 	
-	document.getElementById("edp-informations-edit-text").onclick = username_collapse;
+	document.getElementById("edp-information-edit-text").onclick = username_collapse;
 	document.getElementById("edp-password-edit-text").onclick = password_collapse;
 	document.getElementById("edp-2fa-edit-text").onclick = dfa_collapse;
 	document.getElementById("edp-input-pin").onkeydown = edp_allow_only_digits;

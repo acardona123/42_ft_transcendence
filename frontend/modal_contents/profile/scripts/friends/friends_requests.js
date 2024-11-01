@@ -37,7 +37,7 @@ function send_request_lead_to_friendship(data, status)
 			break;
 		}
 	}
-	// in case of 200 status response, which sould not happen, don't create
+	// in case of 200 status response, which should not happen, don't create
 	// friendship as it already exists
 	if (status == "201")
 	{

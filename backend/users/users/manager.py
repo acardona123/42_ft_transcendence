@@ -27,7 +27,7 @@ class CustomUserManager(BaseUserManager):
 		try:
 			if user.type == user.UserType.USER:
 				user.random_pin()
-				user.create_profil_picture(url=image_url)
+				user.create_profile_picture(url=image_url)
 			else:
 				user.pin = None
 			self.create_stats_for_user(user.id)

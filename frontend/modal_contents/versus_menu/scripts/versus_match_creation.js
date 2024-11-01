@@ -47,7 +47,7 @@ function reset_box_display()
 	});
 }
 
-function initBoxs() {
+function initBoxes() {
 	const BoxVSGuest = document.getElementById('BoxVSGuest');
 	const versus_guest_button = document.getElementById('versus-guest-validate-button');
 	
@@ -337,7 +337,7 @@ document.addEventListener("onModalsLoaded", function()
 	clearErrorFields();
 	clearInputFields();
 
-	initBoxs();
+	initBoxes();
 	reset_box_display();
 
 	handle1v1FormSubmission();

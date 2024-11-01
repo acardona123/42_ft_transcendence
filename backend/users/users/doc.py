@@ -1,4 +1,4 @@
-MSG_ERROR_CREATING_USER = "Error occured while creating user"
+MSG_ERROR_CREATING_USER = "Error occurred while creating user"
 MSG_ERROR_NO_ACCOUNT = "No active account found with the given credentials"
 MSG_ERROR_TOKEN_REQUIRED = "Token is required to authenticate with 2fa"
 MSG_ERROR_REFRESH_REQUIRED = "Refresh field is required"
@@ -7,11 +7,11 @@ MSG_ERROR_WRONG_TOKEN = "Fail to verify the token given"
 MSG_ERROR_WRONG_2FA_STATUS = "Invalid status field for the 2fa"
 MSG_ERROR_2FA_IS_DISABLE = "User have 2fa disable"
 MSG_ERROR_OAUTH_LOGIN = "Unauthorized to login with API 42"
-MSG_ERROR_OAUTH_INFO = "Unauthorized to retreive info with API 42"
+MSG_ERROR_OAUTH_INFO = "Unauthorized to retrieve info with API 42"
 MSG_ERROR_UPDATE_PASSWORD_OAUTH = "Impossible to update password with 42 API"
 MSG_ERROR_UPDATE_2FA_OAUTH = "Impossible to update 2fa with 42 API"
-MSG_ERROR_UPDATE_PASSWORD = "Error occured while updating password"
-MSG_ERROR_UPDATE_USER_INFO = "Error occured while updating user info"
+MSG_ERROR_UPDATE_PASSWORD = "Error occurred while updating password"
+MSG_ERROR_UPDATE_USER_INFO = "Error occurred while updating user info"
 MSG_ERROR_CREATING_USER_OAUTH = "Invalid data to create new user with 42 API"
 MSG_ERROR_SER_INVALID_PASSWORD = "Password fields didn't match"
 MSG_ERROR_SER_PASSWORD_EMPTY = "Password fields empty"
@@ -31,7 +31,7 @@ MSG_LOGIN = "User login successfully"
 MSG_LOGOUT = "User logout successfully"
 MSG_TOKEN_REFRESH = "Token refresh successfully"
 MSG_LOGIN_OAUTH = "User login successfully with 42 API"
-MSG_DISABLE_2FA = "Disable 2fa and remove previous devide"
+MSG_DISABLE_2FA = "Disable 2fa and remove previous device"
 MSG_ENABLE_2FA = "Enable 2fa and generate qr code to connect"
 MSG_SEND_URL_OAUTH = "Send url to oauth2.0 with 42 API"
 MSG_PASSWORD_UPDATE = "Password updated"
@@ -162,7 +162,7 @@ DOC_ERROR_INVALID_2FA = openapi.Response(
 			}
 		)
 
-DOC_2FA_DEVIDE_VALID = openapi.Response(
+DOC_2FA_DEVICE_VALID = openapi.Response(
 			description=MSG_DEVICE_VALIDATED,
 			examples={
 				"application/json": {
@@ -174,7 +174,7 @@ DOC_2FA_DEVIDE_VALID = openapi.Response(
 			}
 		)
 
-DOC_2FA_DEVIDE_ALREADY_VALID = openapi.Response(
+DOC_2FA_DEVICE_ALREADY_VALID = openapi.Response(
 			description=MSG_DEVICE_ALREADY_CONFIRMED,
 			examples={
 				"application/json": {
@@ -469,7 +469,7 @@ DOC_IMAGE_UPDATED = openapi.Response(
 			}
 		)
 
-DOC_ERROR_UPADTE_IMAGE = openapi.Response(
+DOC_ERROR_UPDATE_IMAGE = openapi.Response(
 			description=MSG_ERROR_UPDATING_IMAGE,
 			examples={
 				"application/json": {

@@ -150,7 +150,7 @@
 	padding: 0 1vh;
 }
 
-#BoxsContainer {
+#BoxesContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

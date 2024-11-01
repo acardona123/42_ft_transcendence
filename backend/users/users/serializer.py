@@ -137,7 +137,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 		pin = pin.zfill(4)
 		return pin
 
-class UpdateProfilPictureSerializer(serializers.ModelSerializer):
+class UpdateProfilePictureSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = ProfilePicture
@@ -155,7 +155,7 @@ class UpdateProfilPictureSerializer(serializers.ModelSerializer):
 		return instance
 	
 	def to_representation(self, data):
-		res = super(UpdateProfilPictureSerializer, self).to_representation(data)
+		res = super(UpdateProfilePictureSerializer, self).to_representation(data)
 		res['profile_picture'] = "https://localhost:8443" + res['profile_picture']
 		return res
 	

@@ -24,7 +24,7 @@ from .doc import (MSG_ERROR_CREATING_USER, MSG_ERROR_NO_ACCOUNT,
 	DOC_LOGOUT, DOC_ERROR_NEED_REFRESH_TOKEN,
 	DOC_ERROR_INVALID_TOKEN, DOC_TOKEN_REFRESH)
 
-# --------------- user managment --------------------
+# --------------- user management --------------------
 
 @swagger_auto_schema(method='post',
 	request_body=openapi.Schema(

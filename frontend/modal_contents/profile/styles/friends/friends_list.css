@@ -33,7 +33,7 @@
 	box-shadow: inset 1px 1px 5px 1px var(--violet), inset -1px -1px 5px 1px var(--violet);
 }
 
-.prof-profil-pic {
+.prof-profile-pic {
 	align-self: center;
 	justify-self: left;
 	width: 65%;

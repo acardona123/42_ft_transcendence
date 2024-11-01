@@ -84,7 +84,7 @@ DOC_USER_STATS_MATCH_UPDATED = openapi.Response(
 
 @swagger_auto_schema(
 	method='post',
-	operation_description = "Updat User statistics related to the matches in the data base",
+	operation_description = "Update User statistics related to the matches in the data base",
 	request_body=openapi.Schema(
 		type=openapi.TYPE_OBJECT,
 		properties={

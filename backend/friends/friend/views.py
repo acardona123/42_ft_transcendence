@@ -19,11 +19,11 @@ MSG_ERROR_REQUEST_TO_YOURSELF = 'Can\'t send friend request to yourself'
 MSG_ERROR_INVALID_ID = 'Invalid id'
 MSG_ERROR_INVALID_REQUEST = 'Invalid request'
 MSG_ERROR_INVALID_USERNAME = 'Invalid username'
-MSG_ERROR_FRIENSHIP_EXIST = 'Friendship already exists'
-MSG_ERROR_USERNAME = 'Error while retreiving username'
+MSG_ERROR_FRIENDSHIP_EXIST = 'Friendship already exists'
+MSG_ERROR_USERNAME = 'Error while retrieving username'
 
-MSG_ADD_FRIENSHIP_CREATED = 'Friendship created, and friend request deleted'
-MSG_ADD_FRIENSHIP_EXIST = 'Friendship exists, and friend request deleted'
+MSG_ADD_FRIENDSHIP_CREATED = 'Friendship created, and friend request deleted'
+MSG_ADD_FRIENDSHIP_EXIST = 'Friendship exists, and friend request deleted'
 MSG_ADD_FRIEND_REQUEST_CREATED = 'Friend request created'
 MSG_ADD_FRIEND_REQUEST_EXIST = 'Friend request exists'
 MSG_DELETE_FRIEND_REQUEST = 'Friend request deleted'
@@ -98,7 +98,7 @@ DOC_ADD_FRIENDSHIP_RESPONSE = openapi.Response(
 			description="return existing friendship",
 			examples={
 				"application/json": {
-				"message": MSG_ADD_FRIENSHIP_EXIST,
+				"message": MSG_ADD_FRIENDSHIP_EXIST,
 				"data": {
 					"friendship": {
 						"id": 1,
@@ -201,7 +201,7 @@ def is_friendship_existed(sender, receiver):
 	is_existing = Friendship.objects.filter(user1=user1, user2=user2).exists()
 	return is_existing
 
-def add_frienship(user1, user2):
+def add_friendship(user1, user2):
 	user1, user2 = sorted([user1, user2])
 	return Friendship.objects.get_or_create(user1=user1, user2=user2)
 
@@ -240,14 +240,14 @@ def send_friend_request(request):
 	if receiver_id == sender:
 		return Response({'message': MSG_ERROR_REQUEST_TO_YOURSELF}, status=400)
 	if is_friendship_existed(sender, receiver_id):
-		return Response({'message': MSG_ERROR_FRIENSHIP_EXIST}, status=400)
+		return Response({'message': MSG_ERROR_FRIENDSHIP_EXIST}, status=400)
 	if FriendRequest.objects.filter(sender=receiver_id, receiver=sender).exists():
-		friendship, created = add_frienship(sender, receiver_id)
+		friendship, created = add_friendship(sender, receiver_id)
 		remove_request = FriendRequest.objects.filter(sender=receiver_id, receiver=sender)
 		remove_request_id = remove_request.first().id
 		remove_request.delete()
 		try:
-			data = {'message': MSG_ADD_FRIENSHIP_CREATED if created else MSG_ADD_FRIENSHIP_EXIST,
+			data = {'message': MSG_ADD_FRIENDSHIP_CREATED if created else MSG_ADD_FRIENDSHIP_EXIST,
 				'data': {'friendship': FriendshipSerializer(friendship, context= {'user_id':sender}).data,
 						'remove_friend_request': remove_request_id}}
 			return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
@@ -290,10 +290,10 @@ def manage_request(request, request_id):
 		return Response({'message': MSG_ERROR_INVALID_REQUEST},
 				status=status.HTTP_400_BAD_REQUEST)
 	if request.method == 'POST':
-		friendship, created = add_frienship(receiver_id, friend_request.sender)
+		friendship, created = add_friendship(receiver_id, friend_request.sender)
 		friend_request.delete()
 		try:
-			data = {'message': MSG_ADD_FRIENSHIP_CREATED if created else MSG_ADD_FRIENSHIP_EXIST,
+			data = {'message': MSG_ADD_FRIENDSHIP_CREATED if created else MSG_ADD_FRIENDSHIP_EXIST,
 				'data': {'friendship': FriendshipSerializer(friendship, context= {'user_id':receiver_id}).data,
 						'remove_friend_request': request_id}}
 			return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)

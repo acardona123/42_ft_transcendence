@@ -51,14 +51,14 @@ class UserManagment(TestCase):
 
 		response = self.client.post(reverse('signup'), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'username': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='This field is required.', code='required')], 'password2': [ErrorDetail(string='This field is required.', code='required')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'username': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='This field is required.', code='required')], 'password2': [ErrorDetail(string='This field is required.', code='required')]}})
 
 		payload = {
 			"username" :"coucou"
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password': [ErrorDetail(string='This field is required.', code='required')], 'password2': [ErrorDetail(string='This field is required.', code='required')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password': [ErrorDetail(string='This field is required.', code='required')], 'password2': [ErrorDetail(string='This field is required.', code='required')]}})
 
 		payload = {
 			"password" : "123asd456",
@@ -66,7 +66,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password2': [ErrorDetail(string='This field is required.', code='required')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password2': [ErrorDetail(string='This field is required.', code='required')]}})
 
 		payload = {
 			"password" : "123asd456",
@@ -75,7 +75,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password': [ErrorDetail(string="Password fields didn't match", code='invalid')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password': [ErrorDetail(string="Password fields didn't match", code='invalid')]}})
 
 		payload = {
 			"password" : "",
@@ -84,7 +84,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password': [ErrorDetail(string='This field may not be blank.', code='blank')], 'password2': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password': [ErrorDetail(string='This field may not be blank.', code='blank')], 'password2': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 
 		payload = {
 			"password" : None,
@@ -93,7 +93,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password': [ErrorDetail(string='This field may not be null.', code='null')], 'password2': [ErrorDetail(string='This field may not be null.', code='null')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password': [ErrorDetail(string='This field may not be null.', code='null')], 'password2': [ErrorDetail(string='This field may not be null.', code='null')]}})
 
 		payload = {
 			"password" : "123",
@@ -102,7 +102,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'non_field_errors': [ErrorDetail(string='This password is too short. It must contain at least 8 characters.', code='password_too_short'), ErrorDetail(string='This password is too common.', code='password_too_common'), ErrorDetail(string='This password is entirely numeric.', code='password_entirely_numeric')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'non_field_errors': [ErrorDetail(string='This password is too short. It must contain at least 8 characters.', code='password_too_short'), ErrorDetail(string='This password is too common.', code='password_too_common'), ErrorDetail(string='This password is entirely numeric.', code='password_entirely_numeric')]}})
 
 		payload = {
 			"phone" : "+336582614",
@@ -113,7 +113,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'phone': [ErrorDetail(string='The phone number entered is not valid.', code='invalid')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'phone': [ErrorDetail(string='The phone number entered is not valid.', code='invalid')]}})
 
 		payload = {
 			"phone" : "+33659482614",
@@ -124,7 +124,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'email': [ErrorDetail(string='Enter a valid email address.', code='invalid')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'email': [ErrorDetail(string='Enter a valid email address.', code='invalid')]}})
 
 		payload = {
 			"password" : "123asd456",
@@ -135,7 +135,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'phone': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'phone': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 
 		payload = {
 			"phone" : "+33659482614",
@@ -146,7 +146,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 		
 		payload = {
 			"phone" : "+33659482614",
@@ -157,7 +157,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'email': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'email': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 
 		payload = {
 			"phone" : "+33659482614",
@@ -168,7 +168,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'password2': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'password2': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 
 		payload = {
 			"phone" : "+33659248614",
@@ -179,7 +179,7 @@ class UserManagment(TestCase):
 		}
 		response = self.client.post(reverse('signup'), data=json.dumps(payload), content_type= "application/json")
 		self.assertEqual(response.status_code, 400)
-		self.assertEqual(response.data, {'message': 'Error occured while creating user', 'data': {'username': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
+		self.assertEqual(response.data, {'message': 'Error occurred while creating user', 'data': {'username': [ErrorDetail(string='This field may not be blank.', code='blank')]}})
 
 		payload = {
 			"password" : "123asd456",

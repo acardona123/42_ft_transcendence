@@ -1,5 +1,5 @@
 from .authentication import IsNormalToken
-from .serializer import UpdatePasswordSerializer, UpdateUserSerializer, UpdateProfilPictureSerializer
+from .serializer import UpdatePasswordSerializer, UpdateUserSerializer, UpdateProfilePictureSerializer
 from .utils import get_tokens_for_user
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
@@ -14,7 +14,7 @@ from .doc import (JWT_TOKEN, MSG_ERROR_UPDATE_PASSWORD_OAUTH,
 		MSG_PICTURE_URL, MSG_ERROR_NO_IMAGE, MSG_UPDATE_PICTURE,
 		MSG_ERROR_UPDATING_IMAGE, MSG_ERROR_REFRESH_REQUIRED,
 		DOC_IMAGE_URL, DOC_ERROR_NO_IMAGE, DOC_ERROR_NEED_REFRESH_TOKEN,
-		DOC_IMAGE_UPDATED, DOC_ERROR_UPADTE_IMAGE, DOC_ERROR_UPDATE_INFO_BIS,
+		DOC_IMAGE_UPDATED, DOC_ERROR_UPDATE_IMAGE, DOC_ERROR_UPDATE_INFO_BIS,
 		DOC_ERROR_UPDATE_PASSWORD, DOC_IMPOSSIBLE_UPDATE_PASSWORD,
 		DOC_UPDATE_PASSWORD, DOC_ERROR_UPDATE_INFO, DOC_UPDATE_INFO,
 		DOC_ERROR_UNAUTHORIZED, DOC_ERROR_METHOD_NOT_ALLOWED)
@@ -127,7 +127,7 @@ class UpdateProfilePicture(APIView):
 			openapi.Parameter('profile_picture', openapi.IN_FORM, type=openapi.TYPE_FILE, description='Picture to be uploaded, only jpeg, jpg, png')],
 		responses={
 			200: DOC_IMAGE_UPDATED,
-			400: DOC_ERROR_UPADTE_IMAGE,
+			400: DOC_ERROR_UPDATE_IMAGE,
 			401: DOC_ERROR_UNAUTHORIZED,
 			404: DOC_ERROR_NO_IMAGE,
 			405: DOC_ERROR_METHOD_NOT_ALLOWED,
@@ -136,7 +136,7 @@ class UpdateProfilePicture(APIView):
 		user = request.user
 		if not (hasattr(user, 'profilepicture') and user.profilepicture):
 			return Response({'message': MSG_ERROR_NO_IMAGE}, status=404)
-		serializer = UpdateProfilPictureSerializer(user.profilepicture, data=request.data)
+		serializer = UpdateProfilePictureSerializer(user.profilepicture, data=request.data)
 		if serializer.is_valid():
 			serializer.save()
 			return Response({"message": MSG_UPDATE_PICTURE,

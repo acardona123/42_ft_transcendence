@@ -58,7 +58,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def random_pin(self):
         self.pin = f"{random.randint(0000, 9999):04d}"
     
-    def create_profil_picture(self, url=None):
+    def create_profile_picture(self, url=None):
         ProfilePicture.objects.create(user=self, oauth_profile_picture=url)
 
     def get_picture(self):

@@ -12,7 +12,7 @@
 	border: 3px solid rgba(240, 248, 255, 0.5);
 	z-index: 2000;
 	
-	animation: popup_disapear_anim 0.3s ease-in;
+	animation: popup_disappear_anim 0.3s ease-in;
 	animation-play-state: paused;
 	animation-iteration-count: 1;
 
@@ -46,7 +46,7 @@
 	transform: scale(1.05);
 }
 
-@keyframes popup_disapear_anim {
+@keyframes popup_disappear_anim {
 	from { opacity: 1; }
 	to { opacity: 0; }
 }

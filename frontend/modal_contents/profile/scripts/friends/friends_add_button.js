@@ -20,7 +20,7 @@ function fill_add_popup(popup_add_friend)
 	input_text.className = "prof-add-friend-pseudo-input";
 	input_text.type = "text";
 	input_text.id = "add_friend_pseudo_input";
-	input_text.placeholder = "Pseudonyme";
+	input_text.placeholder = "Pseudonym";
 	input_text.onkeydown = (event) => {
 		if (event.type == "keydown" && event.key == "Enter")
 			send_friend_request();

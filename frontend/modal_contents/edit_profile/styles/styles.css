@@ -53,7 +53,7 @@
 	border-radius: 50%;
 }
 
-#edp-informations-edit-text
+#edp-information-edit-text
 {
 	cursor: pointer;
 	width: 100%;
@@ -66,7 +66,7 @@
 	width: 20%;
 }
 
-#edp-save-informations-button
+#edp-save-information-button
 {
 	width: 40%;
 	height: 30%;
