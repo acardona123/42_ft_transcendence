@@ -28,6 +28,12 @@ function is_valid_file()
 			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
 		return false;
 	}
+	if (input_file_button.files[0].size > 100000){
+		create_popup("Error: your profile picture cannot be bigger than 100KB.",
+			4000, 4000,
+			hex_color=HEX_RED, t_hover_color=HEX_RED_HOVER);
+		return false;
+	}
 	if (!correct_formats.includes(input_file_button.files[0].type))
 	{
 		create_popup("Error: Accepted formats are [png, jpg, jpeg].",
