@@ -35,7 +35,7 @@ else:
 	SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', 'users']
 
@@ -200,7 +200,7 @@ TIME_TIMEOUT = timedelta(minutes=5)
 TEMPORARY_ACCESS_TOKEN_LIFETIME = timedelta(minutes=3)
 
 SIMPLE_JWT = {
-	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=59),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
