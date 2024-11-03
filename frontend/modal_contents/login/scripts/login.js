@@ -72,6 +72,8 @@ function logout_user_no_back()
 
 async function logout_user()
 {
+	let button_logout = document.getElementById("smc-logout-button");
+	button_logout.disabled = true;
 	const url = "/api/users/logout/";
 	const body = JSON.stringify({
 		refresh : sessionStorage.getItem("refresh_token")
@@ -90,8 +92,8 @@ async function logout_user()
 	catch (error)
 	{
 		// this is a normal silent error
-		return ;
 	}
+	button_logout.disabled = false;
 }
 
 function on_error_form_login(message)

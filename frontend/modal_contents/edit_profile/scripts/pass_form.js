@@ -27,6 +27,8 @@ function error_update_password_from_back(data)
 
 async function submit_pass_form(form)
 {
+	let button_password = document.getElementById("edp-button-submit-pass");
+	button_password.disabled = true;
 	const body = JSON.stringify({
 		old_password : form["cur_pass"].value,
 		password : form["new_pass"].value,
@@ -47,18 +49,18 @@ async function submit_pass_form(form)
 		if (fetched_data.status == 400)
 		{
 			error_update_password_from_back(data);
+			button_password.disabled = false;
 			return ;
 		}
 		data = data.data;
 		create_popup("Password updated.", 4000, 4000, HEX_GREEN, HEX_GREEN_HOVER);
 		clear_edp_pass_error_fields(edp_placeholders_pass);
-		return ;
 	}
 	catch (error)
 	{
 		create_popup("Error while updating password.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		return ;
 	}
+	button_password.disabled = false;
 }
 
 let edp_placeholders_pass = undefined;
