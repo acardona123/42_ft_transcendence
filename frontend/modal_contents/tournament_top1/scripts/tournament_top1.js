@@ -14,9 +14,9 @@ async function get_top1()
 			method: 'GET',
 			headers: {}
 		});
-		let body = await data_fetched.json();
 		if (!data_fetched.ok)
 			throw new Error(`${body.get("message", "internal error")}`);
+		let body = await data_fetched.json();
 		return body.data.matches;
 	}
 	catch (error)

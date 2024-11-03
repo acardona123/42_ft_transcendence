@@ -70,13 +70,15 @@ async function send_friend_request()
 		});
 		if (!fetched_data.ok)
 		{
+			if (fetched_data.status != 400)
+				throw "Friend request failed.";
 			let data = await fetched_data.json();
 			if (data.message == "Invalid username")
 				throw "Invalid username.";
 			else if (data.message == 'Friendship already exists')
-				throw "Friendship already exists";
+				throw "Friendship already exists.";
 			else if (data.message == 'Can\'t send friend request to yourself')
-				throw "Can\'t send friend request to yourself";
+				throw "Can\'t send friend request to yourself.";
 			else
 				throw "Friend request failed.";
 		}

@@ -9,9 +9,9 @@ async function get_round_matches_from_DB() //can throw
 		method: 'GET',
 		headers: {}
 	});
-	let body = await data_fetched.json();
 	if (!data_fetched.ok)
 		throw Error;
+	let body = await data_fetched.json();
 	return body.data.matches;
 }
 
