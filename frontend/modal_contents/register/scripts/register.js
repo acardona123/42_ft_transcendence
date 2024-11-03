@@ -69,6 +69,8 @@ async function send_form_register(form)
 		email: form["email"].value,
 		phone: form["phone"].value,
 	});
+	let button_register = document.getElementById("register-button");
+	button_register.disabled = true;
 	const url = "/api/users/signup/";
 	try
 	{
@@ -84,6 +86,7 @@ async function send_form_register(form)
 		if (fetched_data.status == 400)
 		{
 			on_error_form_register(data);
+			button_register.disabled = false;
 			return ;
 		}
 		await apply_login_user(data.tokens.refresh, data.tokens.access);
@@ -92,9 +95,8 @@ async function send_form_register(form)
 	catch (error)
 	{
 		create_popup(error, 4000, 4000, HEX_RED, HEX_RED_HOVER);
-		return ;
 	}
-
+	button_register.disabled = false;
 }
 
 document.addEventListener("onModalsLoaded", function()

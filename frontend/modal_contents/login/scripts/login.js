@@ -205,17 +205,27 @@ async function auto_login()
 
 async function login_with_42()
 {
+	let button_login = document.getElementById("login-button-42-api");
+	let button_register = document.getElementById("register-button-42-api");
+	button_register.disabled = true;
+	button_login.disabled = true;
 	const url = "/api/users/url/api42/";
-	fetch(url, {
-		method: 'GET'
-	})
-	.then((fetched_data) =>
+	try
 	{
-		fetched_data.json()
-		.then((data_json) => {
-			window.location.href = data_json.data;
+		let fetched_data = await fetch(url, {
+			method: 'GET'
 		});
-	})
+		if (!fetched_data.ok)
+			throw new Error(`${fetched_data.status}`);
+		let data = await fetched_data.json();
+		window.location.href = data.data;
+	}
+	catch (error)
+	{
+		create_popup("Error while redirecting to 42 API.", 4000, 4000, HEX_RED, HEX_RED_HOVER);
+	}
+	button_register.disabled = false;
+	button_login.disabled = false;
 }
 
 document.addEventListener("onModalsLoaded", function()
