@@ -19,5 +19,5 @@ if list['data']['keys'] == ['secret-key']:
 
 os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations users\
 	&& python3 ./manage.py migrate && \
-	gunicorn app.wsgi:application --bind 0.0.0.0:8002'")
+	gunicorn app.wsgi:application --bind 0.0.0.0:8002 --workers=3'")
 	# python3 ./manage.py runserver 0.0.0.0:8002'")
