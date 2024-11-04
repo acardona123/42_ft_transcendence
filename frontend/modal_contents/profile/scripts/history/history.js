@@ -126,7 +126,7 @@ function get_date(epoch_history)
 				format(date.getMinutes().toString()) + ":" +
 				format(date.getSeconds().toString()) + " " +
 				format(date.getDate().toString()) + "/" +
-				format(date.getMonth().toString()) + "/" +
+				format((date.getMonth() + 1).toString()) + "/" +
 				format(date.getFullYear().toString());
 }
 
