@@ -1,4 +1,4 @@
-function disable_buttons_versus_form() {
+function check_disable_button_versus_form() {
 	const versus_guest_button = document.getElementById('versus-guest-validate-button');
 	const versus_player_button = document.getElementById('versus-player-validate-button');
 
@@ -65,14 +65,23 @@ function initBoxes() {
 	BoxVSGuest.addEventListener('mouseenter', () => {
 		BoxVSGuest.classList.add('centered');
 		BoxVSGuest.classList.remove('side');
-		versus_guest_button.disabled = false;
 
 		BoxVSPlayer.classList.add('side');
 		BoxVSPlayer.classList.remove('centered');
-		versus_player_button.disabled = true;
 		VSPlayerInputs.forEach(input => {
 			input.classList.add('cursor-default');
 		});
+
+		if (get_max_values_from_form('versus-match-form') > 1)
+		{
+			versus_guest_button.disabled = true;
+		}
+		else
+		{
+			versus_guest_button.disabled = false;
+		}
+		versus_player_button.disabled = true;
+
 		clearErrorFields();
 	});
 
@@ -80,14 +89,23 @@ function initBoxes() {
 	BoxVSPlayer.addEventListener('mouseenter', () => {
 		BoxVSPlayer.classList.add('centered');
 		BoxVSPlayer.classList.remove('side');
-		versus_player_button.disabled = false;
 		VSPlayerInputs.forEach(input => {
 			input.classList.remove('cursor-default');
 		});
-
 		BoxVSGuest.classList.add('side');
+
 		BoxVSGuest.classList.remove('centered');
+
+		if (get_max_values_from_form('versus-match-form') > 1)
+		{
+			versus_player_button.disabled = true;
+		}
+		else
+		{
+			versus_player_button.disabled = false;
+		}
 		versus_guest_button.disabled = true;
+			
 		clearErrorFields();
 	});
 }
