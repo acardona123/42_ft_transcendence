@@ -44,6 +44,7 @@ MSG_ERROR_MATCH_CREATION_WRONG_GAME = 'Wrong/missing game identifier'
 MSG_ERROR_MATCH_CREATION_MISSING_SCORE = 'Match max score not provided'
 MSG_ERROR_MATCH_CREATION_MISSING_DURATION = 'Match max duration not provided'
 MSG_ERROR_JSON_FORMAT = 'Expecting a json body for creating a new match'
+MSG_ERROR_PLAYER_ID = 'Impossible to play against the same player'
 
 def doc_error_generation(err_description, err_msg):
 	return (openapi.Response(
@@ -138,6 +139,8 @@ def new_match_verified_id(request):
 		return JsonResponse(status = 400, data = {'message' : MSG_ERROR_MATCH_CREATION_MISSING_SCORE})
 	if not match_data.get('max_duration')  and match_data.get('max_duration') != 0:
 		return JsonResponse(status = 400, data = {'message' : MSG_ERROR_MATCH_CREATION_MISSING_DURATION})
+	if match_data.get('user1') == match_data.get('user2'):
+		return JsonResponse(status = 400, data = {'message' : MSG_ERROR_PLAYER_ID})
 
 	# match creation
 	return create_new_match(match_data)
