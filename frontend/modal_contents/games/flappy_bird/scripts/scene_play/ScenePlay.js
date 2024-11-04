@@ -315,8 +315,9 @@ class fb_ScenePlay extends Phaser.Scene{
 			}
 			this.#game_finished = true;
 			this.scene.pause();
+			const results_end_scene = this.#textboard.getAllValues();
 			await this.#sendMatchResults();
-			this.#launchEndScene();
+			this.#launchEndScene(results_end_scene);
 		}
 			async #sendMatchResults(){
 				const url = "/api/matches/finish/" + fb_gameMode.match_id + "/";
@@ -339,8 +340,8 @@ class fb_ScenePlay extends Phaser.Scene{
 					await exit_match_save_fail(match_results);
 				}
 			}
-			#launchEndScene(){
+			#launchEndScene(results_end_scene){
 				this.scene.stop(fb_gameConfig.scene_pause.name);
-				this.scene.start(fb_gameConfig.scene_game_finished.name,{textboard: this.#textboard.getAllValues(), textures: this.#boot_textures});
+				this.scene.start(fb_gameConfig.scene_game_finished.name,{textboard: results_end_scene, textures: this.#boot_textures});
 			}
 }
