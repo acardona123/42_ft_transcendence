@@ -16,8 +16,6 @@ services:
     depends_on:
       stats_db:
         condition: service_healthy
-    ports:
-      - "8006:8006"
   stats_db:
     build: ./postgre
     container_name: stats_db
