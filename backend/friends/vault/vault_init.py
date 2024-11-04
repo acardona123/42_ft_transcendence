@@ -12,5 +12,5 @@ rotate_cred(VAULT_CLIENT, os.getenv("VAULT_DATABASE_NAME"))
 
 os.system("/bin/bash -c 'cd django; python3 ./manage.py makemigrations friend\
 	&& python3 ./manage.py migrate && \
-	python3 ./manage.py runserver 0.0.0.0:8003'")
-	# gunicorn app.wsgi:application --bind 0.0.0.0:8003  --log-level \"debug\"'")
+	gunicorn app.wsgi:application --bind 0.0.0.0:8003'")
+	# python3 ./manage.py runserver 0.0.0.0:8003'")
