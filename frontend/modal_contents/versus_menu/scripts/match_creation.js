@@ -36,7 +36,7 @@ function invalidForm(id)
 	{
 		if (id === "versus-match-form")
 		{
-			disable_buttons_versus_form();
+			check_disable_button_versus_form();
 		}
 		else if (id === "tournament-form")
 		{

@@ -195,12 +195,12 @@ REST_FRAMEWORK = {
 	)
 }
 
-TIME_TIMEOUT = timedelta(minutes=5)
+TIME_TIMEOUT = timedelta(minutes=10)
 
 TEMPORARY_ACCESS_TOKEN_LIFETIME = timedelta(minutes=3)
 
 SIMPLE_JWT = {
-	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=59),
+	"ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
