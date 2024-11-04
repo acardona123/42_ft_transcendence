@@ -195,7 +195,7 @@ REST_FRAMEWORK = {
 	)
 }
 
-TIME_TIMEOUT = timedelta(minutes=5)
+TIME_TIMEOUT = timedelta(minutes=10)
 
 TEMPORARY_ACCESS_TOKEN_LIFETIME = timedelta(minutes=3)
 
