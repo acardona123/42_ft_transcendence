@@ -31,14 +31,14 @@ The goal of this project is to develop a website for playing Pong in matches and
 	- **Backend**: Built with Django.
 	- **Frontend**: Utilizes Bootstrap, CSS, HTML, and JavaScript.
 	- **Database**: Powered by PostgreSQL.
-	- User management and authentication with API42 integration.
+	- User management or authentication with API42 integration.
 	- Games: Pong and Flappy Bird with tournament modes.
 	- AI for Pong gameplay.
 	- Web Application Firewall (WAF) and Vault for secret management.
 	- Two-Factor Authentication (2FA) and JSON Web Tokens (JWT).
 	- Backend designed as a microservice.
 	- Compatibility with Chrome and Firefox browsers.
-- **How to Use**: Run the command `docker compose up --build` to run the server. Then access the website at `https://localhost:8443/`.
+- **How to Use**: Run the command `docker compose up --build` to start the server. Then access the website at `https://localhost:8443/`.
 
 ## Setup
 
