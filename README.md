@@ -72,6 +72,3 @@ cd 42_ft_transcendence
 - Social Features:
 	- View match history and statistics.
 	- Add and manage friends.
-
-## New Notion
-
