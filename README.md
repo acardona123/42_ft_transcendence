@@ -75,3 +75,27 @@ cd 42_ft_transcendence
 
 ## Code Structure
 ![Structure Schema](img/schema.png)
+
+## Overview
+### 1. Main menu
+![Main_menu_img](https://github.com/user-attachments/assets/ec7f3094-c1e7-4225-951f-8e50cab3a7b9)
+
+### 2. Pong game
+![Pong_game_img](https://github.com/user-attachments/assets/99c6cbf0-f376-43bd-84de-4fbfd944bec1)
+
+### 3. Flappy bird duo game
+![Flpayy_bird_game_img](https://github.com/user-attachments/assets/bc15f1c3-1b12-438f-800a-3296bfbaa74d)
+
+### 4. Profile
+![profile_img](https://github.com/user-attachments/assets/e09566a0-1223-43ea-9acc-870459144856)
+
+### 5. Editing profile
+![Edit_profile_img](https://github.com/user-attachments/assets/3fee432a-6e1f-4e3f-ba8c-a063d6437b89)
+
+### 6. Tournaments
+![ttournaments_img](https://github.com/user-attachments/assets/b7e46348-33fc-4f76-afdc-af1fd5e4fee3)
+
+### 7. Double factor authentification
+![2fa_img](https://github.com/user-attachments/assets/6ea865c9-1b39-4efa-9181-0b2e34cf1967)
+
+
