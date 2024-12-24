@@ -14,7 +14,9 @@
 	<img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3"/>
 	<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript"/>	
 </p>
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/17bf9ca0-bb65-4fa5-8804-e756174a285f" alt="Ft_transcendence Project Image"/>
+</p>
 ## About
 >This project is about doing something you’ve never done before.
 >Remind yourself of the beginning of your journey in computer science.
